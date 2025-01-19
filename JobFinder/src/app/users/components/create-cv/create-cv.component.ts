@@ -112,29 +112,13 @@ export class CreateCvComponent implements AfterViewInit {
   }
 
   private getData = (): void => {
-    this.countries = toSignal(
-      this.nomenclatureService.getCountries(),
-      { initialValue: [] as BasicModel[] });
-    this.citizenships = toSignal(
-      this.nomenclatureService.getCitizenships(),
-      { initialValue: [] as BasicModel[] });
-    this.genderOptions = toSignal(
-      this.nomenclatureService.getGenderOptions(),
-      { initialValue: [] as BasicModel[] });
-    this.businessSectors = toSignal(
-      this.nomenclatureService.getBusinessSectors(),
-      { initialValue: [] as BasicModel[] });
-    this.educationLevels = toSignal(
-      this.nomenclatureService.getEducationLevels(),
-      { initialValue: [] as BasicModel[] });
-    this.languageTypes = toSignal(
-      this.nomenclatureService.getLanguageTypes(),
-      { initialValue: [] as BasicModel[] });
-    this.languageLevels = toSignal(
-      this.nomenclatureService.getLanguageLevels(),
-      { initialValue: [] as BasicModel[] });
-    this.drivingCategories = toSignal(
-      this.nomenclatureService.getDrivingCategories(),
-      { initialValue: [] as BasicModel[] });
+    this.countries = toSignal(this.nomenclatureService.getCountries(), { initialValue: [] });
+    this.citizenships = toSignal(this.nomenclatureService.getCitizenships(), { initialValue: [] });
+    this.genderOptions = toSignal(this.nomenclatureService.getGenderOptions(), { initialValue: [] });
+    this.businessSectors = toSignal(this.nomenclatureService.getBusinessSectors(), { initialValue: [] });
+    this.educationLevels = toSignal(this.nomenclatureService.getEducationLevels(), { initialValue: [] });
+    this.languageTypes = toSignal(this.nomenclatureService.getLanguageTypes(), { initialValue: [] });
+    this.languageLevels = toSignal(this.nomenclatureService.getLanguageLevels(), { initialValue: [] });
+    this.drivingCategories = toSignal(this.nomenclatureService.getDrivingCategories(), { initialValue: [] });
   }
 }

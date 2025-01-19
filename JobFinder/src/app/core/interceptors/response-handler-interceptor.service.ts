@@ -46,6 +46,6 @@ export class ResponseHandlerInterceptorService implements HttpInterceptor {
 
           throw err;
         })
-      ) as any as any;
+      ) as any;
   }
 }

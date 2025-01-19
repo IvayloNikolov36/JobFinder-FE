@@ -3,20 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CollapseDirective } from './core/directives/collapse.directive';
-import { DropdownDirective } from './core/directives/dropdown.directive';
 import { CreateJobAdvertisementComponent } from './create-job-advertisement/create-job-advertisement.component';
 import { JobAdvertisementsComponent } from './job-advertisements/job-advertisements.component';
 import { PaginationComponent } from './pagination/pagination.component';
@@ -25,6 +16,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { JwtInterceptorService } from './core/interceptors/jwt-interceptor.service';
 import { UsersModule } from './users/users.module';
 import { ResponseHandlerInterceptorService } from './core/interceptors/response-handler-interceptor.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -33,21 +25,16 @@ import { ResponseHandlerInterceptorService } from './core/interceptors/response-
     HomeComponent,
     RegisterUserComponent,
     RegisterCompanyComponent,
-    NavbarComponent,
-    CollapseDirective,
-    DropdownDirective,
     CreateJobAdvertisementComponent,
     JobAdvertisementsComponent,
     PaginationComponent,
     JobAdvertisementDetailsComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    ReactiveFormsModule,
-    FormsModule,
+    SharedModule,
     UsersModule,
   ],
   providers: [
