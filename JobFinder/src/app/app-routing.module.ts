@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { RegisterCompanyComponent } from './register-company/register-company.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
-import { CreateJobAdvertisementComponent } from './create-job-advertisement/create-job-advertisement.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { RegisterCompanyComponent } from './components/register-company/register-company.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { CreateJobAdvertisementComponent } from './components/create-job-advertisement/create-job-advertisement.component';
 import { AuthGuard, CompanyGuard, IsSignedInGuard } from './core/guards';
-import { JobAdvertisementsComponent } from './job-advertisements/job-advertisements.component';
-import { JobAdvertisementDetailsComponent } from './job-advertisement-details/job-advertisement-details.component';
+import { JobAdvertisementsComponent } from './components/job-advertisements/job-advertisements.component';
+import { JobAdvertisementDetailsComponent } from './components/job-advertisement-details/job-advertisement-details.component';
 
 
 const routes: Routes = [

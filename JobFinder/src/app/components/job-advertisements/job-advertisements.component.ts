@@ -1,10 +1,10 @@
-import { JobAdvertisementsService } from './../services/job-advertisements.service';
+import { JobAdvertisementsService } from '../../services/job-advertisements.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { BasicModel } from '../models/basic.model';
-import { JobAd } from '../models/job-ad';
+import { BasicModel } from '../../models/basic.model';
+import { JobAd } from '../../models/job-ad';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { NomenclatureService } from '../core/services';
+import { NomenclatureService } from '../../core/services';
 
 @Component({
   selector: 'jf-job-advertisements',

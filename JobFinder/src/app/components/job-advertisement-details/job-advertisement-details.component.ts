@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JobDetails } from '../models/job-details';
+import { JobDetails } from '../../models/job-details';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
