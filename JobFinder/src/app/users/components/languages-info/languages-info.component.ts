@@ -72,11 +72,7 @@ export class LanguagesInfoComponent implements OnInit {
     if (this.languagesInfoData.length > 0) {
       this.languagesInfoData.forEach((languagesInfoData: LanguageInfoInput) => {
         const formGroup: FormGroup<any> = this.addNewLanguageInfoForm();
-        formGroup.controls['id'].setValue(languagesInfoData.id);
-        formGroup.controls['languageType'].setValue(languagesInfoData.languageType);
-        formGroup.controls['comprehensionLevel'].setValue(languagesInfoData.comprehensionLevel);
-        formGroup.controls['speakingLevel'].setValue(languagesInfoData.speakingLevel);
-        formGroup.controls['writingLevel'].setValue(languagesInfoData.writingLevel);
+        formGroup.setValue(languagesInfoData);
       });
     } else {
       this.addNewLanguageInfoForm();

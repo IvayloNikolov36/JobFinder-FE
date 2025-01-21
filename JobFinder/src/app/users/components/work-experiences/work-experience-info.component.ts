@@ -35,8 +35,8 @@ export class WorkExperienceInfoComponent implements OnInit {
   addWorkExperienceForm(): FormGroup<any> {
     const formGroup: FormGroup<any> = this.formBuilder.group({
       id: [0, []],
-      fromDate: ['', [Validators.required]],
-      toDate: ['', []],
+      fromDate: [Date.now, [Validators.required]],
+      toDate: [Date.now, []],
       jobTitle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       businessSector: [{} as BasicModel, [Validators.required]],
@@ -74,14 +74,7 @@ export class WorkExperienceInfoComponent implements OnInit {
     if (this.workExperienceInfoData.length > 0) {
       this.workExperienceInfoData.forEach((we: WorkExperience) => {
         const formGroup: FormGroup<any> = this.addWorkExperienceForm();
-        formGroup.controls['id'].setValue(we.id);
-        formGroup.controls['fromDate'].setValue(we.fromDate);
-        formGroup.controls['toDate'].setValue(we.toDate);
-        formGroup.controls['jobTitle'].setValue(we.jobTitle);
-        formGroup.controls['organization'].setValue(we.organization);
-        formGroup.controls['businessSector'].setValue(we.businessSector);
-        formGroup.controls['location'].setValue(we.location);
-        formGroup.controls['additionalDetails'].setValue(we.additionalDetails);
+        formGroup.setValue(we);
       });
     } else {
       this.addWorkExperienceForm();

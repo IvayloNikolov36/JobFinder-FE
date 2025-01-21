@@ -31,7 +31,7 @@
 
     <mat-form-field>
       <mat-label>Driving Categories</mat-label>
-      <mat-select [formControl]="drivingLicenseCategories" multiple [compareWith]="compareFn">
+      <mat-select formControlName="drivingLicenseCategories" multiple [compareWith]="compareFn">
         @for (lc of drivingCategories(); track lc.id) {
         <mat-option [value]="lc">{{ lc.name }}</mat-option>
         }

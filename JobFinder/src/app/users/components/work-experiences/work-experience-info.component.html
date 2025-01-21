@@ -90,12 +90,10 @@
           </textarea>
           <mat-hint>Enter additional details.</mat-hint>
           <mat-error *ngIf="workExp['controls']['additionalDetails']?.errors?.['minlength']">
-            Details length must be at least
-            {{workExp['controls']['additionalDetails'].errors?.['minlength']['requiredLength']}} characters!
+            Details length must be at least {{workExp['controls']['additionalDetails'].errors?.['minlength']['requiredLength']}} characters!
           </mat-error>
           <mat-error *ngIf="workExp['controls']['additionalDetails'].errors?.['maxlength']">
-            Details length must be no more than
-            {{workExp['controls']['additionalDetails'].errors?.['maxlength']['requiredLength']}} characters!
+            Details length must be no more than {{workExp['controls']['additionalDetails'].errors?.['maxlength']['requiredLength']}} characters!
           </mat-error>
         </mat-form-field>
       </div>

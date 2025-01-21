@@ -36,8 +36,8 @@ export class EducationsComponent implements OnInit {
 
     const formGroup: FormGroup<any> = this.formBuilder.group({
       id: [0, []],
-      fromDate: ['', [Validators.required]],
-      toDate: ['', []],
+      fromDate: [Date.now, [Validators.required]],
+      toDate: [Date.now, []],
       location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       educationLevel: [{} as BasicModel, [Validators.required]],
       major: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -75,14 +75,7 @@ export class EducationsComponent implements OnInit {
     if (this.educationsData.length > 0) {
       this.educationsData.forEach((educationData: Education) => {
         const formGroup: FormGroup<any> = this.addNewEducationForm();
-        formGroup.controls['id'].setValue(educationData.id);
-        formGroup.controls['fromDate'].setValue(educationData.fromDate);
-        formGroup.controls['toDate'].setValue(educationData.toDate);
-        formGroup.controls['organization'].setValue(educationData.organization);
-        formGroup.controls['location'].setValue(educationData.location);
-        formGroup.controls['educationLevel'].setValue(educationData.educationLevel);
-        formGroup.controls['major'].setValue(educationData.major);
-        formGroup.controls['mainSubjects'].setValue(educationData.mainSubjects);
+        formGroup.setValue(educationData);
       });
     } else {
       this.addNewEducationForm();

@@ -12,7 +12,7 @@
             *ngIf="cInfo['controls']['courseName']?.touched && cInfo['controls']['courseName']?.errors?.['required']">Course
             name is required!</mat-error>
           <mat-error *ngIf="cInfo['controls']['courseName']?.errors?.['minlength']">
-            Course name length must be at least {{cf['courseName'].errors?.['minlength']['requiredLength']}} characters!
+            Course name length must be at least {{cInfo['controls']['courseName'].errors?.['minlength']['requiredLength']}} characters!
           </mat-error>
           <mat-error *ngIf="cInfo['controls']['courseName']?.errors?.['maxlength']">
             Course name length must be no more than

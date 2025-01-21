@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, input, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonalDetails } from '../../models/cv';
 import { BasicModel } from '../../../models';
@@ -54,21 +54,7 @@ export class PersonalDetailsComponent implements OnInit {
     this.personalInfoForm = this.formBuilder.group(controlls);
 
     if (this.personalDetailsData) {
-      this.setFormData(this.personalInfoForm, this.personalDetailsData);
+      this.personalInfoForm.setValue(this.personalDetailsData);
     }
-  }
-
-  private setFormData = (form: FormGroup<any>, data: PersonalDetails): void => {
-    form.controls['id'].setValue(data.id);
-    form.controls['firstName'].setValue(data.firstName);
-    form.controls['middleName'].setValue(data.middleName);
-    form.controls['lastName'].setValue(data.lastName);
-    form.controls['email'].setValue(data.email);
-    form.controls['phone'].setValue(data.phone);
-    form.controls['gender'].setValue(data.gender);
-    form.controls['birthdate'].setValue(data.birthdate);
-    form.controls['citizenship'].setValue(data.citizenship);
-    form.controls['country'].setValue(data.country);
-    form.controls['city'].setValue(data.city);
   }
 }

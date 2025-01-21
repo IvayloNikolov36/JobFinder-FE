@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SkillsInfo } from '../../models/cv';
 import { BasicModel } from '../../../models';
 
@@ -16,7 +16,6 @@ export class SkillsInfoComponent implements OnInit {
   @Output() emitSkillsData = new EventEmitter<SkillsInfo>();
 
   skillsForm!: FormGroup;
-  drivingLicenseCategories: FormControl<BasicModel[]> = new FormControl();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -31,7 +30,6 @@ export class SkillsInfoComponent implements OnInit {
   emitData(): void {
     const dataToEmit: SkillsInfo = {
       ...this.skillsForm.value as SkillsInfo,
-      drivingLicenseCategories: this.drivingLicenseCategories.value
     } as SkillsInfo;
 
     this.emitSkillsData.emit(dataToEmit);
@@ -42,25 +40,17 @@ export class SkillsInfoComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    const controllsObject = {
+
+    this.skillsForm = this.formBuilder.group({
       id: [0, []],
       computerSkills: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
       otherSkills: ['', [Validators.minLength(10), Validators.maxLength(500)]],
-      hasManagedPeople: [false, []]
-    };
-
-    this.skillsForm = this.formBuilder.group(controllsObject);
+      hasManagedPeople: [false, []],
+      drivingLicenseCategories: [[] as BasicModel[]]
+    });
 
     if (this.skillsInfoData) {
-      this.setFormData(this.skillsForm, this.skillsInfoData);
+      this.skillsForm.patchValue(this.skillsInfoData)
     }
-  }
-
-  private setFormData = (form: FormGroup<any>, data: SkillsInfo): void => {
-    form.controls['id'].setValue(data.id);
-    form.controls['computerSkills'].setValue(data.computerSkills);
-    form.controls['otherSkills'].setValue(data.otherSkills);
-    form.controls['hasManagedPeople'].setValue(data.hasManagedPeople);
-    this.drivingLicenseCategories.setValue(data.drivingLicenseCategories);
   }
 }

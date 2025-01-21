@@ -65,9 +65,7 @@ export class CoursesCertificatesComponent implements OnInit {
     if (this.coursesInfoData.length > 0) {
       this.coursesInfoData.forEach((cs: CourseCertificate) => {
         const formGroup: FormGroup<any> = this.addNewCoursesFrom();
-        formGroup.controls['id'].setValue(cs.id);
-        formGroup.controls['courseName'].setValue(cs.courseName);
-        formGroup.controls['certificateUrl'].setValue(cs.certificateUrl);
+        formGroup.setValue(cs);
       });
     } else {
       this.addNewCoursesFrom();
