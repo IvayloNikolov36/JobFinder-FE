@@ -20,34 +20,21 @@ export class CoursesCertificatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeCoursesForm();
-    this.addForms();
   }
 
-  get cf() {
-    return this.coursesForm.controls;
+  get coursesFormArray(): FormArray<FormGroup> {
+    return this.coursesForm.controls['coursesArray'] as FormArray<FormGroup>;
   }
 
-  get c() {
-    return this.cf['coursesArray'] as FormArray<FormGroup>;
+  addNewCourseInfo(): void {
+    this.coursesFormArray.push(this.createCourseFormGroup());
   }
 
-  addNewCoursesFrom(): FormGroup<any> {
-    const formGroup: FormGroup<any> = this.formBuilder.group({
-      id: [0, []],
-      courseName: ['', [Validators.minLength(5), Validators.maxLength(100)]],
-      certificateUrl: ['', [Validators.pattern(this.urlPattern)]]
-    });
-
-    this.c.push(formGroup);
-
-    return formGroup;
-  }
-
-  removeLastCoursesForm(): void {
-    if (this.c.length === 1) {
+  removeLastCoursesFormGroup(): void {
+    if (this.coursesFormArray.length === 1) {
       return;
     }
-    this.c.removeAt(this.c.length - 1);
+    this.coursesFormArray.removeAt(this.coursesFormArray.length - 1);
   }
 
   emitData(): void {
@@ -56,19 +43,28 @@ export class CoursesCertificatesComponent implements OnInit {
   }
 
   private initializeCoursesForm(): void {
-    this.coursesForm = this.formBuilder.group({
-      coursesArray: new FormArray<FormGroup>([])
-    });
-  }
+    const coursesArray: FormArray<any> = this.formBuilder.array([]);
 
-  private addForms = (): void => {
+    this.coursesForm = this.formBuilder.group({
+      coursesArray: coursesArray
+    });
+
     if (this.coursesInfoData.length > 0) {
       this.coursesInfoData.forEach((cs: CourseCertificate) => {
-        const formGroup: FormGroup<any> = this.addNewCoursesFrom();
+        const formGroup: FormGroup<any> = this.createCourseFormGroup();
         formGroup.setValue(cs);
+        coursesArray.push(formGroup);
       });
     } else {
-      this.addNewCoursesFrom();
+      coursesArray.push(this.createCourseFormGroup());
     }
+  }
+
+  private createCourseFormGroup(): FormGroup<any> {
+    return this.formBuilder.nonNullable.group({
+      id: [0],
+      courseName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      certificateUrl: ['', [Validators.required, Validators.pattern(this.urlPattern)]]
+    });
   }
 }

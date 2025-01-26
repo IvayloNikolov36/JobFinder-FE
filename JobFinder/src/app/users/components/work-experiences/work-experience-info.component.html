@@ -1,109 +1,113 @@
 <form [formGroup]="workExpForm">
-  <div *ngFor="let workExp of we.controls; let i = index" class="mt-2">
+  <div *ngFor="let workExp of we.controls; let i = index" [formGroup]="workExp" class="mt-2">
     <span class="fs-4">Work Experience Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
-    <div [formGroup]="workExp">
-      <div class="d-flex justify-content-start gap-3 mt-3">
-        <mat-form-field>
-          <input matInput [matDatepicker]="fromDatePicker" placeholder="Choose start date" formControlName="fromDate">
-          <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #fromDatePicker></mat-datepicker>
-          <mat-error
-            *ngIf="workExp['controls']['fromDate']?.touched && workExp['controls']['fromDate']?.errors?.['required']">
-            Start date is required!
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput [matDatepicker]="toDatePicker" placeholder="Choose end date" formControlName="toDate">
-          <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #toDatePicker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Job title" formControlName="jobTitle">
-          <mat-hint>Enter job title.</mat-hint>
-          <mat-error
-            *ngIf="workExp['controls']['jobTitle']?.touched && workExp['controls']['jobTitle']?.errors?.['required']">Job
-            title is required!</mat-error>
-          <mat-error *ngIf="workExp['controls']['jobTitle']?.errors?.['minlength']">
-            Job title length must be at least
-            {{workExp['controls']['jobTitle'].errors?.['minlength']['requiredLength']}}
-            characters!
-          </mat-error>
-          <mat-error *ngIf="workExp['controls']['jobTitle']?.errors?.['maxlength']">
-            Job title length must be no more than
-            {{workExp['controls']['jobTitle'].errors?.['maxlength']['requiredLength']}} characters!
-          </mat-error>
-        </mat-form-field>
-      </div>
 
-      <div class="d-flex justify-content-start gap-3 mt-3">
+    <div class="d-flex justify-content-start gap-3 mt-3">
+      <mat-form-field>
+        <input matInput [matDatepicker]="fromDatePicker" placeholder="Choose start date" formControlName="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+        <mat-error
+          *ngIf="workExp.controls['fromDate']?.touched && workExp.controls['fromDate']?.errors?.['required']">
+          Start date is required!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="toDatePicker" placeholder="Choose end date" formControlName="toDate">
+        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Job title" formControlName="jobTitle">
+        <mat-hint>Enter job title.</mat-hint>
+        <mat-error
+          *ngIf="workExp.controls['jobTitle']?.touched && workExp.controls['jobTitle']?.errors?.['required']">Job
+          title is required!</mat-error>
+        <mat-error *ngIf="workExp.controls['jobTitle']?.errors?.['minlength']">
+          Job title length must be at least
+          {{workExp.controls['jobTitle'].errors?.['minlength']['requiredLength']}}
+          characters!
+        </mat-error>
+        <mat-error *ngIf="workExp.controls['jobTitle']?.errors?.['maxlength']">
+          Job title length must be no more than
+          {{workExp.controls['jobTitle'].errors?.['maxlength']['requiredLength']}} characters!
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-        <mat-form-field>
-          <input matInput type="text" placeholder="Organization" formControlName="organization">
-          <mat-hint>Enter Organization.</mat-hint>
-          <mat-error
-            *ngIf="workExp['controls']['organization']?.touched && workExp['controls']['organization']?.errors?.['required']">Organization
-            is required!
-          </mat-error>
-          <mat-error *ngIf="workExp['controls']['organization']?.errors?.['minlength']">
-            Organization length must be at least
-            {{workExp['controls']['organization'].errors?.['minlength']['requiredLength']}} characters!
-          </mat-error>
-          <mat-error *ngIf="workExp['controls']['organization'].errors?.['maxlength']">
-            Organization length must be no more than
-            {{workExp['controls']['organization'].errors?.['maxlength']['requiredLength']}} characters!
-          </mat-error>
-        </mat-form-field>
+    <div class="d-flex justify-content-start gap-3 mt-3">
 
-        <mat-form-field>
-          <mat-label>Business sector</mat-label>
-          <mat-select formControlName="businessSector" [compareWith]="compareFn">
-            <mat-option *ngFor="let bs of businessSectors()" [value]="bs">
-              {{ bs.name }}
-            </mat-option>
-          </mat-select>
-          <mat-hint>Select business sector.</mat-hint>
-          <mat-error
-            *ngIf="workExp['controls']['businessSector']?.touched && workExp['controls']['businessSector'].errors?.['required']">Business
-            sector is required!</mat-error>
-        </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Organization" formControlName="organization">
+        <mat-hint>Enter Organization.</mat-hint>
+        <mat-error
+          *ngIf="workExp.controls['organization']?.touched && workExp.controls['organization']?.errors?.['required']">Organization
+          is required!
+        </mat-error>
+        <mat-error *ngIf="workExp.controls['organization']?.errors?.['minlength']">
+          Organization length must be at least
+          {{workExp.controls['organization'].errors?.['minlength']['requiredLength']}} characters!
+        </mat-error>
+        <mat-error *ngIf="workExp.controls['organization'].errors?.['maxlength']">
+          Organization length must be no more than
+          {{workExp.controls['organization'].errors?.['maxlength']['requiredLength']}} characters!
+        </mat-error>
+      </mat-form-field>
 
-        <mat-form-field>
-          <input matInput type="text" placeholder="Location" formControlName="location">
-          <mat-hint>Enter Location.</mat-hint>
-          <mat-error
-            *ngIf="workExp['controls']['location']?.touched && workExp['controls']['location']?.errors?.['required']">Location
-            is required!</mat-error>
-          <mat-error *ngIf="workExp['controls']['location']?.errors?.['minlength']">
-            Location length must be at least {{workExp['controls']['location'].errors?.['minlength']['requiredLength']}}
-            characters!
-          </mat-error>
-          <mat-error *ngIf="workExp['controls']['location']?.errors?.['maxlength']">
-            Location length must be no more than
-            {{workExp['controls']['location'].errors?.['maxlength']['requiredLength']}} characters!
-          </mat-error>
-        </mat-form-field>
-      </div>
+      <mat-form-field>
+        <mat-label>Business sector</mat-label>
+        <mat-select formControlName="businessSector" [compareWith]="compareFn">
+          <mat-option *ngFor="let bs of businessSectors()" [value]="bs">
+            {{ bs.name }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Select business sector.</mat-hint>
+        <mat-error
+          *ngIf="workExp.controls['businessSector']?.touched && workExp.controls['businessSector'].errors?.['required']">Business
+          sector is required!</mat-error>
+      </mat-form-field>
 
-      <div class="d-flex mt-3">
-        <mat-form-field>
-          <textarea matInput type="text" placeholder="Additional details" formControlName="additionalDetails">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Location" formControlName="location">
+        <mat-hint>Enter Location.</mat-hint>
+        <mat-error
+          *ngIf="workExp.controls['location']?.touched && workExp.controls['location']?.errors?.['required']">Location
+          is required!</mat-error>
+        <mat-error *ngIf="workExp.controls['location']?.errors?.['minlength']">
+          Location length must be at least {{workExp.controls['location'].errors?.['minlength']['requiredLength']}}
+          characters!
+        </mat-error>
+        <mat-error *ngIf="workExp.controls['location']?.errors?.['maxlength']">
+          Location length must be no more than
+          {{workExp.controls['location'].errors?.['maxlength']['requiredLength']}} characters!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="d-flex mt-3">
+      <mat-form-field>
+        <textarea matInput type="text" placeholder="Additional details" formControlName="additionalDetails">
           </textarea>
-          <mat-hint>Enter additional details.</mat-hint>
-          <mat-error *ngIf="workExp['controls']['additionalDetails']?.errors?.['minlength']">
-            Details length must be at least {{workExp['controls']['additionalDetails'].errors?.['minlength']['requiredLength']}} characters!
-          </mat-error>
-          <mat-error *ngIf="workExp['controls']['additionalDetails'].errors?.['maxlength']">
-            Details length must be no more than {{workExp['controls']['additionalDetails'].errors?.['maxlength']['requiredLength']}} characters!
-          </mat-error>
-        </mat-form-field>
-      </div>
-
+        <mat-hint>Enter additional details.</mat-hint>
+        <mat-error *ngIf="workExp.controls['additionalDetails']?.errors?.['minlength']">
+          Details length must be at least
+          {{workExp.controls['additionalDetails'].errors?.['minlength']['requiredLength']}} characters!
+        </mat-error>
+        <mat-error *ngIf="workExp.controls['additionalDetails'].errors?.['maxlength']">
+          Details length must be no more than
+          {{workExp.controls['additionalDetails'].errors?.['maxlength']['requiredLength']}} characters!
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 
   <div class="d-flex justify-content-start gap-1 mt-3">
-    <button mat-button color="primary" (click)="addWorkExperienceForm()">Add another</button>
-    <button mat-button color="primary" (click)="removeWorkExperienceForm()">Remove last</button>
+    <button mat-button color="primary" [disabled]="!workExpForm.valid" (click)="addWorkExperienceForm()">
+      Add another
+    </button>
+    <button mat-button color="primary" (click)="removeWorkExperienceForm()">
+      Remove last
+    </button>
   </div>
 
   <button *ngIf="!isEditMode" type="submit" mat-button class="mt-2" color="primary" matStepperNext (click)="emitData()"

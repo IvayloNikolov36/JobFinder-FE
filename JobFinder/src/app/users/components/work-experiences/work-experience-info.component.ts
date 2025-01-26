@@ -21,32 +21,14 @@ export class WorkExperienceInfoComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.addForms();
   }
 
-  get f() {
-    return this.workExpForm.controls;
+  get we(): FormArray<FormGroup> {
+    return this.workExpForm.controls['workExperienceArray'] as FormArray<FormGroup>;
   }
 
-  get we() {
-    return this.f['weArray'] as FormArray<FormGroup>;
-  }
-
-  addWorkExperienceForm(): FormGroup<any> {
-    const formGroup: FormGroup<any> = this.formBuilder.group({
-      id: [0, []],
-      fromDate: [Date.now, [Validators.required]],
-      toDate: [Date.now, []],
-      jobTitle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      businessSector: [{} as BasicModel, [Validators.required]],
-      location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      additionalDetails: ['', [Validators.minLength(20), Validators.maxLength(3000)]]
-    });
-
-    this.we.push(formGroup);
-
-    return formGroup;
+  addWorkExperienceForm(): void {
+    this.we.push(this.createWorkExperienceFormGroup());
   }
 
   removeWorkExperienceForm(): void {
@@ -57,7 +39,7 @@ export class WorkExperienceInfoComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitWorkExperiencesData.emit(this.workExpForm.value.weArray as WorkExperience[]);
+    this.emitWorkExperiencesData.emit(this.workExpForm.value.workExperienceArray as WorkExperience[]);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -65,19 +47,33 @@ export class WorkExperienceInfoComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    this.workExpForm = this.formBuilder.group({
-      weArray: new FormArray<FormGroup>([])
-    });
-  }
+    const workExperienceFormArray: FormArray<any> = this.formBuilder.array([]);
 
-  private addForms = (): void => {
+    this.workExpForm = this.formBuilder.group({
+      workExperienceArray: workExperienceFormArray
+    });
+
     if (this.workExperienceInfoData.length > 0) {
       this.workExperienceInfoData.forEach((we: WorkExperience) => {
-        const formGroup: FormGroup<any> = this.addWorkExperienceForm();
-        formGroup.setValue(we);
+        const workExperienceFormGroup: FormGroup<any> = this.createWorkExperienceFormGroup();
+        workExperienceFormGroup.setValue(we);
+        workExperienceFormArray.push(workExperienceFormGroup);
       });
     } else {
-      this.addWorkExperienceForm();
+      workExperienceFormArray.push(this.createWorkExperienceFormGroup());
     }
+  }
+
+  private createWorkExperienceFormGroup(): FormGroup<any> {
+    return this.formBuilder.group({
+      id: [0],
+      fromDate: [null, Validators.required],
+      toDate: [null],
+      jobTitle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      businessSector: [null, Validators.required],
+      location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      additionalDetails: [null, [Validators.minLength(20), Validators.maxLength(3000)]]
+    });
   }
 }

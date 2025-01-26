@@ -21,37 +21,22 @@ export class LanguagesInfoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.initializeForm();
-    this.addForms();
+    this.initializeLanguagesInfoForm();
   }
 
-  get lf() {
-    return this.languagesForm.controls;
+  get languagesInfoFormArray(): FormArray<FormGroup> {
+    return this.languagesForm.controls['languagesInfoArray'] as FormArray<FormGroup>;
   }
 
-  get l() {
-    return this.lf['languagesInfoArray'] as FormArray<FormGroup>;
-  }
-
-  addNewLanguageInfoForm(): FormGroup<any> {
-    const formGroup: FormGroup<any> = this.formBuilder.group({
-      id: [0, []],
-      languageType: [{} as BasicModel, [Validators.required]],
-      comprehensionLevel: [{} as BasicModel, [Validators.required]],
-      speakingLevel: [{} as BasicModel, [Validators.required]],
-      writingLevel: [{} as BasicModel, [Validators.required]]
-    });
-
-    this.l.push(formGroup);
-
-    return formGroup;
+  addNewLanguageInfoForm(): void {
+    this.languagesInfoFormArray.push(this.createLanguageInfoFormGroup());
   }
 
   removeLastLanguageInfoForm(): void {
-    if (this.l.length === 1) {
+    if (this.languagesInfoFormArray.length === 1) {
       return;
     }
-    this.l.removeAt(this.l.length - 1);
+    this.languagesInfoFormArray.removeAt(this.languagesInfoFormArray.length - 1);
   }
 
   emitData(): void {
@@ -62,20 +47,31 @@ export class LanguagesInfoComponent implements OnInit {
     return first && second ? first.id === second.id : first === second;
   }
 
-  private initializeForm(): void {
-    this.languagesForm = this.formBuilder.group({
-      languagesInfoArray: new FormArray<FormGroup>([])
-    });
-  }
+  private initializeLanguagesInfoForm(): void {
+    const languagesFormArray: FormArray = this.formBuilder.array([]);
 
-  private addForms = (): void => {
+    this.languagesForm = this.formBuilder.group({
+      languagesInfoArray: languagesFormArray
+    });
+
     if (this.languagesInfoData.length > 0) {
       this.languagesInfoData.forEach((languagesInfoData: LanguageInfoInput) => {
-        const formGroup: FormGroup<any> = this.addNewLanguageInfoForm();
-        formGroup.setValue(languagesInfoData);
+        const languageInfoFormGroup: FormGroup<any> = this.createLanguageInfoFormGroup();
+        languageInfoFormGroup.setValue(languagesInfoData);
+        languagesFormArray.push(languageInfoFormGroup);
       });
     } else {
-      this.addNewLanguageInfoForm();
+      languagesFormArray.push(this.createLanguageInfoFormGroup());
     }
+  }
+
+  private createLanguageInfoFormGroup(): FormGroup<any> {
+    return this.formBuilder.group({
+      id: [0],
+      languageType: [null, Validators.required],
+      comprehensionLevel: [null, Validators.required],
+      speakingLevel: [null, Validators.required],
+      writingLevel: [null, Validators.required]
+    });
   }
 }

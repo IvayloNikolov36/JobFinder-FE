@@ -1,41 +1,43 @@
 <form [formGroup]="coursesForm">
-  <div *ngFor="let cInfo of c.controls; let i = index" class="mt-3">
+  <div *ngFor="let cInfo of coursesFormArray.controls; let i = index" [formGroup]="cInfo" class="mt-3">
 
     <span class="fs-4">Course Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
-    <div [formGroup]="cInfo">
-      <div class="d-flex justify-content-start gap-3 mt-3">
-        <mat-form-field>
-          <input matInput type="text" placeholder="Course name" formControlName="courseName">
-          <mat-hint>Enter course name.</mat-hint>
-          <mat-error
-            *ngIf="cInfo['controls']['courseName']?.touched && cInfo['controls']['courseName']?.errors?.['required']">Course
-            name is required!</mat-error>
-          <mat-error *ngIf="cInfo['controls']['courseName']?.errors?.['minlength']">
-            Course name length must be at least {{cInfo['controls']['courseName'].errors?.['minlength']['requiredLength']}} characters!
-          </mat-error>
-          <mat-error *ngIf="cInfo['controls']['courseName']?.errors?.['maxlength']">
-            Course name length must be no more than
-            {{cInfo['controls']['courseName'].errors?.['maxlength']['requiredLength']}} characters!
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Sertificate url" formControlName="certificateUrl">
-          <mat-hint>Enter sertificate url.</mat-hint>
-          <mat-error *ngIf="cInfo['controls']['certificateUrl']?.errors?.['pattern']">
-            Invalid url!
-          </mat-error>
-        </mat-form-field>
-      </div>
+    <div class="d-flex justify-content-start gap-3 mt-3">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Course name" formControlName="courseName">
+        <mat-hint>Enter course name.</mat-hint>
+        <mat-error
+          *ngIf="cInfo.controls['courseName']?.touched && cInfo.controls['courseName']?.errors?.['required']"
+        >Course name is required!
+        </mat-error>
+        <mat-error *ngIf="cInfo.controls['courseName']?.errors?.['minlength']">
+          Course name length must be at least
+          {{cInfo.controls['courseName'].errors?.['minlength']['requiredLength']}} characters!
+        </mat-error>
+        <mat-error *ngIf="cInfo.controls['courseName']?.errors?.['maxlength']">
+          Course name length must be no more than
+          {{cInfo.controls['courseName'].errors?.['maxlength']['requiredLength']}} characters!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Sertificate url" formControlName="certificateUrl">
+        <mat-hint>Enter sertificate url.</mat-hint>
+        <mat-error *ngIf="cInfo.controls['certificateUrl']?.errors?.['pattern']">
+          Invalid url!
+        </mat-error>
+      </mat-form-field>
     </div>
+
   </div>
 
   <div class="d-flex justify-content-start gap-2 mt-2">
-    <button mat-button color="primary" (click)="addNewCoursesFrom()">Add another</button>
-    <button mat-button color="primary" (click)="removeLastCoursesForm()">Remove last</button>
+    <button mat-button color="primary" [disabled]="!coursesForm.valid" (click)="addNewCourseInfo()">Add another</button>
+    <button mat-button color="primary" (click)="removeLastCoursesFormGroup()">Remove last</button>
   </div>
 
-  <button *ngIf="!isEditMode" type="submit" [disabled]="!coursesForm.valid" mat-button class="mt-2" matStepperNext (click)="emitData()">
+  <button *ngIf="!isEditMode" type="submit" [disabled]="!coursesForm.valid" mat-button class="mt-2" matStepperNext
+    (click)="emitData()">
     Next
   </button>
 

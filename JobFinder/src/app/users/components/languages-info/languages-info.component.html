@@ -1,9 +1,8 @@
 <form [formGroup]="languagesForm">
-  <div *ngFor="let lInfo of l.controls; let i = index" class="mt-2">
+  <div *ngFor="let lInfo of languagesInfoFormArray.controls; let i = index" [formGroup]="lInfo" class="mt-2">
 
     <span class="fs-4">Language Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
-    <div [formGroup]="lInfo">
       <div class="d-flex justify-content-start gap-3 mt-3">
 
         <mat-form-field>
@@ -15,7 +14,7 @@
           </mat-select>
           <mat-hint>Select education level.</mat-hint>
           <mat-error
-            *ngIf="lInfo['controls']['languageType']?.touched && lInfo['controls']['languageType'].errors?.['required']">
+            *ngIf="lInfo.controls['languageType']?.touched && lInfo.controls['languageType'].errors?.['required']">
             Language is required!
           </mat-error>
         </mat-form-field>
@@ -29,7 +28,7 @@
           </mat-select>
           <mat-hint>Select comprehension level.</mat-hint>
           <mat-error
-            *ngIf="lInfo['controls']['comprehensionLevel']?.touched && lInfo['controls']['comprehensionLevel'].errors?.['required']">
+            *ngIf="lInfo.controls['comprehensionLevel']?.touched && lInfo.controls['comprehensionLevel'].errors?.['required']">
             Comprehension level is required!
           </mat-error>
         </mat-form-field>
@@ -43,7 +42,7 @@
           </mat-select>
           <mat-hint>Select speaking level.</mat-hint>
           <mat-error
-            *ngIf="lInfo['controls']['speakingLevel']?.touched && lInfo['controls']['speakingLevel'].errors?.['required']">
+            *ngIf="lInfo.controls['speakingLevel']?.touched && lInfo.controls['speakingLevel'].errors?.['required']">
             Speaking level is required!
           </mat-error>
         </mat-form-field>
@@ -57,16 +56,14 @@
           </mat-select>
           <mat-hint>Select writing level.</mat-hint>
           <mat-error
-            *ngIf="lInfo['controls']['writingLevel']?.touched && lInfo['controls']['writingLevel'].errors?.['required']">
+            *ngIf="lInfo.controls['writingLevel']?.touched && lInfo.controls['writingLevel'].errors?.['required']">
             Writing level is required!
           </mat-error>
         </mat-form-field>
-
       </div>
-    </div>
   </div>
   <div class="d-flex justify-content-start gap-2 mt-3">
-    <button mat-button color="primary" (click)="addNewLanguageInfoForm()">Add another</button>
+    <button mat-button color="primary" [disabled]="!languagesForm.valid" (click)="addNewLanguageInfoForm()">Add another</button>
     <button mat-button color="primary" (click)="removeLastLanguageInfoForm()">Remove last</button>
   </div>
 

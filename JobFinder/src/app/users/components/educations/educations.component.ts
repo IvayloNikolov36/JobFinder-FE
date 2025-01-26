@@ -20,41 +20,22 @@ export class EducationsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.initializeForm();
-    this.addEducationsForms();
+    this.initializeEducationsForm();
   }
 
-  get edf() {
-    return this.educationsForm.controls;
+  get educationsFormArray(): FormArray<FormGroup> {
+    return this.educationsForm.controls['educationsArray'] as FormArray<FormGroup>;
   }
 
-  get ed() {
-    return this.edf['educationsArray'] as FormArray<FormGroup>;
-  }
-
-  addNewEducationForm(): FormGroup<any> {
-
-    const formGroup: FormGroup<any> = this.formBuilder.group({
-      id: [0, []],
-      fromDate: [Date.now, [Validators.required]],
-      toDate: [Date.now, []],
-      location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      educationLevel: [{} as BasicModel, [Validators.required]],
-      major: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-      mainSubjects: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
-    });
-
-    this.ed.push(formGroup);
-
-    return formGroup;
+  addNewEducationForm(): void {
+    this.educationsFormArray.push(this.createEducationFormGroup());
   }
 
   removeLastEducationForm(): void {
-    if (this.ed.length === 1) {
+    if (this.educationsFormArray.length === 1) {
       return;
     }
-    this.ed.removeAt(this.ed.length - 1);
+    this.educationsFormArray.removeAt(this.educationsFormArray.length - 1);
   }
 
   emitData(): void {
@@ -65,20 +46,34 @@ export class EducationsComponent implements OnInit {
     return first && second ? first.id === second.id : first === second;
   }
 
-  private initializeForm(): void {
-    this.educationsForm = this.formBuilder.group({
-      educationsArray: new FormArray<FormGroup>([])
-    });
-  }
+  private initializeEducationsForm(): void {
+    const educationsFormArray: FormArray<any> = this.formBuilder.array([]);
 
-  private addEducationsForms = (): void => {
+    this.educationsForm = this.formBuilder.group({
+      educationsArray: educationsFormArray
+    });
+
     if (this.educationsData.length > 0) {
       this.educationsData.forEach((educationData: Education) => {
-        const formGroup: FormGroup<any> = this.addNewEducationForm();
-        formGroup.setValue(educationData);
+        const educationInfoFormGroup: FormGroup<any> = this.createEducationFormGroup();
+        educationInfoFormGroup.setValue(educationData);
+        educationsFormArray.push(educationInfoFormGroup);
       });
     } else {
-      this.addNewEducationForm();
+      educationsFormArray.push(this.createEducationFormGroup());
     }
+  }
+
+  private createEducationFormGroup(): FormGroup<any> {
+    return this.formBuilder.group({
+      id: [0],
+      fromDate: [null, Validators.required],
+      toDate: [null],
+      location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      educationLevel: [null, Validators.required],
+      major: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+      mainSubjects: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
+      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
+    });
   }
 }

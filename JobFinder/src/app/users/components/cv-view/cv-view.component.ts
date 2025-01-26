@@ -150,10 +150,18 @@ export class CvViewComponent implements OnInit {
       .subscribe((data: WorkExperience[]) => {
         const requestData: WorkExperienceOutput[] = this.workExperiencesService.mapWorkExperienceInfoData(data);
         this.workExperiencesService.update(this.cv.id, requestData)
-          .subscribe((result: UpdateResultModel) => {
-            this.setItemsIds(data, result.newItemsIds);
-            this.cv.workExperiences = data;
-            this.toaster.success("Work Experience info successfuly updated.");
+          .subscribe({
+            next: (result: UpdateResultModel) => {
+              this.setItemsIds(data, result.newItemsIds);
+              this.cv.workExperiences = data;
+              this.toaster.success("Work Experience info successfuly updated.");
+            },
+            error: (err) => {
+              // console.log(err.error.errors['[2].AdditionalDetails'][0]);
+              // TODO: create a func to return all props and the validation errors
+              // TODO: fix when deleting additional details to send null, not empty string
+              this.toaster.error(err.errors, "Can't update work experience info!");
+            }
           });
       });
   }
