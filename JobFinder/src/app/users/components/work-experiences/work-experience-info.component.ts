@@ -56,6 +56,12 @@ export class WorkExperienceInfoComponent implements OnInit {
     if (this.workExperienceInfoData.length > 0) {
       this.workExperienceInfoData.forEach((we: WorkExperience) => {
         const workExperienceFormGroup: FormGroup<any> = this.createWorkExperienceFormGroup();
+        workExperienceFormGroup.controls['additionalDetails'].valueChanges
+          .subscribe((value: string) => {
+            if (value === '') {
+              workExperienceFormGroup.controls['additionalDetails'].setValue(null);
+            }
+          });
         workExperienceFormGroup.setValue(we);
         workExperienceFormArray.push(workExperienceFormGroup);
       });

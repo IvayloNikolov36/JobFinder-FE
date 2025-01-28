@@ -124,14 +124,19 @@ export class CvViewComponent implements OnInit {
     component.skillsInfoData = this.cv.skills;
 
     component.emitSkillsData
-      .subscribe((data: SkillsInfo) => {
-        const requestData: SkillsInfoOutput = this.skillsInfoService.mapSkillsData(data);
-        this.skillsInfoService.update(this.cv.id, requestData).subscribe(() => {
-          this.cv.skills = { ...data };
-          const cvSkills: SkillsInfo = this.cv.skills;
-          cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
-          this.toaster.success("Skills info successfuly updated.");
-        });
+      .subscribe({
+        next: (data: SkillsInfo) => {
+          const requestData: SkillsInfoOutput = this.skillsInfoService.mapSkillsData(data);
+          this.skillsInfoService.update(this.cv.id, requestData).subscribe(() => {
+            this.cv.skills = { ...data };
+            const cvSkills: SkillsInfo = this.cv.skills;
+            cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
+            this.toaster.success("Skills info successfuly updated.");
+          });
+        },
+        error: (err: any) => {
+          this.showErrors(err.error.errors, "Can't update skills info!");
+        }
       });
   }
 
@@ -156,11 +161,8 @@ export class CvViewComponent implements OnInit {
               this.cv.workExperiences = data;
               this.toaster.success("Work Experience info successfuly updated.");
             },
-            error: (err) => {
-              // console.log(err.error.errors['[2].AdditionalDetails'][0]);
-              // TODO: create a func to return all props and the validation errors
-              // TODO: fix when deleting additional details to send null, not empty string
-              this.toaster.error(err.errors, "Can't update work experience info!");
+            error: (err: any) => {
+              this.showErrors(err.error.errors, "Can't update work experience info!");
             }
           });
       });
@@ -178,13 +180,18 @@ export class CvViewComponent implements OnInit {
     component.coursesInfoData = this.cv.courseCertificates;
 
     component.emitCoursesData
-      .subscribe((data: CourseCertificate[]) => {
-        this.coursesService.update(this.cv.id, data)
-          .subscribe((result: UpdateResultModel) => {
-            this.setItemsIds(data, result.newItemsIds);
-            this.cv.courseCertificates = data;
-            this.toaster.success("Courses info successfuly updated.");
-          });
+      .subscribe({
+        next: (data: CourseCertificate[]) => {
+          this.coursesService.update(this.cv.id, data)
+            .subscribe((result: UpdateResultModel) => {
+              this.setItemsIds(data, result.newItemsIds);
+              this.cv.courseCertificates = data;
+              this.toaster.success("Courses info successfuly updated.");
+            });
+        },
+        error: (err: any) => {
+          this.showErrors(err.error.errors, "Can't update courses info!");
+        }
       });
   }
 
@@ -202,10 +209,15 @@ export class CvViewComponent implements OnInit {
       const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(data);
 
       this.languagesService.update(this.cv.id, requestData)
-        .subscribe((result: UpdateResultModel) => {
-          this.setItemsIds(data, result.newItemsIds);
-          this.cv.languagesInfo = data;
-          this.toaster.success("Languages info successfuly updated.");
+        .subscribe({
+          next: (result: UpdateResultModel) => {
+            this.setItemsIds(data, result.newItemsIds);
+            this.cv.languagesInfo = data;
+            this.toaster.success("Languages info successfuly updated.");
+          },
+          error: (err: any) => {
+            this.showErrors(err.error.errors, "Can't update languages info!");
+          }
         });
     });
   }
@@ -223,10 +235,15 @@ export class CvViewComponent implements OnInit {
       .subscribe((data: Education[]) => {
         const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(data);
         this.educationsService.update(this.cv.id, requestData)
-          .subscribe((result: UpdateResultModel) => {
-            this.setItemsIds(data, result.newItemsIds);
-            this.cv.educations = data;
-            this.toaster.success("Education info successfuly updated.");
+          .subscribe({
+            next: (result: UpdateResultModel) => {
+              this.setItemsIds(data, result.newItemsIds);
+              this.cv.educations = data;
+              this.toaster.success("Education info successfuly updated.");
+            },
+            error: (err: any) => {
+              this.showErrors(err.error.errors, "Can't update education info!");
+            }
           });
       });
   }
@@ -245,11 +262,17 @@ export class CvViewComponent implements OnInit {
     component.emitPersonalDetails
       .subscribe((data: PersonalDetails) => {
         const requestData: PersonalDetailsOutput = this.personalInfoService.mapPersonalInfo(data);
-        this.personalInfoService.update(this.cv.id, requestData).subscribe(() => {
-          this.cv.personalDetails = { ...data };
-          this.fullName = this.getFullName(this.cv.personalDetails);
-          this.toaster.success("Personal Details successfuly updated.");
-        });
+        this.personalInfoService.update(this.cv.id, requestData)
+          .subscribe({
+            next: () => {
+              this.cv.personalDetails = { ...data };
+              this.fullName = this.getFullName(this.cv.personalDetails);
+              this.toaster.success("Personal Details successfuly updated.");
+            },
+            error: (err: any) => {
+              this.showErrors(err.error.errors, "Can't update personal details!");
+            }
+          });
       });
   }
 
@@ -281,5 +304,13 @@ export class CvViewComponent implements OnInit {
         element.id = ids[index++];
       }
     });
+  }
+
+  private showErrors = (errors: any, errorTitle: string): void => {
+    let errorMessage = '';
+    for (let propName in errors) {
+      errorMessage += errors[`${propName}`].join(' ');
+    }
+    this.toaster.error(errorMessage, errorTitle);
   }
 }
