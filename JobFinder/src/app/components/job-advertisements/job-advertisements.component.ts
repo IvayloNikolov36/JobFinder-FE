@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { SubscriptionsService } from './../../services/subscriptions.service';
 import { JobAdvertisementsService } from '../../services/job-advertisements.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -29,8 +31,9 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
   sortBy!: string;
   isAscending!: boolean;
   showFiltersArea: boolean = false;
+  showSubscribeButton: boolean = false;
 
-  readonly locationsArray: string[] = ['Sofia', 'Plovdiv', 'Varna', 'Burgas', 'Ruse', 'Stara Zagora', 'Pleven', 'Veliko Tarnovo'];
+  readonly locationsArray: string[] = ['All', 'Sofia', 'Plovdiv', 'Varna', 'Burgas', 'Ruse', 'Stara Zagora', 'Pleven', 'Veliko Tarnovo'];
   readonly itemsCountArray: number[] = [5, 10, 15, 20, 30, 50, 100];
   readonly initialPage = 1;
   readonly selectValueNone: number = 0;
@@ -40,10 +43,12 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
   buttonText: string = this.showFiltersText;
 
   constructor(
-    private jobAdsService: JobAdvertisementsService,
-    private nomenclatureService: NomenclatureService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private jobAdsService: JobAdvertisementsService,
+    private subscriptionsService: SubscriptionsService,
+    private nomenclatureService: NomenclatureService,
+    private toastr: ToastrService
   ) {
     this.getDataFromQueryParams();
   }
@@ -61,7 +66,19 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
   searchJob(): void {
     this.currentPage = this.initialPage;
     this.updateQueryParams({ page: this.currentPage, searchText: this.searchText });
+    this.showSubscribeButton = this.showSubscribeForJobs();
     this.getJobAds();
+  }
+
+  subscribeForJobs(): void {
+    this.subscriptionsService
+      .subscribeForJobsWithCriterias(
+        this.category === 0 ? null : this.category,
+        this.location === this.locationsArray[0] ? null : this.location)
+      .subscribe({
+        next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
+        error: (err) => this.toastr.error(err.title)
+      });
   }
 
   changeItemsCount(selectedItemsCount: number): void {
@@ -78,9 +95,9 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
     this.getJobAds();
   }
 
-  changeFilterCategory(selectedCategory: number): void {
+  changeFilterCategory(selectedCategory: string): void {
     this.currentPage = this.initialPage;
-    this.category = selectedCategory;
+    this.category = parseInt(selectedCategory);
     this.updateQueryParams({ page: this.currentPage, category: selectedCategory });
     this.getJobAds();
   }
@@ -115,11 +132,17 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
     this.getJobAds();
   }
 
+  // TODO: create it private and use variable in the template
   showOrHideFilters(): void {
     this.showFiltersArea = !this.showFiltersArea;
     this.buttonText === this.showFiltersText
       ? this.buttonText = this.hideFiltersText
       : this.buttonText = this.showFiltersText;
+  }
+
+  // TODO: create signal to reevaluate the value of showSubscribeButton based on location and category
+  private showSubscribeForJobs(): boolean {
+    return this.location !== this.locationsArray[0] || this.category !== 0;
   }
 
   private updateQueryParams(queryParamsObject: object): void {
@@ -131,6 +154,7 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
       });
   }
 
+  // TODO: create filterModel that contains searchText, engagement...
   private getJobAds(): void {
     const subscription: Subscription = this.jobAdsService.all(
       this.currentPage,
@@ -159,7 +183,7 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
     this.itemsCount = itemsValue === null ? this.itemsCountArray[0] : parseInt(itemsValue);
 
     this.searchText = queryParams.get('searchText') ?? '';
-    this.location = queryParams.get('location') ?? 'All';
+    this.location = queryParams.get('location') ?? this.locationsArray[0];
 
     const categoryValue: string | null = queryParams.get('category');
     this.category = categoryValue === null ? this.selectValueNone : parseInt(categoryValue);
@@ -167,6 +191,7 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
     const engagementValue: string | null = queryParams.get('engagement');
     this.engagement = engagementValue === null ? this.selectValueNone : parseInt(engagementValue);
 
+    // TODO: create array with values for sort
     this.sortBy = queryParams.get('sortBy') ?? 'Published';
     this.isAscending = queryParams.get('isAscending') === 'true' ? true : false;
   }
