@@ -37,12 +37,12 @@ export class RegisterCompanyComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      companyLogo: ['', [Validators.required]],
+      logo: ['', [Validators.required]],
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
       middleName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
       companyName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(80)]],
-      bulstat: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(13)]]
+      bulstat: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(13)]]
     }, {
       validator: MustMatch('password', 'confirmPassword')
     } as AbstractControlOptions);

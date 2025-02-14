@@ -141,8 +141,8 @@
 
       <div class="mb-3 w-25">
         <label class="form-label" for="companyLogoUrl">Company Logo Url</label>
-        <input class="form-control" id="companyLogoUrl" formControlName="companyLogo" type="text">
-        <div class="alert alert-danger" *ngIf="form.get('companyLogo')?.touched && form.get('companyLogo')?.errors?.['required']">
+        <input class="form-control" id="companyLogoUrl" formControlName="logo" type="text">
+        <div class="alert alert-danger" *ngIf="form.get('logo')?.touched && form.get('logo')?.errors?.['required']">
           This field is required!
         </div>
       </div>
