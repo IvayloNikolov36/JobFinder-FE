@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { subscribeForJobWithCriterias, unsubscribeForJobs } from "../core/controllers";
+import {
+  subscribeForCompanyJobs,
+  subscribeForJobWithCriterias,
+  unsubscribeForCompanyJobs,
+  unsubscribeForJobs
+} from "../core/controllers";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -14,7 +19,15 @@ export class SubscriptionsService {
     return this.http.post(subscribeForJobWithCriterias(), { jobCategoryId, location });
   }
 
-  unsubscribeFromJobs(subscriptionId: number): Observable<object> {
+  unsubscribeForJobsWithCriterias(subscriptionId: number): Observable<object> {
     return this.http.get<object>(unsubscribeForJobs(subscriptionId));
+  }
+
+  subscribeForCompanyJobs(companyId: number): Observable<object> {
+    return this.http.get<object>(subscribeForCompanyJobs(companyId));
+  }
+
+  unsubscribeForCompanyJobs(companyId: number): Observable<object> {
+    return this.http.get<object>(unsubscribeForCompanyJobs(companyId));
   }
 }

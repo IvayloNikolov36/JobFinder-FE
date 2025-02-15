@@ -3,6 +3,7 @@ export interface JobAd {
   position: string;
   postedOn: string;
   salary: string;
+  companyId: number;
   companyLogo: string;
   companyName: string;
   jobCategory: string;

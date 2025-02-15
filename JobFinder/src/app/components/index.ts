@@ -7,3 +7,4 @@ export * from './login/login.component';
 export * from './job-advertisements/job-advertisements.component';
 export * from './job-advertisement-details/job-advertisement-details.component';
 export * from './create-job-advertisement/create-job-advertisement.component';
+export * from './company-details/company-details.component';

@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { ResponseHandlerInterceptorService } from './core/interceptors/response-handler-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import {
+  CompanyDetailsComponent,
   CreateJobAdvertisementComponent,
   HomeComponent,
   JobAdvertisementsComponent,
@@ -31,6 +32,7 @@ import {
     JobAdvertisementsComponent,
     PaginationComponent,
     JobAdvertisementDetailsComponent,
+    CompanyDetailsComponent,
   ],
   imports: [
     AppRoutingModule,

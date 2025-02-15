@@ -17,3 +17,8 @@ a {
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
   z-index: 99999 !important;
 }
+
+.table-company-logo {
+  max-width: 6.5rem;
+  max-height: 6.5rem;
+}

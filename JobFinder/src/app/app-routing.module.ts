@@ -8,6 +8,7 @@ import { CreateJobAdvertisementComponent } from './components/create-job-adverti
 import { AuthGuard, CompanyGuard, IsSignedInGuard } from './core/guards';
 import { JobAdvertisementsComponent } from './components/job-advertisements/job-advertisements.component';
 import { JobAdvertisementDetailsComponent } from './components/job-advertisement-details/job-advertisement-details.component';
+import { CompanyDetailsComponent } from './components';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'job-advertisement/create', component: CreateJobAdvertisementComponent, canActivate: [CompanyGuard] },
   { path: 'jobs-all', component: JobAdvertisementsComponent, canActivate: [AuthGuard] },
   { path: 'job-details/:id', component: JobAdvertisementDetailsComponent },
-  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) }
+  { path: 'company/:id', component: CompanyDetailsComponent },
+  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
 ];
 
 @NgModule({

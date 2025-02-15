@@ -112,7 +112,9 @@
           <td class="td-center">{{ jobAd.companyName }}</td>
           <td>
             <div class="rounded float-right">
-              <img [src]="jobAd.companyLogo" class="rounded table-company-logo" alt="Company Logo">
+              <a [routerLink]="['/company', jobAd.companyId]">
+                <img [src]="jobAd.companyLogo" class="rounded table-company-logo" alt="Logo">
+              </a>
             </div>
           </td>
         </tr>
