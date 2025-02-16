@@ -9,3 +9,4 @@ export * from './skills-info/skills-info.component';
 export * from './user-account/user-account.component';
 export * from './user-curriculum-vitaes/user-curriculum-vitaes.component';
 export * from './work-experiences/work-experience-info.component';
+export * from './my-subscriptions/my-subscriptions.component';

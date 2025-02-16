@@ -22,3 +22,7 @@ a {
   max-width: 6.5rem;
   max-height: 6.5rem;
 }
+
+.company-card {
+  max-width: 16.875rem;
+}

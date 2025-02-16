@@ -1,8 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CreateCvComponent } from './components/create-cv/create-cv.component';
-import { UserAccountComponent } from './components/user-account/user-account.component';
-import { UserCurriculumVitaesComponent } from './components/user-curriculum-vitaes/user-curriculum-vitaes.component';
-import { CoursesCertificatesComponent, CvInfoComponent, EducationsComponent, LanguagesInfoComponent, PersonalDetailsComponent, SkillsInfoComponent, WorkExperienceInfoComponent } from './components/';
+import {
+  CoursesCertificatesComponent,
+  CreateCvComponent,
+  CvInfoComponent,
+  CvViewComponent,
+  EducationsComponent,
+  LanguagesInfoComponent,
+  MySubscriptionsComponent,
+  PersonalDetailsComponent,
+  SkillsInfoComponent,
+  UserAccountComponent,
+  UserCurriculumVitaesComponent,
+  WorkExperienceInfoComponent
+} from './components/';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,9 +21,10 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 import { UsersRoutingModule } from './users-routing.module';
-import { CvViewComponent } from './components/cv-view/cv-view.component';
 import { SharedModule } from '../shared/shared.module';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -28,6 +39,7 @@ import { SharedModule } from '../shared/shared.module';
     SkillsInfoComponent,
     CoursesCertificatesComponent,
     CvViewComponent,
+    MySubscriptionsComponent,
   ],
   imports: [
     SharedModule,
@@ -41,6 +53,8 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTabsModule,
+    MatCardModule,
   ]
 })
 export class UsersModule { }
