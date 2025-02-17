@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UsersRoutingModule } from './users-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MatCardModule } from '@angular/material/card';
     MatCheckboxModule,
     MatTabsModule,
     MatCardModule,
+    MatDialogModule,
   ]
 })
 export class UsersModule { }

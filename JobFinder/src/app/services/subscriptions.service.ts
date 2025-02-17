@@ -4,6 +4,7 @@ import {
   getMyCompanySubscriptions,
   subscribeForCompanyJobs,
   subscribeForJobWithCriterias,
+  unsubscribeForAllCompanyJobs,
   unsubscribeForCompanyJobs,
   unsubscribeForJobs
 } from "../core/controllers";
@@ -31,6 +32,10 @@ export class SubscriptionsService {
 
   unsubscribeForCompanyJobs(companyId: number): Observable<object> {
     return this.http.get<object>(unsubscribeForCompanyJobs(companyId));
+  }
+
+  unsubscribeFromAllCompanies(): Observable<object> {
+    return this.http.get<object>(unsubscribeForAllCompanyJobs());
   }
 
   getMyCompanySubscriptions(): Observable<CompanySubscription[]> {

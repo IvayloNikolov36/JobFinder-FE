@@ -15,9 +15,7 @@ export class MySubscriptionsComponent implements OnInit {
 
   constructor(
     private subscriptionsService: SubscriptionsService,
-    private toastr: ToastrService) {
-
-  }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.subscriptionsService.getMyCompanySubscriptions().subscribe((data: CompanySubscription[]) => {
@@ -26,8 +24,19 @@ export class MySubscriptionsComponent implements OnInit {
   }
 
   unsubscribe(companyId: number, companyName: string): void {
-    this.subscriptionsService.unsubscribeForCompanyJobs(companyId).subscribe({
-      next: () => this.toastr.success(`Successfully unsubscribed from company ${companyName}.`)
-    });
+    this.subscriptionsService.unsubscribeForCompanyJobs(companyId)
+      .subscribe({
+        next: () => {
+          this.toastr.success(`Successfully unsubscribed from company ${companyName}.`);
+          this.companysubscriptions = this.companysubscriptions.filter(cs => cs.companyId !== companyId);
+        }
+      });
+  }
+
+  unsubscribeAll(): void {
+    this.subscriptionsService.unsubscribeFromAllCompanies()
+      .subscribe({
+        next: () => this.companysubscriptions = []
+      });
   }
 }
