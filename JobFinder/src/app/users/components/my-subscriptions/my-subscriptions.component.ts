@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionsService } from '../../../services/subscriptions.service';
-import { CompanySubscription } from '../../models';
+import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class MySubscriptionsComponent implements OnInit {
 
   companysubscriptions!: CompanySubscription[];
+  jobSubscriptions!: JobSubscription[];
 
   constructor(
     private subscriptionsService: SubscriptionsService,
@@ -20,7 +21,9 @@ export class MySubscriptionsComponent implements OnInit {
   ngOnInit(): void {
     this.subscriptionsService.getMyCompanySubscriptions().subscribe((data: CompanySubscription[]) => {
       this.companysubscriptions = data;
-    })
+    });
+
+    this.getMyJobSubscriptions();
   }
 
   unsubscribe(companyId: number, companyName: string): void {
@@ -38,5 +41,31 @@ export class MySubscriptionsComponent implements OnInit {
       .subscribe({
         next: () => this.companysubscriptions = []
       });
+  }
+
+  unsubscribeForJobs(jobSubscriptionId: number): void {
+    this.subscriptionsService.unsubscribeForJobsWithCriterias(jobSubscriptionId)
+      .subscribe({
+        next: () => {
+          const jobSubscription: JobSubscription = this.jobSubscriptions.filter(js => js.id === jobSubscriptionId)[0];
+          this.toastr.success(`Successfully unsubscribed from jobs with category ${jobSubscription.jobCategory} and location ${jobSubscription.location}.`);
+          this.jobSubscriptions = this.jobSubscriptions.filter(js => js.id !== jobSubscriptionId);
+        }
+      });
+  }
+
+  unsubscribeForAllJobs(): void {
+    this.subscriptionsService.unsubscribeForAllJobsWithCriterias()
+      .subscribe({
+        next: () => {
+          this.toastr.success("Successfully unsubscribed from all jobs with criterias.");
+          this.jobSubscriptions = [];
+        }
+      });
+  }
+
+  getMyJobSubscriptions(): void {
+    this.subscriptionsService.getAllMyJobSubscriptions()
+      .subscribe((data: JobSubscription[]) => this.jobSubscriptions = data);
   }
 }

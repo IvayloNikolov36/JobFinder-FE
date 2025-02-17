@@ -26,3 +26,7 @@ a {
 .company-card {
   max-width: 16.875rem;
 }
+
+.job-subscription-card {
+  width: 30rem;
+}
