@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionsService } from '../../../services/subscriptions.service';
 import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'jf-my-subscriptions',
@@ -13,17 +14,17 @@ export class MySubscriptionsComponent implements OnInit {
 
   companysubscriptions!: CompanySubscription[];
   jobSubscriptions!: JobSubscription[];
+  areJobSubscriptionsLoaded: boolean = false;
+
+  readonly companyTabLabel = 'Company';
+  readonly jobsTabLabel = 'Jobs';
 
   constructor(
     private subscriptionsService: SubscriptionsService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.subscriptionsService.getMyCompanySubscriptions().subscribe((data: CompanySubscription[]) => {
-      this.companysubscriptions = data;
-    });
-
-    this.getMyJobSubscriptions();
+    this.getMyCompanySubscriptions();
   }
 
   unsubscribe(companyId: number, companyName: string): void {
@@ -64,8 +65,26 @@ export class MySubscriptionsComponent implements OnInit {
       });
   }
 
-  getMyJobSubscriptions(): void {
+  onTabChange(tabChangeEvent: MatTabChangeEvent): void {
+    const selectedTabLabel: string = tabChangeEvent.tab.textLabel;
+
+    if (selectedTabLabel === this.jobsTabLabel && !this.areJobSubscriptionsLoaded) {
+      this.getMyJobSubscriptions();
+    }
+  }
+
+  private getMyJobSubscriptions(): void {
     this.subscriptionsService.getAllMyJobSubscriptions()
-      .subscribe((data: JobSubscription[]) => this.jobSubscriptions = data);
+      .subscribe((data: JobSubscription[]) => {
+        this.jobSubscriptions = data;
+        this.areJobSubscriptionsLoaded = true;
+      });
+  }
+
+  private getMyCompanySubscriptions(): void {
+    this.subscriptionsService.getMyCompanySubscriptions()
+      .subscribe((data: CompanySubscription[]) => {
+        this.companysubscriptions = data;
+      });
   }
 }
