@@ -70,6 +70,10 @@ export class JobAdvertisementsComponent implements OnInit, OnDestroy {
     this.getJobAds();
   }
 
+  viewAdDetails(jobAdId: number): void {
+    this.router.navigate(['/job-details', jobAdId]);
+  }
+
   subscribeForJobs(): void {
     this.subscriptionsService
       .subscribeForJobsWithCriterias(

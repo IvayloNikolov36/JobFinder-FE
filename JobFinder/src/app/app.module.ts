@@ -20,6 +20,7 @@ import {
   RegisterCompanyComponent,
   RegisterUserComponent
 } from './components';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {
     BrowserAnimationsModule,
     SharedModule,
     UsersModule,
+    MatCardModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

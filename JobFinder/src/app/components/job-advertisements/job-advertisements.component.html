@@ -1,8 +1,6 @@
 <div class="container-fluid">
 
-  <h3 class="text-center text-primary">Job Advertisements</h3>
-
-  <div class="d-flex justify-content-around" *ngIf="showFiltersArea">
+  <div class="d-flex justify-content-around mt-3" *ngIf="showFiltersArea">
     <div class="mb-3">
       <label class="form-label" for="itemsCount">Items:</label>
       <select id="itemsCount" class="form-control" [(ngModel)]="itemsCount"
@@ -47,8 +45,7 @@
 
     <div class="mb-3">
       <label class="form-label" for="order">Order:</label>
-      <select id="order" class="form-control" [(ngModel)]="isAscending"
-        (ngModelChange)="changeSortingOrder($event)">
+      <select id="order" class="form-control" [(ngModel)]="isAscending" (ngModelChange)="changeSortingOrder($event)">
         <option value="true">Asc</option>
         <option value="false" selected>Desc</option>
       </select>
@@ -74,56 +71,38 @@
 
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-hover mt-3">
-      <thead class="thead-ligth">
-        <tr class="th-color">
-          <th>Position</th>
-          <th>Location</th>
-          <th>Salary</th>
-          <th>Engagement</th>
-          <th>Category</th>
-          <th>Posted On</th>
-          <th>Company</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let jobAd of jobAds">
-          <td class="td-center">
-            <a [routerLink]="['/job-details', jobAd.id]" [queryParams]="{
-                 page: currentPage,
-                 items: itemsCount,
-                 searchText: searchText,
-                 location: location,
-                 sortBy: sortBy,
-                 isAscending: isAscending,
-                 category: category,
-                 engagement: engagement
-                }">
-              {{ jobAd.position }}
-            </a>
-          </td>
-          <td class="td-center">{{ jobAd.location }}</td>
-          <td class="td-center">{{ jobAd.salary === null ? '-' : jobAd.salary }}</td>
-          <td class="td-center">{{ jobAd.jobEngagement }}</td>
-          <td class="td-center">{{ jobAd.jobCategory }}</td>
-          <td class="td-center">{{ jobAd.postedOn | date:'longDate' }}</td>
-          <td class="td-center">{{ jobAd.companyName }}</td>
-          <td>
-            <div class="rounded float-right">
-              <a [routerLink]="['/company', jobAd.companyId]">
-                <img [src]="jobAd.companyLogo" class="rounded table-company-logo" alt="Logo">
-              </a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="w-75 mx-auto my-3">
+
+    @for(jobAd of jobAds; track jobAd.id) {
+    <mat-card class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title class="mb-3">
+            {{ jobAd.position }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            <i class="bi bi-pin-fill me-2"></i>{{ jobAd.location }}</mat-card-subtitle>
+          <img mat-card-md-image [src]="jobAd.companyLogo" alt="Company Logo">
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content class="mt-2">
+        <div class="d-flex justify-content-between">
+          <span>
+            <i class="bi bi-clock me-2"></i>{{ jobAd.jobEngagement }}
+          </span>
+          <span class="mx-0">
+            <i class="bi bi-calendar-event me-2"></i>{{ jobAd.postedOn | date }}
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    }
 
     <div class="d-flex justify-content-start w-50 mt-2">
       <jf-pagination [activePage]="currentPage" [totalRecords]="totalCount" [recordsPerPage]="itemsCount"
         (pageChange)="loadActivePageItems($event)" />
     </div>
+
   </div>
+
 </div>
