@@ -7,15 +7,20 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 })
 export class PaginationComponent implements OnChanges {
 
-  @Input() totalRecords = 0;
-  @Input() recordsPerPage = 0;
-  @Input() activePage = 1;
+  @Input() totalRecords: number = 0;
+  @Input() recordsPerPage: number = 0;
+  @Input() activePage: number = 1;
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   pages: number[] = [];
+  isPreviousDisabled: boolean = true;
+  isNextDisabled: boolean = false;
 
   ngOnChanges(): void {
     const pageCount = this.getPageCount();
+    if (pageCount <= 1) {
+      this.isNextDisabled = true;
+    }
     this.pages = this.getArrayOfPage(pageCount);
   }
 
@@ -29,7 +34,8 @@ export class PaginationComponent implements OnChanges {
     }
 
     this.activePage = pageNumber;
-
+    this.isPreviousDisabled = this.activePage <= 1;
+    this.isNextDisabled = this.activePage === this.pages.length;
     this.pageChange.emit(this.activePage);
   }
 
