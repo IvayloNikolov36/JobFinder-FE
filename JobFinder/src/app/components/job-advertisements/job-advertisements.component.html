@@ -76,13 +76,16 @@
     @for(jobAd of jobAds; track jobAd.id) {
     <mat-card class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
       <mat-card-header>
-        <mat-card-title-group>
+        <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
           <mat-card-title class="mb-3">
             {{ jobAd.position }}
           </mat-card-title>
           <mat-card-subtitle>
-            <i class="bi bi-pin-fill me-2"></i>{{ jobAd.location }}</mat-card-subtitle>
-          <img mat-card-md-image [src]="jobAd.companyLogo" alt="Company Logo">
+            <i class="bi bi-pin-fill me-2"></i>{{ jobAd.location }}
+          </mat-card-subtitle>
+          <div>
+            <img mat-card-md-image [src]="jobAd.companyLogo" alt="Company Logo">
+          </div>
         </mat-card-title-group>
       </mat-card-header>
       <mat-card-content class="mt-2">
