@@ -22,7 +22,7 @@
       <select id="filterCategory" class="form-control" [(ngModel)]="category"
         (ngModelChange)="changeFilterCategory($event)">
         <option value="0">All</option>
-        <option *ngFor="let c of categories$ | async" [value]="c.id">{{ c.name }}</option>
+        <option *ngFor="let c of categories()" [value]="c.id">{{ c.name }}</option>
       </select>
     </div>
 
@@ -31,7 +31,7 @@
       <select id="filterEngagement" class="form-control" [(ngModel)]="engagement"
         (ngModelChange)="changeFilterEngagement($event)">
         <option value="0">All</option>
-        <option *ngFor="let e of engagements$ | async" [value]="e['id']">{{e['name']}}</option>
+        <option *ngFor="let e of engagements()" [value]="e['id']">{{e['name']}}</option>
       </select>
     </div>
 
@@ -56,16 +56,15 @@
   <div class="d-flex justify content around mt-3 mb-3">
 
     <div class="input-group w-50 mx-auto">
-      <button class="btn btn-outline-secondary" (click)="showOrHideFilters()">
-        <i class="fas fa-sliders-h"></i>
-        {{ buttonText }}
+      <button class="btn btn-outline-secondary" (click)="toggleFilters()">
+        <i class="fas fa-sliders-h"></i>{{ filterButtonLabel }}
       </button>
       <input class="form-control italic-text" [(ngModel)]="searchText" id="searchText" type="text"
         placeholder="You can search by Job Title or Company">
-      <button class="btn btn-outline-secondary" (click)="searchJob()">Search</button>
+      <button class="btn btn-outline-secondary" (click)="searchForJobAds()">Search</button>
     </div>
 
-    <div *ngIf="showSubscribeButton" class="mx-auto">
+    <div *ngIf="showSubscribeButton()" class="mx-auto">
       <button class="btn btn-primary" (click)="subscribeForJobs()">Subscribe for jobs with such criterias</button>
     </div>
 
@@ -73,8 +72,9 @@
 
   <div class="w-75 mx-auto my-3">
 
-    @for(jobAd of jobAds; track jobAd.id) {
-    <mat-card class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
+    @for(jobAd of jobAds; track jobAd.id; let even = $even) {
+    <mat-card [class]="{'me-5': even, 'ms-5': !even}"
+      class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
       <mat-card-header>
         <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
           <mat-card-title class="mb-3">
