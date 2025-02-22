@@ -65,7 +65,10 @@
     </div>
 
     <div *ngIf="showSubscribeButton()" class="mx-auto">
-      <button class="btn btn-primary" (click)="subscribeForJobs()">Subscribe for jobs with such criterias</button>
+      <button class="btn btn-light" (click)="subscribeForJobs()">
+        <i class="bi bi-bell me-2"></i>
+        Subscribe for such ads
+      </button>
     </div>
 
   </div>
@@ -73,8 +76,8 @@
   <div class="w-75 mx-auto my-3">
 
     @for(jobAd of jobAds; track jobAd.id; let even = $even) {
-    <mat-card [class]="{'me-5': even, 'ms-5': !even}"
-      class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
+    <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
+      class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
       <mat-card-header>
         <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
           <mat-card-title class="mb-3">
@@ -93,6 +96,9 @@
           <span>
             <i class="bi bi-clock me-2"></i>{{ jobAd.jobEngagement }}
           </span>
+          <div class="salary-container">
+            {{ jobAd.salary }}
+          </div>
           <span class="mx-0">
             <i class="bi bi-calendar-event me-2"></i>{{ jobAd.postedOn | date }}
           </span>

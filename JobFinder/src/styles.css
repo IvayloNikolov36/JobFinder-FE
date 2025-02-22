@@ -6,7 +6,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
 a {
   text-decoration: none;
 }
@@ -30,4 +29,26 @@ a {
 
 .job-subscription-card {
   width: 30rem;
+}
+
+.job-ad-card:hover {
+  cursor: pointer;
+  border-color: #45a0eb;
+  border-width: 0.025rem;
+}
+
+.white-blue-gradient {
+  background-image: linear-gradient(to right, rgb(247, 254, 255) , rgb(184, 226, 254));
+}
+
+.blue-white-gradient {
+  background-image: linear-gradient(to left, rgb(247, 254, 255) , rgb(184, 226, 254));
+}
+
+.salary-container {
+  border: 1px solid rgb(136, 206, 244);
+  border-radius: 25px;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: white;
 }

@@ -13,7 +13,7 @@ import { WorkExperienceInfoComponent } from '../work-experiences/work-experience
 import { ToastrService } from 'ngx-toastr';
 import { PersonalDetailsComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
-import { BasicModel, UpdateResultModel } from '../../../models';
+import { BasicModel, UpdateResult } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
 
@@ -156,7 +156,7 @@ export class CvViewComponent implements OnInit {
         const requestData: WorkExperienceOutput[] = this.workExperiencesService.mapWorkExperienceInfoData(data);
         this.workExperiencesService.update(this.cv.id, requestData)
           .subscribe({
-            next: (result: UpdateResultModel) => {
+            next: (result: UpdateResult) => {
               this.setItemsIds(data, result.newItemsIds);
               this.cv.workExperiences = data;
               this.toaster.success("Work Experience info successfuly updated.");
@@ -183,7 +183,7 @@ export class CvViewComponent implements OnInit {
       .subscribe({
         next: (data: CourseCertificate[]) => {
           this.coursesService.update(this.cv.id, data)
-            .subscribe((result: UpdateResultModel) => {
+            .subscribe((result: UpdateResult) => {
               this.setItemsIds(data, result.newItemsIds);
               this.cv.courseCertificates = data;
               this.toaster.success("Courses info successfuly updated.");
@@ -210,7 +210,7 @@ export class CvViewComponent implements OnInit {
 
       this.languagesService.update(this.cv.id, requestData)
         .subscribe({
-          next: (result: UpdateResultModel) => {
+          next: (result: UpdateResult) => {
             this.setItemsIds(data, result.newItemsIds);
             this.cv.languagesInfo = data;
             this.toaster.success("Languages info successfuly updated.");
@@ -236,7 +236,7 @@ export class CvViewComponent implements OnInit {
         const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(data);
         this.educationsService.update(this.cv.id, requestData)
           .subscribe({
-            next: (result: UpdateResultModel) => {
+            next: (result: UpdateResult) => {
               this.setItemsIds(data, result.newItemsIds);
               this.cv.educations = data;
               this.toaster.success("Education info successfuly updated.");

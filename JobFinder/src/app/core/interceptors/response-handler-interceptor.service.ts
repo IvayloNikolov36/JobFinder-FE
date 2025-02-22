@@ -24,28 +24,20 @@ export class ResponseHandlerInterceptorService implements HttpInterceptor {
           }
         }),
         catchError((err: HttpErrorResponse) => {
-          if (isDevMode()) {
-            let errorMessage = '';
+          let errorMessage: string = '';
 
-            if (err.status === 400) {
-              errorMessage = err.error.title;
-
-              const errors: any = err.error.errors;
-              const hasErrors: boolean = errors !== undefined;
-
-              if (hasErrors) {
-                for (const errType of Object.values(errors)) {
-                  const arrayOfErrors: string[] = errType as string[];
-
-                  arrayOfErrors.forEach((value: string) => {
-                    errorMessage = errorMessage.concat(' ' + value);
-                  });
-                }
-              }
-            } else {
-              errorMessage = err.error;
+          if (err.status === 400) {
+            const errors: string[] = err.error.errors;
+            if (errors !== undefined) {
+              errors.forEach((value: string) => {
+                errorMessage = errorMessage.concat(' ' + value);
+              });
             }
+          } else {
+            errorMessage = err.error;
+          }
 
+          if (isDevMode()) {
             console.log(errorMessage);
           }
 

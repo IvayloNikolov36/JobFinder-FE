@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { JobAd } from '../models/job-ad';
 import { JobDetails } from '../models/job-details';
 import { createAd, getAd, getAds } from '../core/controllers';
+import { JobAdsFilter } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +17,16 @@ export class JobAdvertisementsService {
     return this.http.post(createAd(), data);
   }
 
-  all(page: number, items: number, searchText: string, location: string, category: number,
-    engagement: number, sortBy: string, isAscending: boolean): Observable<JobAd[]> {
+  getAll(filter: JobAdsFilter): Observable<JobAd[]> {
     const params = new HttpParams()
-      .set('page', page.toString())
-      .set('items', items.toString())
-      .set('searchText', searchText)
-      .set('location', location !== 'All' ? location : '')
-      .set('sortBy', sortBy)
-      .set('isAscending', isAscending.toString())
-      .set('categoryId', category.toString())
-      .set('engagementId', engagement.toString());
+      .set('page', filter.page)
+      .set('items', filter.itemsCount)
+      .set('searchText', filter.searchText)
+      .set('location', filter.location !== 'All' ? filter.location : '')
+      .set('sortBy', filter.sortBy)
+      .set('isAscending', filter.isAscending)
+      .set('categoryId', filter.category)
+      .set('engagementId', filter.engagement);
 
     return this.http.get<JobAd[]>(getAds(), { params });
   }

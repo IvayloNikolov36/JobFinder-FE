@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SubscriptionsService } from './../../services/subscriptions.service';
 import { JobAdvertisementsService } from '../../services/job-advertisements.service';
-import { BasicModel, JobAd } from '../../models';
+import { BasicModel, JobAd, JobAdsFilter } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 
@@ -78,7 +78,9 @@ export class JobAdvertisementsComponent implements OnInit {
         this.location() === this.locationsArray[0] ? null : this.location())
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
-        error: (err) => this.toastr.error(err.title)
+        error: (err) => {
+          this.toastr.error(err.error.errors[0]);
+        }
       });
   }
 
@@ -149,17 +151,17 @@ export class JobAdvertisementsComponent implements OnInit {
       });
   }
 
-  // TODO: create filterModel that contains searchText, engagement...
   private getJobAds(): void {
-    this.jobAdsService.all(
-      this.currentPage,
+    const filterModel: JobAdsFilter = new JobAdsFilter(this.currentPage,
       this.itemsCount,
       this.searchText,
       this.location(),
       this.category(),
       this.engagement,
       this.sortBy,
-      this.isAscending)
+      this.isAscending);
+
+    this.jobAdsService.getAll(filterModel)
       .subscribe((data: any) => {
         this.totalCount = data.totalCount;
         this.jobAds = data.data;

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { WorkExperience, WorkExperienceOutput } from './../models/cv/';
 import { getUpdateWorkExperienceInfoUrl } from '../../core/controllers';
 import { Observable } from 'rxjs';
-import { UpdateResultModel } from '../../models';
+import { UpdateResult } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class WorkExperiencesService {
 
   constructor(private http: HttpClient) { }
 
-  update(cvId: string, data: WorkExperienceOutput[]): Observable<UpdateResultModel> {
-    return this.http.put<UpdateResultModel>(getUpdateWorkExperienceInfoUrl(cvId), data);
+  update(cvId: string, data: WorkExperienceOutput[]): Observable<UpdateResult> {
+    return this.http.put<UpdateResult>(getUpdateWorkExperienceInfoUrl(cvId), data);
   }
 
   mapWorkExperienceInfoData = (data: WorkExperience[]): WorkExperienceOutput[] => {

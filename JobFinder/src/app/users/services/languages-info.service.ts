@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { LanguageInfoInput } from '../models/cv/language-info-input';
 import { getUpdateLanguageInfoUrl } from '../../core/controllers';
 import { LanguageInfoOutput } from '../models/cv';
-import { UpdateResultModel } from '../../models';
+import { UpdateResult } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class LanguagesInfoService {
 
   constructor(private http: HttpClient) { }
 
-  update(cvId: string, data: LanguageInfoOutput[]): Observable<UpdateResultModel> {
-    return this.http.put<UpdateResultModel>(getUpdateLanguageInfoUrl(cvId), data);
+  update(cvId: string, data: LanguageInfoOutput[]): Observable<UpdateResult> {
+    return this.http.put<UpdateResult>(getUpdateLanguageInfoUrl(cvId), data);
   }
 
   mapLanguageInfoData = (data: LanguageInfoInput[]): LanguageInfoOutput[] => {
