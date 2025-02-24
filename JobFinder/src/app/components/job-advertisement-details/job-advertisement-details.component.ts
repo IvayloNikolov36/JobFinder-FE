@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { JobDetails } from '../../models/job-details';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CurriculumVitaesService } from '../../users/services';
+import { CvListing } from '../../users/models/cv';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { JobAdsApplicationsService } from '../../services/job-ads-applications.service';
+import { JobAdApplication } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'jf-job-advertisement-details',
@@ -9,51 +15,48 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class JobAdvertisementDetailsComponent implements OnInit {
 
+  jobAdId!: number;
   jobDetails!: JobDetails;
+  showApplyForm: boolean = false;
+  myCVs$!: Observable<CvListing[]>;
+  selectedCv: string | null = null;
 
-  page!: number;
-  items!: number;
-  searchText!: string;
-  location!: string | null;
-  category!: number;
-  engagement!: number;
-  sortBy!: string | null;
-  isAscending!: boolean;
-
-  readonly initialPage: number = 1;
-  readonly itemsPerPage: number = 10;
-  readonly selectValueNone: number = 0;
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private cvsService: CurriculumVitaesService,
+    private jobAdsApplicationsService: JobAdsApplicationsService,
+    private toastr: ToastrService) {
+    this.jobAdId = parseInt(this.route.snapshot.params['id']);
+  }
 
   ngOnInit(): void {
     this.getJobDetails();
-    this.geQueryParamsData();
+  }
+
+  onApply = (): void => {
+    this.showApplyForm = !this.showApplyForm;
+
+    if (this.showApplyForm && this.myCVs$ === undefined) {
+      this.getUserCVs();
+    }
+  }
+
+  send = (): void => {
+    console.log(this.selectedCv);
+    const jobApplication = { jobAdId: this.jobAdId, curriculumVitaeId: this.selectedCv } as JobAdApplication;
+    this.jobAdsApplicationsService.applyForJob(jobApplication)
+      .subscribe({
+        next: () => {
+          this.toastr.success("Successfully applied for this job.");
+        }
+      })
+  }
+
+  private getUserCVs = (): void => {
+    this.myCVs$ = this.cvsService.getAllMine();
   }
 
   private getJobDetails = (): void => {
-    this.jobDetails = this.route.snapshot.data['singleJob']; // TODO: fix to get job details
-  }
 
-  private geQueryParamsData = (): void => {
-    const queryParams: ParamMap = this.route.snapshot.queryParamMap;
-
-    const pageValue: string | null = queryParams.get('page');
-    this.page = pageValue === null ? this.initialPage : parseInt(pageValue);
-
-    const itemsValue: string | null = queryParams.get('items');
-    this.items = itemsValue === null ? this.itemsPerPage : parseInt(itemsValue);
-
-    this.searchText = queryParams.get('searchText') ?? '';
-    this.location = queryParams.get('location');
-
-    const categoryValue: string | null = queryParams.get('category');
-    this.category = categoryValue === null ? this.selectValueNone : parseInt(categoryValue);
-
-    const engagementValue: string | null = queryParams.get('engagement');
-    this.engagement = engagementValue === null ? this.selectValueNone : parseInt(engagementValue);
-
-    this.sortBy = queryParams.get('sortBy');
-    this.isAscending = queryParams.get('isAscending') === 'true' ? true : false;
   }
 }
