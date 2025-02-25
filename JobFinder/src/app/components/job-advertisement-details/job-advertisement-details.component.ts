@@ -48,8 +48,11 @@ export class JobAdvertisementDetailsComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success("Successfully applied for this job.");
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.errors[0]);
         }
-      })
+      });
   }
 
   private getUserCVs = (): void => {

@@ -1,0 +1,28 @@
+<div class="container-fluid">
+
+    <div class="w-75 mx-auto my-3 py-4">
+        @for(app of applications$ | async; track app.id; let even = $even) {
+        <mat-card [class]="{'me-5': even, 'ms-5': !even, 'green-blue-gradient': even, 'blue-green-gradient': !even}"
+            class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined"
+            (click)="viewJobApplicationDetails()">
+            <mat-card-header>
+                <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
+                    <mat-card-title class="mb-3">
+                        {{ app.jobTitle }}
+                    </mat-card-title>
+                    <div>
+                        <img mat-card-md-image [src]="app.companyLogo" alt="Company Logo">
+                    </div>
+                </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content class="mt-3 d-flex justify-content-between">
+                <h6>{{ app.companyName }}</h6>
+                <span>
+                    <i class="bi bi-calendar2-week me-2"></i>{{ app.appliedOn | date: 'medium' }}
+                </span>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+
+</div>

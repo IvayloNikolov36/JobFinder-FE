@@ -11,7 +11,8 @@ import {
   SkillsInfoComponent,
   UserAccountComponent,
   UserCurriculumVitaesComponent,
-  WorkExperienceInfoComponent
+  WorkExperienceInfoComponent,
+  MyJobApplicationsComponent
 } from './components/';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +42,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     CoursesCertificatesComponent,
     CvViewComponent,
     MySubscriptionsComponent,
+    MyJobApplicationsComponent,
   ],
   imports: [
     SharedModule,

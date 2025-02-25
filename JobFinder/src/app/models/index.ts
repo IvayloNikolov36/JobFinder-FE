@@ -5,3 +5,4 @@ export * from './job-details';
 export * from './update-result';
 export * from './job-ads-filter';
 export * from './job-add-application';
+export * from './job-add-application-details';

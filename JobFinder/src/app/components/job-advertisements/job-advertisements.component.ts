@@ -19,7 +19,7 @@ const MinItemsOnPage: number = 5;
   templateUrl: './job-advertisements.component.html',
   standalone: false
 })
-export class JobAdvertisementsComponent implements OnInit {
+export class JobAdvertisementsComponent implements OnInit { // TODO: rename the component and refactor the template
 
   categories!: Signal<BasicModel[]>;
   engagements!: Signal<BasicModel[]>;
@@ -78,7 +78,7 @@ export class JobAdvertisementsComponent implements OnInit {
         this.location() === this.locationsArray[0] ? null : this.location())
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
-        error: (err) => {
+        error: (err: any) => {
           this.toastr.error(err.error.errors[0]);
         }
       });

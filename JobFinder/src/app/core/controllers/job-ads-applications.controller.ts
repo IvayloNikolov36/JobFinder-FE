@@ -1,5 +1,7 @@
 import { environment } from "../../../environments/environment";
 
 const route: string = environment.apiUrl;
+const controllerName: string = 'JobAdsApplications';
 
-export const applyForJob = (): string => route + 'JobAdsApplications';
+export const applyForJob = (): string => `${route}${controllerName}`;
+export const getMyJobApplications = (): string => `${route}${controllerName}/mine`;
