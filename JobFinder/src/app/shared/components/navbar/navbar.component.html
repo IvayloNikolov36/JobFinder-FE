@@ -8,9 +8,14 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/jobs-all">Jobs</a>
       </li>
-      <li *ngIf="isAuthenticated && isCompany" class="nav-item">
-        <a class="nav-link" routerLink="/companies/ads/create">New ad</a>
-      </li>
+      <ng-container *ngIf="isAuthenticated && isCompany">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies/ads/create">New ad</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies/my-job-ads">My ads</a>
+        </li>
+      </ng-container>
     </ul>
 
     <ul class="nav nav-underline justify-content-end">

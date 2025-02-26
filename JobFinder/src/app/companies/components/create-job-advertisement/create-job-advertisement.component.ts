@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BasicModel } from '../../../models';
-import { JobAdvertisementsService } from '../../../services/job-advertisements.service';
 import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
+import { CompanyJobAdsService } from '../services';
 
 @Component({
   selector: 'jf-create-job-advertisement',
@@ -23,7 +23,7 @@ export class CreateJobAdvertisementComponent {
   chosedEngagement: any;
 
   constructor(
-    private jobAdsService: JobAdvertisementsService,
+    private jobAdsService: CompanyJobAdsService,
     private nomenclatureService: NomenclatureService,
     private fb: FormBuilder,
     private router: Router,

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobAd } from '../models/job-ad';
 import { JobDetails } from '../models/job-details';
-import { createAd, getAd, getAds } from '../core/controllers';
+import { getAd, getAds } from '../core/controllers';
 import { JobAdsFilter } from '../models';
 
 @Injectable({
@@ -12,10 +12,6 @@ import { JobAdsFilter } from '../models';
 export class JobAdvertisementsService {
 
   constructor(private http: HttpClient) { }
-
-  createJobAd(data: JobAd): Observable<Object> {
-    return this.http.post(createAd(), data);
-  }
 
   getAll(filter: JobAdsFilter): Observable<JobAd[]> {
     const params = new HttpParams()
