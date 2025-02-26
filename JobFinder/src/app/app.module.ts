@@ -11,7 +11,6 @@ import { ResponseHandlerInterceptorService } from './core/interceptors/response-
 import { SharedModule } from './shared/shared.module';
 import {
   CompanyDetailsComponent,
-  CreateJobAdvertisementComponent,
   HomeComponent,
   JobAdvertisementsComponent,
   JobAdvertisementDetailsComponent,
@@ -23,6 +22,7 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { CompaniesModule } from './companies/companies.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { MatSelectModule } from '@angular/material/select';
     HomeComponent,
     RegisterUserComponent,
     RegisterCompanyComponent,
-    CreateJobAdvertisementComponent,
     JobAdvertisementsComponent,
     PaginationComponent,
     JobAdvertisementDetailsComponent,
@@ -43,6 +42,7 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     SharedModule,
     UsersModule,
+    CompaniesModule,
     MatCardModule,
     MatButtonModule,
     MatSelectModule,

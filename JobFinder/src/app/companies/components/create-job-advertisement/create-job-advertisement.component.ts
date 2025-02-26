@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JobAdvertisementsService } from '../../services/job-advertisements.service';
-import { BasicModel } from '../../models/basic.model';
+import { BasicModel } from '../../../models';
+import { JobAdvertisementsService } from '../../../services/job-advertisements.service';
+import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
-import { NomenclatureService } from '../../core/services';
 
 @Component({
   selector: 'jf-create-job-advertisement',

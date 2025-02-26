@@ -4,24 +4,22 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterCompanyComponent } from './components/register-company/register-company.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import { CreateJobAdvertisementComponent } from './components/create-job-advertisement/create-job-advertisement.component';
-import { AuthGuard, CompanyGuard, IsSignedInGuard } from './core/guards';
+import { AuthGuard, CompanyGuard, IsNotSignedInGuard } from './core/guards';
 import { JobAdvertisementsComponent } from './components/job-advertisements/job-advertisements.component';
 import { JobAdvertisementDetailsComponent } from './components/job-advertisement-details/job-advertisement-details.component';
 import { CompanyDetailsComponent } from './components';
 
-
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'login', component: LoginComponent, canActivate: [IsSignedInGuard] },
-  { path: 'register-company', component: RegisterCompanyComponent, canActivate: [IsSignedInGuard] },
-  { path: 'register-user', component: RegisterUserComponent, canActivate: [IsSignedInGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [IsNotSignedInGuard] },
+  { path: 'register-company', component: RegisterCompanyComponent, canActivate: [IsNotSignedInGuard] },
+  { path: 'register-user', component: RegisterUserComponent, canActivate: [IsNotSignedInGuard] },
   { path: 'home', component: HomeComponent },
-  { path: 'job-advertisement/create', component: CreateJobAdvertisementComponent, canActivate: [CompanyGuard] },
-  { path: 'jobs-all', component: JobAdvertisementsComponent, canActivate: [AuthGuard] },
+  { path: 'jobs-all', component: JobAdvertisementsComponent },
   { path: 'job-details/:id', component: JobAdvertisementDetailsComponent },
   { path: 'company/:id', component: CompanyDetailsComponent },
-  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canActivate: [AuthGuard] },
+  { path: 'companies', loadChildren: () => import('./companies/companies.module').then(c => c.CompaniesModule), canActivate: [CompanyGuard] },
 ];
 
 @NgModule({
