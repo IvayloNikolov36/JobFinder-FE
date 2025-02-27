@@ -42,7 +42,6 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   send = (): void => {
-    console.log(this.selectedCv);
     const jobApplication = { jobAdId: this.jobAdId, curriculumVitaeId: this.selectedCv } as JobAdApplication;
     this.jobAdsApplicationsService.applyForJob(jobApplication)
       .subscribe({

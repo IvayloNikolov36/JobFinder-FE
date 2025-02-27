@@ -1,4 +1,5 @@
 export interface AdApplicationInfo {
+    id: number;
     applicant: string;
     curriculumVitaeId: string;
     curriculumVitaeName: string;

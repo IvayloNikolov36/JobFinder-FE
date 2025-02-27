@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdApplicationInfo, CompanyAd } from '../../models';
 import { CompanyJobAdApplicationsService, CompanyJobAdsService } from '../services';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'jf-my-job-ads',
@@ -16,7 +17,22 @@ export class MyJobAdsComponent implements OnInit {
 
   constructor(
     private jobAdsService: CompanyJobAdsService,
-    private jobAdApplicationsService: CompanyJobAdApplicationsService) { }
+    private jobAdApplicationsService: CompanyJobAdApplicationsService) {
+
+  }
+
+  readonly applicationsDataResource = rxResource({
+    request: () => ({
+      currentJobAdId: this.jobAdId
+    }),
+    loader: ({ request }) => {
+      return this.jobAdApplicationsService
+        .getJobAllApplicationsData(request.currentJobAdId());
+    }
+  });
+
+  private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
+
 
   ngOnInit(): void {
     this.jobAds$ = this.jobAdsService.getCompanyAds();
@@ -27,10 +43,11 @@ export class MyJobAdsComponent implements OnInit {
   }
 
   openExpansionPanel(jobAdId: number): void {
-    this.loadAdApplicationsInfo(jobAdId);
+    this.jobAdId.set(jobAdId);
+    this.reloadApplicationsData();
   }
 
-  private loadAdApplicationsInfo(jobAdId: number): void {
-    this.currentJobAdApplicationsData$ = this.jobAdApplicationsService.getJobAllApplicationsData(jobAdId);
+  private reloadApplicationsData = (): void => {
+    this.applicationsDataResource.reload();
   }
 }
