@@ -1,4 +1,4 @@
-import { Component, effect, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { AdApplicationInfo } from '../../models';
 
 @Component({
@@ -10,11 +10,5 @@ import { AdApplicationInfo } from '../../models';
 export class AdApplicationsListingComponent {
 
   applicationsData: InputSignal<AdApplicationInfo[] | undefined> = input.required<AdApplicationInfo[] | undefined>();
-
-  constructor() {
-    effect(() => {
-      console.log(this.applicationsData());
-    });
-  }
 
 }

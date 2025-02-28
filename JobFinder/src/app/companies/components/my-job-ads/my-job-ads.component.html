@@ -1,5 +1,6 @@
 <div class="container-fluid p-4">
     @for(jobAd of jobAds$ | async; track jobAd.id; let even = $even) {
+
     <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
         class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
         <mat-card-header>
@@ -24,15 +25,26 @@
             </div>
 
             <mat-accordion>
-                <mat-expansion-panel class="mt-3" (opened)="openExpansionPanel(jobAd.id)">
-
+                <mat-expansion-panel class="mt-3" (opened)="openExpansionPanel(jobAd.id)"
+                    [hideToggle]="jobAd.applicationsSent < 1" [disabled]="jobAd.applicationsSent < 1" [id]="jobAd.id">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>{{ jobAd.applicationsSent }} applications | {{
-                            jobAd.notPreviewedApplications}} new
+                        <mat-panel-title>
+                            @if (jobAd.applicationsSent > 0) {
+                            <span class="totalAppsText">
+                                <i class="bi bi-file-earmark-check me-1"></i>
+                                {{ jobAd.applicationsSent }} total applications</span>
+                            <span class="notPreviewed">
+                                <i class="bi bi-eye-slash ms-4 me-1"></i>
+                                {{ jobAd.notPreviewedApplications }} not previewed
+                            </span>
+                            }
+                            @else {
+                            <span><i class="bi bi-file-earmark-check me-1"></i>No applications yet.</span>
+                            }
                         </mat-panel-title>
-                        @if(jobAd.applicationsSent > 0) {
+                        @if (jobAd.applicationsSent > 0) {
                         <mat-panel-description>
-                            Expand to reveal more information about the applications
+                            <small><i>Expand to reveal more information about the applications</i></small>
                         </mat-panel-description>
                         }
                     </mat-expansion-panel-header>
@@ -42,9 +54,12 @@
                     </ng-template>
 
                 </mat-expansion-panel>
+
             </mat-accordion>
+
         </mat-card-content>
 
     </mat-card>
+
     }
 </div>

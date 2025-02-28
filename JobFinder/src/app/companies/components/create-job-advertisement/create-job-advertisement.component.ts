@@ -34,6 +34,7 @@ export class CreateJobAdvertisementComponent {
   }
 
   ngOnInit() {
+    // TODO: refactor
     this.form = this.fb.group({
       position: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(90)]],
       description: ['', [Validators.required, Validators.minLength(20)]],

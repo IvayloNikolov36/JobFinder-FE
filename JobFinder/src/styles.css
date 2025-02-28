@@ -48,7 +48,7 @@ a {
 }
 
 .blue-green-gradient {
-  background-image: linear-gradient(to left,  rgb(161, 240, 170), rgb(147, 210, 252));
+  background-image: linear-gradient(to left, rgb(161, 240, 170), rgb(147, 210, 252));
 }
 
 .salary-container {
@@ -57,4 +57,19 @@ a {
   padding-left: 1%;
   padding-right: 1%;
   background-color: white;
+}
+
+.application-cv-picture {
+  max-height: 8.125rem;
+}
+
+.previewed,
+.totalAppsText {
+  color: rgb(7, 214, 7);
+  font-weight: bold;
+}
+
+.notPreviewed {
+  color: rgb(247, 56, 22);
+  font-weight: bold;
 }

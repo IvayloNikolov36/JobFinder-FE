@@ -3,6 +3,9 @@ export interface AdApplicationInfo {
     applicant: string;
     curriculumVitaeId: string;
     curriculumVitaeName: string;
+    curriculumVitaePictureUrl: string;
+    email: string;
+    phone: string;
     appliedOn: Date;
     isPreviewed: boolean;
     previewDate: Date;

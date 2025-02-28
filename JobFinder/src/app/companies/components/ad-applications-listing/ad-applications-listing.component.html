@@ -6,18 +6,36 @@
         <mat-card-header>
             <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
                 <mat-card-title class="mb-3">
-                    {{ app.applicant }}
+                    <span>{{ app.applicant }}</span>
+                    <i class="bi bi-phone ms-5 me-2"></i><span>{{ app.phone }}</span>
+                    <i class="bi bi-mailbox ms-3 me-2"></i><span>{{ app.email }}</span>
                 </mat-card-title>
                 <mat-card-subtitle>
-                    <i class="bi bi-pin-fill me-2"></i>{{ app.curriculumVitaeName }}
+                    <i class="bi bi-eye me-2"></i><span>{{ app.curriculumVitaeName }}</span>
                 </mat-card-subtitle>
+                <img mat-card-image class="application-cv-picture" [src]="app.curriculumVitaePictureUrl"
+                    alt="CV Picture">
             </mat-card-title-group>
         </mat-card-header>
 
         <mat-card-content class="mt-2">
             <div class="d-flex justify-content-between">
-                <span class="mx-0">
-                    <i class="bi bi-calendar2-week me-2"></i>{{ app.appliedOn | date }}
+                <ng-container>
+                    @if (app.isPreviewed) {
+                    <span class="previewed">
+                        <i class="bi bi-eye-fill"></i>
+                        Previewed on: {{ app.previewDate | date }}
+                    </span>
+                    }
+                    @else {
+                    <span class="notPreviewed">
+                        <i class="bi bi-eye-slash-fill"></i>
+                        Not Previewed
+                    </span>
+                    }
+                </ng-container>
+                <span>
+                    <i class="bi bi-calendar2-week me-2"></i> {{ app.appliedOn | date }}
                 </span>
             </div>
         </mat-card-content>
