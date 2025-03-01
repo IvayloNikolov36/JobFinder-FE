@@ -1,11 +1,11 @@
 import {
-  CourseCertificate,
   EducationOutput,
   LanguageInfoOutput,
   PersonalDetailsOutput,
   SkillsInfoOutput,
   WorkExperienceOutput
 } from ".";
+import { CourseCertificateInfo } from "../../../shared/models";
 
 export interface CvCreate {
   name: string;
@@ -15,5 +15,5 @@ export interface CvCreate {
   workExperiences: WorkExperienceOutput[];
   languagesInfo: LanguageInfoOutput[];
   skills: SkillsInfoOutput;
-  courseCertificates: CourseCertificate[];
+  courseCertificates: CourseCertificateInfo[];
 }

@@ -1,6 +1,6 @@
-import { BasicModel } from "../../../models";
+import { BasicModel } from "../../models";
 
-export interface Education {
+export interface EducationInfo {
   id: number;
   organization: string;
   fromDate: string;

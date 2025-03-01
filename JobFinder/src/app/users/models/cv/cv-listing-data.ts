@@ -1,11 +1,11 @@
 import {
-  CourseCertificate,
-  Education,
-  LanguageInfoInput,
+  CourseCertificateInfo,
+  EducationInfo,
+  LanguageInfo,
   PersonalDetails,
   SkillsInfo,
-  WorkExperience
-} from ".";
+  WorkExperienceInfo
+} from "../../../shared/models";
 
 export interface CvListingData {
   id: string;
@@ -13,9 +13,10 @@ export interface CvListingData {
   pictureUrl: string;
   createdOn: Date;
   personalDetails: PersonalDetails;
-  languagesInfo: LanguageInfoInput[];
-  workExperiences: WorkExperience[];
-  educations: Education[];
-  courseCertificates: CourseCertificate[];
+  languagesInfo: LanguageInfo[];
+  workExperiences: WorkExperienceInfo[];
+  educations: EducationInfo[];
+  courseCertificates: CourseCertificateInfo[];
   skills: SkillsInfo;
 }
+

@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Education, EducationOutput } from '../models/cv';
+import { EducationOutput } from '../models/cv';
+import { EducationInfo } from '../../shared/models';
 import { getCvEducationsEditUrl } from '../../core/controllers';
 import { UpdateResult } from '../../models';
 
@@ -16,8 +17,8 @@ export class EducationsService {
     return this.http.put<UpdateResult>(getCvEducationsEditUrl(cvId), data);
   }
 
-  public mapEducationInfoData = (data: Education[]): EducationOutput[] => {
-    return data.map((item: Education) => {
+  public mapEducationInfoData = (data: EducationInfo[]): EducationOutput[] => {
+    return data.map((item: EducationInfo) => {
       return {
         id: item.id,
         organization: item.organization,

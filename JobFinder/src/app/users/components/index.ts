@@ -1,6 +1,6 @@
 export * from './create-cv/create-cv.component';
 export * from './courses-certificates/courses-certificates.component';
-export * from './cv-view/cv-view.component';
+export * from './cv-view/cv-view-edit.component';
 export * from './cv-info/cv-info.component';
 export * from  './educations/educations.component';
 export * from './languages-info/languages-info.component';

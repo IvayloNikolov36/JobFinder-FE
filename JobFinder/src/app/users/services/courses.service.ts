@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CourseCertificate } from '../models/cv/course-certificate';
+import { CourseCertificateInfo } from '../../shared/models/course-certificate-info';
 import { getUpdateCvCourseUrl } from '../../core/controllers';
 import { UpdateResult } from '../../models';
 
@@ -12,7 +12,7 @@ export class CoursesService {
 
   constructor(private http: HttpClient) { }
 
-  update(cvId: string, data: CourseCertificate[]): Observable<UpdateResult> {
+  update(cvId: string, data: CourseCertificateInfo[]): Observable<UpdateResult> {
     return this.http.put<UpdateResult>(getUpdateCvCourseUrl(cvId), data);
   }
 }

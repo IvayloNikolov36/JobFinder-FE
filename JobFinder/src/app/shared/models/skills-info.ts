@@ -1,4 +1,4 @@
-import { BasicModel } from "../../../models";
+import { BasicModel } from "../../models";
 
 export interface SkillsInfo {
   id: number;

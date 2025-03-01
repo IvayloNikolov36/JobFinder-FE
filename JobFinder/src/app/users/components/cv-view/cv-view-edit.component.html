@@ -1,0 +1,68 @@
+<div class="container-fluid pb-3">
+
+  @if (cv) {
+
+  <jf-personal-info-details
+    [personalDetailsData]="cv.personalDetails"
+    [pictureUrl]="cv.pictureUrl"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.PersonalDetails, modal)"
+  />
+
+  <jf-work-experience-details
+    [workExperienceData]="cv.workExperiences"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.WorkExperienceInfo, modal)"
+  />
+
+  <jf-education-details
+    [educationData]="cv.educations"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.EducationInfo, modal)"
+  />
+
+  <jf-languages-details
+    [languagesData]="cv.languagesInfo"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.LanguagesInfo, modal)"
+  />
+
+  <jf-skills-details
+    [skillsData]="cv.skills"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.SkillsInfo, modal)"
+  />
+
+  <jf-courses-details
+    [coursesData]="cv.courseCertificates"
+    [viewOnly]="false"
+    (onEdit)="editSection(sectionType.CoursesInfo, modal)"
+  />
+  }
+
+  <div #modal class="modal fade modal-lg" id="myModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h6>{{ editCvSectionTitle }}</h6>
+          <button type="button" (click)="onCloseEditSectionModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <ng-container #editCvSectionComponent></ng-container>
+        </div>
+
+        <div class="modal-footer">
+          <button (click)="onCloseEditSectionModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

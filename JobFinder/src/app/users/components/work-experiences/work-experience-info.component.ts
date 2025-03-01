@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WorkExperience } from '../../models/cv';
 import { BasicModel } from '../../../models';
+import { WorkExperienceInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-work-experience-info',
@@ -12,8 +12,8 @@ export class WorkExperienceInfoComponent implements OnInit {
 
   businessSectors = input.required<BasicModel[]>();
   @Input() isEditMode: boolean = false;
-  @Input() workExperienceInfoData: WorkExperience[] = [];
-  @Output() emitWorkExperiencesData: EventEmitter<WorkExperience[]> = new EventEmitter<WorkExperience[]>();
+  @Input() workExperienceInfoData: WorkExperienceInfo[] = [];
+  @Output() emitWorkExperiencesData: EventEmitter<WorkExperienceInfo[]> = new EventEmitter<WorkExperienceInfo[]>();
 
   workExpForm!: FormGroup;
 
@@ -39,7 +39,7 @@ export class WorkExperienceInfoComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitWorkExperiencesData.emit(this.workExpForm.value.workExperienceArray as WorkExperience[]);
+    this.emitWorkExperiencesData.emit(this.workExpForm.value.workExperienceArray as WorkExperienceInfo[]);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -54,7 +54,7 @@ export class WorkExperienceInfoComponent implements OnInit {
     });
 
     if (this.workExperienceInfoData.length > 0) {
-      this.workExperienceInfoData.forEach((we: WorkExperience) => {
+      this.workExperienceInfoData.forEach((we: WorkExperienceInfo) => {
         const workExperienceFormGroup: FormGroup<any> = this.createWorkExperienceFormGroup();
         workExperienceFormGroup.controls['additionalDetails'].valueChanges
           .subscribe((value: string) => {

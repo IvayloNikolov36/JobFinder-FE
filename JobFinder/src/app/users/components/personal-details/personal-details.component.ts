@@ -1,7 +1,7 @@
-import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, InputSignal, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PersonalDetails } from '../../models/cv';
 import { BasicModel } from '../../../models';
+import { PersonalDetails } from '../../../shared/models';
 
 @Component({
   selector: 'jf-personal-details',
@@ -10,9 +10,9 @@ import { BasicModel } from '../../../models';
 })
 export class PersonalDetailsComponent implements OnInit {
 
-  countries = input.required<BasicModel[]>();
-  citizenships = input.required<BasicModel[]>();
-  genderOptions = input.required<BasicModel[]>();
+  countries: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
+  citizenships: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
+  genderOptions: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
   @Input() isEditMode: boolean = false;
   @Input() personalDetailsData: PersonalDetails | null = null;
   @Output() emitPersonalDetails: EventEmitter<PersonalDetails> = new EventEmitter<PersonalDetails>();

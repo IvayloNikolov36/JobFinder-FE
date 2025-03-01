@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { CompaniesModule } from './companies/companies.module';
+import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CompaniesModule } from './companies/companies.module';
     PaginationComponent,
     JobAdvertisementDetailsComponent,
     CompanyDetailsComponent,
+    PersonalDetailsComponent,
   ],
   imports: [
     AppRoutingModule,

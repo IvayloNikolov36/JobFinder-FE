@@ -1,0 +1,23 @@
+<div class="card my-3 w-75 mx-auto">
+
+    <h5 class="card-header">Courses and Certificates</h5>
+
+    <div class="card-body">
+        @for (item of coursesData; track item.id) {
+        <div>
+            <p>
+                <span class="card-text fw-bold">{{ item.courseName }}: </span>
+                <a class="link-opacity-50-hover" [href]="item.certificateUrl">
+                    {{ item.certificateUrl }}
+                </a>
+            </p>
+        </div>
+        }
+    </div>
+
+    @if (!viewOnly) {
+    <div class="card-footer text-muted text-center">
+        <a (click)="onEditClicked()">edit</a>
+    </div>
+    }
+</div>

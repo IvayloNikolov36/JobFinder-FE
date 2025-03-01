@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CvViewComponent } from './components/cv-view/cv-view.component';
+import { CvViewComponent } from './components/cv-view/cv-view-edit.component';
 import {
   CreateCvComponent,
   MyJobApplicationsComponent,

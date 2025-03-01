@@ -1,6 +1,6 @@
-import { BasicModel } from "../../../models";
+import { BasicModel } from "../../models";
 
-export interface LanguageInfoInput {
+export interface LanguageInfo {
   id: number;
   languageType: BasicModel;
   comprehensionLevel: BasicModel;

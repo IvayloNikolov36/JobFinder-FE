@@ -6,12 +6,26 @@ import { DropdownDirective } from './directives/dropdown.directive';
 import { CollapseDirective } from './directives/collapse.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import {
+  CoursesDetailsComponent,
+  EducationDetailsComponent,
+  LanguagesDetailsComponent,  
+  PersonalInfoDetailsComponent,
+  SkillsDetailsComponent,
+  WorkExperienceDetailsComponent
+} from './components';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     DropdownDirective,
     CollapseDirective,
+    WorkExperienceDetailsComponent,
+    EducationDetailsComponent,
+    LanguagesDetailsComponent,
+    SkillsDetailsComponent,
+    CoursesDetailsComponent,
+    PersonalInfoDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +45,12 @@ import { RouterModule } from '@angular/router';
     NavbarComponent,
     DropdownDirective,
     CollapseDirective,
+    WorkExperienceDetailsComponent,
+    EducationDetailsComponent,
+    LanguagesDetailsComponent,
+    SkillsDetailsComponent,
+    CoursesDetailsComponent,
+    PersonalInfoDetailsComponent,
   ]
 })
 export class SharedModule { }

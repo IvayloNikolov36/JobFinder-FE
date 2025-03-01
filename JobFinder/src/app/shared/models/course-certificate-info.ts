@@ -1,4 +1,4 @@
-export interface CourseCertificate {
+export interface CourseCertificateInfo {
   id: number;
   courseName: string;
   certificateUrl: string;

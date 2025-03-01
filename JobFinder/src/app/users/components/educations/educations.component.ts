@@ -1,7 +1,7 @@
 import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Education } from '../../models/cv';
 import { BasicModel } from '../../../models';
+import { EducationInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-educations',
@@ -12,8 +12,8 @@ export class EducationsComponent implements OnInit {
 
   educationLevels = input.required<BasicModel[]>();
   @Input() isEditMode: boolean = false;
-  @Input() educationsData: Education[] = [];
-  @Output() emitEducationData = new EventEmitter<Education[]>();
+  @Input() educationsData: EducationInfo[] = [];
+  @Output() emitEducationData = new EventEmitter<EducationInfo[]>();
 
   educationsForm!: FormGroup;
 
@@ -39,7 +39,7 @@ export class EducationsComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitEducationData.emit(this.educationsForm.value.educationsArray as Education[]);
+    this.emitEducationData.emit(this.educationsForm.value.educationsArray as EducationInfo[]);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -54,7 +54,7 @@ export class EducationsComponent implements OnInit {
     });
 
     if (this.educationsData.length > 0) {
-      this.educationsData.forEach((educationData: Education) => {
+      this.educationsData.forEach((educationData: EducationInfo) => {
         const educationInfoFormGroup: FormGroup<any> = this.createEducationFormGroup();
         educationInfoFormGroup.setValue(educationData);
         educationsFormArray.push(educationInfoFormGroup);

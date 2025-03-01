@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LanguageInfoInput } from '../models/cv/language-info-input';
+import { LanguageInfo } from '../../shared/models/language-info';
 import { getUpdateLanguageInfoUrl } from '../../core/controllers';
 import { LanguageInfoOutput } from '../models/cv';
 import { UpdateResult } from '../../models';
@@ -17,8 +17,8 @@ export class LanguagesInfoService {
     return this.http.put<UpdateResult>(getUpdateLanguageInfoUrl(cvId), data);
   }
 
-  mapLanguageInfoData = (data: LanguageInfoInput[]): LanguageInfoOutput[] => {
-    return data.map((element: LanguageInfoInput) => {
+  mapLanguageInfoData = (data: LanguageInfo[]): LanguageInfoOutput[] => {
+    return data.map((element: LanguageInfo) => {
       const result: LanguageInfoOutput = {} as LanguageInfoOutput;
       result.id = element.id;
       result.comprehensionLevelId = element.comprehensionLevel.id;

@@ -1,6 +1,6 @@
-import { BasicModel } from "../../../models";
+import { BasicModel } from "../../models";
 
-export interface WorkExperience {
+export interface WorkExperienceInfo {
   id: number;
   fromDate: string;
   toDate: string;

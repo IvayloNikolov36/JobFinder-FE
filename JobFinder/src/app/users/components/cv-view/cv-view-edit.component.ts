@@ -1,9 +1,9 @@
-import { SkillsService } from './../../services/skills.service';
+import { SkillsService } from '../../services/skills.service';
 import { Component, ComponentRef, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
 import { CoursesService, CurriculumVitaesService, EducationsService, LanguagesInfoService, PersonalDetailsService as PersonalInfoService, WorkExperiencesService } from '../../services';
 import { ActivatedRoute } from '@angular/router';
 import { CvListingData } from '../../models/cv/cv-listing-data';
-import { CourseCertificate, Education, EducationOutput, LanguageInfoInput, LanguageInfoOutput, PersonalDetails, PersonalDetailsOutput, SkillsInfo, SkillsInfoOutput, WorkExperience, WorkExperienceOutput } from '../../models/cv';
+import { EducationOutput, LanguageInfoOutput, PersonalDetailsOutput, SkillsInfoOutput, WorkExperienceOutput } from '../../models/cv';
 import { EducationsComponent } from '../educations/educations.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Modal } from 'bootstrap';
@@ -16,10 +16,11 @@ import { SkillsInfoComponent } from '../skills-info/skills-info.component';
 import { BasicModel, UpdateResult } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
+import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-cv-view',
-  templateUrl: './cv-view.component.html',
+  templateUrl: './cv-view-edit.component.html',
   standalone: false
 })
 export class CvViewComponent implements OnInit {
@@ -152,7 +153,7 @@ export class CvViewComponent implements OnInit {
     component.isEditMode = true;
 
     component.emitWorkExperiencesData
-      .subscribe((data: WorkExperience[]) => {
+      .subscribe((data: WorkExperienceInfo[]) => {
         const requestData: WorkExperienceOutput[] = this.workExperiencesService.mapWorkExperienceInfoData(data);
         this.workExperiencesService.update(this.cv.id, requestData)
           .subscribe({
@@ -181,7 +182,7 @@ export class CvViewComponent implements OnInit {
 
     component.emitCoursesData
       .subscribe({
-        next: (data: CourseCertificate[]) => {
+        next: (data: CourseCertificateInfo[]) => {
           this.coursesService.update(this.cv.id, data)
             .subscribe((result: UpdateResult) => {
               this.setItemsIds(data, result.newItemsIds);
@@ -204,7 +205,7 @@ export class CvViewComponent implements OnInit {
     component.languageTypes = this.languageTypes as InputSignal<BasicModel[]>;
     component.languageLevels = this.languageLevels as InputSignal<BasicModel[]>;
 
-    component.emitLanguagesInfo.subscribe((data: LanguageInfoInput[]) => {
+    component.emitLanguagesInfo.subscribe((data: LanguageInfo[]) => {
 
       const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(data);
 
@@ -232,7 +233,7 @@ export class CvViewComponent implements OnInit {
     component.educationLevels = this.educationLevels as InputSignal<BasicModel[]>;
 
     component.emitEducationData
-      .subscribe((data: Education[]) => {
+      .subscribe((data: EducationInfo[]) => {
         const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(data);
         this.educationsService.update(this.cv.id, requestData)
           .subscribe({
@@ -288,6 +289,7 @@ export class CvViewComponent implements OnInit {
   }
 
   private getFullName = (details: PersonalDetails): string => {
+    // TODO: access the ref of the component which has this method
     return `${details.firstName} ${details.middleName} ${details.lastName}`;
   }
 

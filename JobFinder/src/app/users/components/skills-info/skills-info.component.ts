@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SkillsInfo } from '../../models/cv';
 import { BasicModel } from '../../../models';
+import { SkillsInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-skills-info',

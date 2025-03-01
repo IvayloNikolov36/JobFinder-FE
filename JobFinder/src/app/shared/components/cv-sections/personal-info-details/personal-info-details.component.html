@@ -1,0 +1,44 @@
+<div class="card my-3 w-50 mx-auto">
+    <div class="row g-0">
+
+        <div class="col-md-4">
+            <img [src]="pictureUrl" class="img-fluid rounded m-1" alt="cv picture">
+        </div>
+
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ fullName }}</h5>
+                <div class="card-text">
+                    <div>
+                        <span class="fw-medium">Birth Date: </span>
+                        <span class="card-text">{{ personalDetailsData.birthdate | date }}</span>
+                    </div>
+                    <div>
+                        <span class="fw-medium"> </span>
+                        <span class="card-text">{{ personalDetailsData.citizenship.name }}</span>
+                    </div>
+                    <div>
+                        <span class="fw-medium">I live in: </span>
+                        <span class="card-text">{{ personalDetailsData.city }}</span>
+                    </div>
+                    <span class="fs-5 fw-medium">Contacts:</span>
+                    <div>
+                        <span class="fw-medium">Email: </span>
+                        <span class="card-text">{{ personalDetailsData.email }}</span>
+                    </div>
+                    <div>
+                        <i class="bi bi-phone"></i>
+                        <span class="fw-medium">Phone: </span>
+                        <span class="card-text">{{ personalDetailsData.phone }}</span>
+                    </div>
+                </div>
+            </div>
+
+            @if (!viewOnly) {
+            <div class="card-footer text-muted text-center">
+                <a (click)="onEditClicked()">edit</a>
+            </div>
+            }
+        </div>
+    </div>
+</div>

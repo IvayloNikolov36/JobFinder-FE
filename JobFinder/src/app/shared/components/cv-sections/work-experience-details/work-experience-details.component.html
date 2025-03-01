@@ -1,0 +1,22 @@
+<div class="card my-3 w-75 mx-auto">
+
+    <h6 class="card-header">Work Experience</h6>
+
+    <div class="card-body">
+        @for (item of workExperienceData; track item.id) {
+        <div>
+            <h6>{{ item.organization }}</h6>
+            <small class="fw-bold">{{ item.fromDate | date }} - {{ item.toDate | date}}</small>
+            <small>{{ item.location }} Bussiness Sector: {{ item.businessSector.name }}</small>
+            <div class="fs-5">{{ item.jobTitle }}</div>
+            <span class="card-text">{{ item.additionalDetails }}</span>
+        </div>
+        }
+    </div>
+
+    @if(!viewOnly) {
+    <div class="card-footer text-muted text-center">
+        <a (click)="editWorkExperienceData()">edit</a>
+    </div>
+    }
+</div>

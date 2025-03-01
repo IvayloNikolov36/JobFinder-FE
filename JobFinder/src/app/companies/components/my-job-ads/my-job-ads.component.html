@@ -32,7 +32,7 @@
                             @if (jobAd.applicationsSent > 0) {
                             <span class="totalAppsText">
                                 <i class="bi bi-file-earmark-check me-1"></i>
-                                {{ jobAd.applicationsSent }} total applications</span>
+                                {{ jobAd.applicationsSent }} applications received</span>
                             <span class="notPreviewed">
                                 <i class="bi bi-eye-slash ms-4 me-1"></i>
                                 {{ jobAd.notPreviewedApplications }} not previewed
@@ -43,7 +43,7 @@
                             }
                         </mat-panel-title>
                         @if (jobAd.applicationsSent > 0) {
-                        <mat-panel-description>
+                        <mat-panel-description class="d-flex justify-content-end me-5">
                             <small><i>Expand to reveal more information about the applications</i></small>
                         </mat-panel-description>
                         }

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { WorkExperience, WorkExperienceOutput } from './../models/cv/';
+import { WorkExperienceOutput } from './../models/cv/';
 import { getUpdateWorkExperienceInfoUrl } from '../../core/controllers';
 import { Observable } from 'rxjs';
 import { UpdateResult } from '../../models';
+import { WorkExperienceInfo } from '../../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class WorkExperiencesService {
     return this.http.put<UpdateResult>(getUpdateWorkExperienceInfoUrl(cvId), data);
   }
 
-  mapWorkExperienceInfoData = (data: WorkExperience[]): WorkExperienceOutput[] => {
-    return data.map((element: WorkExperience) => {
+  mapWorkExperienceInfoData = (data: WorkExperienceInfo[]): WorkExperienceOutput[] => {
+    return data.map((element: WorkExperienceInfo) => {
       return {
         id: element.id,
         fromDate: element.fromDate,

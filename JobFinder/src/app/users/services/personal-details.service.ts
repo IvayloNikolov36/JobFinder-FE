@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PersonalDetails } from '../models/cv/personal-details';
+import { PersonalDetails } from '../../shared/models/personal-details';
 import { getCvPersonalDetailsUpdateUrl } from '../../core/controllers';
 import { PersonalDetailsOutput } from '../models/cv';
 

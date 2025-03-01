@@ -3,13 +3,14 @@ import { AfterViewInit, Component, ViewChild, ChangeDetectorRef, Signal } from '
 import { CvInfoComponent } from '../cv-info/cv-info.component';
 import { FormGroup } from '@angular/forms';
 import { CoursesCertificatesComponent, EducationsComponent, LanguagesInfoComponent, PersonalDetailsComponent, SkillsInfoComponent, WorkExperienceInfoComponent } from '../index';
-import { CourseCertificate, CvCreate, CvInfo, Education, LanguageInfoInput, PersonalDetails, SkillsInfo, WorkExperience } from '../../models/cv';
+import { CvCreate, CvInfo } from '../../models/cv';
 import { CurriculumVitaesService, EducationsService, PersonalDetailsService, SkillsService, WorkExperiencesService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BasicModel } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { Router } from '@angular/router';
+import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-create-cv',
@@ -80,15 +81,15 @@ export class CreateCvComponent implements AfterViewInit {
     this.cvModel.personalDetails = this.personalDetailsService.mapPersonalInfo(data);
   }
 
-  onPassedWorkExperiencesData = (data: WorkExperience[]): void => {
+  onPassedWorkExperiencesData = (data: WorkExperienceInfo[]): void => {
     this.cvModel.workExperiences = this.workExperiencesService.mapWorkExperienceInfoData(data);
   }
 
-  onPassedEducationData = (data: Education[]): void => {
+  onPassedEducationData = (data: EducationInfo[]): void => {
     this.cvModel.educations = this.educationsService.mapEducationInfoData(data);
   }
 
-  onPassedLanguagesInfo = (data: LanguageInfoInput[]): void => {
+  onPassedLanguagesInfo = (data: LanguageInfo[]): void => {
     this.cvModel.languagesInfo = this.languagesService.mapLanguageInfoData(data);
   }
 
@@ -96,7 +97,7 @@ export class CreateCvComponent implements AfterViewInit {
     this.cvModel.skills = this.skillsInfoService.mapSkillsData(data);
   }
 
-  onPassedCoursesData = (data: CourseCertificate[]): void => {
+  onPassedCoursesData = (data: CourseCertificateInfo[]): void => {
     this.cvModel.courseCertificates = data;
   }
 

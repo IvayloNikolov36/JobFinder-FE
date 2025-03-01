@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CvListing, CvListingData, CvCreate } from '../models/cv/';
 import { CvCreateResult } from '../models/cv/cv-create-result';
-import { getCreateCvUrl, getCvData, getCvsUrl, getDeleteCvUrl } from '../../core/controllers';
+import { getCreateCvUrl, getOwnCvData, getCvsUrl, getDeleteCvUrl } from '../../core/controllers';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class CurriculumVitaesService {
   }
 
   getCvListingData = (cvId: string): Observable<CvListingData> => {
-    return this.http.get<CvListingData>(getCvData(cvId));
+    return this.http.get<CvListingData>(getOwnCvData(cvId));
   }
 
   create = (data: CvCreate): Observable<CvCreateResult> => {

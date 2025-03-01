@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CourseCertificate } from '../../models/cv';
+import { CourseCertificateInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-courses-certificates',
@@ -10,8 +10,8 @@ import { CourseCertificate } from '../../models/cv';
 export class CoursesCertificatesComponent implements OnInit {
 
   @Input() isEditMode: boolean = false;
-  @Input() coursesInfoData: CourseCertificate[] = [];
-  @Output() emitCoursesData: EventEmitter<CourseCertificate[]> = new EventEmitter<CourseCertificate[]>();
+  @Input() coursesInfoData: CourseCertificateInfo[] = [];
+  @Output() emitCoursesData: EventEmitter<CourseCertificateInfo[]> = new EventEmitter<CourseCertificateInfo[]>();
 
   coursesForm!: FormGroup;
   readonly urlPattern: RegExp = /^(http(s)?:\/\/)(.+)$/;
@@ -38,7 +38,7 @@ export class CoursesCertificatesComponent implements OnInit {
   }
 
   emitData(): void {
-    const data: CourseCertificate[] = this.coursesForm.value.coursesArray;
+    const data: CourseCertificateInfo[] = this.coursesForm.value.coursesArray;
     this.emitCoursesData.emit(data);
   }
 
@@ -50,7 +50,7 @@ export class CoursesCertificatesComponent implements OnInit {
     });
 
     if (this.coursesInfoData.length > 0) {
-      this.coursesInfoData.forEach((cs: CourseCertificate) => {
+      this.coursesInfoData.forEach((cs: CourseCertificateInfo) => {
         const formGroup: FormGroup<any> = this.createCourseFormGroup();
         formGroup.setValue(cs);
         coursesArray.push(formGroup);

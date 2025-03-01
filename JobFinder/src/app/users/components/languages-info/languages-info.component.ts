@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LanguageInfoInput } from '../../models/cv';
 import { BasicModel } from '../../../models';
+import { LanguageInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-languages-info',
@@ -13,8 +13,8 @@ export class LanguagesInfoComponent implements OnInit {
   languageTypes = input.required<BasicModel[]>();
   languageLevels = input.required<BasicModel[]>();
   @Input() isEditMode: boolean = false;
-  @Input() languagesInfoData: LanguageInfoInput[] = [];
-  @Output() emitLanguagesInfo = new EventEmitter<LanguageInfoInput[]>();
+  @Input() languagesInfoData: LanguageInfo[] = [];
+  @Output() emitLanguagesInfo = new EventEmitter<LanguageInfo[]>();
 
   languagesForm!: FormGroup;
 
@@ -40,7 +40,7 @@ export class LanguagesInfoComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitLanguagesInfo.emit(this.languagesForm.value.languagesInfoArray as LanguageInfoInput[]);
+    this.emitLanguagesInfo.emit(this.languagesForm.value.languagesInfoArray as LanguageInfo[]);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -55,7 +55,7 @@ export class LanguagesInfoComponent implements OnInit {
     });
 
     if (this.languagesInfoData.length > 0) {
-      this.languagesInfoData.forEach((languagesInfoData: LanguageInfoInput) => {
+      this.languagesInfoData.forEach((languagesInfoData: LanguageInfo) => {
         const languageInfoFormGroup: FormGroup<any> = this.createLanguageInfoFormGroup();
         languageInfoFormGroup.setValue(languagesInfoData);
         languagesFormArray.push(languageInfoFormGroup);

@@ -11,7 +11,10 @@
                     <i class="bi bi-mailbox ms-3 me-2"></i><span>{{ app.email }}</span>
                 </mat-card-title>
                 <mat-card-subtitle>
-                    <i class="bi bi-eye me-2"></i><span>{{ app.curriculumVitaeName }}</span>
+                    
+                    <a routerLink="user-cv-preview/{{app.curriculumVitaeId}}">
+                        <i class="bi bi-eye me-2"></i> CV: {{ app.curriculumVitaeName }}
+                    </a>
                 </mat-card-subtitle>
                 <img mat-card-image class="application-cv-picture" [src]="app.curriculumVitaePictureUrl"
                     alt="CV Picture">
