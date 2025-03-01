@@ -6,6 +6,6 @@ export interface JobAdApplicationDetails {
     companyName: string;
     companyLogo: string;
     appliedOn: Date;
-    isPreviewed: boolean;
-    previewDate: Date;
+    firstPreviewDate: Date;
+    latestPreviewDate: Date;
 }

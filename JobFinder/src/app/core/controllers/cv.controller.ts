@@ -5,7 +5,7 @@ const route: string = environment.apiUrl;
 export const getUpdateCvCourseUrl = (cvId: string) => route + `cvs/courses/${cvId}/update`;
 export const getCvsUrl = (): string => route + 'cvs/all';
 export const getOwnCvData = (cvId: string) => route + `cvs/${cvId}`;
-export const getUserCvData = (cvId: string) => route + `cvs/preview/${cvId}`;
+export const getUserCvData = (cvId: string, jobAdId: number) => route + `cvs/preview/${cvId}/${jobAdId}`;
 export const getCreateCvUrl = () => route + `cvs/create`;
 export const getDeleteCvUrl = (id: string) => route + `cvs/delete/${id}`;
 export const getCvEducationsEditUrl = (cvId: string) => route + 'cvs/educations' + `/${cvId}/update`;

@@ -5,7 +5,7 @@ import { CreateJobAdvertisementComponent, MyJobAdsComponent, UserCvPreviewCompon
 const routes: Routes = [
     { path: 'ads/create', component: CreateJobAdvertisementComponent },
     { path: 'my-ads', component: MyJobAdsComponent },
-    { path: 'my-ads/user-cv-preview/:id', component: UserCvPreviewComponent },
+    { path: 'my-ads/:id/user-cv-preview/:cvId', component: UserCvPreviewComponent },
     { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ];
 

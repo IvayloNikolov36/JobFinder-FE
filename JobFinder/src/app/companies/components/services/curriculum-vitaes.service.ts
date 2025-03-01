@@ -11,7 +11,7 @@ export class CurriculumVitaesService {
 
     constructor(private http: HttpClient) { }
 
-    getUserCvData = (id: string): Observable<CvPreviewData> => {
-        return this.http.get<CvPreviewData>(getUserCvData(id));
+    getUserCvData = (cvId: string, jobAdId: number): Observable<CvPreviewData> => {
+        return this.http.get<CvPreviewData>(getUserCvData(cvId, jobAdId));
     }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { applyForJob, getMyJobApplications } from "../core/controllers";
+import { applyForJob, getMyJobApplications, setPreviewInfo } from "../core/controllers";
 import { JobAdApplication, JobAdApplicationDetails } from "../models";
 
 @Injectable({
@@ -17,5 +17,11 @@ export class JobAdsApplicationsService {
 
     getAllMyJobApplications = (): Observable<JobAdApplicationDetails[]> => {
         return this.http.get<JobAdApplicationDetails[]>(getMyJobApplications());
+    }
+
+    // TODO: create two separate services and move to concreate modules
+
+    setPreviewInfo = (cvId: string, jobAdId: number): Observable<object> => {
+        return this.http.post(setPreviewInfo(), { cvId, jobAdId });
     }
 }

@@ -12,7 +12,7 @@
                 </mat-card-title>
                 <mat-card-subtitle>
                     
-                    <a routerLink="user-cv-preview/{{app.curriculumVitaeId}}">
+                    <a routerLink="{{app.jobAdId}}/user-cv-preview/{{app.curriculumVitaeId}}">
                         <i class="bi bi-eye me-2"></i> CV: {{ app.curriculumVitaeName }}
                     </a>
                 </mat-card-subtitle>
@@ -24,10 +24,10 @@
         <mat-card-content class="mt-2">
             <div class="d-flex justify-content-between">
                 <ng-container>
-                    @if (app.isPreviewed) {
+                    @if (app.firstPreviewDate) {
                     <span class="previewed">
                         <i class="bi bi-eye-fill"></i>
-                        Previewed on: {{ app.previewDate | date }}
+                        Previewed on: {{ app.latestPreviewDate | date }}
                     </span>
                     }
                     @else {
