@@ -8,6 +8,5 @@ export interface AdApplicationInfo {
     email: string;
     phone: string;
     appliedOn: Date;
-    firstPreviewDate: Date;
-    latestPreviewDate: Date;
+    previewDate: Date;
 }

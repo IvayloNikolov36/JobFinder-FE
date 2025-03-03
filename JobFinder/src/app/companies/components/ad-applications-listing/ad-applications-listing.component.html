@@ -1,20 +1,18 @@
 <div class="container-fluid">
     @for(app of applicationsData(); track app.id; let even = $even) {
     <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
-        class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined">
-
+        class="job-ad-card p-1 shadow mb-4 bg-body rounded"
+        appearance="outlined"
+        (click)="openCvPreview(app.curriculumVitaeId, app.jobAdId)"
+    >
         <mat-card-header>
             <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
                 <mat-card-title class="mb-3">
                     <span>{{ app.applicant }}</span>
-                    <i class="bi bi-phone ms-5 me-2"></i><span>{{ app.phone }}</span>
-                    <i class="bi bi-mailbox ms-3 me-2"></i><span>{{ app.email }}</span>
                 </mat-card-title>
-                <mat-card-subtitle>
-                    
-                    <a routerLink="{{app.jobAdId}}/user-cv-preview/{{app.curriculumVitaeId}}">
-                        <i class="bi bi-eye me-2"></i> CV: {{ app.curriculumVitaeName }}
-                    </a>
+                <mat-card-subtitle class="text-info">
+                    <span><i class="bi bi-phone me-2"></i>{{ app.phone }}</span>
+                    <span><i class="bi bi-mailbox ms-3 me-2"></i>{{ app.email }}</span>
                 </mat-card-subtitle>
                 <img mat-card-image class="application-cv-picture" [src]="app.curriculumVitaePictureUrl"
                     alt="CV Picture">
@@ -24,10 +22,10 @@
         <mat-card-content class="mt-2">
             <div class="d-flex justify-content-between">
                 <ng-container>
-                    @if (app.firstPreviewDate) {
-                    <span class="previewed">
+                    @if (app.previewDate) {
+                    <span class="previewed fst-italic">
                         <i class="bi bi-eye-fill"></i>
-                        Previewed on: {{ app.latestPreviewDate | date }}
+                        Previewed on: {{ app.previewDate | date: 'medium' }}
                     </span>
                     }
                     @else {

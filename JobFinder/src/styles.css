@@ -63,10 +63,11 @@ a {
   max-height: 8.125rem;
 }
 
-.previewed,
-.totalAppsText {
+.previewed
+{
   color: rgb(7, 214, 7);
   font-weight: bold;
+  text-shadow: 0.094rem 0.094rem #99ff00
 }
 
 .notPreviewed {

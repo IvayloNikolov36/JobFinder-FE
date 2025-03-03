@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CurriculumVitaesService } from '../services';
-import { CvPreviewData } from '../../models';
+import { ApplicationPreviewInfo, CvPreviewData } from '../../models';
 import { JobAdsApplicationsService } from '../../../services/job-ads-applications.service';
 
 @Component({
   selector: 'jf-user-cv-preview',
-  standalone: false,
   templateUrl: './user-cv-preview.component.html',
-  styleUrl: './user-cv-preview.component.css'
+  standalone: false
 })
 export class UserCvPreviewComponent implements OnInit {
 
@@ -31,14 +30,16 @@ export class UserCvPreviewComponent implements OnInit {
         this.cv = data;
         this.setPreviewed(); // for testing purposes
       });
-
-      
   }
 
   // TODO: create logic after specific time to invoke setPreviewed
 
   setPreviewed(): void {
     this.jobAddApplicationsService.setPreviewInfo(this.userCvId, this.jobAdId)
-      .subscribe();
+      .subscribe({
+        next: (previewInfo: ApplicationPreviewInfo) => {
+          // TODO: set in store or in some kind of collection in the service
+        }
+      });
   }
 }

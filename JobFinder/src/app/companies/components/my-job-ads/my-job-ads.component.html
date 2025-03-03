@@ -30,13 +30,16 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             @if (jobAd.applicationsSent > 0) {
-                            <span class="totalAppsText">
+                            <span class="text-info fw-bold">
                                 <i class="bi bi-file-earmark-check me-1"></i>
                                 {{ jobAd.applicationsSent }} applications received</span>
-                            <span class="notPreviewed">
-                                <i class="bi bi-eye-slash ms-4 me-1"></i>
-                                {{ jobAd.notPreviewedApplications }} not previewed
-                            </span>
+
+                                @if (jobAd.notPreviewedApplications > 0) {
+                                <span class="notPreviewed">
+                                    <i class="bi bi-eye-slash ms-4 me-1"></i>
+                                    {{ jobAd.notPreviewedApplications }} waiting for preview
+                                </span>
+                                }
                             }
                             @else {
                             <span><i class="bi bi-file-earmark-check me-1"></i>No applications yet.</span>
@@ -44,7 +47,7 @@
                         </mat-panel-title>
                         @if (jobAd.applicationsSent > 0) {
                         <mat-panel-description class="d-flex justify-content-end me-5">
-                            <small><i>Expand to reveal more information about the applications</i></small>
+                            <span class="text-info fst-italic">Expand to reveal more information about the applications</span>
                         </mat-panel-description>
                         }
                     </mat-expansion-panel-header>

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { applyForJob, getMyJobApplications, setPreviewInfo } from "../core/controllers";
 import { JobAdApplication, JobAdApplicationDetails } from "../models";
+import { ApplicationPreviewInfo } from "../companies/models";
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,7 @@ export class JobAdsApplicationsService {
 
     // TODO: create two separate services and move to concreate modules
 
-    setPreviewInfo = (cvId: string, jobAdId: number): Observable<object> => {
-        return this.http.post(setPreviewInfo(), { cvId, jobAdId });
+    setPreviewInfo = (cvId: string, jobAdId: number): Observable<ApplicationPreviewInfo> => {
+        return this.http.post<ApplicationPreviewInfo>(setPreviewInfo(), { cvId, jobAdId });
     }
 }
