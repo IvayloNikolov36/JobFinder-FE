@@ -74,3 +74,16 @@ a {
   color: rgb(247, 56, 22);
   font-weight: bold;
 }
+
+/* --- User Profile --- */
+
+.user-avatar {
+  width: 10rem;
+  height: 10rem;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.profile-info-badge {
+  margin-top: 16px;
+}

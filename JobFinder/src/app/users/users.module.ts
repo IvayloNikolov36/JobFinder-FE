@@ -27,6 +27,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTabsModule,
     MatCardModule,
     MatDialogModule,
+    MatBadgeModule,
   ]
 })
 export class UsersModule { }

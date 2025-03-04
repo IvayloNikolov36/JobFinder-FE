@@ -5,3 +5,4 @@ export * from './languages-info.service';
 export * from './personal-details.service';
 export * from './skills.service';
 export * from './work-experiences.service';
+export * from './user-profile.service';

@@ -1,26 +1,65 @@
 <div class="container-fluid">
-  <div class="d-flex justify-content-center">
-    <h4>My Profile</h4>
-  </div>
 
-  <div class="w-50 ms-5">
-    <div>
-      <a routerLink="/my-cvs">
-        <h5>View all CVs</h5>
-      </a>
-      <small>Here you can view all CVs or create a new one.</small>
+  <ng-container *ngIf="userProfileData$ | async as userData">
+
+    <div class="d-flex justify-content-center my-5">
+      <div class="me-3">
+        <img class="user-avatar" [src]="userData.pictureUrl" alt="User Avatar">
+      </div>
+      <div class="my-2 fw-bold">
+        <p>{{ userData.fullName }}</p>
+        <p><i class="bi bi-mailbox me-2"></i>{{ userData.email }}</p>
+        <p><i class="bi bi-telephone me-2"></i>{{ userData.phone }}</p>
+      </div>
     </div>
-    <div class="mt-3">
-      <a routerLink="/profile/job-applications">
-        <h5>Job Applications</h5>
-      </a>
-      <small>Review your job applications.</small>
+
+    <div class="d-flex justify-content-center gap-5">
+      <mat-card appearance="raised" class="white-blue-gradient">
+        <mat-card-header>
+          <mat-card-title>
+            <div [matBadge]="userData.curriculumVitaesCount" matBadgeOverlap="false" matBadgeSize="large">
+              View all Curriculum Vitaes
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-2">
+          <a routerLink="/my-cvs">
+            Here you can view all CVs or create a new one.
+          </a>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="raised" class="white-blue-gradient">
+        <mat-card-header>
+          <mat-card-title>
+            <div [matBadge]="userData.applicationsCount" matBadgeOverlap="false" matBadgeSize="large">
+              Job Applications
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-2">
+          <a routerLink="/profile/job-applications">
+            Here you can preview your job applications.
+          </a>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="raised" class="white-blue-gradient">
+        <mat-card-header>
+          <mat-card-title>
+            <div [matBadge]="userData.subscriptionsCount" matBadgeOverlap="false" matBadgeSize="large">
+              Subscriptions
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-2">
+          <a routerLink="/profile/subscriptions">
+            Here you can manage your job subscriptions for email job notifications.
+          </a>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div class="mt-3">
-      <a routerLink="/profile/subscriptions">
-        <h5>Subscriptions</h5>
-      </a>
-      <small>Here you can manage your job subscriptions."</small>
-    </div>
-  </div>
+
+  </ng-container>
+
 </div>
