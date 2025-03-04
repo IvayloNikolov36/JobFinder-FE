@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateJobAdvertisementComponent, MyJobAdsComponent, UserCvPreviewComponent } from './components';
+import { CompanyProfileComponent, CreateJobAdvertisementComponent, MyJobAdsComponent, UserCvPreviewComponent } from './components';
 
 const routes: Routes = [
+    { path: 'profile', component: CompanyProfileComponent },
     { path: 'ads/create', component: CreateJobAdvertisementComponent },
     { path: 'my-ads', component: MyJobAdsComponent },
     { path: 'my-ads/:id/user-cv-preview/:cvId', component: UserCvPreviewComponent },

@@ -4,12 +4,14 @@ import { SharedModule } from '../shared/shared.module';
 import { CompaniesRoutingModule } from './companies-routing.module';
 import {
   AdApplicationsListingComponent,
+  CompanyProfileComponent,
   CreateJobAdvertisementComponent,
   MyJobAdsComponent,
   UserCvPreviewComponent
 } from './components';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MyJobAdsComponent,
     AdApplicationsListingComponent,
     UserCvPreviewComponent,
+    CompanyProfileComponent,
   ],
   imports: [
     SharedModule,
@@ -24,6 +27,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CommonModule,
     MatCardModule,
     MatExpansionModule,
+    MatBadgeModule,
   ]
 })
 export class CompaniesModule { }

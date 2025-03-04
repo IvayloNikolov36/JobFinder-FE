@@ -6,20 +6,30 @@
         <a class="navbar-brand" routerLink="/home">JF</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/jobs-all">Jobs</a>
+        <a class="nav-link" routerLink="/jobs-all">Ads</a>
       </li>
-      <ng-container *ngIf="isAuthenticated && isCompany">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/companies/ads/create">New ad</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/companies/my-ads">My ads</a>
-        </li>
-      </ng-container>
+
+      @if (isAuthenticated && isCompany) {
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/companies/ads/create">New ad</a>
+      </li>
+      }
     </ul>
 
     <ul class="nav nav-underline justify-content-end">
-      <li *ngIf="!isAuthenticated" jfDropdown class="nav-item dropdown">
+
+      @if (isAuthenticated) {
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="isCompany ? 'companies/profile' : 'users/profile'">
+          <i>{{ userName }}</i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+      }
+      @else {
+      <li jfDropdown class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">Register</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -27,17 +37,10 @@
           <a class="dropdown-item" routerLink="/register-company">as Company</a>
         </div>
       </li>
-      <li *ngIf="!isAuthenticated" class="nav-item">
+      <li class="nav-item me-4">
         <a class="nav-link" routerLink="/login">Login</a>
       </li>
-      <li *ngIf="isAuthenticated && !isCompany" class="nav-item">
-        <a class="nav-link" routerLink="users/profile">
-          <i>{{ userName }}</i>
-        </a>
-      </li>
-      <li *ngIf="isAuthenticated" class="nav-item">
-        <a class="nav-link" (click)="logout()">Logout</a>
-      </li>
+      }
     </ul>
 
   </div>

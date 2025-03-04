@@ -6,3 +6,4 @@ export * from './subscriptions.controller';
 export * from './company-subscriptions.controller';
 export * from './job-ads-applications.controller';
 export * from './user-profile-controller';
+export * from './company-profile.controller';

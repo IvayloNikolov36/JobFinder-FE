@@ -1,0 +1,48 @@
+<div class="container-fluid">
+
+    <ng-container *ngIf="profileData$ | async as profile">
+
+        <div class="d-flex justify-content-center my-5">
+            <div class="me-3">
+                <img class="user-avatar" [src]="profile.logo" alt="Company Logo">
+            </div>
+            <div class="my-2 fw-bold">
+                <p>{{ profile.name }}</p>
+                <p><i class="bi bi-mailbox me-2"></i>{{ profile.email }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-5">
+            <mat-card appearance="raised" class="white-blue-gradient">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div [matBadge]="profile.activeAdsCount" matBadgeOverlap="false" matBadgeSize="large">
+                            Job Advertisements
+                        </div>
+                    </mat-card-title>
+                    <mat-card-subtitle class="mt-1 text-end">
+                        <div [matBadge]="profile.newApplicationsCount" matBadgeOverlap="false" matBadgeSize="large">
+                            <span class="fst-italic me-1">New Applications</span>
+                        </div>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="mt-2">
+                    <a routerLink="/companies/my-ads">
+                        Here you can view all job ads and the applications sent to them.
+                    </a>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card appearance="raised" class="white-blue-gradient">
+                <mat-card-header>
+                    <mat-card-title>New Job Advertisement</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="mt-2">
+                    <a routerLink="/companies/ads/create">Here you can post a new ad</a>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </ng-container>
+
+</div>
