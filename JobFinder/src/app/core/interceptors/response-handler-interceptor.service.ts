@@ -1,7 +1,14 @@
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpResponse,
+  HttpErrorResponse
+} from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -26,18 +33,28 @@ export class ResponseHandlerInterceptorService implements HttpInterceptor {
         catchError((err: HttpErrorResponse) => {
           let errorMessage: string = '';
 
-          if (err.status === 400) {
+          const errorStatus = err.status;
+          const serverError = err.status.toString().startsWith('50');
+
+          if (err.status === 400 || serverError) {
+
             const errors: string[] = err.error.errors;
+
             if (errors !== undefined) {
               errors.forEach((value: string) => {
                 errorMessage = errorMessage.concat(' ' + value);
               });
+
+              if (serverError) {
+                this.toastr.error(err.error.message, err.error.guid);
+              }
             }
           } else {
             errorMessage = err.error;
           }
 
           if (isDevMode()) {
+            console.log(err);
             console.log(errorMessage);
           }
 

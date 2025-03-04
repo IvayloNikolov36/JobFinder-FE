@@ -7,10 +7,6 @@ a {
   text-decoration: none;
 }
 
-.italic-text {
-  font-style: italic;
-}
-
 .cdk-global-overlay-wrapper,
 .cdk-overlay-container {
   z-index: 99999 !important;
