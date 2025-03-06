@@ -40,7 +40,7 @@ import {
 import { getFullName } from '../../../shared/functions';
 
 @Component({
-  selector: 'jf-cv-view',
+  selector: 'jf-cv-view-edit',
   templateUrl: './cv-view-edit.component.html',
   standalone: false
 })

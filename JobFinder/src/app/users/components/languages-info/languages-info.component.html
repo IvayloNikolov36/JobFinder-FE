@@ -1,5 +1,5 @@
 <form [formGroup]="languagesForm">
-  <div *ngFor="let lInfo of languagesInfoFormArray.controls; let i = index" [formGroup]="lInfo" class="mt-2">
+  <div *ngFor="let lInfo of languagesInfoFormArray.controls; let i = index" [formGroup]="lInfo" class="mt-1 mb-3">
 
     <span class="fs-4">Language Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
@@ -62,18 +62,22 @@
         </mat-form-field>
       </div>
   </div>
-  <div class="d-flex justify-content-start gap-2 mt-3">
+
+  <div class="d-flex justify-content-start gap-2 mt-4">
     <button mat-button color="primary" [disabled]="!languagesForm.valid" (click)="addNewLanguageInfoForm()">Add another</button>
     <button mat-button color="primary" (click)="removeLastLanguageInfoForm()">Remove last</button>
   </div>
 
-  <button *ngIf="!isEditMode" type="submit" [disabled]="!languagesForm.valid" mat-button class="mt-2" matStepperNext
-    (click)="emitData()">
-    Next
-  </button>
-
-  <button *ngIf="isEditMode" type="submit" [disabled]="!languagesForm.valid" mat-button class="mt-2"
-    (click)="emitData()">
-    Update
-  </button>
+  <div class="justify-content-start mt-3">
+    @if (isEditMode) {
+    <button type="submit" mat-button [disabled]="!languagesForm.valid" (click)="emitData()">
+      Update
+    </button>
+    }
+    @else {
+    <button type="submit" mat-button matStepperNext [disabled]="!languagesForm.valid" (click)="emitData()">
+      Next
+    </button>
+    }
+  </div>
 </form>
