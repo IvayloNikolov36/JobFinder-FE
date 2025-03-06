@@ -2,14 +2,9 @@
 
     <div class="card-header d-flex justify-content-between">
         <h6>Work Experience</h6>
-        
+
         @if(!viewOnly) {
-        <div class="pointer" (click)="editWorkExperienceData()">
-            <span>
-                <i class="bi bi-pencil me-2"></i>
-                edit
-            </span>
-        </div>
+        <jf-edit-button (onClick)="editWorkExperienceData()" />
         }
     </div>
 

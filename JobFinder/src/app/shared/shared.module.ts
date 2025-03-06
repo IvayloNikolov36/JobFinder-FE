@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
   CoursesDetailsComponent,
+  EditButtonComponent,
   EducationDetailsComponent,
   LanguagesDetailsComponent,  
   PersonalInfoDetailsComponent,
@@ -26,6 +27,7 @@ import {
     SkillsDetailsComponent,
     CoursesDetailsComponent,
     PersonalInfoDetailsComponent,
+    EditButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,7 @@ import {
     SkillsDetailsComponent,
     CoursesDetailsComponent,
     PersonalInfoDetailsComponent,
+    EditButtonComponent,
   ]
 })
 export class SharedModule { }

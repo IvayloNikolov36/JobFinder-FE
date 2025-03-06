@@ -4,12 +4,7 @@
         <h6>Courses and Certificates</h6>
 
         @if(!viewOnly) {
-        <div class="pointer" (click)="onEditClicked()">
-            <span>
-                <i class="bi bi-pencil me-2"></i>
-                edit
-            </span>
-        </div>
+        <jf-edit-button (onClick)="onEditClicked()"/>
         }
     </div>
 

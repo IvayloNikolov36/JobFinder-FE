@@ -4,12 +4,7 @@
         <h6>Education</h6>
 
         @if(!viewOnly) {
-        <div class="pointer" (click)="editEducationData()">
-            <span>
-                <i class="bi bi-pencil me-2"></i>
-                edit
-            </span>
-        </div>
+        <jf-edit-button (onClick)="editEducationData()" />
         }
     </div>
 
@@ -25,5 +20,5 @@
         </div>
         }
     </div>
-    
+
 </div>

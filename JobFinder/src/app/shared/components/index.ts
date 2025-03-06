@@ -5,3 +5,4 @@ export * from './cv-sections/languages-details/languages-details.component';
 export * from './cv-sections/skills-details/skills-details.component';
 export * from './cv-sections/courses-details/courses-details.component';
 export * from './cv-sections/personal-info-details/personal-info-details.component';
+export * from './edit-button/edit-button.component';

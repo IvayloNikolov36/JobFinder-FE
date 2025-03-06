@@ -11,6 +11,10 @@ a {
   cursor: pointer;
 }
 
+.editButton:hover {
+  color: #45a0eb;
+}
+
 .cdk-global-overlay-wrapper,
 .cdk-overlay-container {
   z-index: 99999 !important;
@@ -63,8 +67,7 @@ a {
   max-height: 8.125rem;
 }
 
-.previewed
-{
+.previewed {
   color: rgb(7, 214, 7);
   font-weight: bold;
   text-shadow: 0.094rem 0.094rem #99ff00
