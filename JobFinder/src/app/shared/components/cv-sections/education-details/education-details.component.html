@@ -1,6 +1,17 @@
 <div class="card my-3 w-75 mx-auto">
 
-    <h6 class="card-header">Education</h6>
+    <div class="card-header d-flex justify-content-between">
+        <h6>Education</h6>
+
+        @if(!viewOnly) {
+        <div class="pointer" (click)="editEducationData()">
+            <span>
+                <i class="bi bi-pencil me-2"></i>
+                edit
+            </span>
+        </div>
+        }
+    </div>
 
     <div class="card-body">
         @for (item of educationData; track item.id) {
@@ -14,10 +25,5 @@
         </div>
         }
     </div>
-
-    @if (!viewOnly) {
-    <div class="card-footer text-muted text-center">
-        <a (click)="editEducationData()">edit</a>
-    </div>
-    }
+    
 </div>

@@ -1,5 +1,17 @@
 <div class="card my-3 w-75 mx-auto">
-    <h5 class="card-header">Languages</h5>
+
+    <div class="card-header d-flex justify-content-between">
+        <h6>Languages</h6>
+
+        @if(!viewOnly) {
+        <div class="pointer" (click)="onEditClicked()">
+            <span>
+                <i class="bi bi-pencil me-2"></i>
+                edit
+            </span>
+        </div>
+        }
+    </div>
 
     <div class="card-body">
         @for (item of languagesData; track item.id) {
@@ -14,9 +26,4 @@
         }
     </div>
 
-    @if (!viewOnly) {
-    <div class="card-footer text-muted text-center">
-        <a (click)="onEditClicked()">edit</a>
-    </div>
-    }
 </div>

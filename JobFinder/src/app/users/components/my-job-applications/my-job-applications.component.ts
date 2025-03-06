@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JobAdApplicationDetails } from '../../../models';
-import { JobAdsApplicationsService } from '../../../services/job-ads-applications.service';
+import { UserApplicationsService } from '../../../services';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ export class MyJobApplicationsComponent implements OnInit {
 
   applications$!: Observable<JobAdApplicationDetails[]>;
 
-  constructor(private jobAdsApplicationsService: JobAdsApplicationsService) { }
+  constructor(private jobAdsApplicationsService: UserApplicationsService) { }
 
   ngOnInit(): void {
     this.applications$ = this.jobAdsApplicationsService.getAllMyJobApplications();

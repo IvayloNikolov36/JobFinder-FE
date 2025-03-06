@@ -12,7 +12,8 @@ import { SharedModule } from './shared/shared.module';
 import {
   CompanyDetailsComponent,
   HomeComponent,
-  JobAdvertisementsComponent,
+  JobAdComponent,
+  JobAdsListing,
   JobAdvertisementDetailsComponent,
   LoginComponent,
   PaginationComponent,
@@ -32,11 +33,12 @@ import { PersonalDetailsComponent } from './personal-details/personal-details.co
     HomeComponent,
     RegisterUserComponent,
     RegisterCompanyComponent,
-    JobAdvertisementsComponent,
+    JobAdsListing,
     PaginationComponent,
     JobAdvertisementDetailsComponent,
     CompanyDetailsComponent,
     PersonalDetailsComponent,
+    JobAdComponent,
   ],
   imports: [
     AppRoutingModule,

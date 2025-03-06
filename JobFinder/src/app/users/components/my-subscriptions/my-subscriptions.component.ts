@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionsService } from '../../../services/subscriptions.service';
+import { SubscriptionsService } from '../../../services';
 import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { MatTabChangeEvent } from '@angular/material/tabs';

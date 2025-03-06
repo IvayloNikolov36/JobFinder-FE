@@ -5,7 +5,7 @@
             <img [src]="pictureUrl" class="img-fluid rounded m-1" alt="cv picture">
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-8 d-flex p-4">
             <div class="card-body">
                 <h5 class="card-title">{{ fullName }}</h5>
                 <div class="card-text">
@@ -35,8 +35,11 @@
             </div>
 
             @if (!viewOnly) {
-            <div class="card-footer text-muted text-center">
-                <a (click)="onEditClicked()">edit</a>
+            <div class="pointer" (click)="onEditClicked()">
+                <span>
+                    <i class="bi bi-pencil me-2"></i>
+                    edit
+                </span>
             </div>
             }
         </div>

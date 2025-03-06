@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { PersonalDetails } from '../../../models';
+import { getFullName } from '../../../functions';
 
 @Component({
   selector: 'jf-personal-info-details',
@@ -17,15 +18,11 @@ export class PersonalInfoDetailsComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this.personalDetailsData) {
-      this.fullName = this.getFullName(this.personalDetailsData);
+      this.fullName = getFullName(this.personalDetailsData);
     } 
   }
 
   onEditClicked = (): void => {
     this.onEdit.emit();
-  }
-
-  private getFullName = (details: PersonalDetails): string => {
-    return `${details.firstName} ${details.middleName} ${details.lastName}`;
   }
 }

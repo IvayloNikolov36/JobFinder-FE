@@ -1,9 +1,22 @@
 import { SkillsService } from '../../services/skills.service';
 import { Component, ComponentRef, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
-import { CoursesService, CurriculumVitaesService, EducationsService, LanguagesInfoService, PersonalDetailsService as PersonalInfoService, WorkExperiencesService } from '../../services';
+import {
+  CoursesService,
+  CurriculumVitaesService,
+  EducationsService,
+  LanguagesInfoService,
+  PersonalDetailsService,
+  WorkExperiencesService
+} from '../../services';
 import { ActivatedRoute } from '@angular/router';
 import { CvListingData } from '../../models/cv/cv-listing-data';
-import { EducationOutput, LanguageInfoOutput, PersonalDetailsOutput, SkillsInfoOutput, WorkExperienceOutput } from '../../models/cv';
+import {
+  EducationOutput,
+  LanguageInfoOutput,
+  PersonalDetailsOutput,
+  SkillsInfoOutput,
+  WorkExperienceOutput
+} from '../../models/cv';
 import { EducationsComponent } from '../educations/educations.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Modal } from 'bootstrap';
@@ -16,7 +29,15 @@ import { SkillsInfoComponent } from '../skills-info/skills-info.component';
 import { BasicModel, UpdateResult } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
-import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
+import {
+  CourseCertificateInfo,
+  EducationInfo,
+  LanguageInfo,
+  PersonalDetails,
+  SkillsInfo,
+  WorkExperienceInfo
+} from '../../../shared/models';
+import { getFullName } from '../../../shared/functions';
 
 @Component({
   selector: 'jf-cv-view',
@@ -54,12 +75,13 @@ export class CvViewComponent implements OnInit {
     private coursesService: CoursesService,
     private skillsInfoService: SkillsService,
     private workExperiencesService: WorkExperiencesService,
-    private personalInfoService: PersonalInfoService,
+    private personalInfoService: PersonalDetailsService,
     private nomenclatureService: NomenclatureService) {
 
     this.cvId = this.route.snapshot.params['id'];
 
     const initialValue: BasicModel[] = [] as BasicModel[];
+
     this.educationLevels = toSignal(this.nomenclatureService.getEducationLevels(), { initialValue });
     this.languageTypes = toSignal(this.nomenclatureService.getLanguageTypes(), { initialValue });
     this.languageLevels = toSignal(this.nomenclatureService.getLanguageLevels(), { initialValue });
@@ -267,7 +289,7 @@ export class CvViewComponent implements OnInit {
           .subscribe({
             next: () => {
               this.cv.personalDetails = { ...data };
-              this.fullName = this.getFullName(this.cv.personalDetails);
+              this.fullName = getFullName(this.cv.personalDetails);
               this.toaster.success("Personal Details successfuly updated.");
             },
             error: (err: any) => {
@@ -282,15 +304,10 @@ export class CvViewComponent implements OnInit {
       .subscribe((data: CvListingData) => {
         this.cv = data;
         const details: PersonalDetails = this.cv.personalDetails;
-        this.fullName = this.getFullName(details);
+        this.fullName = getFullName(details);
         const cvSkills: SkillsInfo = this.cv.skills;
         cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
       });
-  }
-
-  private getFullName = (details: PersonalDetails): string => {
-    // TODO: access the ref of the component which has this method
-    return `${details.firstName} ${details.middleName} ${details.lastName}`;
   }
 
   private getDrivingLicensesText = (drivingLicenseCategories: BasicModel[]): string => {

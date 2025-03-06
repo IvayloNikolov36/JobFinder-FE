@@ -1,8 +1,7 @@
 import { Component, computed, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SubscriptionsService } from './../../services/subscriptions.service';
-import { JobAdvertisementsService } from '../../services/job-advertisements.service';
+import { JobAdvertisementsService, SubscriptionsService } from '../../services';
 import { BasicModel, JobAd, JobAdsFilter } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
@@ -15,11 +14,11 @@ const SelectValueNone: number = 0;
 const MinItemsOnPage: number = 5;
 
 @Component({
-  selector: 'jf-job-advertisements',
-  templateUrl: './job-advertisements.component.html',
+  selector: 'jf-job-ads-listing',
+  templateUrl: './job-ads-listing.component.html',
   standalone: false
 })
-export class JobAdvertisementsComponent implements OnInit { // TODO: rename the component and refactor the template
+export class JobAdsListing implements OnInit {
 
   categories!: Signal<BasicModel[]>;
   engagements!: Signal<BasicModel[]>;
@@ -65,10 +64,6 @@ export class JobAdvertisementsComponent implements OnInit { // TODO: rename the 
     this.currentPage = InitialPage;
     this.updateQueryParams({ page: this.currentPage, searchText: this.searchText });
     this.getJobAds();
-  }
-
-  viewAdDetails(jobAdId: number): void {
-    this.router.navigate(['/job-details', jobAdId]);
   }
 
   subscribeForJobs(): void {

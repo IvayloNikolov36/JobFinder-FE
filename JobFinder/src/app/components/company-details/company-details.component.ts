@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SubscriptionsService } from '../../services/subscriptions.service';
+import { SubscriptionsService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

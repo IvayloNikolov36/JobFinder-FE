@@ -1,6 +1,17 @@
 <div class="card my-3 w-75 mx-auto">
 
-    <h5 class="card-header">Skills Info</h5>
+    <div class="card-header d-flex justify-content-between">
+        <h6>Skills Info</h6>
+
+        @if(!viewOnly) {
+        <div class="pointer" (click)="onEditClicked()">
+            <span>
+                <i class="bi bi-pencil me-2"></i>
+                edit
+            </span>
+        </div>
+        }
+    </div>
 
     <div class="card-body">
         <span class="card-text">Computer skills:</span>
@@ -10,9 +21,4 @@
         <span class="card-text">Driving License Categories: {{ skillsData.licenseCategoriesText }}</span>
     </div>
 
-    @if (!viewOnly) {
-    <div class="card-footer text-muted text-center">
-        <a (click)="onEditClicked()">edit</a>
-    </div>
-    }
 </div>

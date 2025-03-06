@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CurriculumVitaesService } from '../services';
+import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../services';
 import { ApplicationPreviewInfo, CvPreviewData } from '../../models';
-import { JobAdsApplicationsService } from '../../../services/job-ads-applications.service';
 
 @Component({
   selector: 'jf-user-cv-preview',
@@ -18,7 +17,7 @@ export class UserCvPreviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cvsService: CurriculumVitaesService,
-    private jobAddApplicationsService: JobAdsApplicationsService
+    private applicationsService: CompanyJobAdApplicationsService
   ) {
     this.userCvId = this.route.snapshot.params['cvId'];
     this.jobAdId = +this.route.snapshot.params['id'];
@@ -35,7 +34,7 @@ export class UserCvPreviewComponent implements OnInit {
   // TODO: create logic after specific time to invoke setPreviewed
 
   setPreviewed(): void {
-    this.jobAddApplicationsService.setPreviewInfo(this.userCvId, this.jobAdId)
+    this.applicationsService.setPreviewInfo(this.userCvId, this.jobAdId)
       .subscribe({
         next: (previewInfo: ApplicationPreviewInfo) => {
           // TODO: set in store or in some kind of collection in the service

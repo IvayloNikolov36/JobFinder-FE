@@ -4,7 +4,7 @@ import { CurriculumVitaesService } from '../../users/services';
 import { CvListing } from '../../users/models/cv';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { JobAdsApplicationsService } from '../../services/job-ads-applications.service';
+import { UserApplicationsService } from '../../services';
 import { JobAdApplication } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
@@ -24,7 +24,7 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cvsService: CurriculumVitaesService,
-    private jobAdsApplicationsService: JobAdsApplicationsService,
+    private jobAdsApplicationsService: UserApplicationsService,
     private toastr: ToastrService) {
     this.jobAdId = parseInt(this.route.snapshot.params['id']);
   }
