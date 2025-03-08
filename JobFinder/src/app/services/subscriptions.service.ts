@@ -20,8 +20,8 @@ export class SubscriptionsService {
 
   constructor(private http: HttpClient) { }
 
-  subscribeForJobsWithCriterias(jobCategoryId: number | null, location: string | null): Observable<object> {
-    return this.http.post(subscribeForJobWithCriterias(), { jobCategoryId, location });
+  subscribeForJobsWithCriterias(jobCategoryId: number | null, cityId: number | null): Observable<object> {
+    return this.http.post(subscribeForJobWithCriterias(), { jobCategoryId, cityId });
   }
 
   unsubscribeForJobsWithCriterias(subscriptionId: number): Observable<object> {

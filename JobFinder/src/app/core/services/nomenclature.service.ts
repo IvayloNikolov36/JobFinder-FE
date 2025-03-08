@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BasicModel } from "../../models";
-import { getBusinessSectorsUrl, getCitizenshipsUrl, getCountriesUrl, getDrivingCategoriesUrl, getEducationLevelsUrl, getGenderOptionsUrl, getJobCategoriesUrl, getJobEngagementsUrl, getLanguageLevelsUrl, getLanguageTypesUrl } from "../controllers";
+import { NomenclatureController } from "../controllers";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -12,42 +12,46 @@ export class NomenclatureService {
   constructor(private http: HttpClient) { }
 
   getEducationLevels(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getEducationLevelsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getEducationLevelsUrl());
   }
 
   getLanguageLevels(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getLanguageLevelsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getLanguageLevelsUrl());
   }
 
   getLanguageTypes(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getLanguageTypesUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getLanguageTypesUrl());
   }
 
   getCountries(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getCountriesUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getCountriesUrl());
   }
 
   getCitizenships(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getCitizenshipsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getCitizenshipsUrl());
   }
 
   getBusinessSectors(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getBusinessSectorsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getBusinessSectorsUrl());
   }
 
   getGenderOptions(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getGenderOptionsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getGenderOptionsUrl());
   }
 
   getDrivingCategories(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getDrivingCategoriesUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getDrivingCategoriesUrl());
   }
 
   getJobCategories(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getJobCategoriesUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getJobCategoriesUrl());
   }
 
   getJobEngagements(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(getJobEngagementsUrl());
+    return this.http.get<BasicModel[]>(NomenclatureController.getJobEngagementsUrl());
+  }
+
+  getCities(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getCititesUrl());
   }
 }

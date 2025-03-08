@@ -3,9 +3,9 @@ export class JobAdsFilter {
         public page: number,
         public itemsCount: number,
         public searchText: string,
-        public location: string,
-        public category: number,
-        public engagement: number,
+        public locationId: number | null,
+        public categoryId: number | null,
+        public engagementId: number | null,
         public sortBy: string,
         public isAscending: boolean
     ) { }

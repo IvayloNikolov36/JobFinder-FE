@@ -5,32 +5,33 @@
       <label class="form-label" for="itemsCount">Items:</label>
       <select id="itemsCount" class="form-control" [(ngModel)]="itemsCount"
         (ngModelChange)="changeItemsCount($event.target.value)">
-        <option *ngFor="let count of itemsCountArray" [value]="count">{{count}}</option>
+        <option *ngFor="let count of itemsCountArray" [value]="count">{{ count }}</option>
       </select>
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="filterLocation">Filter by Location:</label>
-      <select id="filterLocation" class="form-control" [(ngModel)]="location"
+      <select id="filterLocation" class="form-control" [ngModel]="location()"
         (ngModelChange)="changeFilterLocation($event)">
-        <option *ngFor="let l of locationsArray" [value]="l">{{l}}</option>
+        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
+        <option *ngFor="let location of locations()" [value]="location.id">{{ location.name }}</option>
       </select>
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="filterCategory">Filter by Category:</label>
-      <select id="filterCategory" class="form-control" [(ngModel)]="category"
+      <select id="filterCategory" class="form-control" [ngModel]="category()"
         (ngModelChange)="changeFilterCategory($event)">
-        <option value="0">All</option>
+        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
         <option *ngFor="let c of categories()" [value]="c.id">{{ c.name }}</option>
       </select>
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="filterEngagement">Filter by Engagement:</label>
-      <select id="filterEngagement" class="form-control" [(ngModel)]="engagement"
+      <select id="filterEngagement" class="form-control" [ngModel]="engagement()"
         (ngModelChange)="changeFilterEngagement($event)">
-        <option value="0">All</option>
+        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
         <option *ngFor="let e of engagements()" [value]="e['id']">{{e['name']}}</option>
       </select>
     </div>

@@ -17,13 +17,14 @@ export class CreateJobAdvertisementComponent {
   form!: FormGroup;
   jobCategories$!: Observable<BasicModel[]>;
   jobEngagements$!: Observable<BasicModel[]>;
+  locations$!: Observable<BasicModel[]>;
 
   constructor(
-    private jobAdsService: CompanyJobAdsService,
-    private nomenclatureService: NomenclatureService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private jobAdsService: CompanyJobAdsService,
+    private nomenclatureService: NomenclatureService) { }
 
   ngOnInit() {
     this.loadNomenclatureData();
@@ -36,6 +37,10 @@ export class CreateJobAdvertisementComponent {
 
   changeJobEngagement(engagementId: number): void {
     this.form.controls['jobEngagementId'].setValue(engagementId);
+  }
+
+  changeLocation(locationId: number): void {
+    this.form.controls['locationId'].setValue(locationId);
   }
 
   publishAd(): void {
@@ -54,12 +59,13 @@ export class CreateJobAdvertisementComponent {
       maxSalary: [null, [Validators.min(1)]],
       jobCategoryId: [null, [Validators.required]],
       jobEngagementId: [null, [Validators.required]],
-      location: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]]
+      locationId: [null, [Validators.required]]
     });
   }
 
   private loadNomenclatureData(): void {
     this.jobCategories$ = this.nomenclatureService.getJobCategories();
     this.jobEngagements$ = this.nomenclatureService.getJobEngagements();
+    this.locations$ = this.nomenclatureService.getCities();
   }
 }

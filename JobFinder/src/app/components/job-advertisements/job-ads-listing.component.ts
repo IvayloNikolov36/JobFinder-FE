@@ -10,8 +10,7 @@ const ShowFiltersText: string = 'Show Filters';
 const HideFiltersText: string = 'Hide Filters';
 const SortByValues: string[] = ['Published', 'Salary'];
 const InitialPage: number = 1;
-const SelectValueNone: number = 0;
-const MinItemsOnPage: number = 5;
+const MinItemsOnPage: number = 10;
 
 @Component({
   selector: 'jf-job-ads-listing',
@@ -22,6 +21,7 @@ export class JobAdsListing implements OnInit {
 
   categories!: Signal<BasicModel[]>;
   engagements!: Signal<BasicModel[]>;
+  locations!: Signal<BasicModel[]>;
   jobAds: JobAd[] = [];
 
   totalCount!: number;
@@ -30,12 +30,11 @@ export class JobAdsListing implements OnInit {
   filterButtonLabel: string = ShowFiltersText;
   currentPage: number = InitialPage;
   itemsCount: number = MinItemsOnPage;
-  engagement: number = SelectValueNone;
   sortBy: string = SortByValues[0];
   isAscending: boolean = true;
 
-  readonly itemsCountArray: number[] = [MinItemsOnPage, 10, 15, 20, 30, 50, 100];
-  readonly locationsArray: string[] = ['All', 'Sofia', 'Plovdiv', 'Varna', 'Burgas', 'Ruse', 'Stara Zagora', 'Pleven', 'Veliko Tarnovo'];
+  readonly itemsCountArray: number[] = [MinItemsOnPage, 20, 25, 50];
+  readonly allValue = { id: null, name: 'All' };
 
   constructor(
     private route: ActivatedRoute,
@@ -49,11 +48,12 @@ export class JobAdsListing implements OnInit {
     this.getNomenclaturesData();
   }
 
-  location: WritableSignal<string> = signal(this.locationsArray[0]);
-  category: WritableSignal<number> = signal(SelectValueNone);
+  location: WritableSignal<number | null> = signal(null);
+  category: WritableSignal<number | null> = signal(null);
+  engagement: WritableSignal<number | null> = signal(null);
 
   showSubscribeButton: Signal<boolean> = computed(() => {
-    return this.location() !== this.locationsArray[0] || this.category() !== 0;
+    return this.location() !== null || this.category() !== null;
   });
 
   ngOnInit(): void {
@@ -68,9 +68,7 @@ export class JobAdsListing implements OnInit {
 
   subscribeForJobs(): void {
     this.subscriptionsService
-      .subscribeForJobsWithCriterias(
-        this.category() === 0 ? null : this.category(),
-        this.location() === this.locationsArray[0] ? null : this.location())
+      .subscribeForJobsWithCriterias(this.category(), this.location())
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
         error: (err: any) => {
@@ -86,24 +84,24 @@ export class JobAdsListing implements OnInit {
     this.getJobAds();
   }
 
-  changeFilterLocation(selectedLocation: string): void {
+  changeFilterLocation(selectedLocation: number | null): void {
     this.currentPage = InitialPage;
     this.location.set(selectedLocation);
-    this.updateQueryParams({ page: this.currentPage, location: selectedLocation });
+    this.updateQueryParams({ page: this.currentPage, locationId: selectedLocation });
     this.getJobAds();
   }
 
-  changeFilterCategory(selectedCategory: string): void {
+  changeFilterCategory(selectedCategory: number | null): void {
     this.currentPage = InitialPage;
-    this.category.set(parseInt(selectedCategory));
-    this.updateQueryParams({ page: this.currentPage, category: selectedCategory });
+    this.category.set(selectedCategory);
+    this.updateQueryParams({ page: this.currentPage, categoryId: selectedCategory });
     this.getJobAds();
   }
 
-  changeFilterEngagement(selectedEngagement: number): void {
+  changeFilterEngagement(selectedEngagement: number | null): void {
     this.currentPage = InitialPage;
-    this.engagement = selectedEngagement;
-    this.updateQueryParams({ page: this.currentPage, engagement: selectedEngagement });
+    this.engagement.set(selectedEngagement);
+    this.updateQueryParams({ page: this.currentPage, engagementId: selectedEngagement });
     this.getJobAds();
   }
 
@@ -152,7 +150,7 @@ export class JobAdsListing implements OnInit {
       this.searchText,
       this.location(),
       this.category(),
-      this.engagement,
+      this.engagement(),
       this.sortBy,
       this.isAscending);
 
@@ -173,13 +171,15 @@ export class JobAdsListing implements OnInit {
     this.itemsCount = itemsValue === null ? MinItemsOnPage : parseInt(itemsValue);
 
     this.searchText = queryParams.get('searchText') ?? '';
-    this.location.set(queryParams.get('location') ?? this.locationsArray[0]);
 
-    const categoryValue: string | null = queryParams.get('category');
-    this.category.set(categoryValue === null ? SelectValueNone : parseInt(categoryValue));
+    const locationValue: string | null = queryParams.get('locationId');
+    this.location.set(locationValue !== null ? parseInt(locationValue) : null);
 
-    const engagementValue: string | null = queryParams.get('engagement');
-    this.engagement = engagementValue === null ? SelectValueNone : parseInt(engagementValue);
+    const categoryValue: string | null = queryParams.get('categoryId');
+    this.category.set(categoryValue !== null ? parseInt(categoryValue) : null);
+
+    const engagementValue: string | null = queryParams.get('engagementId');
+    this.engagement.set(engagementValue !== null ? parseInt(engagementValue) : null);
 
     this.sortBy = queryParams.get('sortBy') ?? SortByValues[0];
     this.isAscending = queryParams.get('isAscending') === 'true' ? true : false;
@@ -188,5 +188,6 @@ export class JobAdsListing implements OnInit {
   private getNomenclaturesData(): void {
     this.categories = toSignal(this.nomenclatureService.getJobCategories(), { initialValue: [] });
     this.engagements = toSignal(this.nomenclatureService.getJobEngagements(), { initialValue: [] });
+    this.locations = toSignal(this.nomenclatureService.getCities(), { initialValue: [] });
   }
 }

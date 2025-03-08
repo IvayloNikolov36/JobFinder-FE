@@ -1,14 +1,18 @@
 import { environment } from "../../../environments/environment";
 
-const route: string = environment.apiUrl + 'nomenclature';
+const Route: string = environment.apiUrl + 'nomenclature/';
 
-export const getGenderOptionsUrl = (): string => route + '/gender';
-export const getCountriesUrl = (): string => route + '/countries';
-export const getCitizenshipsUrl = (): string => route + '/citizenships';
-export const getBusinessSectorsUrl = (): string => route + '/business-sectors';
-export const getJobCategoriesUrl = (): string => route + '/job-categories';
-export const getJobEngagementsUrl = (): string => route + '/job-engagements';
-export const getEducationLevelsUrl = (): string => route + '/education-levels';
-export const getLanguageTypesUrl = (): string => route + '/language-types';
-export const getLanguageLevelsUrl = (): string => route + '/language-levels';
-export const getDrivingCategoriesUrl = (): string => route + '/driving-categories';
+export class NomenclatureController {
+
+    static getGenderOptionsUrl = (): string => Route + 'gender';
+    static getCountriesUrl = (): string => Route + 'countries';
+    static getCitizenshipsUrl = (): string => Route + 'citizenships';
+    static getBusinessSectorsUrl = (): string => Route + 'business-sectors';
+    static getJobCategoriesUrl = (): string => Route + 'job-categories';
+    static getJobEngagementsUrl = (): string => Route + 'job-engagements';
+    static getEducationLevelsUrl = (): string => Route + 'education-levels';
+    static getLanguageTypesUrl = (): string => Route + 'language-types';
+    static getLanguageLevelsUrl = (): string => Route + 'language-levels';
+    static getDrivingCategoriesUrl = (): string => Route + 'driving-categories';
+    static getCititesUrl = (): string => Route + 'cities';
+}
