@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../services';
 import { ApplicationPreviewInfo, CvPreviewData } from '../../models';
+
+const PreviewedAfterMiliSeconds: number = 3000;
 
 @Component({
   selector: 'jf-user-cv-preview',
   templateUrl: './user-cv-preview.component.html',
   standalone: false
 })
-export class UserCvPreviewComponent implements OnInit {
+export class UserCvPreviewComponent implements OnInit, OnDestroy {
 
   userCvId!: string;
   jobAdId!: number;
   cv!: CvPreviewData;
+  timerId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,17 +30,26 @@ export class UserCvPreviewComponent implements OnInit {
     this.cvsService.getUserCvData(this.userCvId, this.jobAdId)
       .subscribe((data: CvPreviewData) => {
         this.cv = data;
-        this.setPreviewed(); // for testing purposes
+        this.setPreviewed();
       });
   }
 
-  // TODO: create logic after specific time to invoke setPreviewed
+  ngOnDestroy(): void {
+    clearTimeout(this.timerId);
+  }
 
-  setPreviewed(): void {
+  private setPreviewed(): void {
+    this.timerId = setTimeout(() => {
+      this.cvPreviewed();
+    }, PreviewedAfterMiliSeconds);
+  }
+
+  private cvPreviewed(): void {
     this.applicationsService.setPreviewInfo(this.userCvId, this.jobAdId)
       .subscribe({
         next: (previewInfo: ApplicationPreviewInfo) => {
           // TODO: set in store or in some kind of collection in the service
+          console.log(previewInfo);
         }
       });
   }
