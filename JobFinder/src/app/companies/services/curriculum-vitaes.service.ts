@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { getUserCvData } from "../../../core/controllers";
 import { HttpClient } from "@angular/common/http";
-import { CvPreviewData } from "../../models";
+import { getUserCvData } from "../../core/controllers";
+import { CvPreviewData } from "../models";
 
 @Injectable({
     providedIn: 'root'

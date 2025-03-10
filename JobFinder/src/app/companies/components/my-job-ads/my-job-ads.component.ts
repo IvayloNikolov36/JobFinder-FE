@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdApplicationInfo, CompanyAd } from '../../models';
-import { CompanyJobAdApplicationsService, CompanyJobAdsService } from '../services';
+import { CompanyJobAdApplicationsService, CompanyJobAdsService } from '../../services';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({

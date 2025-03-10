@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyProfileService } from '../services';
+import { CompanyProfileService } from '../../services';
 import { CompanyProfileData } from '../../models';
 import { Observable } from 'rxjs';
 

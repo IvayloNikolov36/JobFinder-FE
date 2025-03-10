@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { getJobAllApplications, setPreviewInfo } from "../../../core/controllers";
-import { AdApplicationInfo, ApplicationPreviewInfo } from "../../models";
+import { AdApplicationInfo, ApplicationPreviewInfo } from "../models";
+import { getJobAllApplications, setPreviewInfo } from "../../core/controllers";
 
 @Injectable({
   providedIn: 'root'

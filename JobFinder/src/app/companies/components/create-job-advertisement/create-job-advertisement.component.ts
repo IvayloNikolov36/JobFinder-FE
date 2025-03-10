@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { BasicModel } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
-import { CompanyJobAdsService } from '../services';
+import { CompanyJobAdsService } from '../../services';
 
 @Component({
   selector: 'jf-create-job-advertisement',

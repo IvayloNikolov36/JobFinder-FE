@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../services';
+import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../../services';
 import { ApplicationPreviewInfo, CvPreviewData } from '../../models';
 
 const PreviewedAfterMiliSeconds: number = 3000;

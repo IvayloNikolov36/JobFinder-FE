@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { createAd, getCompanyAds } from "../../../core/controllers";
-import { JobAd } from "../../../models";
-import { CompanyAd } from "../../models";
+import { JobAd } from "../../models";
+import { createAd, getCompanyAds } from "../../core/controllers";
+import { CompanyAd } from "../models";
 
 @Injectable({
     providedIn: "root"
