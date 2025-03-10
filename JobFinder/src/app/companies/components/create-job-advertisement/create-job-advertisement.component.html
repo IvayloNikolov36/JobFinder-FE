@@ -84,9 +84,9 @@
 
     <div class="mb-3 w-75 mx-auto">
       <div class="mb-3">
-        <label class="form-label" for="engagement">Location</label>
-        <select id="engagement" class="form-control" (change)="changeLocation($any($event).target.value)"
-          formControlName="jobEngagementId">
+        <label class="form-label" for="location">Location</label>
+        <select id="location" class="form-control" (change)="changeLocation($any($event).target.value)"
+          formControlName="locationId">
           <option [value]="null" disabled>Choose Location</option>
           <option *ngFor="let location of locations$ | async" [value]="location.id">
             {{ location.name }}

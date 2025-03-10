@@ -1,17 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
-  getAllMyJobSubscriptions,
   getMyCompanySubscriptions,
   subscribeForCompanyJobs,
-  subscribeForJobWithCriterias,
+  SubscriptionsController,
   unsubscribeForAllCompanyJobs,
   unsubscribeForCompanyJobs,
-  unsubscribeFromAllJobs,
-  unsubscribeFromJobs
 } from "../core/controllers";
-import { Observable } from "rxjs";
 import { CompanySubscription, JobSubscription } from "../users/models";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +17,20 @@ export class SubscriptionsService {
 
   constructor(private http: HttpClient) { }
 
-  subscribeForJobsWithCriterias(jobCategoryId: number | null, cityId: number | null): Observable<object> {
-    return this.http.post(subscribeForJobWithCriterias(), { jobCategoryId, cityId });
+  subscribeForJobsWithCriterias(jobCategoryId: number | null, locationId: number | null): Observable<object> {
+    return this.http.post(SubscriptionsController.subscribeForJobWithCriterias(), { jobCategoryId, locationId });
   }
 
   unsubscribeForJobsWithCriterias(subscriptionId: number): Observable<object> {
-    return this.http.get<object>(unsubscribeFromJobs(subscriptionId));
+    return this.http.get<object>(SubscriptionsController.unsubscribeFromJobs(subscriptionId));
   }
 
   unsubscribeForAllJobsWithCriterias(): Observable<object> {
-    return this.http.get<object>(unsubscribeFromAllJobs());
+    return this.http.get<object>(SubscriptionsController.unsubscribeFromAllJobs());
   }
 
   getAllMyJobSubscriptions(): Observable<JobSubscription[]> {
-    return this.http.get<JobSubscription[]>(getAllMyJobSubscriptions());
+    return this.http.get<JobSubscription[]>(SubscriptionsController.getAllMyJobSubscriptions());
   }
 
   subscribeForCompanyJobs(companyId: number): Observable<object> {
