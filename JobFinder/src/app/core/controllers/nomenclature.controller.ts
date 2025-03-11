@@ -15,4 +15,5 @@ export class NomenclatureController {
     static getLanguageLevelsUrl = (): string => Route + 'language-levels';
     static getDrivingCategoriesUrl = (): string => Route + 'driving-categories';
     static getCititesUrl = (): string => Route + 'cities';
+    static getCurrenciesUrl = (): string => Route + 'currencies';
 }

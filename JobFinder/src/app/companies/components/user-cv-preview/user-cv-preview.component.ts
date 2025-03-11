@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../../services';
-import { ApplicationPreviewInfo, CvPreviewData } from '../../models';
+import { CvPreviewData } from '../../models';
 
 const PreviewedAfterMiliSeconds: number = 3000;
 
@@ -45,12 +45,8 @@ export class UserCvPreviewComponent implements OnInit, OnDestroy {
   }
 
   private cvPreviewed(): void {
-    this.applicationsService.setPreviewInfo(this.userCvId, this.jobAdId)
-      .subscribe({
-        next: (previewInfo: ApplicationPreviewInfo) => {
-          // TODO: set in store or in some kind of collection in the service
-          console.log(previewInfo);
-        }
-      });
+    this.applicationsService
+      .setPreviewInfo(this.userCvId, this.jobAdId)
+      .subscribe();
   }
 }

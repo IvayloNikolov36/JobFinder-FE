@@ -17,9 +17,7 @@ export class MyJobAdsComponent implements OnInit {
 
   constructor(
     private jobAdsService: CompanyJobAdsService,
-    private jobAdApplicationsService: CompanyJobAdApplicationsService) {
-
-  }
+    private jobAdApplicationsService: CompanyJobAdApplicationsService) { }
 
   readonly applicationsDataResource = rxResource({
     request: () => ({
@@ -32,7 +30,6 @@ export class MyJobAdsComponent implements OnInit {
   });
 
   private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
-
 
   ngOnInit(): void {
     this.jobAds$ = this.jobAdsService.getCompanyAds();

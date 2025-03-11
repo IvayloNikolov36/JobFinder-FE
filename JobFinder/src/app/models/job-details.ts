@@ -3,7 +3,9 @@ export interface JobDetails {
   description: string;
   position: string;
   postedOn: string;
-  salary: string;
+  minSalary: number | null;
+  maxSalary: number | null;
+  currency: string | null;
   companyLogo: string;
   companyName: string;
   jobEngagement: string;

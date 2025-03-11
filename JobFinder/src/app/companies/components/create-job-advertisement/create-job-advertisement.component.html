@@ -37,7 +37,7 @@
     <div class="d-flex justify-content-around">
       <div class="mb-3 w-25">
         <div class="mb-3">
-          <label class="form-label" for="MinSalary">Min Salary</label>
+          <label class="form-label" for="minSalary">Min Salary</label>
           <input class="form-control" id="minSalary" formControlName="minSalary" type="number" min="1">
         </div>
         <div class="alert alert-danger" *ngIf="form.get('minSalary')?.errors?.['min']">
@@ -53,6 +53,20 @@
           Value must be a positive number!
         </div>
       </div>
+
+      <div class="mb-3 w-25">
+        <label class="form-label" for="currency">Currency</label>
+        <select id="currency" class="form-control" (change)="changeCurrency($any($event).target.value)"
+          formControlName="currencyId">
+          <option [value]="null">Choose Currency</option>
+          <option *ngFor="let currency of currencies$ | async" [value]="currency.id">
+            {{ currency.name }}
+          </option>
+        </select>
+        <div class="alert alert-danger" *ngIf="form.get('currencyId')?.errors?.['required']">Currency is required!
+        </div>
+      </div>
+
     </div>
 
     <div class="row">

@@ -1,12 +1,14 @@
 export interface JobAd {
   id: number;
-  position: string;
-  postedOn: string;
-  salary: string;
   companyId: number;
   companyLogo: string;
   companyName: string;
+  position: string;
+  postedOn: string;
   jobCategory: string;
   jobEngagement: string;
+  minSalary: number | null;
+  maxSalary: number | null;
+  currency: string | null;
   location: string;
 }

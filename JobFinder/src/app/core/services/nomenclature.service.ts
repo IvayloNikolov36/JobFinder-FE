@@ -54,4 +54,8 @@ export class NomenclatureService {
   getCities(): Observable<BasicModel[]> {
     return this.http.get<BasicModel[]>(NomenclatureController.getCititesUrl());
   }
+
+  getCurrcencies(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getCurrenciesUrl());
+  }
 }

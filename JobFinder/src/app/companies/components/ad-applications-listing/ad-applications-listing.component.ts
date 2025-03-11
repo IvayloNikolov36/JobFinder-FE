@@ -4,9 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'jf-ad-applications-listing',
-  standalone: false,
   templateUrl: './ad-applications-listing.component.html',
-  styleUrl: './ad-applications-listing.component.css'
+  standalone: false
 })
 export class AdApplicationsListingComponent {
 
