@@ -1,8 +1,5 @@
 <mat-card [class]="{'me-5': isEven, 'ms-5': !isEven, 'white-blue-gradient': isEven, 'blue-white-gradient': !isEven}"
-    class="job-ad-card p-1 shadow mb-4 bg-body rounded"
-    appearance="outlined"
-    (click)="viewAdDetails(ad.id)"
->
+    class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(ad.id)">
     <mat-card-header>
         <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
             <mat-card-title class="mb-3">
@@ -23,9 +20,11 @@
     <mat-card-content class="mt-2">
         <div class="d-flex justify-content-between">
             <span>{{ ad.companyName }}</span>
+            @if (ad.salary) {
             <div class="salary-container">
-                {{ ad.minSalary }}
+                {{ ad.salary }}
             </div>
+            }
             <span class="mx-0">
                 <i class="bi bi-calendar2-week me-2"></i>{{ ad.postedOn | date }}
             </span>

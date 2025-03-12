@@ -16,9 +16,11 @@
         <mat-card-content class="mt-2">
 
             <div class="d-flex justify-content-between">
+                @if (jobAd.salary) {
                 <div class="salary-container">
-                    {{ jobAd.minSalary }}
+                    {{ jobAd.salary }}
                 </div>
+                }
                 <span class="mx-0">
                     <i class="bi bi-calendar2-week me-2"></i>{{ jobAd.publishDate | date }}
                 </span>
@@ -34,12 +36,12 @@
                                 <i class="bi bi-file-earmark-check me-1"></i>
                                 {{ jobAd.applicationsSent }} applications received</span>
 
-                                @if (jobAd.notPreviewedApplications > 0) {
-                                <span class="notPreviewed">
-                                    <i class="bi bi-eye-slash ms-4 me-1"></i>
-                                    {{ jobAd.notPreviewedApplications }} waiting for preview
-                                </span>
-                                }
+                            @if (jobAd.notPreviewedApplications > 0) {
+                            <span class="notPreviewed">
+                                <i class="bi bi-eye-slash ms-4 me-1"></i>
+                                {{ jobAd.notPreviewedApplications }} waiting for preview
+                            </span>
+                            }
                             }
                             @else {
                             <span><i class="bi bi-file-earmark-check me-1"></i>No applications yet.</span>
@@ -47,7 +49,8 @@
                         </mat-panel-title>
                         @if (jobAd.applicationsSent > 0) {
                         <mat-panel-description class="d-flex justify-content-end me-5">
-                            <span class="text-info fst-italic">Expand to reveal more information about the applications</span>
+                            <span class="text-info fst-italic">Expand to reveal more information about the
+                                applications</span>
                         </mat-panel-description>
                         }
                     </mat-expansion-panel-header>

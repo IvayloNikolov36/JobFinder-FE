@@ -4,10 +4,11 @@ export interface CompanyAd {
     jobCategory: string;
     minSalary: number | null;
     maxSalary: number | null;
-    currency: number | null;
+    currency: string | null;
     location: string;
     applicationsSent: number;
     notPreviewedApplications: number;
     isActive: boolean;
     publishDate: Date;
+    salary: string | null;
 }

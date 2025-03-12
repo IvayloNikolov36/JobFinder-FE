@@ -11,4 +11,5 @@ export interface JobAd {
   maxSalary: number | null;
   currency: string | null;
   location: string;
+  salary: string | null;
 }

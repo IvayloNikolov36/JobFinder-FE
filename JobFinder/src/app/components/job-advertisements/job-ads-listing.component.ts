@@ -5,6 +5,7 @@ import { JobAdvertisementsService, SubscriptionsService } from '../../services';
 import { BasicModel, JobAd, JobAdsFilter } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
+import { renderSalary } from '../../shared/functions';
 
 const ShowFiltersText: string = 'Show Filters';
 const HideFiltersText: string = 'Hide Filters';
@@ -157,7 +158,11 @@ export class JobAdsListing implements OnInit {
     this.jobAdsService.getAll(filterModel)
       .subscribe((data: any) => {
         this.totalCount = data.totalCount;
-        this.jobAds = data.data;
+        const ads = data.data as JobAd[];
+        this.jobAds = ads.map((a: JobAd) => {
+          a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency);
+          return a;
+        });
       });
   }
 
