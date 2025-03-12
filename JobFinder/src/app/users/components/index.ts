@@ -11,3 +11,4 @@ export * from './user-curriculum-vitaes/user-curriculum-vitaes.component';
 export * from './work-experiences/work-experience-info.component';
 export * from './my-subscriptions/my-subscriptions.component';
 export * from './my-job-applications/my-job-applications.component';
+export * from './jobs-subscription/jobs-subscription.component';

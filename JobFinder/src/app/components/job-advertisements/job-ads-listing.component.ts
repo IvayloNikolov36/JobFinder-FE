@@ -6,6 +6,7 @@ import { BasicModel, JobAd, JobAdsFilter } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { renderSalary } from '../../shared/functions';
+import { JobSubscriptionCriterias } from '../../users/models';
 
 const ShowFiltersText: string = 'Show Filters';
 const HideFiltersText: string = 'Hide Filters';
@@ -68,8 +69,18 @@ export class JobAdsListing implements OnInit {
   }
 
   subscribeForJobs(): void {
+    const subscriptionCriterias: JobSubscriptionCriterias = {
+      jobCategoryId: this.category(),
+      jobEngagementId: this.engagement(),
+      locationId: this.location(),
+      reccuringTypeId: 1, // TODO: fix the model
+      intership: false,
+      specifiedSalary: false,
+      searchTerm: this.searchText
+    };
+
     this.subscriptionsService
-      .subscribeForJobsWithCriterias(this.category(), this.location())
+      .subscribeForJobsWithCriterias(subscriptionCriterias)
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
         error: (err: any) => {

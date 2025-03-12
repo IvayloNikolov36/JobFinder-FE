@@ -58,4 +58,8 @@ export class NomenclatureService {
   getCurrcencies(): Observable<BasicModel[]> {
     return this.http.get<BasicModel[]>(NomenclatureController.getCurrenciesUrl());
   }
+
+  getReccuringTypes(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getReccuringTypesUrl());
+  }
 }

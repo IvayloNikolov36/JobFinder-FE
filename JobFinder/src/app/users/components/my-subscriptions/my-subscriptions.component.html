@@ -23,9 +23,17 @@
         </mat-tab>
         <mat-tab [label]="jobsTabLabel">
             <ng-template matTabContent>
-                <div class="text-end my-3 pt-3">
-                    <i>Remove all jobs subscriptions:</i>
-                    <a mat-button class="ms-2" (click)="unsubscribeForAllJobs()" target="_blank">Unsubscribe</a>
+                <div class="d-flex justify-content-between w-75 mx-auto pt-3">
+                    <div>
+                        <a mat-raised-button class="ms-2" (click)="showAddNewSubscriptions()" target="_blank">Add new
+                            Subscriptions</a>
+                    </div>
+                    @if (jobSubscriptions.length > 0) {
+                    <div>
+                        <i>Remove all jobs subscriptions:</i>
+                        <a mat-button class="ms-2" (click)="unsubscribeForAllJobs()" target="_blank">Unsubscribe</a>
+                    </div>
+                    }
                 </div>
                 <div class="d-flex flex-wrap my-3">
                     @for(jobSub of jobSubscriptions; track jobSub.id) {
@@ -46,7 +54,7 @@
                     </div>
                     }
                 </div>
-            </ng-template>            
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
 </div>

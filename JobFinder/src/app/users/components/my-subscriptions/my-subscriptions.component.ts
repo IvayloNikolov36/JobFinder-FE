@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionsService } from '../../../services';
 import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { SubscriptionsService } from '../../services';
 
 @Component({
   selector: 'jf-my-subscriptions',
@@ -35,6 +35,10 @@ export class MySubscriptionsComponent implements OnInit {
           this.companysubscriptions = this.companysubscriptions.filter(cs => cs.companyId !== companyId);
         }
       });
+  }
+
+  showAddNewSubscriptions(): void {
+
   }
 
   unsubscribeAll(): void {

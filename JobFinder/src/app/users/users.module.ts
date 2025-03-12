@@ -5,6 +5,7 @@ import {
   CvInfoComponent,
   CvViewComponent,
   EducationsComponent,
+  JobsSubscriptionComponent,
   LanguagesInfoComponent,
   MySubscriptionsComponent,
   PersonalDetailsComponent,
@@ -44,6 +45,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     CvViewComponent,
     MySubscriptionsComponent,
     MyJobApplicationsComponent,
+    JobsSubscriptionComponent,
   ],
   imports: [
     SharedModule,
