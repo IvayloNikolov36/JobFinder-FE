@@ -6,7 +6,7 @@ import { BasicModel, JobAd, JobAdsFilter } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { renderSalary } from '../../shared/functions';
-import { JobSubscriptionCriterias } from '../../users/models';
+import { JobsSubscriptionCriterias } from '../../shared/models';
 
 const ShowFiltersText: string = 'Show Filters';
 const HideFiltersText: string = 'Hide Filters';
@@ -69,7 +69,7 @@ export class JobAdsListing implements OnInit {
   }
 
   subscribeForJobs(): void {
-    const subscriptionCriterias: JobSubscriptionCriterias = {
+    const subscriptionCriterias: JobsSubscriptionCriterias = {
       jobCategoryId: this.category(),
       jobEngagementId: this.engagement(),
       locationId: this.location(),

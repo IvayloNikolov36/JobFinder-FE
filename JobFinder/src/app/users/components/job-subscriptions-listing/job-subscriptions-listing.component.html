@@ -1,0 +1,37 @@
+<div class="d-flex flex-wrap justify-content-start gap-3">
+    @for(jobSub of jobSubscriptions; track jobSub.id) {
+    <div class="d-flex align-items-stretch my-2">
+        <mat-card appearance="outlined" class="job-subscription-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="d-flex mb-3 fs-4">
+                        <span>Location: {{ jobSub.location }}</span>
+                    </div>
+                    <div class="d-flex mb-3 fs-5">
+                        <span>Category: {{ jobSub.jobCategory }}</span>
+                    </div>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <div class="d-flex justify-content-start gap-3 mb-2 fst-italic">
+                        <span>Engagement: {{ jobSub.jobEngagement }}</span>
+                        <span>Reccuring: {{ jobSub.reccuringType }}</span>
+                    </div>
+
+                    @if (jobSub.specifiedSalary) {
+                    <div class="fst-italic mb-2">Only jobs with specified salary</div>
+                    }
+                    @if (jobSub.intership) {
+                    <div class="fst-italic mb-2">Only intership jobs</div>
+                    }
+                    @if (jobSub.searchTerm) {
+                    <div class="fst-italic mb-2">Jobs with term '{{ jobSub.searchTerm }}' in title</div>
+                    }
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+                <button mat-button (click)="unsubscribeForJobs(jobSub.id)">Unsubscribe</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    }
+</div>

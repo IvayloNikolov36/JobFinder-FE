@@ -1,0 +1,77 @@
+<div class="container my-3">
+    <form [formGroup]="form">
+
+        <div class="d-flex justify-content-start gap-4 mt-4">
+            <mat-form-field>
+                <mat-label>Reccuring type</mat-label>
+                <mat-select formControlName="reccuringTypeId">
+                    @for (type of reccuringTypes$ | async; track type.id) {
+                    <mat-option [value]="type.id">{{ type.name }}</mat-option>
+                    }
+                </mat-select>
+                <mat-hint>Select reccuring type.</mat-hint>
+                @if (form.controls['reccuringTypeId'].touched && form.controls['reccuringTypeId'].errors?.['required'])
+                {
+                <mat-error>Reccuring type is required!</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Job Category</mat-label>
+                <mat-select formControlName="jobCategoryId">
+                    <mat-option [value]="null">Select Job Category</mat-option>
+                    @for (category of jobCategories$ | async; track category.id) {
+                    <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                    }
+                </mat-select>
+                <mat-hint>Select Job Category.</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Job Engagement</mat-label>
+                <mat-select formControlName="jobEngagementId">
+                    <mat-option [value]="null">Select Job Engagement</mat-option>
+                    @for (engagement of jobEngagements$ | async; track engagement.id) {
+                    <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
+                    }
+                </mat-select>
+                <mat-hint>Select Job Engagement.</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="locationId">
+                    <mat-option [value]="null">Select Location</mat-option>
+                    @for (location of locations$ | async; track location.id) {
+                    <mat-option [value]="location.id">{{ location.name }}</mat-option>
+                    }
+                </mat-select>
+                <mat-hint>Select Location.</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex justify-content-start gap-4 mt-4">
+
+            <mat-form-field>
+                <mat-label>Search Term</mat-label>
+                <input matInput formControlName="searchTerm">
+                <mat-hint>Input search term for the title of the jobs.</mat-hint>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="intership">Intership Jobs</mat-checkbox>
+
+            <mat-checkbox formControlName="specifiedSalary">Jobs with specified salary</mat-checkbox>
+
+        </div>
+
+        @if (subscriptionCriteriasErrorMessage) {
+        <mat-error class="mt-5 text-center">{{ subscriptionCriteriasErrorMessage }}</mat-error>
+        }
+
+        <div class="d-flex justify-content-center mt-5">
+            <button type="submit" mat-raised-button [disabled]="!form.valid" (click)="submitSubscriptionForm()">
+                Subscribe
+            </button>
+        </div>
+    </form>
+</div>

@@ -7,8 +7,9 @@ import {
   unsubscribeForAllCompanyJobs,
   unsubscribeForCompanyJobs,
 } from "../../core/controllers";
-import { CompanySubscription, JobSubscription, JobSubscriptionCriterias } from "../models";
+import { CompanySubscription, JobSubscription } from "../models";
 import { Observable } from "rxjs";
+import { JobsSubscriptionCriterias } from "../../shared/models";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class SubscriptionsService {
 
   constructor(private http: HttpClient) { }
 
-  subscribeForJobsWithCriterias(criterias: JobSubscriptionCriterias): Observable<object> {
-    return this.http.post(SubscriptionsController.subscribeForJobWithCriterias(), criterias);
+  subscribeForJobsWithCriterias(criterias: JobsSubscriptionCriterias): Observable<JobSubscription> {
+    return this.http.post<JobSubscription>(SubscriptionsController.subscribeForJobWithCriterias(), criterias);
   }
 
   unsubscribeForJobsWithCriterias(subscriptionId: number): Observable<object> {

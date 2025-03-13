@@ -5,7 +5,8 @@ import {
   CvInfoComponent,
   CvViewComponent,
   EducationsComponent,
-  JobsSubscriptionComponent,
+  CreateJobsSubscriptionsComponent,
+  JobSubscriptionsListingComponent,
   LanguagesInfoComponent,
   MySubscriptionsComponent,
   PersonalDetailsComponent,
@@ -29,6 +30,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     CvViewComponent,
     MySubscriptionsComponent,
     MyJobApplicationsComponent,
-    JobsSubscriptionComponent,
+    CreateJobsSubscriptionsComponent,
+    JobSubscriptionsListingComponent,
   ],
   imports: [
     SharedModule,
@@ -63,6 +66,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatCardModule,
     MatDialogModule,
     MatBadgeModule,
+    MatExpansionModule,
   ]
 })
 export class UsersModule { }

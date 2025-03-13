@@ -3,12 +3,12 @@ import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SubscriptionsService } from '../../services';
+import { JobsSubscriptionCriterias } from '../../../shared/models';
 
 @Component({
   selector: 'jf-my-subscriptions',
-  standalone: false,
   templateUrl: './my-subscriptions.component.html',
-  styleUrl: './my-subscriptions.component.css'
+  standalone: false
 })
 export class MySubscriptionsComponent implements OnInit {
 
@@ -27,6 +27,10 @@ export class MySubscriptionsComponent implements OnInit {
     this.getMyCompanySubscriptions();
   }
 
+  onNewJobSubscriptionCreated(jobsSubscription: JobSubscription): void {
+    this.jobSubscriptions.push(jobsSubscription);
+  }
+
   unsubscribe(companyId: number, companyName: string): void {
     this.subscriptionsService.unsubscribeForCompanyJobs(companyId)
       .subscribe({
@@ -37,10 +41,6 @@ export class MySubscriptionsComponent implements OnInit {
       });
   }
 
-  showAddNewSubscriptions(): void {
-
-  }
-
   unsubscribeAll(): void {
     this.subscriptionsService.unsubscribeFromAllCompanies()
       .subscribe({
@@ -48,7 +48,7 @@ export class MySubscriptionsComponent implements OnInit {
       });
   }
 
-  unsubscribeForJobs(jobSubscriptionId: number): void {
+  unsubscribeJobs(jobSubscriptionId: number): void {
     this.subscriptionsService.unsubscribeForJobsWithCriterias(jobSubscriptionId)
       .subscribe({
         next: () => {

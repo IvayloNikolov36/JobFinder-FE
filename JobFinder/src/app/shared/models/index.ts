@@ -4,3 +4,4 @@ export * from './language-info';
 export * from './personal-details';
 export * from './skills-info';
 export * from './work-experience-info';
+export * from './jobs-subscription-criterias';

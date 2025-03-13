@@ -7,9 +7,8 @@ import { renderSalary } from '../../../shared/functions';
 
 @Component({
   selector: 'jf-my-job-ads',
-  standalone: false,
   templateUrl: './my-job-ads.component.html',
-  styleUrl: './my-job-ads.component.css'
+  standalone: false
 })
 export class MyJobAdsComponent implements OnInit {
 
