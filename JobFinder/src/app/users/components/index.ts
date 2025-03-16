@@ -13,3 +13,4 @@ export * from './my-subscriptions/my-subscriptions.component';
 export * from './my-job-applications/my-job-applications.component';
 export * from './jobs-subscription/create-jobs-subscriptions.component';
 export * from './job-subscriptions-listing/job-subscriptions-listing.component';
+export * from './company-details/company-details.component';

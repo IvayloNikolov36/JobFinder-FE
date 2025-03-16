@@ -6,5 +6,5 @@ export * from './home/home.component';
 export * from './login/login.component';
 export * from './job-advertisements/job-ads-listing.component';
 export * from './job-advertisement-details/job-advertisement-details.component';
-export * from './company-details/company-details.component';
+export * from '../users/components/company-details/company-details.component';
 export * from './job-ad/job-ad.component';

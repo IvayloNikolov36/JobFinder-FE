@@ -38,7 +38,7 @@ export class SubscriptionsService {
     return this.http.get<object>(subscribeForCompanyJobs(companyId));
   }
 
-  unsubscribeForCompanyJobs(companyId: number): Observable<object> {
+  unsubscribeFromCompany(companyId: number): Observable<object> {
     return this.http.get<object>(unsubscribeForCompanyJobs(companyId));
   }
 

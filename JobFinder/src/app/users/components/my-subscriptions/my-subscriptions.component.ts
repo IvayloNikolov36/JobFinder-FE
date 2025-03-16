@@ -32,7 +32,7 @@ export class MySubscriptionsComponent implements OnInit {
   }
 
   unsubscribe(companyId: number, companyName: string): void {
-    this.subscriptionsService.unsubscribeForCompanyJobs(companyId)
+    this.subscriptionsService.unsubscribeFromCompany(companyId)
       .subscribe({
         next: () => {
           this.toastr.success(`Successfully unsubscribed from company ${companyName}.`);

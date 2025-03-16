@@ -7,7 +7,6 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { AuthGuard, CompanyGuard, IsNotSignedInGuard } from './core/guards';
 import { JobAdsListing } from './components/job-advertisements/job-ads-listing.component';
 import { JobAdvertisementDetailsComponent } from './components/job-advertisement-details/job-advertisement-details.component';
-import { CompanyDetailsComponent } from './components';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -17,7 +16,6 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'jobs-all', component: JobAdsListing },
   { path: 'job-details/:id', component: JobAdvertisementDetailsComponent },
-  { path: 'company/:id', component: CompanyDetailsComponent },
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canActivate: [AuthGuard] },
   { path: 'companies', loadChildren: () => import('./companies/companies.module').then(c => c.CompaniesModule), canActivate: [CompanyGuard] },
 ];
