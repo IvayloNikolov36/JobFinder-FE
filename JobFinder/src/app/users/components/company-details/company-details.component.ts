@@ -13,7 +13,7 @@ import { CompaniesService } from '../../services';
 export class CompanyDetailsComponent implements OnInit {
 
   companyId!: number;
-  companyDetails!: CompanyDetailsUser;
+  companyDetails!: CompanyDetailsUser | null;
 
   constructor(
     private route: ActivatedRoute,

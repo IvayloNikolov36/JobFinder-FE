@@ -8,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../../shared/models';
 import { JobSubscription } from '../../models';
 
-
 @Component({
   selector: 'jf-create-jobs-subscriptions',
   templateUrl: './create-jobs-subscriptions.component.html',
@@ -40,6 +39,11 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
 
   submitSubscriptionForm(): void {
     const subscription: JobsSubscriptionCriterias = this.form.value;
+
+    if (subscription.searchTerm?.trim()?.length === 0) {
+      subscription.searchTerm = null;
+    }
+
     const areCriteriasValid: boolean = this.areSelectedJobSubscriptionCriteriasValid(subscription);
 
     if (!areCriteriasValid) {
@@ -63,7 +67,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
     return criterias.jobCategoryId !== null
       || criterias.jobEngagementId !== null
       || criterias.locationId !== null
-      || (criterias.searchTerm !== null && criterias.searchTerm.length > 0)
+      || criterias.searchTerm !== null
       || criterias.intership
       || criterias.specifiedSalary;
   }
@@ -74,8 +78,6 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
     this.jobCategories$ = this.nomenclatureService.getJobCategories();
     this.locations$ = this.nomenclatureService.getCities();
   }
-
-
 
   private initializeForm(): void {
     this.form = this.formBuilder.group({
