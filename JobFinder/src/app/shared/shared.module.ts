@@ -15,6 +15,7 @@ import {
   SkillsDetailsComponent,
   WorkExperienceDetailsComponent
 } from './components';
+import { CustomMaterialModule } from '../custom-material/custom-material.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {
   imports: [
     CommonModule,
     RouterModule,
+    CustomMaterialModule,
     ReactiveFormsModule,
     FormsModule,
     ToastrModule.forRoot({
@@ -42,6 +44,7 @@ import {
   ],
   exports: [
     CommonModule,
+    CustomMaterialModule,
     ReactiveFormsModule,
     FormsModule,
     NavbarComponent,

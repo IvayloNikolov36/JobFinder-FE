@@ -20,9 +20,6 @@ import {
   RegisterCompanyComponent,
   RegisterUserComponent
 } from './components';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import { CompaniesModule } from './companies/companies.module';
 import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 
@@ -47,9 +44,6 @@ import { PersonalDetailsComponent } from './personal-details/personal-details.co
     SharedModule,
     UsersModule,
     CompaniesModule,
-    MatCardModule,
-    MatButtonModule,
-    MatSelectModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
