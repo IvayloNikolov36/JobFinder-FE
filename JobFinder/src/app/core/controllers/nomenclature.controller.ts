@@ -16,5 +16,5 @@ export class NomenclatureController {
     static getDrivingCategoriesUrl = (): string => Route + 'driving-categories';
     static getCititesUrl = (): string => Route + 'cities';
     static getCurrenciesUrl = (): string => Route + 'currencies';
-    static getReccuringTypesUrl = (): string => Route + 'reccuring-types';
+    static getRecurringTypesUrl = (): string => Route + 'recurring-types';
 }

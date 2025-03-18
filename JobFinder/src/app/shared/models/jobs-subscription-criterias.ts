@@ -1,5 +1,5 @@
 export interface JobsSubscriptionCriterias {
-    reccuringTypeId: number;
+    recurringTypeId: number;
     jobCategoryId: number | null;
     jobEngagementId: number | null;
     locationId: number | null;

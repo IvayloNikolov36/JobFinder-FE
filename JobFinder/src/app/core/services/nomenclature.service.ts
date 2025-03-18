@@ -59,7 +59,7 @@ export class NomenclatureService {
     return this.http.get<BasicModel[]>(NomenclatureController.getCurrenciesUrl());
   }
 
-  getReccuringTypes(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getReccuringTypesUrl());
+  getRecurringTypes(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getRecurringTypesUrl());
   }
 }

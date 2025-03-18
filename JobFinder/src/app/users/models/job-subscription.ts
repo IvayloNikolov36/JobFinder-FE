@@ -1,6 +1,6 @@
 export interface JobSubscription {
     id: number;
-    reccuringType: string;
+    recurringType: string;
     jobCategory: string;
     jobEngagement: string;
     location: string;

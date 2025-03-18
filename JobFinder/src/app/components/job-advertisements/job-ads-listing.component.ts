@@ -73,7 +73,7 @@ export class JobAdsListing implements OnInit {
       jobCategoryId: this.category(),
       jobEngagementId: this.engagement(),
       locationId: this.location(),
-      reccuringTypeId: 1, // TODO: fix the model
+      recurringTypeId: 1, // TODO: fix the model
       intership: false,
       specifiedSalary: false,
       searchTerm: this.searchText

@@ -18,7 +18,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
   @Output() emitSubscription: EventEmitter<JobSubscription> = new EventEmitter<JobSubscription>();
 
   form!: FormGroup;
-  reccuringTypes$!: Observable<BasicModel[]>;
+  recurringTypes$!: Observable<BasicModel[]>;
   locations$!: Observable<BasicModel[]>;
   jobCategories$!: Observable<BasicModel[]>;
   jobEngagements$!: Observable<BasicModel[]>;
@@ -73,7 +73,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
   }
 
   private fetchNomenclatureData(): void {
-    this.reccuringTypes$ = this.nomenclatureService.getReccuringTypes();
+    this.recurringTypes$ = this.nomenclatureService.getRecurringTypes();
     this.jobEngagements$ = this.nomenclatureService.getJobEngagements();
     this.jobCategories$ = this.nomenclatureService.getJobCategories();
     this.locations$ = this.nomenclatureService.getCities();
@@ -81,7 +81,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
 
   private initializeForm(): void {
     this.form = this.formBuilder.group({
-      reccuringTypeId: [null, Validators.required],
+      recurringTypeId: [null, Validators.required],
       jobCategoryId: [null],
       jobEngagementId: [null],
       locationId: [null],

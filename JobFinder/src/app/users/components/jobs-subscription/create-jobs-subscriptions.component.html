@@ -3,16 +3,16 @@
 
         <div class="d-flex justify-content-start gap-4 mt-4">
             <mat-form-field>
-                <mat-label>Reccuring type</mat-label>
-                <mat-select formControlName="reccuringTypeId">
-                    @for (type of reccuringTypes$ | async; track type.id) {
+                <mat-label>Recurring type</mat-label>
+                <mat-select formControlName="recurringTypeId">
+                    @for (type of recurringTypes$ | async; track type.id) {
                     <mat-option [value]="type.id">{{ type.name }}</mat-option>
                     }
                 </mat-select>
-                <mat-hint>Select reccuring type.</mat-hint>
-                @if (form.controls['reccuringTypeId'].touched && form.controls['reccuringTypeId'].errors?.['required'])
+                <mat-hint>Select recurring type.</mat-hint>
+                @if (form.controls['recurringTypeId'].touched && form.controls['recurringTypeId'].errors?.['required'])
                 {
-                <mat-error>Reccuring type is required!</mat-error>
+                <mat-error>Recurring type is required!</mat-error>
                 }
             </mat-form-field>
 
