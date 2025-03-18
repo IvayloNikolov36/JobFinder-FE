@@ -1,120 +1,114 @@
-<div class="container-fluid">
+<div class="container">
 
-  <h4 class="text-center text-primary">Create Job Advertisement</h4>
+  <h5 class="text-center text-primary mt-2">Publish new Job Advertisement</h5>
 
-  <div class="d-flex justify-content-center">
-    <hr class="bg-primary w-50" />
-  </div>
+  <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
-  <form [formGroup]="form" (ngSubmit)="publishAd()" class="w-50 mx-auto">
-    <div class="mb-3 w-75 mx-auto">
-      <label class="form-label" for="position">Position</label>
-      <input class="form-control" id="position" formControlName="position" type="text">
-    </div>
-    <div class="alert alert-danger w-75 mx-auto"
-      *ngIf="form.get('position')?.touched && form.get('position')?.errors?.['required']">
-      This field is required!
-    </div>
-    <div class="alert alert-danger w-75 mx-auto" *ngIf="form.get('position')?.errors?.['minlength']">
-      Length must be at least {{form.get('position')?.errors?.['minlength']['requiredLength']}} characters!
-    </div>
-    <div class="alert alert-danger w-75 mx-auto" *ngIf="form.get('position')?.errors?.['maxlength']">
-      Length must be up to {{form.get('position')?.errors?.['maxlength']['requiredLength']}} characters!
-    </div>
+  <form [formGroup]="form" (ngSubmit)="publishAd()">
 
-    <div class="mb-3">
-      <label class="form-label" for="description">Description</label>
-      <textarea class="form-control" id="description" formControlName="description" type="text"></textarea>
-    </div>
-    <div class="alert alert-danger"
-      *ngIf="form.get('description')?.touched && form.get('description')?.errors?.['required']">
-      This field is required!
-    </div>
-    <div class="alert alert-danger" *ngIf="form.get('description')?.errors?.['minlength']">
-      Length must be at least {{form.get('description')?.errors?.['minlength']['requiredLength']}} characters!
-    </div>
+    <mat-form-field class="d-flex half-width mx-auto my-4">
+      <mat-label>Position</mat-label>
+      <input type="text" matInput formControlName="position" placeholder="Position Title...">
+      @if (form.get('position')?.touched && form.get('position')?.errors?.['required']) {
+      <mat-error>Please enter a job position</mat-error>
+      }
+      @if (form.get('position')?.errors?.['minlength']) {
+      <mat-error>Length must be at least {{form.get('position')?.errors?.['minlength']['requiredLength']}} characters!
+      </mat-error>
+      }
+      @if (form.get('position')?.errors?.['maxlength']) {
+      <mat-error>
+        Length must be up to {{form.get('position')?.errors?.['maxlength']['requiredLength']}} characters!
+      </mat-error>
+      }
+    </mat-form-field>
 
-    <div class="d-flex justify-content-around">
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="minSalary">Min Salary</label>
-          <input class="form-control" id="minSalary" formControlName="minSalary" type="number" min="1">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('minSalary')?.errors?.['min']">
-          Value must be a positive number!
-        </div>
-      </div>
-      <div class="mb-3 w25">
-        <div class="mb-3">
-          <label class="form-label" for="maxSalary">Max Salary</label>
-          <input class="form-control" id="maxSalary" formControlName="maxSalary" type="number" min="1">
-        </div>
-        <div class="alart alert-danger" *ngIf="form.get('maxSalary')?.errors?.['min']">
-          Value must be a positive number!
-        </div>
-      </div>
+    <mat-form-field class="d-flex half-width mx-auto my-4">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Job description..."></textarea>
+      @if (form.get('description')?.touched && form.get('description')?.errors?.['required']) {
+      <mat-error>Please enter a job description</mat-error>
+      }
+      @if (form.get('description')?.errors?.['minlength']) {
+      <mat-error>
+        Length must be at least {{form.get('description')?.errors?.['minlength']['requiredLength']}} characters!
+      </mat-error>
+      }
+    </mat-form-field>
 
-      <div class="mb-3 w-25">
-        <label class="form-label" for="currency">Currency</label>
-        <select id="currency" class="form-control" (change)="changeCurrency($any($event).target.value)"
-          formControlName="currencyId">
-          <option [value]="null">Choose Currency</option>
-          <option *ngFor="let currency of currencies$ | async" [value]="currency.id">
-            {{ currency.name }}
-          </option>
-        </select>
-        <div class="alert alert-danger" *ngIf="form.get('currencyId')?.errors?.['required']">Currency is required!
-        </div>
-      </div>
+    <div class="d-flex justify-content-center gap-5 my-4">
+      <mat-form-field class="quarter-width">
+        <mat-label>Min Salary</mat-label>
+        <input type="number" matInput formControlName="minSalary" min="1" placeholder="Min Salary...">
+        @if (form.get('minSalary')?.errors?.['min']) {
+        <mat-error>Value must be above 0!</mat-error>
+        }
+      </mat-form-field>
 
+      <mat-form-field class="quarter-width">
+        <mat-label>Min Salary</mat-label>
+        <input type="number" matInput formControlName="maxSalary" min="1" placeholder="Max Salary...">
+        @if (form.get('maxSalary')?.errors?.['min']) {
+        <mat-error>Value must be above 0!</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currencyId" (change)="changeCurrency($any($event).target.value)">
+          <mat-option [value]="null">Select Currency</mat-option>
+          @for (currency of currencies$ | async; track currency.id) {
+          <mat-option [value]="currency.id">{{ currency.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('currencyId')?.errors?.['required']) {
+        <mat-error>Selecting Currency is mandotory!</mat-error>
+        }
+      </mat-form-field>
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label" for="category">Job Category</label>
-          <select id="category" class="form-control" (change)="changeJobCategory($any($event).target.value)"
-            formControlName="jobCategoryId">
-            <option [value]="null" disabled>Choose job category</option>
-            <option *ngFor="let category of jobCategories$ | async" [value]="category.id">
-              {{ category.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label" for="engagement">Job Engagement</label>
-          <select id="engagement" class="form-control" (change)="changeJobEngagement($any($event).target.value)"
-            formControlName="jobEngagementId">
-            <option [value]="null" disabled>Choose job engagement</option>
-            <option *ngFor="let engagement of jobEngagements$ | async" [value]="engagement.id">
-              {{ engagement.name }}
-            </option>
-          </select>
-        </div>
-      </div>
+    <div class="d-flex justify-content-center gap-5 my-4">
+      <mat-form-field class="half-width">
+        <mat-label>Job Category</mat-label>
+        <mat-select formControlName="jobCategoryId" (change)="changeJobCategory($any($event).target.value)">
+          @for (category of jobCategories$ | async; track category.id) {
+          <mat-option [value]="category.id">{{ category.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('jobCategoryId')?.errors?.['required']) {
+        <mat-error>Selecting Job Category is mandatory!</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-label>Job Engagement</mat-label>
+        <mat-select formControlName="jobEngagementId" (change)="changeJobEngagement($any($event).target.value)">
+          @for (engagement of jobEngagements$ | async; track engagement.id) {
+          <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('jobEngagementId')?.errors?.['required']) {
+        <mat-error>Selecting Job Engagement is mandatory!</mat-error>
+        }
+      </mat-form-field>
     </div>
 
-    <div class="mb-3 w-75 mx-auto">
-      <div class="mb-3">
-        <label class="form-label" for="location">Location</label>
-        <select id="location" class="form-control" (change)="changeLocation($any($event).target.value)"
-          formControlName="locationId">
-          <option [value]="null" disabled>Choose Location</option>
-          <option *ngFor="let location of locations$ | async" [value]="location.id">
-            {{ location.name }}
-          </option>
-        </select>
-      </div>
-    </div>
+    <mat-form-field class="d-flex half-width mx-auto my-4">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="locationId" (change)="changeLocation($any($event).target.value)">
+        @for (location of locations$ | async; track location.id) {
+        <mat-option [value]="location.id">{{ location.name }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('locationId')?.errors?.['required']) {
+      <mat-error>Selecting Location is mandatory!</mat-error>
+      }
+    </mat-form-field>
 
-    <div class="d-flex justify-content-center">
-      <hr class="bg-primary w-75" />
-    </div>
+    <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
     <div class="d-flex justify-content-center pb-3">
-      <button type="submit" [disabled]="!form.valid" class="btn btn-primary">
+      <button mat-fab extended type="submit" [disabled]="!form.valid">
         Publish
       </button>
     </div>
