@@ -1,36 +1,35 @@
 <div class="container-fluid">
 
-  <h3 class="text-center text-primary">Login</h3>
+  <h5 class="text-center text-primary mt-3">Login</h5>
 
-  <div class="d-flex justify-content-center">
-    <hr class="bg-primary w-75" />
-  </div>
+  <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="w-50 mx-auto">
-    <div class="mb-3">
-      <label class="form-label" for="username">Username</label>
-      <input class="form-control" id="username" formControlName="username" type="text">
-    </div>
-    <div *ngIf="form.get('username')?.touched && form.get('username')?.errors?.['required']" class="alert alert-danger">
-      This field is required!
-    </div>
-    <div class="mb-3">
-      <label class="form-label" for="password">Password</label>
-      <input class="form-control" id="password" formControlName="password" type="password">
-    </div>
-    <div *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']" class="alert alert-danger">
-      This field is required!
-    </div>
-    <div class="alert alert-danger" *ngIf="form.get('password')?.errors?.['minlength']">
-      Length must be at least {{ form.get('password')?.errors?.['minlength'].requiredLength }} characters!
-    </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="w-75 mx-auto my-5">
 
-    <div class="d-flex justify-content-center mt-2">
-      <hr class="bg-primary w-75" />
-    </div>
+    <mat-form-field class="d-flex half-width mx-auto my-4">
+      <mat-label>Username</mat-label>
+      <input type="text" matInput formControlName="username" placeholder="Username...">
+      @if (form.get('username')?.touched && form.get('username')?.errors?.['required']) {
+      <mat-error>Username is mandatory!</mat-error>
+      }
+    </mat-form-field>
 
-    <div class="d-flex justify-content-center mt-3">
-      <button type="submit" [disabled]="!form.valid" class="btn btn-primary">
+    <mat-form-field class="d-flex half-width mx-auto my-4">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" placeholder="Password...">
+      @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
+      <mat-error>Password is mandatory!</mat-error>
+      }
+      @if (form.get('password')?.errors?.['minlength']) {
+      <mat-error>Length must be at least {{ form.get('password')?.errors?.['minlength'].requiredLength }}
+        characters!</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
+
+    <div class="d-flex justify-content-center pb-3">
+      <button mat-fab extended type="submit" [disabled]="!form.valid">
         Login
       </button>
     </div>
