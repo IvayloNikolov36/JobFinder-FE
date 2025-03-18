@@ -12,6 +12,14 @@
       @if (form.get('username')?.touched && form.get('username')?.errors?.['required']) {
       <mat-error>Username is mandatory!</mat-error>
       }
+      @if (form.get('username')?.errors?.['minlength']) {
+      <mat-error>Username length has to be at least
+        {{form.get('username')?.errors?.['minlength']['requiredLength']}} symbols!</mat-error>
+      }
+      @if (form.get('username')?.errors?.['maxlength']) {
+      <mat-error>Username length has to maximum {{form.get('username')?.errors?.['maxlength']['requiredLength']}}
+        symbols!</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="d-flex half-width mx-auto my-4">
