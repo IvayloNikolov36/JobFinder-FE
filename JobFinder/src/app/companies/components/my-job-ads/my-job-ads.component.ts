@@ -15,6 +15,9 @@ export class MyJobAdsComponent implements OnInit {
   jobAds$!: Observable<CompanyAd[]>;
   currentJobAdApplicationsData$!: Observable<AdApplicationInfo[]>;
 
+  filterType: typeof AdsFilterEnum = AdsFilterEnum;
+  selectedFilterType: AdsFilterEnum = AdsFilterEnum.Active;
+
   constructor(
     private jobAdsService: CompanyJobAdsService,
     private jobAdApplicationsService: CompanyJobAdApplicationsService) { }
@@ -32,13 +35,12 @@ export class MyJobAdsComponent implements OnInit {
   private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
 
   ngOnInit(): void {
-    this.jobAds$ = this.jobAdsService.getCompanyAds()
-      .pipe(
-        map((ads: CompanyAd[]) => {
-          ads.map((a: CompanyAd) => a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency));
-          return ads;
-        })
-      );
+    this.loadJobAds();
+  }
+
+  changeFilter = (data: any) => {
+    this.selectedFilterType = data.value;
+    this.loadJobAds();
   }
 
   viewAdDetails(id: number): void {
@@ -53,4 +55,37 @@ export class MyJobAdsComponent implements OnInit {
   private reloadApplicationsData = (): void => {
     this.applicationsDataResource.reload();
   }
+
+  private loadJobAds = (): void => {
+
+    let observableData: Observable<CompanyAd[]>;
+
+    switch (this.selectedFilterType) {
+      case AdsFilterEnum.All:
+        observableData = this.jobAdsService.getAllCompanyAds();
+        break;
+      case AdsFilterEnum.Active:
+        observableData = this.jobAdsService.getCompanyAds(true);
+        break;
+      case AdsFilterEnum.Inactive:
+        observableData = this.jobAdsService.getCompanyAds(false);
+        break;
+    }
+
+    // TODO: create momoization
+
+    this.jobAds$ = observableData
+      .pipe(
+        map((ads: CompanyAd[]) => {
+          ads.map((a: CompanyAd) => a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency));
+          return ads;
+        })
+      );
+  }
+}
+
+enum AdsFilterEnum {
+  Active,
+  Inactive,
+  All
 }

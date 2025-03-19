@@ -14,6 +14,7 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -36,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatTabsModule,
     MatDialogModule,
+    MatButtonToggleModule,
   ]
 })
 export class CustomMaterialModule { }
