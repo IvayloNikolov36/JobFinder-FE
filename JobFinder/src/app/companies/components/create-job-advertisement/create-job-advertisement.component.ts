@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { BasicModel } from '../../../models';
 import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';
+import { GreaterThanOrEqual } from '../../../core/functions';
 
 @Component({
   selector: 'jf-create-job-advertisement',
@@ -62,16 +63,22 @@ export class CreateJobAdvertisementComponent {
   }
 
   private initializeJobAdvertisementForm(): void {
-    this.form = this.fb.group({
-      position: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(90)]],
-      description: ['', [Validators.required, Validators.minLength(20)]],
-      minSalary: [null, [Validators.min(1)]],
-      maxSalary: [null, [Validators.min(1)]],
-      currencyId: [null],
-      jobCategoryId: [null, [Validators.required]],
-      jobEngagementId: [null, [Validators.required]],
-      locationId: [null, [Validators.required]]
-    });
+    this.form = this.fb.group(
+      {
+        position: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(90)]],
+        description: ['', [Validators.required, Validators.minLength(20)]],
+        minSalary: [null, [Validators.min(1)]],
+        maxSalary: [null, [Validators.min(1)]],
+        currencyId: [null],
+        jobCategoryId: [null, [Validators.required]],
+        jobEngagementId: [null, [Validators.required]],
+        intership: [false],
+        locationId: [null, [Validators.required]]
+      },
+      {
+        validator: GreaterThanOrEqual('minSalary', 'maxSalary')
+      } as AbstractControlOptions
+    );
 
     this.form.controls['minSalary'].valueChanges
       .pipe(distinctUntilChanged())

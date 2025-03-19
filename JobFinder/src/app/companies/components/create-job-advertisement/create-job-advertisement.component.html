@@ -46,10 +46,13 @@
       </mat-form-field>
 
       <mat-form-field class="quarter-width">
-        <mat-label>Min Salary</mat-label>
+        <mat-label>Max Salary</mat-label>
         <input type="number" matInput formControlName="maxSalary" min="1" placeholder="Max Salary...">
         @if (form.get('maxSalary')?.errors?.['min']) {
         <mat-error>Value must be above 0!</mat-error>
+        }
+        @if (form.get('maxSalary')?.errors?.['greaterThanOrEqual']) {
+        <mat-error>Max Salary must be greater than or equal to Min Salary!</mat-error>
         }
       </mat-form-field>
 
@@ -91,6 +94,10 @@
         <mat-error>Selecting Job Engagement is mandatory!</mat-error>
         }
       </mat-form-field>
+    </div>
+
+    <div class="d-flex mx-auto my-2">
+      <mat-checkbox formControlName="intership" class="mx-auto">Intership</mat-checkbox>
     </div>
 
     <mat-form-field class="d-flex half-width mx-auto my-4">
