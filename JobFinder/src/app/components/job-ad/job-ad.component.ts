@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { JobAd } from '../../models';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services';
 
 @Component({
   selector: 'jf-job-ad',
@@ -12,9 +13,15 @@ export class JobAdComponent {
   @Input() ad!: JobAd;
   @Input() isEven!: boolean;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService) { }
 
   viewAdDetails(jobAdId: number): void {
-    this.router.navigate(['/job-details', jobAdId]);
+    if (this.authService.isCompany()) {
+      this.router.navigate(['/ad', jobAdId]);
+    } else {
+      this.router.navigate(['/job-ad', jobAdId]);
+    }
   }
 }

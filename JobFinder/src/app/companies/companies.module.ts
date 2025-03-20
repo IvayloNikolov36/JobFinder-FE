@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CompaniesRoutingModule } from './companies-routing.module';
 import {
   AdApplicationsListingComponent,
+  AdDetailsComponent,
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
   MyJobAdsComponent,
@@ -17,6 +18,7 @@ import {
     AdApplicationsListingComponent,
     UserCvPreviewComponent,
     CompanyProfileComponent,
+    AdDetailsComponent,
   ],
   imports: [
     SharedModule,
