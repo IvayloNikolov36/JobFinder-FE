@@ -2,24 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { JobAdApplicationDetails } from '../../../models';
 import { UserApplicationsService } from '../../../services';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jf-my-job-applications',
-  standalone: false,
   templateUrl: './my-job-applications.component.html',
-  styleUrl: './my-job-applications.component.css'
+  standalone: false
 })
 export class MyJobApplicationsComponent implements OnInit {
 
   applications$!: Observable<JobAdApplicationDetails[]>;
 
-  constructor(private jobAdsApplicationsService: UserApplicationsService) { }
+  constructor(
+    private router: Router,
+    private jobAdsApplicationsService: UserApplicationsService) { }
 
   ngOnInit(): void {
     this.applications$ = this.jobAdsApplicationsService.getAllMyJobApplications();
   }
 
-  viewJobApplicationDetails = (): void => {
-    
+  viewJobApplicationDetails = (jobAdId: number): void => {
+    this.router.navigate(['/job-ad', jobAdId]);
   }
 }

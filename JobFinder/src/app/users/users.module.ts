@@ -14,7 +14,8 @@ import {
   UserAccountComponent,
   UserCurriculumVitaesComponent,
   WorkExperienceInfoComponent,
-  MyJobApplicationsComponent
+  MyJobApplicationsComponent,
+  JobAdvertisementDetailsComponent
 } from './components/';
 import { UsersRoutingModule } from './users-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -36,6 +37,7 @@ import { SharedModule } from '../shared/shared.module';
     MyJobApplicationsComponent,
     CreateJobsSubscriptionsComponent,
     JobSubscriptionsListingComponent,
+    JobAdvertisementDetailsComponent,
   ],
   imports: [
     SharedModule,

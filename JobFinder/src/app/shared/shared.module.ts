@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastrModule } from 'ngx-toastr';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { DropdownDirective } from './directives/dropdown.directive';
-import { CollapseDirective } from './directives/collapse.directive';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomMaterialModule } from '../custom-material/custom-material.module';
+import { CollapseDirective, DropdownDirective } from './directives';
 import {
   CoursesDetailsComponent,
   EditButtonComponent,
   EducationDetailsComponent,
-  LanguagesDetailsComponent,  
+  LanguagesDetailsComponent,
+  NavbarComponent,
   PersonalInfoDetailsComponent,
   SkillsDetailsComponent,
   WorkExperienceDetailsComponent
 } from './components';
-import { CustomMaterialModule } from '../custom-material/custom-material.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,9 +46,9 @@ import { CustomMaterialModule } from '../custom-material/custom-material.module'
     CustomMaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    NavbarComponent,
     DropdownDirective,
     CollapseDirective,
+    NavbarComponent,
     WorkExperienceDetailsComponent,
     EducationDetailsComponent,
     LanguagesDetailsComponent,

@@ -4,7 +4,7 @@
         @for(app of applications$ | async; track app.id; let even = $even) {
         <mat-card [class]="{'me-5': even, 'ms-5': !even, 'green-blue-gradient': even, 'blue-green-gradient': !even}"
             class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined"
-            (click)="viewJobApplicationDetails()">
+            (click)="viewJobApplicationDetails(app.jobAdId)">
             <mat-card-header>
                 <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
                     <mat-card-title class="mb-3">

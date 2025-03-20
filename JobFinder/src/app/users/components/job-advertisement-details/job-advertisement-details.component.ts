@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { JobDetails } from '../../models/job-details';
-import { CurriculumVitaesService } from '../../users/services';
-import { CvListing } from '../../users/models/cv';
+import { JobDetails } from '../../../models/job-details';
+import { CurriculumVitaesService } from '../../../users/services';
+import { CvListing } from '../../../users/models/cv';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { UserApplicationsService } from '../../services';
-import { JobAdApplication } from '../../models';
+import { UserApplicationsService } from '../../../services';
+import { JobAdApplication } from '../../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -59,6 +59,6 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   private getJobDetails = (): void => {
-
+    
   }
 }
