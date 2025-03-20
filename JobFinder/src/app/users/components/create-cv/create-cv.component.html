@@ -12,7 +12,7 @@
     </mat-step>
 
     <mat-step [stepControl]="personalDetailsForm">
-      <ng-template matStepLabel>Personal Info</ng-template>
+      <ng-template matStepLabel>Personal Details</ng-template>
       <jf-personal-details [countries]="countries()" [citizenships]="citizenships()" [genderOptions]="genderOptions()" (emitPersonalDetails)="onPassedPersonalDetailsData($event)" />
     </mat-step>
 

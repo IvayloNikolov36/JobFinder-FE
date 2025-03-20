@@ -3,7 +3,7 @@
     <span class="fs-4">Work Experience Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
     <div class="d-flex justify-content-start gap-3 my-4">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput [matDatepicker]="fromDatePicker" placeholder="Choose start date" formControlName="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
@@ -12,7 +12,8 @@
           Start date is required!
         </mat-error>
       </mat-form-field>
-      <mat-form-field>
+
+      <mat-form-field class="quarter-width">
         <input matInput [matDatepicker]="toDatePicker" placeholder="Choose end date" formControlName="toDate">
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>
@@ -21,7 +22,7 @@
     </div>
 
     <div class="d-flex justify-content-start gap-3 mt-3">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Organization" formControlName="organization">
         <mat-hint>Enter Organization.</mat-hint>
         <mat-error
@@ -38,7 +39,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <mat-label>Business sector</mat-label>
         <mat-select formControlName="businessSector" [compareWith]="compareFn">
           <mat-option *ngFor="let bs of businessSectors()" [value]="bs">
@@ -53,7 +54,7 @@
     </div>
 
     <div class="d-flex justify-content-start gap-3 my-4">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Location" formControlName="location">
         <mat-hint>Enter Location.</mat-hint>
         <mat-error
@@ -68,7 +69,8 @@
           {{workExp.controls['location'].errors?.['maxlength']['requiredLength']}} characters!
         </mat-error>
       </mat-form-field>
-      <mat-form-field>
+
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Job title" formControlName="jobTitle">
         <mat-hint>Enter job title.</mat-hint>
         <mat-error
@@ -87,7 +89,7 @@
     </div>
 
     <div class="d-flex mt-3">
-      <mat-form-field>
+      <mat-form-field class="half-width">
         <textarea matInput type="text" placeholder="Additional details" formControlName="additionalDetails">
         </textarea>
         <mat-hint>Enter additional details.</mat-hint>

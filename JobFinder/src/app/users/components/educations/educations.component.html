@@ -4,7 +4,7 @@
     <span class="fs-4">Education Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
     <div class="d-flex justify-content-start gap-3 mt-4">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput [matDatepicker]="fromDateEducationPicker" placeholder="Choose start date"
           formControlName="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDateEducationPicker"></mat-datepicker-toggle>
@@ -15,7 +15,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput [matDatepicker]="toDateEducationPicker" placeholder="Choose end date" formControlName="toDate">
         <mat-datepicker-toggle matSuffix [for]="toDateEducationPicker"></mat-datepicker-toggle>
         <mat-datepicker #toDateEducationPicker></mat-datepicker>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="d-flex justify-content-start gap-3 mt-4">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Organization" formControlName="organization">
         <mat-hint>Enter Organization.</mat-hint>
         <mat-error
@@ -44,7 +44,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Location" formControlName="location">
         <mat-hint>Enter Location.</mat-hint>
         <mat-error *ngIf="e.controls['location']?.touched && e.controls['location']?.errors?.['required']">Location is
@@ -62,7 +62,7 @@
     </div>
 
     <div class="d-flex justify-content-start gap-3 mt-4">
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <mat-label>Education Level</mat-label>
         <mat-select formControlName="educationLevel" [compareWith]="compareFn">
           <mat-option *ngFor="let e of educationLevels()" [value]="e">
@@ -75,7 +75,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="quarter-width">
         <input matInput type="text" placeholder="Major" formControlName="major">
         <mat-hint>Enter major.</mat-hint>
         <mat-error *ngIf="e.controls['major']?.touched && e.controls['major']?.errors?.['required']">Major is
@@ -91,25 +91,24 @@
       </mat-form-field>
     </div>
 
-    <div class="mt-4">
-      <mat-form-field>
-        <textarea matInput type="text" placeholder="Main subjects" formControlName="mainSubjects">
+    <mat-form-field class="half-width mt-4">
+      <textarea matInput type="text" placeholder="Main subjects" formControlName="mainSubjects">
           </textarea>
-        <mat-hint>Enter Main subjects.</mat-hint>
-        <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['required']">
-          Main subjects field is requred!
-        </mat-error>
-        <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['minlength']">
-          Main subjects length must be at least {{ e.controls['mainSubjects'].errors?.['minlength']['requiredLength']}}
-          characters!
-        </mat-error>
-        <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['maxlength']">
-          Main subjects length must be no more than
-          {{e.controls['mainSubjects'].errors?.['maxlength']['requiredLength']}}
-          characters!
-        </mat-error>
-      </mat-form-field>
-    </div>
+      <mat-hint>Enter Main subjects.</mat-hint>
+      <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['required']">
+        Main subjects field is requred!
+      </mat-error>
+      <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['minlength']">
+        Main subjects length must be at least {{ e.controls['mainSubjects'].errors?.['minlength']['requiredLength']}}
+        characters!
+      </mat-error>
+      <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['maxlength']">
+        Main subjects length must be no more than
+        {{e.controls['mainSubjects'].errors?.['maxlength']['requiredLength']}}
+        characters!
+      </mat-error>
+    </mat-form-field>
+
   </div>
 
   <div class="d-flex justify-content-start gap-3 mt-4">

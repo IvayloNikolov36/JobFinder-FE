@@ -28,9 +28,13 @@ export class SkillsInfoComponent implements OnInit {
   }
 
   emitData(): void {
+    const formData = this.skillsForm.value as SkillsInfo;
+
     const dataToEmit: SkillsInfo = {
-      ...this.skillsForm.value as SkillsInfo,
-    } as SkillsInfo;
+      ...formData,
+      computerSkills: formData.computerSkills === '' ? null : formData.computerSkills,
+      otherSkills: formData.otherSkills === '' ? null : formData.otherSkills,
+    };
 
     this.emitSkillsData.emit(dataToEmit);
   }
@@ -43,8 +47,8 @@ export class SkillsInfoComponent implements OnInit {
 
     this.skillsForm = this.formBuilder.group({
       id: [0, []],
-      computerSkills: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
-      otherSkills: ['', [Validators.minLength(10), Validators.maxLength(500)]],
+      computerSkills: [null, [Validators.minLength(10), Validators.maxLength(1000)]],
+      otherSkills: [null, [Validators.minLength(10), Validators.maxLength(500)]],
       hasManagedPeople: [false, []],
       drivingLicenseCategories: [[] as BasicModel[]]
     });

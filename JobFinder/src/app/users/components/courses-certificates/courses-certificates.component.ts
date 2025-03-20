@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseCertificateInfo } from '../../../shared/models';
+import { PairValues } from '../../../core/functions';
 
 @Component({
   selector: 'jf-courses-certificates',
@@ -39,7 +40,20 @@ export class CoursesCertificatesComponent implements OnInit {
 
   emitData(): void {
     const data: CourseCertificateInfo[] = this.coursesForm.value.coursesArray;
-    this.emitCoursesData.emit(data);
+
+    const dataToEmit = data.map((cs: CourseCertificateInfo) => {
+      return {
+        ...cs,
+        courseName: cs.courseName === '' ? null : cs.courseName,
+        certificateUrl: cs.certificateUrl === '' ? null : cs.courseName
+      } as CourseCertificateInfo;
+    });
+
+    if (dataToEmit.every(cs => cs.courseName === null && cs.certificateUrl === null)) {
+      this.emitCoursesData.emit([]);
+    } else {
+      this.emitCoursesData.emit(dataToEmit);
+    }
   }
 
   private initializeCoursesForm(): void {
@@ -61,10 +75,16 @@ export class CoursesCertificatesComponent implements OnInit {
   }
 
   private createCourseFormGroup(): FormGroup<any> {
-    return this.formBuilder.nonNullable.group({
-      id: [0],
-      courseName: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      certificateUrl: ['', [Validators.required, Validators.pattern(this.urlPattern)]]
-    });
+
+    return this.formBuilder.group(
+      {
+        id: [0],
+        courseName: [null, [Validators.minLength(5), Validators.maxLength(100)]],
+        certificateUrl: [null, Validators.pattern(this.urlPattern)]
+      },
+      {
+        validator: PairValues('courseName', 'certificateUrl')
+      } as AbstractControlOptions
+    );
   }
 }

@@ -43,11 +43,11 @@ export class PersonalDetailsComponent implements OnInit {
       middleName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      phone: ['', [Validators.required]],
-      gender: [{} as BasicModel, [Validators.required]],
+      phone: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      gender: [null, [Validators.required]],
       birthdate: ['', [Validators.required]],
-      citizenship: [{} as BasicModel, [Validators.required]],
-      country: [{} as BasicModel, [Validators.required]],
+      citizenship: [null, [Validators.required]],
+      country: [null, [Validators.required]],
       city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]]
     };
 

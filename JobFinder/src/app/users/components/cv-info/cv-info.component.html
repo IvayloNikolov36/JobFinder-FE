@@ -1,8 +1,8 @@
 <form [formGroup]="cvInfoForm">
   <div class="d-flex justify-content-start gap-3 mt-3">
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Name" formControlName="name">
-      <mat-hint>Enter cv name.</mat-hint>
+      <mat-hint>Enter CV name.</mat-hint>
       <mat-error *ngIf="cvInfoForm.get('name')?.touched && cvInfoForm.get('name')?.errors?.['required']">CV name is
         required!</mat-error>
       <mat-error *ngIf="cvInfoForm.get('name')?.errors?.['minlength']">
@@ -13,7 +13,8 @@
         characters!
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field class="half-width">
       <input matInput type="text" placeholder="Picture Url" formControlName="pictureUrl">
       <mat-hint>Paste picture url.</mat-hint>
       <mat-error

@@ -6,5 +6,5 @@ export interface WorkExperienceOutput {
   organization: string;
   businessSectorId: number;
   location: string;
-  additionalDetails: string;
+  additionalDetails: string | null;
 }

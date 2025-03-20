@@ -5,7 +5,7 @@
 
       <div class="d-flex justify-content-start gap-3 mt-3">
 
-        <mat-form-field>
+        <mat-form-field class="quarter-width">
           <mat-label>Language</mat-label>
           <mat-select formControlName="languageType" [compareWith]="compareFn">
             <mat-option *ngFor="let l of languageTypes()" [value]="l">
@@ -19,7 +19,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="quarter-width">
           <mat-label>Comprehension level</mat-label>
           <mat-select formControlName="comprehensionLevel" [compareWith]="compareFn">
             <mat-option *ngFor="let l of languageLevels()" [value]="l">
@@ -33,7 +33,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="quarter-width">
           <mat-label>Speaking level</mat-label>
           <mat-select formControlName="speakingLevel" [compareWith]="compareFn">
             <mat-option *ngFor="let l of languageLevels()" [value]="l">
@@ -47,7 +47,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="quarter-width">
           <mat-label>Wiring level</mat-label>
           <mat-select formControlName="writingLevel" [compareWith]="compareFn">
             <mat-option *ngFor="let l of languageLevels()" [value]="l">

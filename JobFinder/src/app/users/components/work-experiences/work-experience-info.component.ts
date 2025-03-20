@@ -39,7 +39,11 @@ export class WorkExperienceInfoComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitWorkExperiencesData.emit(this.workExpForm.value.workExperienceArray as WorkExperienceInfo[]);
+    const formData = this.workExpForm.value.workExperienceArray as WorkExperienceInfo[];
+    const workExperienceData = formData.map((we: WorkExperienceInfo) => {
+      return { ...we, additionalDetails: we.additionalDetails === '' ? null : we.additionalDetails };
+    });
+    this.emitWorkExperiencesData.emit(workExperienceData);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -56,12 +60,6 @@ export class WorkExperienceInfoComponent implements OnInit {
     if (this.workExperienceInfoData.length > 0) {
       this.workExperienceInfoData.forEach((we: WorkExperienceInfo) => {
         const workExperienceFormGroup: FormGroup<any> = this.createWorkExperienceFormGroup();
-        workExperienceFormGroup.controls['additionalDetails'].valueChanges
-          .subscribe((value: string) => {
-            if (value === '') {
-              workExperienceFormGroup.controls['additionalDetails'].setValue(null);
-            }
-          });
         workExperienceFormGroup.setValue(we);
         workExperienceFormArray.push(workExperienceFormGroup);
       });

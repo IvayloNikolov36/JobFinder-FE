@@ -2,7 +2,7 @@
 
   <div class="d-flex justify-content-start gap-3 mt-3">
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="First Name" formControlName="firstName">
       <mat-hint>Enter first name.</mat-hint>
       <mat-error
@@ -19,7 +19,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Middle Name" formControlName="middleName">
       <mat-hint>Enter middle name.</mat-hint>
       <mat-error
@@ -36,7 +36,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Last Name" formControlName="lastName">
       <mat-hint>Enter last name.</mat-hint>
       <mat-error
@@ -55,7 +55,7 @@
   </div>
 
   <div class="d-flex justify-content-start gap-3 mt-4">
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Email" formControlName="email">
       <mat-hint>Enter email.</mat-hint>
       <mat-error
@@ -66,17 +66,24 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Phone" formControlName="phone">
       <mat-hint>Enter phone.</mat-hint>
       <mat-error
         *ngIf="personalInfoForm.get('phone')?.touched && personalInfoForm.get('phone')?.errors?.['required']">Phone is
-        required!</mat-error>
+        required!
+      </mat-error>
+      <mat-error *ngIf="personalInfoForm.get('phone')?.touched && personalInfoForm.get('phone')?.errors?.['minlength']">
+        Phone must be exactly {{personalInfoForm.get('phone')?.errors?.['minlength']['requiredLength']}} characters!
+      </mat-error>
+      <mat-error *ngIf="personalInfoForm.get('phone')?.touched && personalInfoForm.get('phone')?.errors?.['maxlength']">
+        Phone must be exactly {{personalInfoForm.get('phone')?.errors?.['maxlength']['requiredLength']}} characters!
+      </mat-error>
     </mat-form-field>
   </div>
 
   <div class="d-flex justify-content-start gap-3 mt-4">
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput [matDatepicker]="birthdatePicker" placeholder="Bithdate" formControlName="birthdate">
       <mat-datepicker-toggle matSuffix [for]="birthdatePicker"></mat-datepicker-toggle>
       <mat-datepicker #birthdatePicker></mat-datepicker>
@@ -87,7 +94,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <mat-label>Gender</mat-label>
       <mat-select formControlName="gender" [compareWith]="compareFn">
         <mat-option *ngFor="let g of genderOptions()" [value]="g">
@@ -104,7 +111,7 @@
 
   <div class="d-flex justify-content-start gap-3 mt-4">
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Current City" formControlName="city">
       <mat-hint>Enter city.</mat-hint>
       <mat-error
@@ -120,7 +127,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="quarter-width">
       <mat-label>Citizenship</mat-label>
       <mat-select formControlName="citizenship" [compareWith]="compareFn">
         <mat-option *ngFor="let c of citizenships()" [value]="c">
@@ -132,7 +139,8 @@
         *ngIf="personalInfoForm.get('gender')?.touched && personalInfoForm.get('gender')?.errors?.['required']">Citizenship
         is required!</mat-error>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field class="quarter-width">
       <mat-label>Country</mat-label>
       <mat-select formControlName="country" [compareWith]="compareFn">
         <mat-option *ngFor="let c of countries()" [value]="c">

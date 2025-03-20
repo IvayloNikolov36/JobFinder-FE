@@ -4,13 +4,9 @@
     <span class="fs-4">Course Info {{ (i + 1 === 1 ? '' : i + 1) }}</span>
 
     <div class="d-flex justify-content-start gap-3 mt-3">
-      <mat-form-field>
+      <mat-form-field class="half-width">
         <input matInput type="text" placeholder="Course name" formControlName="courseName">
         <mat-hint>Enter course name.</mat-hint>
-        <mat-error
-          *ngIf="cInfo.controls['courseName']?.touched && cInfo.controls['courseName']?.errors?.['required']"
-        >Course name is required!
-        </mat-error>
         <mat-error *ngIf="cInfo.controls['courseName']?.errors?.['minlength']">
           Course name length must be at least
           {{cInfo.controls['courseName'].errors?.['minlength']['requiredLength']}} characters!
@@ -19,12 +15,19 @@
           Course name length must be no more than
           {{cInfo.controls['courseName'].errors?.['maxlength']['requiredLength']}} characters!
         </mat-error>
+        <mat-error *ngIf="cInfo.controls['courseName']?.errors?.['pairValues']">
+          Course name is required!
+        </mat-error>
       </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" placeholder="Sertificate url" formControlName="certificateUrl">
-        <mat-hint>Enter sertificate url.</mat-hint>
+
+      <mat-form-field class="half-width">
+        <input matInput type="text" placeholder="Certificate url" formControlName="certificateUrl">
+        <mat-hint>Enter certificate url.</mat-hint>
         <mat-error *ngIf="cInfo.controls['certificateUrl']?.errors?.['pattern']">
           Invalid url!
+        </mat-error>
+        <mat-error *ngIf="cInfo.controls['certificateUrl']?.errors?.['pairValues']">
+          Certificate url is required!
         </mat-error>
       </mat-form-field>
     </div>

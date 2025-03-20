@@ -108,7 +108,7 @@ export class CreateCvComponent implements AfterViewInit {
           this.toastr.success(`${this.cvModel.name} cv is successfully created.`);
           this.router.navigate(['/profile/cvs']);
         },
-        error: () => this.toastr.error('Sorry, Can not create the CV.')
+        error: (err) => this.toastr.error(err.error.errors[0].join(''))
       });
   }
 
