@@ -1,7 +1,7 @@
 export class JobAdsFilter {
     constructor(
         public page: number,
-        public itemsCount: number,
+        public items: number,
         public searchText: string,
         public locationId: number | null,
         public categoryId: number | null,

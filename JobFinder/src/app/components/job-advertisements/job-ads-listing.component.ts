@@ -7,10 +7,10 @@ import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { renderSalary } from '../../shared/functions';
 import { JobsSubscriptionCriterias } from '../../shared/models';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 const ShowFiltersText: string = 'Show Filters';
-const HideFiltersText: string = 'Hide Filters';
-const SortByValues: string[] = ['Published', 'Salary'];
+const CloseFiltersText: string = 'Close Filters';
 const InitialPage: number = 1;
 const MinItemsOnPage: number = 10;
 
@@ -21,24 +21,26 @@ const MinItemsOnPage: number = 10;
 })
 export class JobAdsListing implements OnInit {
 
+  form!: FormGroup;
+
+  filterType: typeof SortByColumnEnum = SortByColumnEnum;
+  sortType: typeof OrderEnum = OrderEnum;
+
   categories!: Signal<BasicModel[]>;
   engagements!: Signal<BasicModel[]>;
   locations!: Signal<BasicModel[]>;
   jobAds: JobAd[] = [];
 
   totalCount!: number;
-  searchText: string = '';
-  showFiltersArea: boolean = false;
-  filterButtonLabel: string = ShowFiltersText;
+  filtersAccordionTitle: string = ShowFiltersText;
   currentPage: number = InitialPage;
-  itemsCount: number = MinItemsOnPage;
-  sortBy: string = SortByValues[0];
-  isAscending: boolean = true;
 
   readonly itemsCountArray: number[] = [MinItemsOnPage, 20, 25, 50];
   readonly allValue = { id: null, name: 'All' };
+  readonly defaultSortBy: string = SortByColumnEnum[SortByColumnEnum.Published];
 
   constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private jobAdsService: JobAdvertisementsService,
@@ -46,7 +48,6 @@ export class JobAdsListing implements OnInit {
     private nomenclatureService: NomenclatureService,
     private toastr: ToastrService
   ) {
-    this.getDataFromQueryParams();
     this.getNomenclaturesData();
   }
 
@@ -59,13 +60,39 @@ export class JobAdsListing implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getJobAds();
+
+    this.form = this.formBuilder.group({
+      items: [this.itemsCountArray[0]],
+      location: [null],
+      category: [null],
+      engagement: [null],
+      sortBy: [this.defaultSortBy],
+      isAscending: [false],
+      searchText: [null]
+    });
+
+    this.getDataFromQueryParams();
+    this.getJobAds(this.form);
   }
 
-  searchForJobAds(): void {
+  onOpenExpansionPanel(): void {
+    this.filtersAccordionTitle = CloseFiltersText;
+  }
+
+  onCloseExpansionPanel(): void {
+    this.filtersAccordionTitle = ShowFiltersText;
+  }
+
+  changeSortBy(data: any): void {
+    const sortBy = data.value === SortByColumnEnum.Published ? SortByColumnEnum[SortByColumnEnum.Published] : SortByColumnEnum[SortByColumnEnum.Salary];
+    this.form.controls['sortBy'].setValue(sortBy);
+  }
+
+  onSearchClicked(form: FormGroup): void {
     this.currentPage = InitialPage;
-    this.updateQueryParams({ page: this.currentPage, searchText: this.searchText });
-    this.getJobAds();
+    const filterModel: JobAdsFilter = { ...form.value, page: this.currentPage } as JobAdsFilter;
+    this.updateQueryParams(filterModel);
+    this.getJobAds(form);
   }
 
   subscribeForJobs(): void {
@@ -76,7 +103,7 @@ export class JobAdsListing implements OnInit {
       recurringTypeId: 1, // TODO: fix the model
       intership: false,
       specifiedSalary: false,
-      searchTerm: this.searchText
+      searchTerm: this.form.controls['searchText'].value
     };
 
     this.subscriptionsService
@@ -89,46 +116,29 @@ export class JobAdsListing implements OnInit {
       });
   }
 
-  changeItemsCount(selectedItemsCount: number): void {
-    this.itemsCount = selectedItemsCount;
-    this.currentPage = InitialPage;
-    this.updateQueryParams({ page: this.currentPage, items: selectedItemsCount });
-    this.getJobAds();
+  changeItems(selectedItemsCount: number): void {
+    this.form.controls['items'].setValue(selectedItemsCount);
   }
 
-  changeFilterLocation(selectedLocation: number | null): void {
-    this.currentPage = InitialPage;
-    this.location.set(selectedLocation);
-    this.updateQueryParams({ page: this.currentPage, locationId: selectedLocation });
-    this.getJobAds();
+  changeLocation(selectedLocation: number | null): void {
+    this.form.controls['location'].setValue(selectedLocation);
   }
 
-  changeFilterCategory(selectedCategory: number | null): void {
-    this.currentPage = InitialPage;
-    this.category.set(selectedCategory);
-    this.updateQueryParams({ page: this.currentPage, categoryId: selectedCategory });
-    this.getJobAds();
+  changeCategory(selectedCategory: number | null): void {
+    this.form.controls['category'].setValue(selectedCategory);
   }
 
-  changeFilterEngagement(selectedEngagement: number | null): void {
-    this.currentPage = InitialPage;
-    this.engagement.set(selectedEngagement);
-    this.updateQueryParams({ page: this.currentPage, engagementId: selectedEngagement });
-    this.getJobAds();
+  changeEngagement(selectedEngagement: number | null): void {
+    this.form.controls['engagement'].setValue(selectedEngagement);
   }
 
-  changeSortBy(sortBy: string): void {
-    this.currentPage = InitialPage;
-    this.sortBy = sortBy;
-    this.updateQueryParams({ page: this.currentPage, sortBy: sortBy });
-    this.getJobAds();
+  changeSortType(sortData: any): void {
+    const isAscending: boolean = sortData.value === OrderEnum.Asc ? true : false;
+    this.form.controls['isAscending'].setValue(isAscending);
   }
 
-  changeSortingOrder(orderValue: string): void {
-    this.currentPage = InitialPage;
-    this.isAscending = orderValue === 'true' ? true : false;
-    this.updateQueryParams({ page: this.currentPage, isAscending: orderValue });
-    this.getJobAds();
+  clearSearchInput(): void {
+    this.form.controls['searchText'].setValue(null);
   }
 
   loadActivePageItems(activePageNumber: number): void {
@@ -137,14 +147,7 @@ export class JobAdsListing implements OnInit {
     }
     this.currentPage = activePageNumber;
     this.updateQueryParams({ page: this.currentPage });
-    this.getJobAds();
-  }
-
-  toggleFilters(): void {
-    this.showFiltersArea = !this.showFiltersArea;
-    this.filterButtonLabel === ShowFiltersText
-      ? this.filterButtonLabel = HideFiltersText
-      : this.filterButtonLabel = ShowFiltersText;
+    this.getJobAds(this.form);
   }
 
   private updateQueryParams(queryParamsObject: object): void {
@@ -156,15 +159,8 @@ export class JobAdsListing implements OnInit {
       });
   }
 
-  private getJobAds(): void {
-    const filterModel: JobAdsFilter = new JobAdsFilter(this.currentPage,
-      this.itemsCount,
-      this.searchText,
-      this.location(),
-      this.category(),
-      this.engagement(),
-      this.sortBy,
-      this.isAscending);
+  private getJobAds(form: FormGroup): void {
+    const filterModel: JobAdsFilter = { ...form.value, page: this.currentPage } as JobAdsFilter;
 
     this.jobAdsService.getAll(filterModel)
       .subscribe((data: any) => {
@@ -184,21 +180,29 @@ export class JobAdsListing implements OnInit {
     this.currentPage = pageValue === null ? InitialPage : parseInt(pageValue);
 
     const itemsValue: string | null = queryParams.get('items');
-    this.itemsCount = itemsValue === null ? MinItemsOnPage : parseInt(itemsValue);
+    const itemsCount: number = itemsValue === null ? MinItemsOnPage : parseInt(itemsValue);
+    this.form.controls['items'].setValue(itemsCount);
 
-    this.searchText = queryParams.get('searchText') ?? '';
+    const searchText = queryParams.get('searchText') ?? null;
+    this.form.controls['searchText'].setValue(searchText);
 
     const locationValue: string | null = queryParams.get('locationId');
-    this.location.set(locationValue !== null ? parseInt(locationValue) : null);
+    const location: number | null = locationValue !== null ? parseInt(locationValue) : null;
+    this.form.controls['location'].setValue(location);
 
     const categoryValue: string | null = queryParams.get('categoryId');
-    this.category.set(categoryValue !== null ? parseInt(categoryValue) : null);
+    const category: number | null = categoryValue !== null ? parseInt(categoryValue) : null;
+    this.form.controls['category'].setValue(category);
 
     const engagementValue: string | null = queryParams.get('engagementId');
-    this.engagement.set(engagementValue !== null ? parseInt(engagementValue) : null);
+    const engagement: number | null = engagementValue !== null ? parseInt(engagementValue) : null;
+    this.form.controls['engagement'].setValue(engagement);
 
-    this.sortBy = queryParams.get('sortBy') ?? SortByValues[0];
-    this.isAscending = queryParams.get('isAscending') === 'true' ? true : false;
+    const sortByValue: string = queryParams.get('sortBy') ?? this.defaultSortBy;
+    this.form.controls['sortBy'].setValue(sortByValue);
+
+    const isAscending = queryParams.get('isAscending') === 'true' ? true : false;
+    this.form.controls['isAscending'].setValue(isAscending);
   }
 
   private getNomenclaturesData(): void {
@@ -206,4 +210,12 @@ export class JobAdsListing implements OnInit {
     this.engagements = toSignal(this.nomenclatureService.getJobEngagements(), { initialValue: [] });
     this.locations = toSignal(this.nomenclatureService.getCities(), { initialValue: [] });
   }
+}
+
+enum SortByColumnEnum {
+  Published, Salary
+}
+
+enum OrderEnum {
+  Asc, Desc
 }

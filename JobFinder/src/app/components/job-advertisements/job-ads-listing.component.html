@@ -1,77 +1,105 @@
 <div class="container-fluid">
 
-  <div class="d-flex justify-content-around mt-3" *ngIf="showFiltersArea">
-    <div class="mb-3">
-      <label class="form-label" for="itemsCount">Items:</label>
-      <select id="itemsCount" class="form-control" [(ngModel)]="itemsCount"
-        (ngModelChange)="changeItemsCount($event.target.value)">
-        <option *ngFor="let count of itemsCountArray" [value]="count">{{ count }}</option>
-      </select>
-    </div>
+  <div class="d-flex w-75 mx-auto justify-content-center my-2">
+    <mat-accordion class="full-width">
+      <mat-expansion-panel class="mt-3" (opened)="onOpenExpansionPanel()" (closed)="onCloseExpansionPanel()">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="fs-5 fst-italic">{{ filtersAccordionTitle }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <!-- TODO: create a separate component for the filters -->
+          <form [formGroup]="form" (ngSubmit)="onSearchClicked(form)">
+            <div class="d-flex justify-content-center gap-3 mt-2">
+              <mat-form-field class="quarter-width">
+                <mat-label>Location:</mat-label>
+                <mat-select formControlName="location" (change)="changeLocation($any($event).target.value)">
+                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
+                  @for (location of locations(); track location.id) {
+                  <mat-option [value]="location.id">{{ location.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
 
-    <div class="mb-3">
-      <label class="form-label" for="filterLocation">Filter by Location:</label>
-      <select id="filterLocation" class="form-control" [ngModel]="location()"
-        (ngModelChange)="changeFilterLocation($event)">
-        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
-        <option *ngFor="let location of locations()" [value]="location.id">{{ location.name }}</option>
-      </select>
-    </div>
+              <mat-form-field class="quarter-width">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" (change)="changeCategory($any($event).target.value)">
+                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
+                  @for (category of categories(); track category.id) {
+                  <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
 
-    <div class="mb-3">
-      <label class="form-label" for="filterCategory">Filter by Category:</label>
-      <select id="filterCategory" class="form-control" [ngModel]="category()"
-        (ngModelChange)="changeFilterCategory($event)">
-        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
-        <option *ngFor="let c of categories()" [value]="c.id">{{ c.name }}</option>
-      </select>
-    </div>
+              <mat-form-field class="quarter-width">
+                <mat-label>Engagement</mat-label>
+                <mat-select formControlName="engagement" (change)="changeEngagement($any($event).target.value)">
+                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
+                  @for (engagement of engagements(); track engagement.id) {
+                  <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-    <div class="mb-3">
-      <label class="form-label" for="filterEngagement">Filter by Engagement:</label>
-      <select id="filterEngagement" class="form-control" [ngModel]="engagement()"
-        (ngModelChange)="changeFilterEngagement($event)">
-        <option selected [ngValue]="allValue.id">{{ allValue.name }}</option>
-        <option *ngFor="let e of engagements()" [value]="e['id']">{{e['name']}}</option>
-      </select>
-    </div>
+            <div class="d-flex justify-content-center align-items-center gap-5 my-3">
+              <div class="d-flex gap-3 mb-3 mt-1">
+                <mat-button-toggle-group (change)="changeSortBy($event)" [value]="filterType.Published">
+                  <mat-button-toggle [value]="filterType.Published">Published</mat-button-toggle>
+                  <mat-button-toggle [value]="filterType.Salary">Salary</mat-button-toggle>
+                </mat-button-toggle-group>
 
-    <div class="mb-3">
-      <label class="form-label" for="sortBy">Sort by:</label>
-      <select id="sortBy" class="form-control" [(ngModel)]="sortBy" (ngModelChange)="changeSortBy($event)">
-        <option value="Salary">Salary</option>
-        <option value="Published" selected>Published</option>
-      </select>
-    </div>
+                <mat-button-toggle-group (change)="changeSortType($event)" [value]="sortType.Desc">
+                  <mat-button-toggle [value]="sortType.Asc">ASC</mat-button-toggle>
+                  <mat-button-toggle [value]="sortType.Desc">DESC</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
 
-    <div class="mb-3">
-      <label class="form-label" for="order">Order:</label>
-      <select id="order" class="form-control" [(ngModel)]="isAscending" (ngModelChange)="changeSortingOrder($event)">
-        <option value="true">Asc</option>
-        <option value="false" selected>Desc</option>
-      </select>
-    </div>
+              <mat-form-field class="quarter-width">
+                <mat-label>Items per page:</mat-label>
+                <mat-select formControlName="items" (change)="changeItems($any($event).target.value)">
+                  @for (items of itemsCountArray; track items; let idx = $index, isFirst = $first) {
+                    @if (isFirst) {
+                      <mat-option [value]="items" selected>{{ items }}</mat-option>
+                    }
+                    @else {
+                      <mat-option [value]="items">{{ items }}</mat-option>
+                    }    
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
 
+            <div class="d-flex justify-content-center mx-auto my-2">
+              <mat-form-field class="half-width">
+                <mat-label>Search:</mat-label>
+                <input matInput type="text" formControlName="searchText">
+                @if (form.controls['searchText'].value?.length > 0) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
+                  <mat-icon>close</mat-icon>
+                </button>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button mat-fab extended type="submit">
+                <mat-icon>search</mat-icon>Search
+              </button>
+            </div>
+          </form>
+
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 
   <div class="d-flex justify content around mt-3 mb-3">
-
-    <div class="input-group w-50 mx-auto">
-      <button class="btn btn-outline-secondary" (click)="toggleFilters()">
-        <i class="fas fa-sliders-h"></i>{{ filterButtonLabel }}
-      </button>
-      <input class="form-control fst-italic" [(ngModel)]="searchText" id="searchText" type="text"
-        placeholder="You can search by Job Title or Company">
-      <button class="btn btn-outline-secondary" (click)="searchForJobAds()">Search</button>
-    </div>
-
     <div *ngIf="showSubscribeButton()" class="mx-auto">
       <button class="btn btn-light" (click)="subscribeForJobs()">
         <i class="bi bi-bell me-2"></i>
         Subscribe for such ads
       </button>
     </div>
-
   </div>
 
   <div class="w-75 mx-auto my-3">
@@ -81,7 +109,7 @@
     }
 
     <div class="d-flex justify-content-start w-50 mt-2">
-      <jf-pagination [activePage]="currentPage" [totalRecords]="totalCount" [recordsPerPage]="itemsCount"
+      <jf-pagination [activePage]="currentPage" [totalRecords]="totalCount" [recordsPerPage]="form.controls['items'].value"
         (pageChange)="loadActivePageItems($event)" />
     </div>
 
