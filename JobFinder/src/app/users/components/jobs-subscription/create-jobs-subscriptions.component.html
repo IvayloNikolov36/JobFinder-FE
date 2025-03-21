@@ -16,7 +16,7 @@
                 }
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field class="quarter-width">
                 <mat-label>Job Category</mat-label>
                 <mat-select formControlName="jobCategoryId">
                     <mat-option [value]="null">Select Job Category</mat-option>
@@ -27,7 +27,7 @@
                 <mat-hint>Select Job Category.</mat-hint>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field class="quarter-width">
                 <mat-label>Job Engagement</mat-label>
                 <mat-select formControlName="jobEngagementId">
                     <mat-option [value]="null">Select Job Engagement</mat-option>
@@ -52,7 +52,7 @@
 
         <div class="d-flex justify-content-start gap-4 mt-4">
 
-            <mat-form-field>
+            <mat-form-field class="quarter-width">
                 <mat-label>Search Term</mat-label>
                 <input matInput formControlName="searchTerm">
                 <mat-hint>Input search term for the title of the jobs.</mat-hint>

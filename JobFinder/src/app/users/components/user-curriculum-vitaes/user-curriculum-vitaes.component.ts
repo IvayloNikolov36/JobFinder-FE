@@ -19,6 +19,8 @@ export class UserCurriculumVitaesComponent implements OnInit, OnDestroy {
   deleteModal: Modal | null = null;
   subscriptions: Subscription[] = [];
 
+  displayedColumns: string[] = ['name', 'createdOn', 'actions'];
+
   constructor(
     private cvService: CurriculumVitaesService,
     private toaster: ToastrService

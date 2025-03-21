@@ -3,7 +3,6 @@ import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SubscriptionsService } from '../../services';
-import { JobsSubscriptionCriterias } from '../../../shared/models';
 
 @Component({
   selector: 'jf-my-subscriptions',

@@ -4,12 +4,25 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 
+.danger-btn {
+  background-color: red !important;
+  color: white !important;
+}
+
+.full-width {
+  width: 100%
+}
+
 .half-width {
   width: 50%;
 }
 
 .quarter-width {
   width: 25%;
+}
+
+.one-tenth-width {
+  width: 10%;
 }
 
 a {

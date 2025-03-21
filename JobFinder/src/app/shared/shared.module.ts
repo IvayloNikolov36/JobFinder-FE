@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../custom-material/custom-material.module';
 import { CollapseDirective, DropdownDirective } from './directives';
 import {
@@ -34,7 +34,6 @@ import { ToastrModule } from 'ngx-toastr';
     RouterModule,
     CustomMaterialModule,
     ReactiveFormsModule,
-    FormsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       preventDuplicates: true,
@@ -45,7 +44,6 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     CustomMaterialModule,
     ReactiveFormsModule,
-    FormsModule,
     DropdownDirective,
     CollapseDirective,
     NavbarComponent,

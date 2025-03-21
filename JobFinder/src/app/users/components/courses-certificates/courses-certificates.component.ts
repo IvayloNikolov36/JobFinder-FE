@@ -44,8 +44,8 @@ export class CoursesCertificatesComponent implements OnInit {
     const dataToEmit = data.map((cs: CourseCertificateInfo) => {
       return {
         ...cs,
-        courseName: cs.courseName === '' ? null : cs.courseName,
-        certificateUrl: cs.certificateUrl === '' ? null : cs.courseName
+        courseName: cs.courseName.trim() === '' ? null : cs.courseName,
+        certificateUrl: cs.certificateUrl.trim() === '' ? null : cs.courseName
       } as CourseCertificateInfo;
     });
 

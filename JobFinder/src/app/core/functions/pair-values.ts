@@ -3,8 +3,6 @@ import { AbstractControl, FormGroup } from "@angular/forms";
 export function PairValues(firstControlName: string, secondControlName: string) {
 
     return (formGroup: FormGroup) => {
-        debugger;
-
         const firstControl: AbstractControl<any, any> = formGroup.controls[firstControlName];
         const secondControl: AbstractControl<any, any> = formGroup.controls[secondControlName];
 

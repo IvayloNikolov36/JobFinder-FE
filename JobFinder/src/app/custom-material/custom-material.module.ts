@@ -15,6 +15,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -38,6 +40,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatTabsModule,
     MatDialogModule,
     MatButtonToggleModule,
+    MatIconModule,
+    MatTableModule,
   ]
 })
 export class CustomMaterialModule { }
