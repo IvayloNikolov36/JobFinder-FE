@@ -31,16 +31,7 @@ export class AdsFiltersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: method
-    this.form = this.formBuilder.group({
-      items: [this.jobAdsService.filterModel().items],
-      searchText: [this.jobAdsService.filterModel().searchText],
-      locationId: [this.jobAdsService.filterModel().locationId],
-      categoryId: [this.jobAdsService.filterModel().categoryId],
-      engagementId: [this.jobAdsService.filterModel().engagementId],
-      sortBy: [this.jobAdsService.filterModel().sortBy],
-      isAscending: [this.jobAdsService.filterModel().isAscending],
-    });
+    this.initializeFiltersForm();
   }
 
   changeSortBy(data: any): void {
@@ -76,5 +67,17 @@ export class AdsFiltersComponent implements OnInit {
 
   clearSearchInput(): void {
     this.form.controls['searchText'].setValue(null);
+  }
+
+  private initializeFiltersForm(): void {
+    this.form = this.formBuilder.group({
+      items: [this.jobAdsService.filterModel().items],
+      searchText: [this.jobAdsService.filterModel().searchText],
+      locationId: [this.jobAdsService.filterModel().locationId],
+      categoryId: [this.jobAdsService.filterModel().categoryId],
+      engagementId: [this.jobAdsService.filterModel().engagementId],
+      sortBy: [this.jobAdsService.filterModel().sortBy],
+      isAscending: [this.jobAdsService.filterModel().isAscending],
+    });
   }
 }
