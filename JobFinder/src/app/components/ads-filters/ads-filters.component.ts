@@ -33,13 +33,13 @@ export class AdsFiltersComponent implements OnInit {
   ngOnInit(): void {
     // TODO: method
     this.form = this.formBuilder.group({
-      items: [this.jobAdsService.minItemsOnPage],
-      locationId: [null],
-      categoryId: [null],
-      engagementId: [null],
-      sortBy: [this.jobAdsService.defaultSortBy],
-      isAscending: [false],
-      searchText: [null]
+      items: [this.jobAdsService.filterModel().items],
+      searchText: [this.jobAdsService.filterModel().searchText],
+      locationId: [this.jobAdsService.filterModel().locationId],
+      categoryId: [this.jobAdsService.filterModel().categoryId],
+      engagementId: [this.jobAdsService.filterModel().engagementId],
+      sortBy: [this.jobAdsService.filterModel().sortBy],
+      isAscending: [this.jobAdsService.filterModel().isAscending],
     });
   }
 
