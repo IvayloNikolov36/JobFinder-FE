@@ -1,8 +1,8 @@
-import { Component, computed, OnInit, signal, Signal, WritableSignal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, signal, Signal, WritableSignal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { JobAdvertisementsService, SubscriptionsService } from '../../services';
-import { AdsFilterProps, BasicModel, JobAd } from '../../models';
+import { AdsFiltering, AdsFilterProps, BasicModel, JobAd } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../shared/models';
@@ -15,7 +15,7 @@ const CloseFiltersText: string = 'Close Filters';
   templateUrl: './job-ads-listing.component.html',
   standalone: false
 })
-export class JobAdsListing implements OnInit {
+export class JobAdsListing {
 
   categories: Signal<BasicModel[]> = signal([]);
   engagements: Signal<BasicModel[]> = signal([]);
@@ -44,17 +44,18 @@ export class JobAdsListing implements OnInit {
     private nomenclatureService: NomenclatureService,
     private toastr: ToastrService
   ) {
-
+    this.getDataFromQueryParams();
     this.getNomenclaturesData();
 
     this.currentPage = this.adsService.currentPage;
     this.jobAds = this.adsService.jobAds;
     this.totalCount = this.adsService.totalCount;
     this.itemsOnPage = this.adsService.itemsOnPage;
-  }
+    const filterChange$ = toObservable(this.adsService.filterModel);
 
-  ngOnInit(): void {
-    this.getDataFromQueryParams();
+    filterChange$.subscribe((data: AdsFilterProps) => {
+      this.updateQueryParams({ page: this.currentPage(), ...data });
+    });
   }
 
   onOpenExpansionPanel(): void {
@@ -91,34 +92,37 @@ export class JobAdsListing implements OnInit {
       return;
     }
     this.adsService.currentPage.set(selectedPage);
-    this.updateQueryParams({ page: this.adsService.currentPage() });
+    this.updateQueryParams({ page: selectedPage });
   }
 
   private getDataFromQueryParams = (): void => {
     const queryParams: ParamMap = this.route.snapshot.queryParamMap;
 
     const pageValue: string | null = queryParams.get('page');
-    this.adsService.currentPage.set(pageValue === null ? this.adsService.initialPage : parseInt(pageValue));
+    const page: number = pageValue === null ? this.adsService.initialPage : parseInt(pageValue);
+    this.adsService.currentPage.set(page);
 
     const itemsValue: string | null = queryParams.get('items');
     const itemsCount: number = itemsValue === null ? this.adsService.minItemsOnPage : parseInt(itemsValue);
-    
+
     const searchText = queryParams.get('searchText') ?? null;
-    
+
     const locationValue: string | null = queryParams.get('locationId');
     const location: number | null = locationValue !== null ? parseInt(locationValue) : null;
-    
+
     const categoryValue: string | null = queryParams.get('categoryId');
     const category: number | null = categoryValue !== null ? parseInt(categoryValue) : null;
-    
+
     const engagementValue: string | null = queryParams.get('engagementId');
     const engagement: number | null = engagementValue !== null ? parseInt(engagementValue) : null;
-    
+
     const sortBy: string = queryParams.get('sortBy') ?? this.adsService.defaultSortBy;
 
     const isAscending = queryParams.get('isAscending') === 'true' ? true : false;
-    
-    this.adsService.filterModel.set(new AdsFilterProps(itemsCount, searchText, location, category, engagement, sortBy, isAscending ));
+
+    const model = new AdsFilterProps(itemsCount, searchText, location, category, engagement, sortBy, isAscending);
+    this.adsService.filterModel.set(model);
+    this.updateQueryParams(new AdsFiltering(page, model))
   }
 
   private updateQueryParams(queryParamsObject: object): void {
