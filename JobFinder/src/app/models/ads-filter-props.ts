@@ -1,8 +1,7 @@
-export class JobAdsFilter {
+export class AdsFilterProps {
     constructor(
-        public page: number,
         public items: number,
-        public searchText: string,
+        public searchText: string | null,
         public locationId: number | null,
         public categoryId: number | null,
         public engagementId: number | null,

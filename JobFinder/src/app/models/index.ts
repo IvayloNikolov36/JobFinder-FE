@@ -3,6 +3,7 @@ export * from './data-listing';
 export * from './job-ad';
 export * from './job-details';
 export * from './update-result';
-export * from './job-ads-filter';
+export * from './ads-filter-props';
 export * from './job-add-application';
 export * from './job-add-application-details';
+export * from './ads-filtering';

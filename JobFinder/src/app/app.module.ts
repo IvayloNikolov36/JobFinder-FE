@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { JwtInterceptorService } from './core/interceptors/jwt-interceptor.service';
-import { UsersModule } from './users/users.module';
 import { ResponseHandlerInterceptorService } from './core/interceptors/response-handler-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { CompaniesModule } from './companies/companies.module';
+import { UsersModule } from './users/users.module';
 import {
+  AdsFiltersComponent,
   CompanyDetailsComponent,
   HomeComponent,
   JobAdComponent,
@@ -19,8 +21,6 @@ import {
   RegisterCompanyComponent,
   RegisterUserComponent
 } from './components';
-import { CompaniesModule } from './companies/companies.module';
-import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { PersonalDetailsComponent } from './personal-details/personal-details.co
     JobAdsListing,
     PaginationComponent,
     CompanyDetailsComponent,
-    PersonalDetailsComponent,
     JobAdComponent,
+    AdsFiltersComponent,
   ],
   imports: [
     AppRoutingModule,

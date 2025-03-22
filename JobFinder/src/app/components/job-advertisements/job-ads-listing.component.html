@@ -7,87 +7,7 @@
           <mat-panel-title class="fs-5 fst-italic">{{ filtersAccordionTitle }}</mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
-          <!-- TODO: create a separate component for the filters -->
-          <form [formGroup]="form" (ngSubmit)="onSearchClicked(form)">
-            <div class="d-flex justify-content-center gap-3 mt-2">
-              <mat-form-field class="quarter-width">
-                <mat-label>Location:</mat-label>
-                <mat-select formControlName="location" (change)="changeLocation($any($event).target.value)">
-                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
-                  @for (location of locations(); track location.id) {
-                  <mat-option [value]="location.id">{{ location.name }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field class="quarter-width">
-                <mat-label>Category</mat-label>
-                <mat-select formControlName="category" (change)="changeCategory($any($event).target.value)">
-                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
-                  @for (category of categories(); track category.id) {
-                  <mat-option [value]="category.id">{{ category.name }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field class="quarter-width">
-                <mat-label>Engagement</mat-label>
-                <mat-select formControlName="engagement" (change)="changeEngagement($any($event).target.value)">
-                  <mat-option selected [value]="allValue.id">{{ allValue.name }}</mat-option>
-                  @for (engagement of engagements(); track engagement.id) {
-                  <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="d-flex justify-content-center align-items-center gap-5 my-3">
-              <div class="d-flex gap-3 mb-3 mt-1">
-                <mat-button-toggle-group (change)="changeSortBy($event)" [value]="filterType.Published">
-                  <mat-button-toggle [value]="filterType.Published">Published</mat-button-toggle>
-                  <mat-button-toggle [value]="filterType.Salary">Salary</mat-button-toggle>
-                </mat-button-toggle-group>
-
-                <mat-button-toggle-group (change)="changeSortType($event)" [value]="sortType.Desc">
-                  <mat-button-toggle [value]="sortType.Asc">ASC</mat-button-toggle>
-                  <mat-button-toggle [value]="sortType.Desc">DESC</mat-button-toggle>
-                </mat-button-toggle-group>
-              </div>
-
-              <mat-form-field class="quarter-width">
-                <mat-label>Items per page:</mat-label>
-                <mat-select formControlName="items" (change)="changeItems($any($event).target.value)">
-                  @for (items of itemsCountArray; track items; let idx = $index, isFirst = $first) {
-                    @if (isFirst) {
-                      <mat-option [value]="items" selected>{{ items }}</mat-option>
-                    }
-                    @else {
-                      <mat-option [value]="items">{{ items }}</mat-option>
-                    }    
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="d-flex justify-content-center mx-auto my-2">
-              <mat-form-field class="half-width">
-                <mat-label>Search:</mat-label>
-                <input matInput type="text" formControlName="searchText">
-                @if (form.controls['searchText'].value?.length > 0) {
-                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
-                  <mat-icon>close</mat-icon>
-                </button>
-                }
-              </mat-form-field>
-            </div>
-
-            <div class="d-flex justify-content-center">
-              <button mat-fab extended type="submit">
-                <mat-icon>search</mat-icon>Search
-              </button>
-            </div>
-          </form>
-
+          <jf-ads-filters [categories]="categories()" [engagements]="engagements()" [locations]="locations()" />
         </ng-template>
       </mat-expansion-panel>
     </mat-accordion>
@@ -102,15 +22,20 @@
     </div>
   </div>
 
+  <div class="w-75 mx-auto mt-3">
+    <span class="fst-italic text-info">Total ads: {{ totalCount() }}</span>
+  </div>
+  
+
   <div class="w-75 mx-auto my-3">
 
-    @for(jobAd of jobAds; track jobAd.id; let even = $even) {
+    @for(jobAd of jobAds(); track jobAd.id; let even = $even) {
     <jf-job-ad [ad]="jobAd" [isEven]="even" />
     }
 
     <div class="d-flex justify-content-start w-50 mt-2">
-      <jf-pagination [activePage]="currentPage" [totalRecords]="totalCount" [recordsPerPage]="form.controls['items'].value"
-        (pageChange)="loadActivePageItems($event)" />
+      <jf-pagination [activePage]="currentPage()" [totalRecords]="totalCount()" [recordsPerPage]="itemsOnPage()"
+        (pageChange)="onPageChange($event)" />
     </div>
 
   </div>
