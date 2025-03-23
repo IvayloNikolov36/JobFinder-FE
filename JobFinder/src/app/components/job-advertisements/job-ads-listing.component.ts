@@ -1,4 +1,4 @@
-import { Component, computed, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, computed, linkedSignal, signal, Signal, WritableSignal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { JobAdvertisementsService, SubscriptionsService } from '../../services';
@@ -6,6 +6,7 @@ import { AdsFiltering, AdsFilterProps, BasicModel, JobAd } from '../../models';
 import { NomenclatureService } from '../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../shared/models';
+import { FormControl, Validators } from '@angular/forms';
 
 const ShowFiltersText: string = 'Show Filters';
 const CloseFiltersText: string = 'Close Filters';
@@ -20,6 +21,9 @@ export class JobAdsListing {
   categories: Signal<BasicModel[]> = signal([]);
   engagements: Signal<BasicModel[]> = signal([]);
   locations: Signal<BasicModel[]> = signal([]);
+  recurringTypes: Signal<BasicModel[]> = signal([]);
+
+  recurringTypeId = new FormControl<number | null>(null, Validators.required);
 
   filtersAccordionTitle: string = ShowFiltersText;
 
@@ -27,14 +31,7 @@ export class JobAdsListing {
   jobAds!: Signal<JobAd[] | undefined>;
   totalCount!: Signal<number>;
   itemsOnPage!: Signal<number>;
-
-  // For subscribtions
-  location: WritableSignal<number | null> = signal(null);
-  category: WritableSignal<number | null> = signal(null);
-  engagement: WritableSignal<number | null> = signal(null);
-  showSubscribeButton: Signal<boolean> = computed(() => {
-    return this.location() !== null || this.category() !== null;
-  });
+  showReccuringType: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,23 +55,35 @@ export class JobAdsListing {
     });
   }
 
-  onOpenExpansionPanel(): void {
-    this.filtersAccordionTitle = CloseFiltersText;
-  }
+  filter: Signal<AdsFilterProps> = computed(() => this.adsService.filterModel());
 
-  onCloseExpansionPanel(): void {
-    this.filtersAccordionTitle = ShowFiltersText;
-  }
+  showSubscribeButton: WritableSignal<boolean> = linkedSignal(() => {
+    const filter: AdsFilterProps = this.filter();
+
+    const showButton: boolean = filter.locationId !== null
+      || filter.categoryId !== null
+      || filter.engagementId !== null
+      || (filter.searchText !== null && filter.searchText.trim().length > 0);
+
+    return showButton;
+  });
 
   subscribeForJobs(): void {
+    if (!this.recurringTypeId.valid) {
+      this.showReccuringType = true;
+      return;
+    }
+
+    const filter: AdsFilterProps = this.adsService.filterModel();
+
     const subscriptionCriterias: JobsSubscriptionCriterias = {
-      jobCategoryId: this.category(),
-      jobEngagementId: this.engagement(),
-      locationId: this.location(),
-      recurringTypeId: 1, // TODO: fix the model
+      recurringTypeId: this.recurringTypeId.value!,
+      jobCategoryId: filter.categoryId,
+      jobEngagementId: filter.engagementId,
+      locationId: filter.locationId,
       intership: false,
       specifiedSalary: false,
-      searchTerm: this.adsService.filterModel().searchText
+      searchTerm: filter.searchText
     };
 
     this.subscriptionsService
@@ -83,8 +92,21 @@ export class JobAdsListing {
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
         error: (err: any) => {
           this.toastr.error(err.error.errors[0]);
+        },
+        complete: () => {
+          this.recurringTypeId.setValue(null);
+          this.showSubscribeButton.set(false);
+          this.showReccuringType = false;
         }
       });
+  }
+
+  onOpenExpansionPanel(): void {
+    this.filtersAccordionTitle = CloseFiltersText;
+  }
+
+  onCloseExpansionPanel(): void {
+    this.filtersAccordionTitle = ShowFiltersText;
   }
 
   onPageChange(selectedPage: number): void {
@@ -138,5 +160,6 @@ export class JobAdsListing {
     this.categories = toSignal(this.nomenclatureService.getJobCategories(), { initialValue: [] });
     this.engagements = toSignal(this.nomenclatureService.getJobEngagements(), { initialValue: [] });
     this.locations = toSignal(this.nomenclatureService.getCities(), { initialValue: [] });
+    this.recurringTypes = toSignal(this.nomenclatureService.getRecurringTypes(), { initialValue: [] });
   }
 }
