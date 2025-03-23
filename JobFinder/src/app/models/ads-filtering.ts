@@ -10,7 +10,9 @@ export class AdsFiltering extends AdsFilterProps {
             filterProps.categoryId,
             filterProps.engagementId,
             filterProps.sortBy,
-            filterProps.isAscending
+            filterProps.isAscending,
+            filterProps.specifiedSalary,
+            filterProps.intership
         );
     }
 }

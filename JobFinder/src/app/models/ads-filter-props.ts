@@ -6,6 +6,8 @@ export class AdsFilterProps {
         public categoryId: number | null,
         public engagementId: number | null,
         public sortBy: string,
-        public isAscending: boolean
+        public isAscending: boolean,
+        public specifiedSalary: boolean,
+        public intership: boolean
     ) { }
 }

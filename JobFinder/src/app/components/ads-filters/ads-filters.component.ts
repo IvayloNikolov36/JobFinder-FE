@@ -70,14 +70,17 @@ export class AdsFiltersComponent implements OnInit {
   }
 
   private initializeFiltersForm(): void {
+    const filter: AdsFilterProps = this.jobAdsService.filterModel();
     this.form = this.formBuilder.group({
-      items: [this.jobAdsService.filterModel().items],
-      searchText: [this.jobAdsService.filterModel().searchText],
-      locationId: [this.jobAdsService.filterModel().locationId],
-      categoryId: [this.jobAdsService.filterModel().categoryId],
-      engagementId: [this.jobAdsService.filterModel().engagementId],
-      sortBy: [this.jobAdsService.filterModel().sortBy],
-      isAscending: [this.jobAdsService.filterModel().isAscending],
+      items: [filter.items],
+      searchText: [filter.searchText],
+      locationId: [filter.locationId],
+      categoryId: [filter.categoryId],
+      engagementId: [filter.engagementId],
+      sortBy: [filter.sortBy],
+      isAscending: [filter.isAscending],
+      specifiedSalary: [filter.specifiedSalary],
+      intership: [filter.intership]
     });
   }
 }

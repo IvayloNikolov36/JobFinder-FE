@@ -63,6 +63,8 @@ export class JobAdsListing {
     const showButton: boolean = filter.locationId !== null
       || filter.categoryId !== null
       || filter.engagementId !== null
+      || filter.intership
+      || filter.specifiedSalary
       || (filter.searchText !== null && filter.searchText.trim().length > 0);
 
     return showButton;
@@ -81,9 +83,9 @@ export class JobAdsListing {
       jobCategoryId: filter.categoryId,
       jobEngagementId: filter.engagementId,
       locationId: filter.locationId,
-      intership: false,
-      specifiedSalary: false,
-      searchTerm: filter.searchText
+      intership: filter.intership,
+      specifiedSalary: filter.specifiedSalary,
+      searchTerm: filter.searchText,
     };
 
     this.subscriptionsService
@@ -142,7 +144,21 @@ export class JobAdsListing {
 
     const isAscending = queryParams.get('isAscending') === 'true' ? true : false;
 
-    const model = new AdsFilterProps(itemsCount, searchText, location, category, engagement, sortBy, isAscending);
+    const specifiedSalary: boolean = queryParams.get('specifiedSalary') === 'true' ? true : false;
+
+    const intership: boolean = queryParams.get('intership') === 'true' ? true : false;
+
+    const model = new AdsFilterProps(
+      itemsCount,
+      searchText,
+      location,
+      category,
+      engagement,
+      sortBy,
+      isAscending,
+      specifiedSalary,
+      intership
+    );
     this.adsService.filterModel.set(model);
     this.updateQueryParams(new AdsFiltering(page, model))
   }

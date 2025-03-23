@@ -44,6 +44,10 @@
             </mat-button-toggle-group>
         </div>
 
+        <mat-checkbox formControlName="specifiedSalary">Only with specified salary</mat-checkbox>
+
+        <mat-checkbox formControlName="intership">Intership</mat-checkbox>
+
         <mat-form-field class="quarter-width">
             <mat-label>Items per page:</mat-label>
             <mat-select formControlName="items" (change)="changeItems($any($event).target.value)">
