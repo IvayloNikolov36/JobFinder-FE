@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { BasicModel } from '../../../models';
+import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { Observable } from 'rxjs';
-import { SubscriptionsService } from '../../../services';
+import { SubscriptionsService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../../shared/models';
@@ -59,7 +59,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
           this.toastr.success("Successfull subscription.");
           this.emitSubscription.emit(createdSubscription);
         },
-        error: (err) => this.toastr.error(err.error.errors[0])
+        error: (err: any) => this.toastr.error(err.error.errors[0])
       });
   }
 

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { JobDetails } from '../../../models/job-details';
-import { CurriculumVitaesService } from '../../../users/services';
-import { CvListing } from '../../../users/models/cv';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { UserApplicationsService } from '../../../services';
-import { JobAdApplication } from '../../../models';
+import { Observable } from 'rxjs';
+import { JobDetails } from '../../../core/models/job-details';
+import { CvListing } from '../../../users/models/cv';
+import { JobAdApplication } from '../../models';
+import { CurriculumVitaesService, UserApplicationsService } from '../../../users/services';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'jf-job-advertisement-details',

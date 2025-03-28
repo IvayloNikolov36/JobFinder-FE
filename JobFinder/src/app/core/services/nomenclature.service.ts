@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BasicModel } from "../../models";
+import { BasicModel } from "../models";
 import { NomenclatureController } from "../controllers";
 import { Observable } from "rxjs";
 

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { LanguageInfo } from '../../shared/models/language-info';
 import { getUpdateLanguageInfoUrl } from '../../core/controllers';
 import { LanguageInfoOutput } from '../models/cv';
-import { UpdateResult } from '../../models';
+import { UpdateResult } from '../../core/models';
 
 @Injectable({
   providedIn: 'root'

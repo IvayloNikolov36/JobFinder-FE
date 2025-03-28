@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { JobAdApplicationDetails } from '../../../models';
-import { UserApplicationsService } from '../../../services';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { UserApplicationsService } from '../../services';
+import { JobAdApplicationDetails } from '../../models';
 
 @Component({
   selector: 'jf-my-job-applications',

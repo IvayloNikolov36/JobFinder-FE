@@ -1,4 +1,4 @@
-import { BasicModel } from "../../models";
+import { BasicModel } from "../../core/models";
 
 export interface WorkExperienceInfo {
   id: number;

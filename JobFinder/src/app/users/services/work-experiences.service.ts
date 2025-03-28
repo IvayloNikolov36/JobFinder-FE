@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { WorkExperienceOutput } from './../models/cv/';
 import { getUpdateWorkExperienceInfoUrl } from '../../core/controllers';
 import { Observable } from 'rxjs';
-import { UpdateResult } from '../../models';
+import { UpdateResult } from '../../core/models';
 import { WorkExperienceInfo } from '../../shared/models';
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { MustMatch } from '../../core/functions/must-match';
+import { MustMatch } from '../../functions/must-match';
 
 @Component({
   selector: 'jf-register-user',

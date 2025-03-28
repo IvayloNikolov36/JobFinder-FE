@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SubscriptionsService } from '../../../services';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyDetailsUser } from '../../models';
-import { CompaniesService } from '../../services';
+import { CompaniesService, SubscriptionsService } from '../../services';
 
 @Component({
   selector: 'jf-company-details',

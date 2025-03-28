@@ -26,7 +26,7 @@ import { WorkExperienceInfoComponent } from '../work-experiences/work-experience
 import { ToastrService } from 'ngx-toastr';
 import { PersonalDetailsComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
-import { BasicModel, UpdateResult } from '../../../models';
+import { BasicModel, UpdateResult } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
 import {

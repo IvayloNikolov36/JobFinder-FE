@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { JobAd } from '../models/job-ad';
-import { JobDetails } from '../models/job-details';
-import { getAd, getAds } from '../core/controllers';
-import { AdsFiltering, AdsFilterProps } from '../models';
-import { SortByColumnEnum } from '../enums';
+import { JobAd } from '../../core/models/job-ad';
+import { JobDetails } from '../../core/models/job-details';
+import { getAd, getAds } from '../../core/controllers';
+
+import { SortByColumnEnum } from '../../core/enums';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { renderSalary } from '../shared/functions';
+import { renderSalary } from '../../shared/functions';
+import { AdsFiltering, AdsFilterProps } from '../models';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
-import { BasicModel } from '../../../models';
+import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';

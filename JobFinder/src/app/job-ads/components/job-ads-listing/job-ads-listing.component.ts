@@ -1,12 +1,14 @@
 import { Component, computed, linkedSignal, signal, Signal, WritableSignal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { JobAdvertisementsService, SubscriptionsService } from '../../services';
-import { AdsFiltering, AdsFilterProps, BasicModel, JobAd } from '../../models';
-import { NomenclatureService } from '../../core/services';
+import { BasicModel, JobAd } from '../../../core/models';
+import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
-import { JobsSubscriptionCriterias } from '../../shared/models';
+import { JobsSubscriptionCriterias } from '../../../shared/models';
 import { FormControl, Validators } from '@angular/forms';
+import { JobAdvertisementsService } from '../../services';
+import { SubscriptionsService } from '../../../users/services';
+import { AdsFiltering, AdsFilterProps } from '../../models';
 
 const ShowFiltersText: string = 'Show Filters';
 const CloseFiltersText: string = 'Close Filters';
@@ -16,7 +18,7 @@ const CloseFiltersText: string = 'Close Filters';
   templateUrl: './job-ads-listing.component.html',
   standalone: false
 })
-export class JobAdsListing {
+export class JobAdsListingComponent {
 
   categories: Signal<BasicModel[]> = signal([]);
   engagements: Signal<BasicModel[]> = signal([]);

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { EducationOutput } from '../models/cv';
 import { EducationInfo } from '../../shared/models';
 import { getCvEducationsEditUrl } from '../../core/controllers';
-import { UpdateResult } from '../../models';
+import { UpdateResult } from '../../core/models';
 
 @Injectable({
   providedIn: 'root'

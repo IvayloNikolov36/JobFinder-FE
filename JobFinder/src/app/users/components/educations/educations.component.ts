@@ -1,6 +1,6 @@
 import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BasicModel } from '../../../models';
+import { BasicModel } from '../../../core/models';
 import { EducationInfo } from '../../../shared/models';
 
 @Component({

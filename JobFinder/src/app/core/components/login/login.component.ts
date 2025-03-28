@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services';
 
 @Component({
   selector: 'jf-login',

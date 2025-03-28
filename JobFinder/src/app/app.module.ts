@@ -5,22 +5,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { JwtInterceptorService } from './core/interceptors/jwt-interceptor.service';
-import { ResponseHandlerInterceptorService } from './core/interceptors/response-handler-interceptor.service';
+import { JwtInterceptorService, ResponseHandlerInterceptorService } from './core/interceptors';
 import { SharedModule } from './shared/shared.module';
 import { CompaniesModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
-import {
-  AdsFiltersComponent,
-  CompanyDetailsComponent,
-  HomeComponent,
-  JobAdComponent,
-  JobAdsListing,
-  LoginComponent,
-  PaginationComponent,
-  RegisterCompanyComponent,
-  RegisterUserComponent
-} from './components';
+import { HomeComponent, LoginComponent, RegisterCompanyComponent, RegisterUserComponent } from './core/components';
 
 @NgModule({
   declarations: [
@@ -29,11 +18,6 @@ import {
     HomeComponent,
     RegisterUserComponent,
     RegisterCompanyComponent,
-    JobAdsListing,
-    PaginationComponent,
-    CompanyDetailsComponent,
-    JobAdComponent,
-    AdsFiltersComponent,
   ],
   imports: [
     AppRoutingModule,

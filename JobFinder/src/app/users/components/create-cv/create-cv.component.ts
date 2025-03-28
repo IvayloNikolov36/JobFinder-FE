@@ -7,7 +7,7 @@ import { CvCreate, CvInfo } from '../../models/cv';
 import { CurriculumVitaesService, EducationsService, PersonalDetailsService, SkillsService, WorkExperiencesService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { BasicModel } from '../../../models';
+import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { Router } from '@angular/router';
 import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { JobAd } from '../../models';
+import { JobAd } from '../../../core/models';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'jf-job-ad',

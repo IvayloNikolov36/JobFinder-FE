@@ -10,6 +10,7 @@ import {
   EducationDetailsComponent,
   LanguagesDetailsComponent,
   NavbarComponent,
+  PaginationComponent,
   PersonalInfoDetailsComponent,
   SkillsDetailsComponent,
   WorkExperienceDetailsComponent
@@ -19,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     NavbarComponent,
+    PaginationComponent,
     DropdownDirective,
     CollapseDirective,
     WorkExperienceDetailsComponent,
@@ -27,7 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     SkillsDetailsComponent,
     CoursesDetailsComponent,
     PersonalInfoDetailsComponent,
-    EditButtonComponent,
+    EditButtonComponent,   
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     CustomMaterialModule,
     ReactiveFormsModule,
+    PaginationComponent,
     DropdownDirective,
     CollapseDirective,
     NavbarComponent,

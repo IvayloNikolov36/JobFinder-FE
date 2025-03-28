@@ -1,8 +1,9 @@
 import { Component, input, InputSignal, OnInit } from '@angular/core';
-import { BasicModel, AdsFilterProps } from '../../models';
+import { BasicModel } from '../../../core/models';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OrderEnum, SortByColumnEnum } from '../../enums';
+import { OrderEnum, SortByColumnEnum } from '../../../core/enums';
 import { JobAdvertisementsService } from '../../services';
+import { AdsFilterProps } from '../../models';
 
 @Component({
   selector: 'jf-ads-filters',

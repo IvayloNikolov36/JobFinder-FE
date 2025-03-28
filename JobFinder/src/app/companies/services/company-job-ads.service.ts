@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { JobAd } from "../../models";
+import { JobAd } from "../../core/models";
 import { createAd, getAllCompanyAds, getCompanyAds } from "../../core/controllers";
 import { CompanyAd } from "../models";
 
