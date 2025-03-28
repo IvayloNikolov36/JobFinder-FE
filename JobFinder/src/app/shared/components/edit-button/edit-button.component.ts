@@ -2,9 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'jf-edit-button',
-  standalone: false,
   templateUrl: './edit-button.component.html',
-  styleUrl: './edit-button.component.css'
+  standalone: false
 })
 export class EditButtonComponent {
 
