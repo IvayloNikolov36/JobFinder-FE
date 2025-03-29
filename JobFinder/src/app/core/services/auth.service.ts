@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { loginUrl, registerCompanyUrl, registerUserUrl } from '../controllers';
+import { RegisterUserModel } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) {  }
 
-  registerUser(body: any): Observable<Object> {
-    return this.http.post(registerUserUrl(), body);
+  registerUser(registerModel: RegisterUserModel): Observable<Object> {
+    return this.http.post(registerUserUrl(), registerModel);
   }
 
   registerComapny(body: any): Observable<Object> {
