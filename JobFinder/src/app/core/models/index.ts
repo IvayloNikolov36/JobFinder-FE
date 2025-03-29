@@ -1,5 +1,6 @@
 export * from './basic.model';
 export * from './register-user.model';
+export * from './login-result.model';
 export * from './data-listing';
 export * from './job-ad';
 export * from './job-details';

@@ -19,7 +19,7 @@ const PasswordMaxLength: number = 35;
 export class RegisterUserComponent implements OnInit {
 
   form!: FormGroup<RegisterUserForm>;
-  emailPattern = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+  emailPattern: RegExp = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
   constructor(
     private authService: AuthService,
