@@ -38,11 +38,6 @@ a {
   z-index: 99999 !important;
 }
 
-.table-company-logo {
-  max-width: 6.5rem;
-  max-height: 6.5rem;
-}
-
 .company-card {
   max-width: 16.875rem;
 }
