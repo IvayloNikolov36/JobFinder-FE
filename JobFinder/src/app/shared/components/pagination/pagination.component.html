@@ -1,20 +1,13 @@
-<nav aria-label="page navigation example">
-  <ul class="pagination">
-    <li class="page-item" (click)="onClickPage(activePage - 1)">
-      <button class="page-link" [disabled]="isPreviousDisabled">
-        <i class="bi bi-arrow-left"></i> Previous
-      </button>
-    </li>
-    <li *ngFor="let item of pages"
-      class="page-item"
-      [ngClass]="{'active': activePage === item}" 
-      (click)="onClickPage(item)">
-      <button class="page-link">{{ item }}</button>
-    </li>
-    <li class="page-item" (click)="onClickPage(activePage + 1)">
-      <button class="page-link">
-        <i class="bi bi-arrow-right"></i> Next
-      </button>
-    </li>
-  </ul>
-</nav>
+<mat-button-toggle-group>
+  <mat-button-toggle value="Prev" (change)="onPreviousClicked($event)" [disabled]="isPreviousDisabled">
+    Previous
+  </mat-button-toggle>
+  @for(page of pages; track page) {
+  <mat-button-toggle [value]="page" (click)="onClickPage(page)" [checked]="activePage === page">
+    {{ page }}
+  </mat-button-toggle>
+  }
+  <mat-button-toggle value="Next" (change)="onNextClicked($event)" [disabled]="isNextDisabled">
+    Next
+  </mat-button-toggle>
+</mat-button-toggle-group>

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
+const FirstPage: number = 1;
+
 @Component({
   selector: 'jf-pagination',
   templateUrl: './pagination.component.html',
@@ -9,58 +11,84 @@ export class PaginationComponent implements OnChanges {
 
   @Input() totalRecords: number = 0;
   @Input() recordsPerPage: number = 0;
-  @Input() activePage: number = 1;
+  @Input() activePage: number = FirstPage;
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   pages: number[] = [];
   isPreviousDisabled: boolean = true;
-  isNextDisabled: boolean = false;
+  isNextDisabled: boolean = true;
 
   ngOnChanges(): void {
-    const pageCount = this.getPageCount();
-    if (pageCount <= 1) {
+    const pagesCount: number = this.getPagesCount();
+
+    if (pagesCount <= 1) {
       this.isNextDisabled = true;
+      this.isPreviousDisabled = true;
+    } else {
+
+      if (this.activePage < pagesCount) {
+        this.isNextDisabled = false;
+      }
+      if (this.activePage > FirstPage) {
+        this.isPreviousDisabled = false;
+      }
     }
-    this.pages = this.getArrayOfPage(pageCount);
+
+    this.pages = this.getArrayOfPageNumbers(pagesCount);
   }
 
-  onClickPage(pageNumber: number): void {
-    if (pageNumber < 1) {
+  onPreviousClicked(event: any): void {
+    this.onNavigationButtonClicked(event, -1);
+  }
+
+  onNextClicked(event: any): void {
+    this.onNavigationButtonClicked(event, 1);
+  }
+
+  onClickPage(page: number): void {
+    if (page < FirstPage) {
       return;
     }
 
-    if (pageNumber > this.pages.length) {
+    if (page > this.pages[this.pages.length - 1]) {
       return;
     }
 
-    this.activePage = pageNumber;
-    this.isPreviousDisabled = this.activePage <= 1;
-    this.isNextDisabled = this.activePage === this.pages.length;
+    this.activePage = page;
+    this.isPreviousDisabled = this.activePage <= FirstPage;
+    this.isNextDisabled = this.activePage === this.pages[this.pages.length - 1];
     this.pageChange.emit(this.activePage);
   }
 
-  private getPageCount(): number {
-    let totalPage: number = 0;
+  private onNavigationButtonClicked(event: any, pageAddition: number): void {
+    const toggle: any = event.source;
+    const pageToGo: number = this.activePage + pageAddition;
+    toggle.buttonToggleGroup.value = pageToGo;
+    this.onClickPage(pageToGo);
+  }
+
+  private getPagesCount(): number {
+    let maxPage: number = 0;
 
     if (this.totalRecords > 0 && this.recordsPerPage > 0) {
       const pageCount: number = this.totalRecords / this.recordsPerPage;
       const roundedPageCount: number = Math.floor(pageCount);
-      totalPage = roundedPageCount < pageCount ? roundedPageCount + 1 : roundedPageCount;
+      maxPage = roundedPageCount < pageCount ? roundedPageCount + 1 : roundedPageCount;
     }
 
-    return totalPage;
+    return maxPage;
   }
 
-  private getArrayOfPage(pageCount: number): number[] {
-    const pageArray: number[] = [];
+  private getArrayOfPageNumbers(pageCount: number): number[] {
+    const pageNumbers: number[] = [];
 
     if (pageCount > 0) {
       for (let i = 1; i <= pageCount; i++) {
-        pageArray.push(i);
+        pageNumbers.push(i);
       }
     }
 
-    return pageArray;
+    return pageNumbers;
   }
 }
 
