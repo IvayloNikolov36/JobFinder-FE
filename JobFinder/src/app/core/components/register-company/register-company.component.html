@@ -1,161 +1,157 @@
 <div class="container-fluid">
 
-  <h3 class="text-center text-primary">Register Company</h3>
+  <h5 class="text-center text-primary mt-3">Register Company</h5>
 
-  <div class="d-flex justify-content-center">
-    <hr class="bg-primary w-75" />
-  </div>
+  <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
   <form [formGroup]="form" (ngSubmit)="registerCompany()">
 
-    <div class="d-flex justify-content-around">
+    <div class="d-flex mx-auto gap-3 my-2 w-75">
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email" placeholder="Email...">
+        @if (form.controls.email.touched && form.controls.email.errors?.['required']) {
+        <mat-error>Email is mandatory!</mat-error>
+        }
+        @if (form.controls.email.errors?.['pattern']) {
+        <mat-error>Invalid email!</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Password...">
+        @if (form.controls.password.touched && form.controls.password.errors?.['required']) {
+        <mat-error>Password is mandatory!</mat-error>
+        }
+        @if (form.controls.password.errors?.['minlength']) {
+        <mat-error>Length must be at least {{ form.controls.password.errors?.['minlength'].requiredLength }}
+          characters!</mat-error>
+        }
+      </mat-form-field>
 
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="email">Email</label>
-          <input class="form-control" id="email" formControlName="email" type="text">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
-          Email field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('email')?.errors?.['pattern']">
-          Invalid email!
-        </div>
-      </div>
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" placeholder="Confirm Password...">
+        @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.errors?.['required']) {
+        <mat-error>Confirm Password is mandatory!</mat-error>
+        }
+        @if (form.controls.confirmPassword.errors?.['minlength']) {
+        <mat-error>Length must be at least {{ form.controls.confirmPassword.errors?.['minlength'].requiredLength }}
+          characters!</mat-error>
+        }
+        @if (form.controls.confirmPassword.errors?.['mustMatch']) {
+        <mat-error>Passwords must match!</mat-error>
+        }
+      </mat-form-field>
     </div>
 
-    <div class="d-flex justify-content-around">
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="password">Password</label>
-          <input class="form-control" id="password" formControlName="password" type="password">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('password')?.errors?.['minlength']">
-          Length must be at least {{form.get('password')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-      </div>
-      <div class="mb-3 w-25">
+    <div class="d-flex mx-auto gap-3 w-75">
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName" placeholder="First Name...">
+        @if (form.controls.firstName.touched && form.controls.firstName.errors?.['required']) {
+        <mat-error>First name is mandatory!</mat-error>
+        }
+        @if (form.controls.firstName.errors?.['minlength']) {
+        <mat-error>First Name length has to be at least
+          {{form.controls.firstName.errors?.['minlength']['requiredLength']}} symbols!</mat-error>
+        }
+        @if (form.controls.firstName.errors?.['maxlength']) {
+        <mat-error>
+          First name length has to maximum {{form.controls.firstName.errors?.['maxlength']['requiredLength']}}
+          symbols!
+        </mat-error>
+        }
+      </mat-form-field>
 
-        <div class="mb-3">
-          <label class="form-label" for="confirmPassword">Confirm Password</label>
-          <input class="form-control" id="confirmPassword" formControlName="confirmPassword" type="password">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('confirmPassword')?.errors?.['minlength']">
-          Length must be at least {{form.get('confirmPassword')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('confirmPassword')?.errors?.['mustMatch']">
-          Passwords must match!
-        </div>
-      </div>
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>Middle Name</mat-label>
+        <input type="text" matInput formControlName="middleName" placeholder="Middle Name...">
+        @if (form.controls.middleName.touched && form.controls.middleName.errors?.['required']) {
+        <mat-error>Middle name is mandatory!</mat-error>
+        }
+        @if (form.controls.middleName.errors?.['minlength']) {
+        <mat-error>Middle Name length has to be at least
+          {{form.controls.middleName.errors?.['minlength']['requiredLength']}} symbols!</mat-error>
+        }
+        @if (form.controls.middleName.errors?.['maxlength']) {
+        <mat-error>Middle name length has to maximum
+          {{form.controls.middleName.errors?.['maxlength']['requiredLength']}}
+          symbols!</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="d-flex half-width mx-auto my-4">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName" placeholder="Last Name...">
+        @if (form.controls.lastName.touched && form.controls.lastName.errors?.['required']) {
+        <mat-error>Last name is mandatory!</mat-error>
+        }
+        @if (form.controls.lastName.errors?.['minlength']) {
+        <mat-error>Last Name length has to be at least
+          {{form.controls.lastName.errors?.['minlength']['requiredLength']}} symbols!</mat-error>
+        }
+        @if (form.controls.lastName.errors?.['maxlength']) {
+        <mat-error>Last name length has to maximum {{form.controls.lastName.errors?.['maxlength']['requiredLength']}}
+          symbols!</mat-error>
+        }
+      </mat-form-field>
     </div>
 
-    <div class="d-flex justify-content-around">
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="firstName">First Name</label>
-          <input class="form-control" id="firstName" formControlName="firstName" type="text">
-        </div>
-        <div class="alert alert-danger"
-          *ngIf="form.get('firstName')?.touched && form.get('firstName')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('firstName')?.errors?.['minlength']">
-          Length must be at least {{form.get('firstName')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('firstName')?.errors?.['maxlength']">
-          Length must up to {{form.get('firstName')?.errors?.['maxlength']['requiredLength']}} characters!
-        </div>
-      </div>
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="middleName">Middle Name</label>
-          <input class="form-control" id="middleName" formControlName="middleName" type="text">
-        </div>
-        <div class="alert alert-danger"
-          *ngIf="form.get('middleName')?.touched && form.get('middleName')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('middleName')?.errors?.['minlength']">
-          Length must be at least {{form.get('middleName')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('middleName')?.errors?.['maxlength']">
-          Length must up to {{ form.get('middleName')?.errors?.['maxlength']['requiredLength'] }} characters!
-        </div>
-      </div>
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="lastName">Last Name</label>
-          <input class="form-control" id="lastName" formControlName="lastName" type="text">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('lastName')?.errors?.['minlength']">
-          Length must be at least {{form.get('lastName')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('lastName')?.errors?.['maxlength']">
-          Length must up to {{form.get('lastName')?.errors?.['maxlength']['requiredLength']}} characters!
-        </div>
-      </div>
+    <div class="d-flex mx-auto gap-3 w-75">
+      <mat-form-field class="d-flex half-width mx-auto my-3">
+        <mat-label>Company Name</mat-label>
+        <input type="text" matInput formControlName="companyName" placeholder="Copany Name...">
+        @if (form.controls.companyName.touched && form.controls.companyName.errors?.['required']) {
+        <mat-error>Company name is mandatory!</mat-error>
+        }
+        @if (form.controls.companyName.errors?.['minlength']) {
+        <mat-error>Company Name length has to be at least
+          {{ form.controls.companyName.errors?.['minlength']['requiredLength'] }} symbols!
+        </mat-error>
+        }
+        @if (form.controls.companyName.errors?.['maxlength']) {
+        <mat-error>
+          Company name length has to maximum {{ form.controls.companyName.errors?.['maxlength']['requiredLength'] }}
+          symbols!
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="d-flex half-width mx-auto my-3">
+        <mat-label>Company logo Url</mat-label>
+        <input type="text" matInput formControlName="logo" placeholder="Company logo Url...">
+        @if (form.controls.logo.touched && form.controls.logo.errors?.['required']) {
+        <mat-error>Company logo Url is mandatory!</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="d-flex half-width mx-auto my-3">
+        <mat-label>Bulstat</mat-label>
+        <input type="text" matInput formControlName="bulstat" placeholder="Bulstat...">
+        @if (form.controls.bulstat.touched && form.controls.bulstat.errors?.['required']) {
+        <mat-error>Bulstat is mandatory!</mat-error>
+        }
+        @if (form.controls.bulstat.errors?.['minlength']) {
+        <mat-error>Bulstat length has to be at least
+          {{ form.controls.bulstat.errors?.['minlength']['requiredLength'] }} symbols!
+        </mat-error>
+        }
+        @if (form.controls.bulstat.errors?.['maxlength']) {
+        <mat-error>Bulstat length has to maximum {{ form.controls.bulstat.errors?.['maxlength']['requiredLength'] }}
+          symbols!
+        </mat-error>
+        }
+      </mat-form-field>
     </div>
 
-    <div class="d-flex justify-content-around">
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="companyName">Company name</label>
-          <input class="form-control" id="companyName" formControlName="companyName" type="text">
-        </div>
-        <div class="alert alert-danger"
-          *ngIf="form.get('companyName')?.touched && form.get('companyName')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('companyName')?.errors?.['minlength']">
-          Length must be at least {{form.get('companyName')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('companyName')?.errors?.['maxlength']">
-          Length must be up to {{form.get('companyName')?.errors?.['maxlength']['requiredLength']}} characters!
-        </div>
-      </div>
+    <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
-      <div class="mb-3 w-25">
-        <label class="form-label" for="companyLogoUrl">Company Logo Url</label>
-        <input class="form-control" id="companyLogoUrl" formControlName="logo" type="text">
-        <div class="alert alert-danger" *ngIf="form.get('logo')?.touched && form.get('logo')?.errors?.['required']">
-          This field is required!
-        </div>
-      </div>
-
-      <div class="mb-3 w-25">
-        <div class="mb-3">
-          <label class="form-label" for="bulstat">Bulstat</label>
-          <input class="form-control" id="bulstat" formControlName="bulstat" type="text">
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('bulstat')?.touched && form.get('bulstat')?.errors?.['required']">
-          This field is required!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('bulstat')?.errors?.['minlength']">
-          Length must be at least {{form.get('bulstat')?.errors?.['minlength']['requiredLength']}} characters!
-        </div>
-        <div class="alert alert-danger" *ngIf="form.get('bulstat')?.errors?.['maxlength']">
-          Length must be up to {{form.get('bulstat')?.errors?.['maxlength']['requiredLength']}} characters!
-        </div>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <hr class="bg-primary w-75" />
-    </div>
-
-    <div class="d-flex justify-content-center mt-3">
-      <button type="submit" [disabled]="!form.valid" class="btn btn-primary">
+    <div class="d-flex justify-content-center pb-3">
+      <button mat-fab extended type="submit" [disabled]="!form.valid">
         Register
       </button>
     </div>
+
   </form>
 </div>

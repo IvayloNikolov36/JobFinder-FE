@@ -6,6 +6,7 @@ import { CvListing } from '../../../users/models/cv';
 import { JobAdApplication } from '../../models';
 import { CurriculumVitaesService, UserApplicationsService } from '../../../users/services';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -48,9 +49,7 @@ export class JobAdvertisementDetailsComponent implements OnInit {
         next: () => {
           this.toastr.success("Successfully applied for this job.");
         },
-        error: (err: any) => {
-          this.toastr.error(err.error.errors[0]);
-        }
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
       });
   }
 
@@ -59,6 +58,6 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   private getJobDetails = (): void => {
-    
+    // TODO: implement the function
   }
 }

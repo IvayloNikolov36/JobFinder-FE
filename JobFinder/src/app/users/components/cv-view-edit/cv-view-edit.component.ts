@@ -38,6 +38,7 @@ import {
   WorkExperienceInfo
 } from '../../../shared/models';
 import { getFullName } from '../../../shared/functions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -157,9 +158,7 @@ export class CvViewComponent implements OnInit {
             this.toaster.success("Skills info successfuly updated.");
           });
         },
-        error: (err: any) => {
-          this.showErrors(err.error.errors, "Can't update skills info!");
-        }
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update skills info!")
       });
   }
 
@@ -184,9 +183,7 @@ export class CvViewComponent implements OnInit {
               this.cv.workExperiences = data;
               this.toaster.success("Work Experience info successfuly updated.");
             },
-            error: (err: any) => {
-              this.showErrors(err.error.errors, "Can't update work experience info!");
-            }
+            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update work experience info!")
           });
       });
   }
@@ -212,9 +209,7 @@ export class CvViewComponent implements OnInit {
               this.toaster.success("Courses info successfuly updated.");
             });
         },
-        error: (err: any) => {
-          this.showErrors(err.error.errors, "Can't update courses info!");
-        }
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update courses info!")
       });
   }
 
@@ -238,9 +233,7 @@ export class CvViewComponent implements OnInit {
             this.cv.languagesInfo = data;
             this.toaster.success("Languages info successfuly updated.");
           },
-          error: (err: any) => {
-            this.showErrors(err.error.errors, "Can't update languages info!");
-          }
+          error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update languages info!")
         });
     });
   }
@@ -264,9 +257,7 @@ export class CvViewComponent implements OnInit {
               this.cv.educations = data;
               this.toaster.success("Education info successfuly updated.");
             },
-            error: (err: any) => {
-              this.showErrors(err.error.errors, "Can't update education info!");
-            }
+            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update education info!")
           });
       });
   }
@@ -292,9 +283,7 @@ export class CvViewComponent implements OnInit {
               this.fullName = getFullName(this.cv.personalDetails);
               this.toaster.success("Personal Details successfuly updated.");
             },
-            error: (err: any) => {
-              this.showErrors(err.error.errors, "Can't update personal details!");
-            }
+            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update personal details!")
           });
       });
   }

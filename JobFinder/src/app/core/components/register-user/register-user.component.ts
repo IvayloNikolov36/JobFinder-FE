@@ -5,11 +5,8 @@ import { Router } from '@angular/router';
 import { MustMatch } from '../../functions/must-match';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterUserModel } from '../../models';
-
-const MinNameLength: number = 2;
-const MaxNameLength: number = 25;
-const PasswordMinLength: number = 6;
-const PasswordMaxLength: number = 35;
+import { HttpErrorResponse } from '@angular/common/http';
+import { ValidationConstants as c } from '../../constants';
 
 @Component({
   selector: 'jf-register-user',
@@ -19,7 +16,6 @@ const PasswordMaxLength: number = 35;
 export class RegisterUserComponent implements OnInit {
 
   form!: FormGroup<RegisterUserForm>;
-  emailPattern: RegExp = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
   constructor(
     private authService: AuthService,
@@ -37,18 +33,18 @@ export class RegisterUserComponent implements OnInit {
       .registerUser(this.form.value as RegisterUserModel)
       .subscribe({
         next: () => this.router.navigate(['/login']),
-        error: (err: any) => this.toastr.error(err.error.errors.join(' '))
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
       });
   }
 
   private initializeRegisterForm(): void {
     this.form = this.fb.group<RegisterUserForm>({
-      email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern(this.emailPattern)] }),
-      password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(PasswordMinLength), Validators.maxLength(PasswordMaxLength)] }),
-      confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(PasswordMinLength), Validators.maxLength(PasswordMaxLength)] }),
-      firstName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(MinNameLength), Validators.maxLength(MaxNameLength)] }),
-      middleName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(MinNameLength), Validators.maxLength(MaxNameLength)] }),
-      lastName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(MinNameLength), Validators.maxLength(MaxNameLength)] }),
+      email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern(c.emailPattern)] }),
+      password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.passwordMinLength), Validators.maxLength(c.passwordMaxLength)] }),
+      confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.passwordMinLength), Validators.maxLength(c.passwordMaxLength)] }),
+      firstName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
+      middleName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
+      lastName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
     },
       {
         validator: MustMatch('password', 'confirmPassword')

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 import { LoginResultModel } from '../../models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-login',
@@ -53,13 +54,12 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.form.value)
       .subscribe({
-        next: (data: any) => {
-          const loginResult: LoginResultModel = data;
-          this.setDataInStorage(data);
+        next: (loginResult: LoginResultModel) => {
+          this.setDataInStorage(loginResult);
           this.authService.isLoggedIn.next(true);
           this.router.navigate(['/home']);
         },
-        error: (err: any) => this.toastr.error(err.title)
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.title)
       });
   }
 

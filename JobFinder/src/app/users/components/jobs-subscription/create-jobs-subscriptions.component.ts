@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../../shared/models';
 import { JobSubscription } from '../../models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-create-jobs-subscriptions',
@@ -59,7 +60,7 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
           this.toastr.success("Successfull subscription.");
           this.emitSubscription.emit(createdSubscription);
         },
-        error: (err: any) => this.toastr.error(err.error.errors[0])
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
       });
   }
 

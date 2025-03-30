@@ -9,6 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { JobAdvertisementsService } from '../../services';
 import { SubscriptionsService } from '../../../users/services';
 import { AdsFiltering, AdsFilterProps } from '../../models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const ShowFiltersText: string = 'Show Filters';
 const CloseFiltersText: string = 'Close Filters';
@@ -94,9 +95,7 @@ export class JobAdsListingComponent {
       .subscribeForJobsWithCriterias(subscriptionCriterias)
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
-        error: (err: any) => {
-          this.toastr.error(err.error.errors[0]);
-        },
+        error: (err: HttpErrorResponse) =>  this.toastr.error(err.error.errors[0]),
         complete: () => {
           this.recurringTypeId.setValue(null);
           this.showSubscribeButton.set(false);
