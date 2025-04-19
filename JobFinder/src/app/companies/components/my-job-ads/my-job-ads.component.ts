@@ -24,11 +24,11 @@ export class MyJobAdsComponent implements OnInit {
 
   readonly applicationsDataResource = rxResource({
     request: () => ({
-      currentJobAdId: this.jobAdId
+      currentJobAdId: this.jobAdId()
     }),
     loader: ({ request }) => {
       return this.jobAdApplicationsService
-        .getJobAllApplicationsData(request.currentJobAdId());
+        .getJobAllApplicationsData(request.currentJobAdId);
     }
   });
 
@@ -48,16 +48,11 @@ export class MyJobAdsComponent implements OnInit {
   }
 
   openExpansionPanel(jobAdId: number): void {
+    
     this.jobAdId.set(jobAdId);
-    this.reloadApplicationsData();
-  }
-
-  private reloadApplicationsData = (): void => {
-    this.applicationsDataResource.reload();
   }
 
   private loadJobAds = (): void => {
-
     let observableData: Observable<CompanyAd[]>;
 
     switch (this.selectedFilterType) {
