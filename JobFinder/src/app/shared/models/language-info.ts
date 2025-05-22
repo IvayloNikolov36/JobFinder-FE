@@ -6,4 +6,5 @@ export interface LanguageInfo {
   comprehensionLevel: BasicModel;
   speakingLevel: BasicModel;
   writingLevel: BasicModel;
+  includeInAnonymousProfile: boolean | undefined;
 }

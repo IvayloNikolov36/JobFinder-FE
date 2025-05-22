@@ -3,17 +3,25 @@
     <div class="card-header d-flex justify-content-between">
         <h6>Work Experience</h6>
 
-        @if(!viewOnly) {
+        @if(mode === sectionMode.Edit) {
         <jf-edit-button (onClick)="editWorkExperienceData()" />
         }
     </div>
 
     <div class="card-body">
         @for (item of workExperienceData; track item.id) {
-        <div>
-            <h6>{{ item.organization }}</h6>
+        <div class="card my-2 p-3" [class]="{'cv-section-blur': item.includeInAnonymousProfile === false}">
+            <div class="d-flex justify-content-between">
+                <h6>{{ item.organization }}</h6>
+
+                @if (mode === sectionMode.AnonymousProfile) {
+                <a (click)="blurSection(item.id)" class="pointer">
+                    <i class="bi bi-eye-slash-fill"></i>
+                </a>
+                }
+            </div>
             <small class="fw-bold">{{ item.fromDate | date }} - {{ item.toDate | date}}</small>
-            <small>{{ item.location }} Bussiness Sector: {{ item.businessSector.name }}</small>
+            <small>{{ item.location }}, Bussiness Sector: {{ item.businessSector.name }}</small>
             <div class="fs-5">{{ item.jobTitle }}</div>
             <span class="card-text">{{ item.additionalDetails }}</span>
         </div>

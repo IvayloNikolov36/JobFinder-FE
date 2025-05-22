@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LanguageInfo } from '../../../models';
+import { CvSectionModeEnum } from '../../../enums';
 
 @Component({
   selector: 'jf-languages-details',
@@ -9,10 +10,21 @@ import { LanguageInfo } from '../../../models';
 export class LanguagesDetailsComponent {
 
   @Input() languagesData: LanguageInfo[] = [];
-  @Input() viewOnly: boolean = true;
+  @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
   @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
+
+  sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   onEditClicked = (): void => {
     this.onEdit.emit();
+  }
+
+  blurSection = (id: number): void => {
+    const langugageInfo: LanguageInfo | undefined = this.languagesData.find(l => l.id === id);
+    if (langugageInfo) {
+      langugageInfo.includeInAnonymousProfile = langugageInfo.includeInAnonymousProfile === undefined
+        ? false
+        : !langugageInfo.includeInAnonymousProfile;
+    }
   }
 }

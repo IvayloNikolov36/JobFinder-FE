@@ -3,19 +3,32 @@
     <div class="card-header d-flex justify-content-between">
         <h6>Languages</h6>
 
-        @if(!viewOnly) {
+        @if(mode === sectionMode.Edit) {
         <jf-edit-button (onClick)="onEditClicked()" />
         }
     </div>
 
     <div class="card-body">
         @for (item of languagesData; track item.id) {
-        <div>
-            <span class="fw-bold">{{ item.languageType.name }}: </span>
-            <span class="card-text">
-                Comprehension: {{ item.comprehensionLevel.name }},
-                Speaking: {{ item.speakingLevel.name }},
-                Writing: {{ item.writingLevel.name }}
+        <div class="card my-2 p-3" [class]="{'cv-section-blur': item.includeInAnonymousProfile === false}">
+            <div class="d-flex justify-content-between">
+                <span class="fs-5 fw-bold">{{ item.languageType.name }} </span>
+                @if (mode === sectionMode.AnonymousProfile) {
+                <a (click)="blurSection(item.id)" class="pointer">
+                    <i class="bi bi-eye-slash-fill"></i>
+                </a>
+                }
+            </div>
+            <span class="d-flex justify-content-start ms-3 mt-2 gap-3 card-text">
+                <div>
+                    Comprehension: <span class="fw-medium">{{ item.comprehensionLevel.name }}</span>
+                </div>
+                <div>
+                    Speaking: <span class="fw-medium">{{ item.speakingLevel.name }}</span>
+                </div>
+                <div>
+                    Writing: <span class="fw-medium">{{ item.writingLevel.name }}</span>
+                </div>
             </span>
         </div>
         }

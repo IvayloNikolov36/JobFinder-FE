@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WorkExperienceInfo } from '../../../models';
+import { CvSectionModeEnum } from '../../../enums';
 
 @Component({
   selector: 'jf-work-experience-details',
@@ -9,10 +10,20 @@ import { WorkExperienceInfo } from '../../../models';
 export class WorkExperienceDetailsComponent {
 
   @Input() workExperienceData: WorkExperienceInfo[] = [];
-  @Input() viewOnly: boolean = true;
+  @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
   @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
+
+  sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   editWorkExperienceData = (): void => {
     this.onEdit.emit();
+  }
+
+  blurSection = (id: number): void => {
+    const workExpInfo: WorkExperienceInfo | undefined = this.workExperienceData.find(we => we.id === id);
+    if (workExpInfo) {
+      workExpInfo.includeInAnonymousProfile = workExpInfo.includeInAnonymousProfile === undefined ? false
+        : !workExpInfo.includeInAnonymousProfile;
+    }
   }
 }

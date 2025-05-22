@@ -3,23 +3,33 @@
     <div class="card-header d-flex justify-content-between">
         <h6>Courses and Certificates</h6>
 
-        @if(!viewOnly) {
+        @if(mode === sectionMode.Edit) {
         <jf-edit-button (onClick)="onEditClicked()" />
         }
     </div>
 
     <div class="card-body">
+
         @if (coursesData.length === 0) {
         <span class="text-info"> No courses data is specified</span>
         }
+
         @for (item of coursesData; track item.id) {
-        <div>
-            <p>
+        <div class="card my-2 p-3" [class]="{'cv-section-blur': item.includeInAnonymousProfile === false}">
+
+            <div class="d-flex justify-content-between">
                 <span class="card-text fw-bold">{{ item.courseName }}: </span>
-                <a class="link-opacity-50-hover" [href]="item.certificateUrl">
-                    {{ item.certificateUrl }}
+                @if (mode === sectionMode.AnonymousProfile) {
+                <a (click)="blurSection(item.id)" class="pointer">
+                    <i class="bi bi-eye-slash-fill"></i>
                 </a>
-            </p>
+                }
+            </div>
+
+            <a class="link-opacity-50-hover" [href]="item.certificateUrl">
+                {{ item.certificateUrl }}
+            </a>
+
         </div>
         }
     </div>

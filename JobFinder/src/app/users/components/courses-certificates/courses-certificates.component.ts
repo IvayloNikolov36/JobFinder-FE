@@ -45,7 +45,7 @@ export class CoursesCertificatesComponent implements OnInit {
       return {
         ...cs,
         courseName: cs.courseName.trim() === '' ? null : cs.courseName,
-        certificateUrl: cs.certificateUrl.trim() === '' ? null : cs.courseName
+        certificateUrl: cs.certificateUrl.trim() === '' ? null : cs.certificateUrl
       } as CourseCertificateInfo;
     });
 

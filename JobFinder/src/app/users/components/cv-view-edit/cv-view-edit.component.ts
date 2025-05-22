@@ -39,6 +39,7 @@ import {
 } from '../../../shared/models';
 import { getFullName } from '../../../shared/functions';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CvSectionModeEnum } from '../../../shared/enums';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -66,6 +67,7 @@ export class CvViewComponent implements OnInit {
   drivingCategories!: Signal<BasicModel[]>;
 
   sectionType: typeof CvSectionTypeEnum = CvSectionTypeEnum;
+  sectionMode: CvSectionModeEnum = CvSectionModeEnum.Edit;
 
   constructor(
     private route: ActivatedRoute,
@@ -134,6 +136,10 @@ export class CvViewComponent implements OnInit {
     }
 
     modal.show();
+  }
+
+  createAnonymousProfile = (): void => {
+    this.sectionMode = CvSectionModeEnum.AnonymousProfile;
   }
 
   private onCreateSkillsModalComponent = (): void => {
