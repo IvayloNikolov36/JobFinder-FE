@@ -1,6 +1,7 @@
 import { SkillsService } from '../../services/skills.service';
 import { Component, ComponentRef, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
 import {
+  AnonymousProfileService,
   CoursesService,
   CurriculumVitaesService,
   EducationsService,
@@ -40,6 +41,7 @@ import {
 import { getFullName } from '../../../shared/functions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CvSectionModeEnum } from '../../../shared/enums';
+import { AnonymousProfileCreate } from '../../models';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -67,7 +69,8 @@ export class CvViewComponent implements OnInit {
   drivingCategories!: Signal<BasicModel[]>;
 
   sectionType: typeof CvSectionTypeEnum = CvSectionTypeEnum;
-  sectionMode: CvSectionModeEnum = CvSectionModeEnum.Edit;
+  sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
+  mode: CvSectionModeEnum = CvSectionModeEnum.Edit;
 
   constructor(
     private route: ActivatedRoute,
@@ -79,7 +82,8 @@ export class CvViewComponent implements OnInit {
     private skillsInfoService: SkillsService,
     private workExperiencesService: WorkExperiencesService,
     private personalInfoService: PersonalDetailsService,
-    private nomenclatureService: NomenclatureService) {
+    private nomenclatureService: NomenclatureService,
+    private anonymousProfileService: AnonymousProfileService) {
 
     this.cvId = this.route.snapshot.params['id'];
 
@@ -139,7 +143,49 @@ export class CvViewComponent implements OnInit {
   }
 
   createAnonymousProfile = (): void => {
-    this.sectionMode = CvSectionModeEnum.AnonymousProfile;
+    this.cv.workExperiences.forEach(e => e.includeInAnonymousProfile = true);
+    this.cv.educations.forEach(e => e.includeInAnonymousProfile = true);
+    this.cv.languagesInfo.forEach(l => l.includeInAnonymousProfile = true);
+    this.cv.courseCertificates.forEach(cs => cs.includeInAnonymousProfile = true);
+    this.mode = CvSectionModeEnum.AnonymousProfile;
+  }
+
+  activateAnonymousProfile = (): void => {
+    const model: AnonymousProfileCreate = this.constructAnonymousProfileActivationData();
+
+    this.anonymousProfileService.activate(model)
+      .subscribe({
+        next: () => this.toaster.success('Successfully activated an anonymous profile!'),
+        error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
+      });
+  }
+
+  private constructAnonymousProfileActivationData = (): AnonymousProfileCreate => {
+    const workExperienceInfoIds: number[] = this.cv.workExperiences
+      .filter(we => we.includeInAnonymousProfile)
+      .map(we => we.id);
+
+    const educationsIds: number[] = this.cv.educations
+      .filter(e => e.includeInAnonymousProfile)
+      .map(e => e.id);
+
+    const languageInfoIds: number[] = this.cv.languagesInfo
+      .filter(li => li.includeInAnonymousProfile)
+      .map(li => li.id);
+
+    const courseInfoIds: number[] = this.cv.courseCertificates
+      .filter(cs => cs.includeInAnonymousProfile)
+      .map(cs => cs.id);
+
+    const model: AnonymousProfileCreate = new AnonymousProfileCreate(
+      this.cv.id,
+      workExperienceInfoIds,
+      educationsIds,
+      languageInfoIds,
+      courseInfoIds
+    );
+
+    return model;
   }
 
   private onCreateSkillsModalComponent = (): void => {

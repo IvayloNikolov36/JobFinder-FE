@@ -22,7 +22,7 @@ export class LanguagesDetailsComponent {
   blurSection = (id: number): void => {
     const langugageInfo: LanguageInfo | undefined = this.languagesData.find(l => l.id === id);
     if (langugageInfo) {
-      langugageInfo.includeInAnonymousProfile = langugageInfo.includeInAnonymousProfile === undefined
+      langugageInfo.includeInAnonymousProfile = langugageInfo.includeInAnonymousProfile === null
         ? false
         : !langugageInfo.includeInAnonymousProfile;
     }

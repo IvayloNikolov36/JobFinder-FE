@@ -8,3 +8,4 @@ export * from './job-ads-applications.controller';
 export * from './user-profile-controller';
 export * from './company-profile.controller';
 export * from './companies.controller';
+export * from './anonymous-profile.controller';

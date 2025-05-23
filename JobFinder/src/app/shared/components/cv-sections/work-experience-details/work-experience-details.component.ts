@@ -22,7 +22,8 @@ export class WorkExperienceDetailsComponent {
   blurSection = (id: number): void => {
     const workExpInfo: WorkExperienceInfo | undefined = this.workExperienceData.find(we => we.id === id);
     if (workExpInfo) {
-      workExpInfo.includeInAnonymousProfile = workExpInfo.includeInAnonymousProfile === undefined ? false
+      workExpInfo.includeInAnonymousProfile = workExpInfo.includeInAnonymousProfile === null
+        ? false
         : !workExpInfo.includeInAnonymousProfile;
     }
   }

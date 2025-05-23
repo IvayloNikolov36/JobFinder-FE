@@ -9,5 +9,5 @@ export interface EducationInfo {
   educationLevel: BasicModel;
   major: string;
   mainSubjects: string;
-  includeInAnonymousProfile: boolean | undefined;
+  includeInAnonymousProfile: boolean | null;
 }

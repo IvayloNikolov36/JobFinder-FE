@@ -6,7 +6,7 @@
     <jf-personal-info-details
       [personalDetailsData]="cv.personalDetails"
       [pictureUrl]="cv.pictureUrl"
-      [mode]="sectionMode"
+      [mode]="mode"
       (onEdit)="editSection(sectionType.PersonalDetails, modal)"
     />
     <button mat-fab extended class="mt-5 me-5" (click)="createAnonymousProfile()">
@@ -16,19 +16,19 @@
 
   <jf-work-experience-details
     [workExperienceData]="cv.workExperiences"
-    [mode]="sectionMode"
+    [mode]="mode"
     (onEdit)="editSection(sectionType.WorkExperienceInfo, modal)"
   />
 
   <jf-education-details
     [educationData]="cv.educations"
-    [mode]="sectionMode"
+    [mode]="mode"
     (onEdit)="editSection(sectionType.EducationInfo, modal)"
   />
 
   <jf-languages-details
     [languagesData]="cv.languagesInfo"
-    [mode]="sectionMode"
+    [mode]="mode"
     (onEdit)="editSection(sectionType.LanguagesInfo, modal)"
   />
 
@@ -40,9 +40,18 @@
 
   <jf-courses-details
     [coursesData]="cv.courseCertificates"
-    [mode]="sectionMode"
+    [mode]="mode"
     (onEdit)="editSection(sectionType.CoursesInfo, modal)"
   />
+
+  @if (mode === sectionMode.AnonymousProfile) {
+    <div class="d-flex justify-content-center mb-5">
+      <button class="pull-right" mat-fab extended class="mt-5 me-5" (click)="activateAnonymousProfile()">
+          Activate Anonymous Profile
+      </button>
+    </div>
+  }
+
   }
 
   <div #modal class="modal fade modal-lg" id="myModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

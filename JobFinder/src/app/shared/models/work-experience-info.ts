@@ -9,5 +9,5 @@ export interface WorkExperienceInfo {
   businessSector: BasicModel;
   location: string;
   additionalDetails: string | null;
-  includeInAnonymousProfile: boolean | undefined;
+  includeInAnonymousProfile: boolean | null;
 }

@@ -22,7 +22,7 @@ export class EducationDetailsComponent {
   blurSection = (id: number): void => {
     const education: EducationInfo | undefined = this.educationData.find(e => e.id === id);
     if (education) {
-      education.includeInAnonymousProfile = education.includeInAnonymousProfile === undefined
+      education.includeInAnonymousProfile = education.includeInAnonymousProfile === null
         ? false
         : !education.includeInAnonymousProfile;
     }
