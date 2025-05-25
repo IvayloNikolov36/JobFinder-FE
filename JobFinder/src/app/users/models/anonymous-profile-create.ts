@@ -1,9 +1,6 @@
-export class AnonymousProfileCreate {
-    constructor(
-        public curriculumVitaeId: string,
-        public workExpiriencesInfo: number[],
-        public educationsInfo: number[],
-        public languagesInfo: number[],
-        public coursesInfo: number[]
-    ) { }
+export interface AnonymousProfileCreate {
+    workExpiriencesInfo: number[],
+    educationsInfo: number[],
+    languagesInfo: number[],
+    coursesInfo: number[]
 }

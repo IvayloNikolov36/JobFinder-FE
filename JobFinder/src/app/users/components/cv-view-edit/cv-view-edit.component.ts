@@ -151,13 +151,17 @@ export class CvViewComponent implements OnInit {
   }
 
   activateAnonymousProfile = (): void => {
-    const model: AnonymousProfileCreate = this.constructAnonymousProfileActivationData();
-
-    this.anonymousProfileService.activate(model)
+    this.anonymousProfileService.activate(
+      this.cv.id,
+      this.constructAnonymousProfileActivationData())
       .subscribe({
         next: () => this.toaster.success('Successfully activated an anonymous profile!'),
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
       });
+  }
+
+  getAnonymousProfile = (): void => {
+    this.anonymousProfileService.view().subscribe((data: unknown) => console.log(data));
   }
 
   private constructAnonymousProfileActivationData = (): AnonymousProfileCreate => {
@@ -177,15 +181,12 @@ export class CvViewComponent implements OnInit {
       .filter(cs => cs.includeInAnonymousProfile)
       .map(cs => cs.id);
 
-    const model: AnonymousProfileCreate = new AnonymousProfileCreate(
-      this.cv.id,
-      workExperienceInfoIds,
-      educationsIds,
-      languageInfoIds,
-      courseInfoIds
-    );
-
-    return model;
+    return {
+      workExpiriencesInfo: workExperienceInfoIds,
+      educationsInfo: educationsIds,
+      languagesInfo: languageInfoIds,
+      coursesInfo: courseInfoIds
+    } satisfies AnonymousProfileCreate;
   }
 
   private onCreateSkillsModalComponent = (): void => {
