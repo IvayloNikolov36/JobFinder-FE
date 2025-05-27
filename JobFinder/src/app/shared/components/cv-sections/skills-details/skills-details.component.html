@@ -9,11 +9,16 @@
     </div>
 
     <div class="card-body">
-        <span class="card-text">Computer skills:</span>
-        <p>{{ skillsData.computerSkills }}</p>
-        <span class="card-text">Other skills:</span>
-        <p>{{ skillsData.otherSkills }}</p>
-        <span class="card-text">Driving License Categories: {{ skillsData.licenseCategoriesText }}</span>
+        <span class="card-text fw-bold">Computer skills:</span>
+        <p class="ms-2">{{ skillsData.computerSkills }}</p>
+        @if (skillsData.otherSkills) {
+        <span class="card-text fw-bold">Other skills:</span>
+        <p class="ms-2">{{ skillsData.otherSkills }}</p>
+        }
+        @if (skillsData.licenseCategoriesText.length > 0) {
+        <span class="card-text fw-bold">Driving License Categories: </span>
+        <span>{{ skillsData.licenseCategoriesText }}</span>
+        }
     </div>
 
 </div>

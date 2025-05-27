@@ -155,7 +155,24 @@ export class CvViewComponent implements OnInit {
       this.cv.id,
       this.constructAnonymousProfileActivationData())
       .subscribe({
-        next: () => this.toaster.success('Successfully activated an anonymous profile!'),
+        next: () => {
+          this.cv.anonymousProfileActivated = true;
+          this.cv.canActivateAnonymousProfile = false;
+          this.toaster.success('Successfully activated an anonymous profile!');
+        },
+        error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
+      });
+  }
+
+  // TODO: create dialog for assertion
+  deactivateAnonymousProfile = (): void => {
+    this.anonymousProfileService.deactivate(this.cv.id)
+      .subscribe({
+        next: () => {
+          this.cv.anonymousProfileActivated = false;
+          this.cv.canActivateAnonymousProfile = true;
+          this.toaster.success('Successfully deactivated anonymous profile!');
+        },
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
       });
   }

@@ -9,9 +9,19 @@
       [mode]="mode"
       (onEdit)="editSection(sectionType.PersonalDetails, modal)"
     />
+
+    @if (cv.canActivateAnonymousProfile) {
     <button mat-fab extended class="mt-5 me-5" (click)="createAnonymousProfile()">
       Create Anonymous Profile
     </button>
+    }
+
+    @if (cv.anonymousProfileActivated) {
+    <button mat-fab extended class="mt-5 me-5" (click)="deactivateAnonymousProfile()">
+      Deactivate Anonymous Profile
+    </button>
+    }
+
   </div>
 
   <jf-work-experience-details

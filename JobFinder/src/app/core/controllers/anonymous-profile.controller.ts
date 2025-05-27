@@ -1,6 +1,9 @@
 import { environment } from "../../../environments/environment";
 
-const route: string = environment.apiUrl + 'AnonymousProfile/';
+const Route: string = environment.apiUrl + 'AnonymousProfile/';
 
-export const view = (): string => route + 'view';
-export const activate = (cvId: string): string => route + `${cvId}/activate`;
+export class AnonymousProfileController {
+    static view = (): string => Route + 'view';
+    static activate = (cvId: string): string => Route + `${cvId}/activate`;
+    static deactivate = (cvId: string): string => Route + `${cvId}/deactivate`;
+}

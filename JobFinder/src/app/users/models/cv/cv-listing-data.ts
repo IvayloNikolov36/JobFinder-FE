@@ -12,6 +12,8 @@ export interface CvListingData {
   name: string;
   pictureUrl: string;
   createdOn: Date;
+  anonymousProfileActivated: boolean;
+  canActivateAnonymousProfile: boolean;
   personalDetails: PersonalDetails;
   languagesInfo: LanguageInfo[];
   workExperiences: WorkExperienceInfo[];
@@ -19,4 +21,3 @@ export interface CvListingData {
   courseCertificates: CourseCertificateInfo[];
   skills: SkillsInfo;
 }
-
