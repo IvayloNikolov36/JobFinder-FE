@@ -1,29 +1,33 @@
 <div class="card my-3 w-50 mx-auto">
     <div class="row g-0">
 
-        <div class="col-md-4" [class]="{'cv-pic-blur': blurDetails}">
+        <div class="col-md-4" [class]="{'cv-pic-blur': (blurDetails || mode === sectionMode.AnonymousProfileView)}">
             <img [src]="pictureUrl" class="img-fluid rounded m-1" alt="cv picture">
         </div>
 
         <div class="col-md-8 d-flex p-4">
             <div class="card-body">
+                @if (mode !== sectionMode.AnonymousProfileView) {
                 <div [class]="{'cv-details-blur': blurDetails}">
                     <h5 class="card-title">{{ fullName }}</h5>
                 </div>
-
+                }
                 <div class="card-text">
+                    @if (mode !== sectionMode.AnonymousProfileView) {
                     <div [class]="{'cv-details-blur': blurDetails}">
                         <span class="fw-medium">Birth Date: </span>
                         <span class="card-text">{{ personalDetailsData.birthdate | date }}</span>
                     </div>
+                    }
                     <div>
-                        <span class="fw-medium"> </span>
+                        <span class="fw-medium">Citizenship: </span>
                         <span class="card-text">{{ personalDetailsData.citizenship.name }}</span>
                     </div>
                     <div>
                         <span class="fw-medium">I live in: </span>
                         <span class="card-text">{{ personalDetailsData.city }}</span>
                     </div>
+                    @if (mode !== sectionMode.AnonymousProfileView) {
                     <div [class]="{'cv-details-blur': blurDetails}">
                         <span class="fs-5 fw-medium">Contacts:</span>
                         <div>
@@ -36,6 +40,7 @@
                             <span class="card-text">{{ personalDetailsData.phone }}</span>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
 

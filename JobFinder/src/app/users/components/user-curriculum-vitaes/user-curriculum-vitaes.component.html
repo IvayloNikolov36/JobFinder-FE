@@ -31,7 +31,9 @@
         <td mat-cell *matCellDef="let element">
           <div class="d-flex justify-content-end gap-2">
             @if (element.anonymousProfileActivated) {
-            <a mat-stroked-button routerLink="view/{{element.id}}">Anonymous Profile</a>
+            <div class="d-flex align-items-center me-2">
+              <span class="text-info fw-bold">Anonymous Profile</span>
+            </div>
             }
             <a mat-flat-button routerLink="view/{{element.id}}">View</a>
             <button mat-raised-button class="danger-btn" (click)="deleteCv(element.id, element.name, modal)">

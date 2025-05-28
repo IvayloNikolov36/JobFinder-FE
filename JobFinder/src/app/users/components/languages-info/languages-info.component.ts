@@ -71,7 +71,8 @@ export class LanguagesInfoComponent implements OnInit {
       languageType: [null, Validators.required],
       comprehensionLevel: [null, Validators.required],
       speakingLevel: [null, Validators.required],
-      writingLevel: [null, Validators.required]
+      writingLevel: [null, Validators.required],
+      includeInAnonymousProfile: [null]
     });
   }
 }

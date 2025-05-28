@@ -142,12 +142,24 @@ export class CvViewComponent implements OnInit {
     modal.show();
   }
 
+  viewCV = (): void => {
+    this.mode = CvSectionModeEnum.Edit;
+  }
+
+  viewAnonymousProfile = (): void => {
+    this.mode = CvSectionModeEnum.AnonymousProfileView;
+  }
+
   createAnonymousProfile = (): void => {
     this.cv.workExperiences.forEach(e => e.includeInAnonymousProfile = true);
     this.cv.educations.forEach(e => e.includeInAnonymousProfile = true);
     this.cv.languagesInfo.forEach(l => l.includeInAnonymousProfile = true);
     this.cv.courseCertificates.forEach(cs => cs.includeInAnonymousProfile = true);
-    this.mode = CvSectionModeEnum.AnonymousProfile;
+    this.mode = CvSectionModeEnum.AnonymousProfileCreate;
+  }
+
+  discardAnonymousProfile = (): void => {
+    this.mode = CvSectionModeEnum.Edit;
   }
 
   activateAnonymousProfile = (): void => {
@@ -158,6 +170,7 @@ export class CvViewComponent implements OnInit {
         next: () => {
           this.cv.anonymousProfileActivated = true;
           this.cv.canActivateAnonymousProfile = false;
+          this.mode = CvSectionModeEnum.AnonymousProfileView;
           this.toaster.success('Successfully activated an anonymous profile!');
         },
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
@@ -165,12 +178,14 @@ export class CvViewComponent implements OnInit {
   }
 
   // TODO: create dialog for assertion
+
   deactivateAnonymousProfile = (): void => {
     this.anonymousProfileService.deactivate(this.cv.id)
       .subscribe({
         next: () => {
           this.cv.anonymousProfileActivated = false;
           this.cv.canActivateAnonymousProfile = true;
+          this.mode = CvSectionModeEnum.View;
           this.toaster.success('Successfully deactivated anonymous profile!');
         },
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)

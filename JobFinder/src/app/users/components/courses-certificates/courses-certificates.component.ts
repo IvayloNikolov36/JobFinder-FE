@@ -80,7 +80,8 @@ export class CoursesCertificatesComponent implements OnInit {
       {
         id: [0],
         courseName: [null, [Validators.minLength(5), Validators.maxLength(100)]],
-        certificateUrl: [null, Validators.pattern(this.urlPattern)]
+        certificateUrl: [null, Validators.pattern(this.urlPattern)],
+        includeInAnonymousProfile: [null]
       },
       {
         validator: PairValues('courseName', 'certificateUrl')

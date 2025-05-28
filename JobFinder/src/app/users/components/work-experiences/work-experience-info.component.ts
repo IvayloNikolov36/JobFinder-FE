@@ -77,7 +77,8 @@ export class WorkExperienceInfoComponent implements OnInit {
       organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       businessSector: [null, Validators.required],
       location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      additionalDetails: [null, [Validators.minLength(20), Validators.maxLength(3000)]]
+      additionalDetails: [null, [Validators.minLength(20), Validators.maxLength(3000)]],
+      includeInAnonymousProfile: [null]
     });
   }
 }

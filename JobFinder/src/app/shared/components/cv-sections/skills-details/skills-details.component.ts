@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SkillsInfo } from '../../../models';
+import { CvSectionModeEnum } from '../../../enums';
 
 @Component({
   selector: 'jf-skills-details',
@@ -9,8 +10,10 @@ import { SkillsInfo } from '../../../models';
 export class SkillsDetailsComponent {
 
   @Input() skillsData: SkillsInfo = {} as SkillsInfo;
-  @Input() viewOnly: boolean = true;
+  @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
   @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
+
+  sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   onEditClicked = (): void => {
     this.onEdit.emit();

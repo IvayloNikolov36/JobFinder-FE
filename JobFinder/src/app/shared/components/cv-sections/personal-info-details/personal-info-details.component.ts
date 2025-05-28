@@ -21,7 +21,8 @@ export class PersonalInfoDetailsComponent implements OnChanges {
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   ngOnChanges(): void {
-    this.blurDetails = this.mode === CvSectionModeEnum.AnonymousProfile;
+    this.blurDetails = this.mode === CvSectionModeEnum.AnonymousProfileCreate;
+
     if (this.personalDetailsData) {
       this.fullName = getFullName(this.personalDetailsData);
     }

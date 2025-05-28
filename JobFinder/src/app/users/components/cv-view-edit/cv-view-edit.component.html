@@ -10,16 +10,33 @@
       (onEdit)="editSection(sectionType.PersonalDetails, modal)"
     />
 
-    @if (cv.canActivateAnonymousProfile) {
+    @if (cv.canActivateAnonymousProfile && mode !== sectionMode.AnonymousProfileCreate) {
     <button mat-fab extended class="mt-5 me-5" (click)="createAnonymousProfile()">
       Create Anonymous Profile
     </button>
     }
 
-    @if (cv.anonymousProfileActivated) {
-    <button mat-fab extended class="mt-5 me-5" (click)="deactivateAnonymousProfile()">
-      Deactivate Anonymous Profile
+    @if (mode === sectionMode.AnonymousProfileCreate) {
+    <button mat-fab extended class="mt-5 me-5" (click)="discardAnonymousProfile()">
+      Discard Anonymous Profile
     </button>
+    }
+
+    @if (cv.anonymousProfileActivated) {
+
+      @if (mode === sectionMode.AnonymousProfileView) {
+      <button mat-fab extended class="mt-5 me-5" (click)="viewCV()">
+        View CV
+      </button>
+      <button mat-fab extended class="mt-5 me-5" (click)="deactivateAnonymousProfile()">
+        Deactivate Anonymous Profile
+      </button>
+      }
+      @else {
+      <button mat-fab extended class="mt-5 me-5" (click)="viewAnonymousProfile()">
+        View Anonymous Profile
+      </button>
+      }
     }
 
   </div>
@@ -44,7 +61,7 @@
 
   <jf-skills-details
     [skillsData]="cv.skills"
-    [viewOnly]="false"
+    [mode]="mode"
     (onEdit)="editSection(sectionType.SkillsInfo, modal)"
   />
 
@@ -54,7 +71,7 @@
     (onEdit)="editSection(sectionType.CoursesInfo, modal)"
   />
 
-  @if (mode === sectionMode.AnonymousProfile) {
+  @if (mode === sectionMode.AnonymousProfileCreate) {
     <div class="d-flex justify-content-center mb-5">
       <button class="pull-right" mat-fab extended class="mt-5 me-5" (click)="activateAnonymousProfile()">
           Activate Anonymous Profile

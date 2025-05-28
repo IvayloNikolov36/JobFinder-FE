@@ -3,7 +3,7 @@
     <div class="card-header d-flex justify-content-between">
         <h6>Skills Info</h6>
 
-        @if(!viewOnly) {
+        @if(mode === sectionMode.Edit) {
         <jf-edit-button (onClick)="onEditClicked()" />
         }
     </div>

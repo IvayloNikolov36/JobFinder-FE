@@ -15,22 +15,28 @@
         }
 
         @for (item of coursesData; track item.id) {
-        <div class="card my-2 p-3" [class]="{'cv-section-blur': item.includeInAnonymousProfile === false}">
 
+        @if (mode !== sectionMode.AnonymousProfileView || item.includeInAnonymousProfile) {
+        <div class="card my-2 p-3"
+            [class]="{
+                'cv-section-blur':
+                (mode === sectionMode.AnonymousProfileCreate && item.includeInAnonymousProfile === false)
+            }"
+        >
             <div class="d-flex justify-content-between">
                 <span class="card-text fw-bold">{{ item.courseName }}: </span>
-                @if (mode === sectionMode.AnonymousProfile) {
+                @if (mode === sectionMode.AnonymousProfileCreate) {
                 <a (click)="blurSection(item.id)" class="pointer">
                     <i class="bi bi-eye-slash-fill"></i>
                 </a>
                 }
             </div>
-
             <a class="link-opacity-50-hover" [href]="item.certificateUrl">
                 {{ item.certificateUrl }}
             </a>
-
         </div>
+        }
+
         }
     </div>
 

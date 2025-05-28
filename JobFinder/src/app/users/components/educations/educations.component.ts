@@ -73,7 +73,8 @@ export class EducationsComponent implements OnInit {
       educationLevel: [null, Validators.required],
       major: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       mainSubjects: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
-      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
+      organization: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      includeInAnonymousProfile: [null]
     });
   }
 }

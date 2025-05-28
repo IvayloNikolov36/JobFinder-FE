@@ -10,11 +10,18 @@
 
     <div class="card-body">
         @for (item of workExperienceData; track item.id) {
-        <div class="card my-2 p-3" [class]="{'cv-section-blur': item.includeInAnonymousProfile === false}">
+
+        @if (mode !== sectionMode.AnonymousProfileView || item.includeInAnonymousProfile) {
+        <div class="card my-2 p-3"
+            [class]="{
+                'cv-section-blur':
+                (mode === sectionMode.AnonymousProfileCreate && item.includeInAnonymousProfile === false)
+            }"
+        >
             <div class="d-flex justify-content-between">
                 <h6>{{ item.organization }}</h6>
 
-                @if (mode === sectionMode.AnonymousProfile) {
+                @if (mode === sectionMode.AnonymousProfileCreate) {
                 <a (click)="blurSection(item.id)" class="pointer">
                     <i class="bi bi-eye-slash-fill"></i>
                 </a>
@@ -25,6 +32,8 @@
             <div class="fs-5">{{ item.jobTitle }}</div>
             <span class="card-text">{{ item.additionalDetails }}</span>
         </div>
+        }
+
         }
     </div>
 
