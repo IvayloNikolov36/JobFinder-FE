@@ -17,6 +17,11 @@
         }
         <span class="card-text fw-bold">Driving License Categories: </span>
         <span>{{ skillsData.licenseCategoriesText }}</span>
+        @if (skillsData.hasManagedPeople) {
+        <div class="card-text mt-3">
+            <span class="fw-bold">People management experience</span>
+        </div>
+        }
     </div>
 
 </div>
