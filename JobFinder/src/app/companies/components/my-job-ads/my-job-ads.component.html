@@ -52,7 +52,11 @@
                             }
                             }
                             @else {
-                            <span><i class="bi bi-file-earmark-check me-1"></i>No applications yet.</span>
+                            <span><i class="bi bi-file-earmark-check me-1"></i>
+                                @let textAdd = jobAd.isActive ? ' yet.' : '.';
+                                @let text = 'No applications' + textAdd;
+                                <span>{{ text }}</span>
+                            </span>
                             }
                         </mat-panel-title>
                         @if (jobAd.applicationsSent > 0) {
