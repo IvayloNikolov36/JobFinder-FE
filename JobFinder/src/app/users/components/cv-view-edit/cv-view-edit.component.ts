@@ -196,6 +196,10 @@ export class CvViewComponent implements OnInit {
     this.anonymousProfileService.view().subscribe((data: unknown) => console.log(data));
   }
 
+  setAnonymousProfileAppearanceCriterias = (): void => {
+    this.mode = CvSectionModeEnum.AnonymousProfileSetAppearanceCriterias;
+  }
+
   private constructAnonymousProfileActivationData = (): AnonymousProfileCreate => {
     const workExperienceInfoIds: number[] = this.cv.workExperiences
       .filter(we => we.includeInAnonymousProfile)

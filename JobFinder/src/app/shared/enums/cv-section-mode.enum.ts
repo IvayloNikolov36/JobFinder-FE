@@ -2,5 +2,6 @@ export enum CvSectionModeEnum {
     View,
     Edit,
     AnonymousProfileCreate,
-    AnonymousProfileView
+    AnonymousProfileView,
+    AnonymousProfileSetAppearanceCriterias,
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
+  AnonymousProfileAppearanceComponent,
   CoursesCertificatesComponent,
   CreateCvComponent,
   CvInfoComponent,
@@ -40,6 +41,7 @@ import { SharedModule } from '../shared/shared.module';
     JobSubscriptionsListingComponent,
     JobAdvertisementDetailsComponent,
     CompanyDetailsComponent,
+    AnonymousProfileAppearanceComponent,
   ],
   imports: [
     SharedModule,

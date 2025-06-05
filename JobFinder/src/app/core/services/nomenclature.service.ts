@@ -62,4 +62,20 @@ export class NomenclatureService {
   getRecurringTypes(): Observable<BasicModel[]> {
     return this.http.get<BasicModel[]>(NomenclatureController.getRecurringTypesUrl());
   }
+
+  getSoftSkills(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getSoftSkillsUrl());
+  }
+
+  getTechStacks(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getTechStacksUrls());
+  }
+
+  getITAreas(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getItAreasUrl());
+  }
+
+  getRemoteJobPreferences(): Observable<BasicModel[]> {
+    return this.http.get<BasicModel[]>(NomenclatureController.getRemoteJobPreferencesUrl());
+  }
 }

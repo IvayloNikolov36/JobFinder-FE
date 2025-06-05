@@ -73,10 +73,14 @@
 
   @if (mode === sectionMode.AnonymousProfileCreate) {
     <div class="d-flex justify-content-center mb-5">
-      <button class="pull-right" mat-fab extended class="mt-5 me-5" (click)="activateAnonymousProfile()">
-          Activate Anonymous Profile
+      <button class="pull-right" mat-fab extended class="mt-5 me-5" (click)="setAnonymousProfileAppearanceCriterias()">
+          Set Anonymous Profile Apperance Criterias
       </button>
     </div>
+  }
+
+  @if (mode === sectionMode.AnonymousProfileSetAppearanceCriterias) {
+  <jf-anonymous-profile-appearance />
   }
 
   }
