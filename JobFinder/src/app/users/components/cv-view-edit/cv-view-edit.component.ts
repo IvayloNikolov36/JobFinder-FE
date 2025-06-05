@@ -217,7 +217,15 @@ export class CvViewComponent implements OnInit {
       workExpiriencesInfo: workExperienceInfoIds,
       educationsInfo: educationsIds,
       languagesInfo: languageInfoIds,
-      coursesInfo: courseInfoIds
+      coursesInfo: courseInfoIds,
+      // TODO: set the right data when the view is ready
+      remoteJobPreferenceId: 1,
+      jobCategoryId: 1,
+      preferredPositions: 'some prefered positions',
+      JobEngagements: [1, 2, 3],
+      softSkills: [1, 2],
+      iTAreas: [4, 5, 6],
+      techStacks: [7, 8, 9]
     } satisfies AnonymousProfileCreate;
   }
 
