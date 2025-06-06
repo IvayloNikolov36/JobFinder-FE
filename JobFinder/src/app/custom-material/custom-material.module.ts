@@ -18,6 +18,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [],
@@ -44,6 +45,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatTableModule,
     MatMenuModule,
+    MatRadioModule,
   ]
 })
 export class CustomMaterialModule { }

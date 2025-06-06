@@ -80,7 +80,7 @@
   }
 
   @if (mode === sectionMode.AnonymousProfileSetAppearanceCriterias) {
-  <jf-anonymous-profile-appearance />
+  <jf-anonymous-profile-appearance (onAppearanceDataEmit)="onProfileAppearanceDataEmit($event)" />
   }
 
   }

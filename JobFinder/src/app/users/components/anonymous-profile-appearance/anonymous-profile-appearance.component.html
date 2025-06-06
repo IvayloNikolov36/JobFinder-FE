@@ -1,11 +1,11 @@
 <div class="container-fluid">
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="submitAnonymousProfileAppearanceData()">
 
-        <div class="d-flex justify-content-start ms-5 my-4">
+        <div class="d-flex justify-content-start ms-5 my-5">
             <mat-form-field class="quarter-width">
                 <mat-label>Job Category</mat-label>
-                <mat-select formControlName="jobCategory">
+                <mat-select formControlName="jobCategoryId">
                     <mat-option *ngFor="let jobCategory of (jobCategories$ | async)" [value]="jobCategory.id">
                         {{ jobCategory.name }}
                     </mat-option>
@@ -18,8 +18,8 @@
             </mat-form-field>
         </div>
 
-        <div class="d-flex justify-content-start ms-5 my-4">
-            <mat-form-field class="quarter-width">
+        <div class="d-flex justify-content-start ms-5 my-5">
+            <mat-form-field class="half-width">
                 <mat-label>Job Engagements</mat-label>
                 <mat-select formControlName="jobEngagements" multiple>
                     <mat-option *ngFor="let engagement of (jobEngagements$ | async)" [value]="engagement.id">
@@ -34,17 +34,17 @@
             </mat-form-field>
         </div>
 
-        <div class="d-flex justify-content-start ms-5 my-4">
-            <mat-form-field class="half-width mt-4">
+        <div class="d-flex justify-content-start ms-5 my-5">
+            <mat-form-field class="half-width">
                 <textarea matInput type="text" placeholder="preffered or/and not desired positions"
                     formControlName="preferredPositions">
-          </textarea>
+                </textarea>
                 <mat-hint>Here you can input preffered or/and not desired job positions.</mat-hint>
             </mat-form-field>
         </div>
 
-        <div class="d-flex justify-content-start ms-5 my-4">
-            <mat-form-field class="quarter-width">
+        <div class="d-flex justify-content-start ms-5 my-5">
+            <mat-form-field class="half-width">
                 <mat-label>Soft Skills</mat-label>
                 <mat-select formControlName="softSkills" multiple>
                     <mat-option *ngFor="let skill of (softSkills$ | async)" [value]="skill.id">
@@ -59,8 +59,8 @@
             </mat-form-field>
         </div>
 
-        <div class="d-flex justify-content-start ms-5 my-4">
-            <mat-form-field class="quarter-width">
+        <div class="d-flex justify-content-start ms-5 my-5">
+            <mat-form-field class="half-width">
                 <mat-label>Tech Stack</mat-label>
                 <mat-select formControlName="techStacks" multiple>
                     <mat-option *ngFor="let stack of (techStacks$ | async)" [value]="stack.id">
@@ -75,8 +75,8 @@
             </mat-form-field>
         </div>
 
-        <div class="d-flex justify-content-start ms-5 my-4">
-            <mat-form-field class="quarter-width">
+        <div class="d-flex justify-content-start ms-5 my-5">
+            <mat-form-field class="half-width">
                 <mat-label>IT Areas</mat-label>
                 <mat-select formControlName="itAreas" multiple>
                     <mat-option *ngFor="let area of (itAreas$ | async)" [value]="area.id">
@@ -90,8 +90,22 @@
             </mat-form-field>
         </div>
 
-    </form>
+        <div class="my-5 ms-5">
+            <label id="radio-group-label">Select your remote jobs preference:</label>
+            <div class="d-flex mt-3">
+                <mat-radio-group aria-labelledby="radio-group-label" formControlName="remoteJobPreferenceId">
+                    <div *ngFor="let preference of (remoteJobPreferences$ | async)" class="d-flex">
+                        <mat-radio-button [value]="preference.id">
+                            {{ preference.name }}
+                        </mat-radio-button>
+                    </div>
+                </mat-radio-group>
+            </div>
+        </div>
 
-    <!-- TODO: remote job preferences -->
+        <button mat-fab extended type="submit" [disabled]="!form.valid" class="mt-5 me-5">
+            Activate Anonymous Profile
+        </button>
+    </form>
 
 </div>

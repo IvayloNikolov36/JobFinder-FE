@@ -41,7 +41,7 @@ import {
 import { getFullName } from '../../../shared/functions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CvSectionModeEnum } from '../../../shared/enums';
-import { AnonymousProfileCreate } from '../../models';
+import { AnonymousProfileAppearance, AnonymousProfileCreate } from '../../models';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -162,10 +162,10 @@ export class CvViewComponent implements OnInit {
     this.mode = CvSectionModeEnum.Edit;
   }
 
-  activateAnonymousProfile = (): void => {
+  activateAnonymousProfile = (profileAppearanceData: AnonymousProfileAppearance): void => {
     this.anonymousProfileService.activate(
       this.cv.id,
-      this.constructAnonymousProfileActivationData())
+      this.constructAnonymousProfileActivationData(profileAppearanceData))
       .subscribe({
         next: () => {
           this.cv.anonymousProfileActivated = true;
@@ -200,7 +200,13 @@ export class CvViewComponent implements OnInit {
     this.mode = CvSectionModeEnum.AnonymousProfileSetAppearanceCriterias;
   }
 
-  private constructAnonymousProfileActivationData = (): AnonymousProfileCreate => {
+  onProfileAppearanceDataEmit = (profileAppearanceData: AnonymousProfileAppearance): void => {
+    this.activateAnonymousProfile(profileAppearanceData);
+  }
+
+  private constructAnonymousProfileActivationData = (
+    profileAppearanceData: AnonymousProfileAppearance): AnonymousProfileCreate => {
+
     const workExperienceInfoIds: number[] = this.cv.workExperiences
       .filter(we => we.includeInAnonymousProfile)
       .map(we => we.id);
@@ -222,14 +228,7 @@ export class CvViewComponent implements OnInit {
       educationsInfo: educationsIds,
       languagesInfo: languageInfoIds,
       coursesInfo: courseInfoIds,
-      // TODO: set the right data when the view is ready
-      remoteJobPreferenceId: 1,
-      jobCategoryId: 1,
-      preferredPositions: 'some prefered positions',
-      JobEngagements: [1, 2, 3],
-      softSkills: [1, 2],
-      iTAreas: [4, 5, 6],
-      techStacks: [7, 8, 9]
+      profileAppearanceCriterias: { ...profileAppearanceData }
     } satisfies AnonymousProfileCreate;
   }
 

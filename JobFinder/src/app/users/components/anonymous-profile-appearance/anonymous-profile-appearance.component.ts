@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NomenclatureService } from '../../../core/services';
 import { BasicModel } from '../../../core/models';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AnonymousProfileAppearance } from '../../models';
 
 @Component({
   selector: 'jf-anonymous-profile-appearance',
@@ -10,6 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   standalone: false
 })
 export class AnonymousProfileAppearanceComponent implements OnInit {
+
+  @Output() onAppearanceDataEmit: EventEmitter<AnonymousProfileAppearance> = new EventEmitter<AnonymousProfileAppearance>;
 
   jobCategories$!: Observable<BasicModel[]>;
   jobEngagements$!: Observable<BasicModel[]>;
@@ -30,15 +33,19 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.loadNomenclatureData();
   }
 
+  submitAnonymousProfileAppearanceData = (): void => {
+    this.onAppearanceDataEmit.emit(this.form.value as AnonymousProfileAppearance);
+  }
+
   private initializeForm(): void {
     this.form = this.formBuilder.group({
-      jobCategory: [null, Validators.required],
+      jobCategoryId: [null, Validators.required],
       jobEngagements: [[], Validators.required],
       preferredPositions: [null],
       softSkills: [[], Validators.required],
       itAreas: [[], Validators.required], // TODO: requred only if IT sector is selected
       techStacks: [[], Validators.required],
-      remoteJobPreferences: [null, Validators.required]
+      remoteJobPreferenceId: [null, Validators.required]
     });
   }
 
