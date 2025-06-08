@@ -3,6 +3,7 @@ import { environment } from "../../../environments/environment";
 const Route: string = environment.apiUrl + 'nomenclature/';
 
 export class NomenclatureController {
+
     static getGenderOptionsUrl = (): string => Route + 'gender';
     static getCountriesUrl = (): string => Route + 'countries';
     static getCitizenshipsUrl = (): string => Route + 'citizenships';
@@ -20,4 +21,5 @@ export class NomenclatureController {
     static getTechStacksUrls = (): string => Route + 'tech-stacks';
     static getItAreasUrl = (): string => Route + 'it-areas';
     static getRemoteJobPreferencesUrl = (): string => Route + 'remote-job-preferences';
+    static getWorkplaceTypesUrl = (): string => Route + 'workplace-types';
 }

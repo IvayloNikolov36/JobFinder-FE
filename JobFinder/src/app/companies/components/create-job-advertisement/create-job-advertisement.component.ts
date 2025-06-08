@@ -20,6 +20,12 @@ export class CreateJobAdvertisementComponent {
   jobEngagements$!: Observable<BasicModel[]>;
   locations$!: Observable<BasicModel[]>;
   currencies$!: Observable<BasicModel[]>;
+  workplaceTypes$!: Observable<BasicModel[]>;
+  softSkills$!: Observable<BasicModel[]>;
+  itAreas$: Observable<BasicModel[]> | undefined = undefined;
+  techStacks$: Observable<BasicModel[]> | undefined = undefined;
+
+  readonly itCategoryId: number = 3;
 
   constructor(
     private fb: FormBuilder,
@@ -31,22 +37,12 @@ export class CreateJobAdvertisementComponent {
   ngOnInit() {
     this.loadNomenclatureData();
     this.initializeJobAdvertisementForm();
-  }
-
-  changeJobCategory(categoryId: number): void {
-    this.form.controls['jobCategoryId'].setValue(categoryId);
-  }
-
-  changeJobEngagement(engagementId: number): void {
-    this.form.controls['jobEngagementId'].setValue(engagementId);
-  }
-
-  changeLocation(locationId: number): void {
-    this.form.controls['locationId'].setValue(locationId);
-  }
-
-  changeCurrency(currencyId: number): void {
-    this.form.controls['currencyId'].setValue(currencyId);
+    
+    this.form.controls['jobCategoryId'].valueChanges.subscribe((categoryId: number) => {
+      if (categoryId === this.itCategoryId) {
+        this.loadITNomenclatureData();
+      }
+    });
   }
 
   publishAd(): void {
@@ -73,7 +69,11 @@ export class CreateJobAdvertisementComponent {
         jobCategoryId: [null, [Validators.required]],
         jobEngagementId: [null, [Validators.required]],
         intership: [false],
-        locationId: [null, [Validators.required]]
+        locationId: [null, [Validators.required]],
+        softSkills: [[], Validators.required],
+        techStacks: [[], Validators.required],
+        itAreas: [[], Validators.required],
+        workplaceTypeId: [null, Validators.required]
       },
       {
         validator: GreaterThanOrEqual('minSalary', 'maxSalary')
@@ -116,5 +116,17 @@ export class CreateJobAdvertisementComponent {
     this.jobEngagements$ = this.nomenclatureService.getJobEngagements();
     this.locations$ = this.nomenclatureService.getCities();
     this.currencies$ = this.nomenclatureService.getCurrcencies();
+    this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
+    this.softSkills$ = this.nomenclatureService.getSoftSkills();
+  }
+
+  private loadITNomenclatureData(): void {
+    if (this.itAreas$ === undefined) {
+      this.itAreas$ = this.nomenclatureService.getITAreas();
+    }
+
+    if (this.techStacks$ === undefined) {
+      this.techStacks$ = this.nomenclatureService.getTechStacks();
+    }
   }
 }
