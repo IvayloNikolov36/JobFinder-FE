@@ -1,7 +1,7 @@
 import {
   EducationOutput,
   LanguageInfoOutput,
-  PersonalDetailsOutput,
+  PersonalInfoOutput,
   SkillsInfoOutput,
   WorkExperienceOutput
 } from ".";
@@ -10,7 +10,7 @@ import { CourseCertificateInfo } from "../../../shared/models";
 export interface CvCreate {
   name: string;
   pictureUrl: string;
-  personalDetails: PersonalDetailsOutput;
+  personalInfo: PersonalInfoOutput;
   educations: EducationOutput[];
   workExperiences: WorkExperienceOutput[];
   languagesInfo: LanguageInfoOutput[];

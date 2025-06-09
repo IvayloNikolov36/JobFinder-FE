@@ -1,6 +1,6 @@
 import { BasicModel } from "../../core/models";
 
-export interface PersonalDetails {
+export interface PersonalInfo {
   id: number;
   firstName: string;
   middleName: string;

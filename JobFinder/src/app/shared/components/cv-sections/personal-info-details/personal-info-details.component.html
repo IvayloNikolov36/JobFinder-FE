@@ -16,28 +16,28 @@
                     @if (mode !== sectionMode.AnonymousProfileView) {
                     <div [class]="{'cv-details-blur': blurDetails}">
                         <span class="fw-medium">Birth Date: </span>
-                        <span class="card-text">{{ personalDetailsData.birthdate | date }}</span>
+                        <span class="card-text">{{ personalInfo.birthdate | date }}</span>
                     </div>
                     }
                     <div>
                         <span class="fw-medium">Citizenship: </span>
-                        <span class="card-text">{{ personalDetailsData.citizenship.name }}</span>
+                        <span class="card-text">{{ personalInfo.citizenship.name }}</span>
                     </div>
                     <div>
                         <span class="fw-medium">I live in: </span>
-                        <span class="card-text">{{ personalDetailsData.city }}</span>
+                        <span class="card-text">{{ personalInfo.city }}</span>
                     </div>
                     @if (mode !== sectionMode.AnonymousProfileView) {
                     <div [class]="{'cv-details-blur': blurDetails}">
                         <span class="fs-5 fw-medium">Contacts:</span>
                         <div>
                             <span class="fw-medium">Email: </span>
-                            <span class="card-text">{{ personalDetailsData.email }}</span>
+                            <span class="card-text">{{ personalInfo.email }}</span>
                         </div>
                         <div>
                             <i class="bi bi-phone"></i>
                             <span class="fw-medium">Phone: </span>
-                            <span class="card-text">{{ personalDetailsData.phone }}</span>
+                            <span class="card-text">{{ personalInfo.phone }}</span>
                         </div>
                     </div>
                     }

@@ -1,5 +1,5 @@
-import { PersonalDetails } from "../models";
+import { PersonalInfo } from "../models";
 
-export function getFullName(details: PersonalDetails): string {
+export function getFullName(details: PersonalInfo): string {
     return `${details.firstName} ${details.middleName} ${details.lastName}`;
 }

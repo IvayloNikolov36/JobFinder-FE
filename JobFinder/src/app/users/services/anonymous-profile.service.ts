@@ -15,11 +15,11 @@ export class AnonymousProfileService {
         return this.http.get<object>(AnonymousProfileController.view());
     }
 
-    activate = (cvId: string, profileData: AnonymousProfileCreate): Observable<object> => {
-        return this.http.post(AnonymousProfileController.activate(cvId), profileData);
+    create = (cvId: string, profileData: AnonymousProfileCreate): Observable<object> => {
+        return this.http.post<object>(AnonymousProfileController.create(cvId), profileData);
     }
 
-    deactivate = (cvId: string): Observable<object> => {
-        return this.http.get(AnonymousProfileController.deactivate(cvId));
+    delete = (id: string): Observable<object> => {
+        return this.http.delete(AnonymousProfileController.delete(id));
     }
 }

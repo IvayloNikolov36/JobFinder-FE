@@ -1,4 +1,4 @@
-export interface PersonalDetailsOutput {
+export interface PersonalInfoOutput {
   id: number;
   firstName: string;
   middleName: string;

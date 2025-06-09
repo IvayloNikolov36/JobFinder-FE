@@ -11,6 +11,6 @@ export const getDeleteCvUrl = (id: string) => route + `cvs/delete/${id}`;
 export const getCvEducationsEditUrl = (cvId: string) => route + 'cvs/educations' + `/${cvId}/update`;
 export const getUpdateLanguageInfoUrl = (cvId: string) => route + `cvs/languagesinfo/${cvId}/update`;
 export const getUpdateCvSkillsUrl = (cvId: string) => route + `cvs/skills/${cvId}/update`;
-export const getCvPersonalDetailsUpdateUrl = (cvId: string): string => route + `cvs/personalDetails/${cvId}/update`;
+export const getCvPersonalInfoUpdateUrl = (cvId: string): string => route + `cvs/personalInfo/${cvId}/update`;
 export const getCvWorkExperienceUrl = (id: string): string => route + 'cvs/WorkExperiences' + `/${id}`;
 export const getUpdateWorkExperienceInfoUrl = (cvId: string) => route + 'cvs/WorkExperiences' + `/${cvId}/update`;

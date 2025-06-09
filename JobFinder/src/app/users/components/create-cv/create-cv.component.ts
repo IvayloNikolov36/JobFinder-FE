@@ -2,15 +2,15 @@ import { LanguagesInfoService } from './../../services/languages-info.service';
 import { AfterViewInit, Component, ViewChild, ChangeDetectorRef, Signal } from '@angular/core';
 import { CvInfoComponent } from '../cv-info/cv-info.component';
 import { FormGroup } from '@angular/forms';
-import { CoursesCertificatesComponent, EducationsComponent, LanguagesInfoComponent, PersonalDetailsComponent, SkillsInfoComponent, WorkExperienceInfoComponent } from '../index';
+import { CoursesCertificatesComponent, EducationsComponent, LanguagesInfoComponent, PersonalInfoComponent, SkillsInfoComponent, WorkExperienceInfoComponent } from '../index';
 import { CvCreate, CvInfo } from '../../models/cv';
-import { CurriculumVitaesService, EducationsService, PersonalDetailsService, SkillsService, WorkExperiencesService } from '../../services';
+import { CurriculumVitaesService, EducationsService, PersonalInfoService, SkillsService, WorkExperiencesService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { Router } from '@angular/router';
-import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
+import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalInfo, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-create-cv',
@@ -20,7 +20,7 @@ import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, Sk
 export class CreateCvComponent implements AfterViewInit {
 
   @ViewChild(CvInfoComponent) cvInfoComponent!: CvInfoComponent;
-  @ViewChild(PersonalDetailsComponent) personalDetailsComponent!: PersonalDetailsComponent;
+  @ViewChild(PersonalInfoComponent) personalInfoComponent!: PersonalInfoComponent;
   @ViewChild(WorkExperienceInfoComponent) workExperiencesComponent!: WorkExperienceInfoComponent;
   @ViewChild(EducationsComponent) educationsComponent!: EducationsComponent;
   @ViewChild(LanguagesInfoComponent) languagesInfoComponent!: LanguagesInfoComponent;
@@ -28,7 +28,7 @@ export class CreateCvComponent implements AfterViewInit {
   @ViewChild(CoursesCertificatesComponent) coursesCertificatesComponent!: CoursesCertificatesComponent;
 
   cvInfoForm!: FormGroup<any>;
-  personalDetailsForm!: FormGroup<any>;
+  personalInfoForm!: FormGroup<any>;
   workExperiencesForm!: FormGroup<any>;
   educationsForm!: FormGroup<any>;
   languagesInfoForm!: FormGroup<any>;
@@ -51,7 +51,7 @@ export class CreateCvComponent implements AfterViewInit {
     private cdref: ChangeDetectorRef,
     private cvService: CurriculumVitaesService,
     private nomenclatureService: NomenclatureService,
-    private personalDetailsService: PersonalDetailsService,
+    private personalInfoService: PersonalInfoService,
     private workExperiencesService: WorkExperiencesService,
     private educationsService: EducationsService,
     private languagesService: LanguagesInfoService,
@@ -63,7 +63,7 @@ export class CreateCvComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.cvInfoForm = this.cvInfoComponent.cvInfoForm;
-    this.personalDetailsForm = this.personalDetailsComponent.personalInfoForm;
+    this.personalInfoForm = this.personalInfoComponent.personalInfoForm;
     this.workExperiencesForm = this.workExperiencesComponent.workExpForm;
     this.educationsForm = this.educationsComponent.educationsForm;
     this.languagesInfoForm = this.languagesInfoComponent.languagesForm;
@@ -77,8 +77,8 @@ export class CreateCvComponent implements AfterViewInit {
     this.cvModel.pictureUrl = info.pictureUrl;
   };
 
-  onPassedPersonalDetailsData = (data: PersonalDetails): void => {
-    this.cvModel.personalDetails = this.personalDetailsService.mapPersonalInfo(data);
+  onPassedPersonalInfo = (data: PersonalInfo): void => {
+    this.cvModel.personalInfo = this.personalInfoService.mapPersonalInfo(data);
   }
 
   onPassedWorkExperiencesData = (data: WorkExperienceInfo[]): void => {

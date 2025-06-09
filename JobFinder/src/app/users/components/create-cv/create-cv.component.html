@@ -11,9 +11,14 @@
       <jf-cv-info (emitCvInfoData)="onPassedCvInfoData($event)" />
     </mat-step>
 
-    <mat-step [stepControl]="personalDetailsForm">
+    <mat-step [stepControl]="personalInfoForm">
       <ng-template matStepLabel>Personal Details</ng-template>
-      <jf-personal-details [countries]="countries()" [citizenships]="citizenships()" [genderOptions]="genderOptions()" (emitPersonalDetails)="onPassedPersonalDetailsData($event)" />
+      <jf-personal-details
+        [countries]="countries()"
+        [citizenships]="citizenships()"
+        [genderOptions]="genderOptions()"
+        (emitPersonalInfo)="onPassedPersonalInfo($event)"
+      />
     </mat-step>
 
     <mat-step [stepControl]="workExperiencesForm">

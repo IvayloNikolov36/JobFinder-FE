@@ -6,7 +6,7 @@ import {
   CurriculumVitaesService,
   EducationsService,
   LanguagesInfoService,
-  PersonalDetailsService,
+  PersonalInfoService,
   WorkExperiencesService
 } from '../../services';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { CvListingData } from '../../models/cv/cv-listing-data';
 import {
   EducationOutput,
   LanguageInfoOutput,
-  PersonalDetailsOutput,
+  PersonalInfoOutput,
   SkillsInfoOutput,
   WorkExperienceOutput
 } from '../../models/cv';
@@ -25,7 +25,7 @@ import { LanguagesInfoComponent } from '../languages-info/languages-info.compone
 import { CoursesCertificatesComponent } from '../courses-certificates/courses-certificates.component';
 import { WorkExperienceInfoComponent } from '../work-experiences/work-experience-info.component';
 import { ToastrService } from 'ngx-toastr';
-import { PersonalDetailsComponent } from '../personal-details/personal-details.component';
+import { PersonalInfoComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
 import { BasicModel, UpdateResult } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
@@ -34,7 +34,7 @@ import {
   CourseCertificateInfo,
   EducationInfo,
   LanguageInfo,
-  PersonalDetails,
+  PersonalInfo,
   SkillsInfo,
   WorkExperienceInfo
 } from '../../../shared/models';
@@ -81,7 +81,7 @@ export class CvViewComponent implements OnInit {
     private coursesService: CoursesService,
     private skillsInfoService: SkillsService,
     private workExperiencesService: WorkExperiencesService,
-    private personalInfoService: PersonalDetailsService,
+    private personalInfoService: PersonalInfoService,
     private nomenclatureService: NomenclatureService,
     private anonymousProfileService: AnonymousProfileService) {
 
@@ -111,9 +111,9 @@ export class CvViewComponent implements OnInit {
     const modal = new Modal(modalElement);
 
     switch (sectionType) {
-      case CvSectionTypeEnum.PersonalDetails:
+      case CvSectionTypeEnum.PersonalInfo:
         this.editCvSectionTitle = "Edit Personal Details";
-        this.onCreatePersonalDetailsModalComponent();
+        this.onCreatePersonalInfoModalComponent();
         break;
       case CvSectionTypeEnum.EducationInfo:
         this.editCvSectionTitle = "Edit Educations info";
@@ -163,12 +163,12 @@ export class CvViewComponent implements OnInit {
   }
 
   activateAnonymousProfile = (profileAppearanceData: AnonymousProfileAppearance): void => {
-    this.anonymousProfileService.activate(
+    this.anonymousProfileService.create(
       this.cv.id,
       this.constructAnonymousProfileActivationData(profileAppearanceData))
       .subscribe({
-        next: () => {
-          this.cv.anonymousProfileActivated = true;
+        next: (data: any) => { // TODO: refactor
+          this.cv.anonymousProfileId = data.id;
           this.cv.canActivateAnonymousProfile = false;
           this.mode = CvSectionModeEnum.AnonymousProfileView;
           this.toaster.success('Successfully activated an anonymous profile!');
@@ -180,10 +180,10 @@ export class CvViewComponent implements OnInit {
   // TODO: create dialog for assertion
 
   deactivateAnonymousProfile = (): void => {
-    this.anonymousProfileService.deactivate(this.cv.id)
+    this.anonymousProfileService.delete(this.cv.anonymousProfileId!)
       .subscribe({
         next: () => {
-          this.cv.anonymousProfileActivated = false;
+          this.cv.anonymousProfileId = null;
           this.cv.canActivateAnonymousProfile = true;
           this.mode = CvSectionModeEnum.View;
           this.toaster.success('Successfully deactivated anonymous profile!');
@@ -358,25 +358,25 @@ export class CvViewComponent implements OnInit {
       });
   }
 
-  private onCreatePersonalDetailsModalComponent = (): void => {
-    const createdComponentRef: ComponentRef<PersonalDetailsComponent> = this.cvSectionComponentRef
-      .createComponent(PersonalDetailsComponent);
+  private onCreatePersonalInfoModalComponent = (): void => {
+    const createdComponentRef: ComponentRef<PersonalInfoComponent> = this.cvSectionComponentRef
+      .createComponent(PersonalInfoComponent);
     this.createdComponentRef = createdComponentRef;
-    const component: PersonalDetailsComponent = createdComponentRef.instance;
+    const component: PersonalInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
-    component.personalDetailsData = this.cv.personalDetails;
+    component.personalInfo = this.cv.personalInfo;
     component.countries = this.countries as InputSignal<BasicModel[]>;
     component.citizenships = this.citizenships as InputSignal<BasicModel[]>;
     component.genderOptions = this.genderOptions as InputSignal<BasicModel[]>;
 
-    component.emitPersonalDetails
-      .subscribe((data: PersonalDetails) => {
-        const requestData: PersonalDetailsOutput = this.personalInfoService.mapPersonalInfo(data);
+    component.emitPersonalInfo
+      .subscribe((data: PersonalInfo) => {
+        const requestData: PersonalInfoOutput = this.personalInfoService.mapPersonalInfo(data);
         this.personalInfoService.update(this.cv.id, requestData)
           .subscribe({
             next: () => {
-              this.cv.personalDetails = { ...data };
-              this.fullName = getFullName(this.cv.personalDetails);
+              this.cv.personalInfo = { ...data };
+              this.fullName = getFullName(this.cv.personalInfo);
               this.toaster.success("Personal Details successfuly updated.");
             },
             error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update personal details!")
@@ -388,7 +388,7 @@ export class CvViewComponent implements OnInit {
     this.cvService.getCvListingData(this.cvId)
       .subscribe((data: CvListingData) => {
         this.cv = data;
-        const details: PersonalDetails = this.cv.personalDetails;
+        const details: PersonalInfo = this.cv.personalInfo;
         this.fullName = getFullName(details);
         const cvSkills: SkillsInfo = this.cv.skills;
         cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);

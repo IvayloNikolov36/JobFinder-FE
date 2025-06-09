@@ -1,5 +1,5 @@
 export enum CvSectionTypeEnum {
-  PersonalDetails = 1,
+  PersonalInfo = 1,
   EducationInfo,
   WorkExperienceInfo,
   LanguagesInfo,

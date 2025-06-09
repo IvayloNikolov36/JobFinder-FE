@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { PersonalDetails } from '../../../models';
+import { PersonalInfo } from '../../../models';
 import { getFullName } from '../../../functions';
 import { CvSectionModeEnum } from '../../../enums';
 
@@ -10,7 +10,7 @@ import { CvSectionModeEnum } from '../../../enums';
 })
 export class PersonalInfoDetailsComponent implements OnChanges {
 
-  @Input() personalDetailsData: PersonalDetails = {} as PersonalDetails;
+  @Input() personalInfo: PersonalInfo = {} as PersonalInfo;
   @Input() pictureUrl: string = '';
   @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
   @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
@@ -23,8 +23,8 @@ export class PersonalInfoDetailsComponent implements OnChanges {
   ngOnChanges(): void {
     this.blurDetails = this.mode === CvSectionModeEnum.AnonymousProfileCreate;
 
-    if (this.personalDetailsData) {
-      this.fullName = getFullName(this.personalDetailsData);
+    if (this.personalInfo) {
+      this.fullName = getFullName(this.personalInfo);
     }
   }
 

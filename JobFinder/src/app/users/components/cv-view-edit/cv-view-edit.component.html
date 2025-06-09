@@ -4,10 +4,10 @@
 
   <div class="d-flex justify-content-around gap-3">
     <jf-personal-info-details
-      [personalDetailsData]="cv.personalDetails"
+      [personalInfo]="cv.personalInfo"
       [pictureUrl]="cv.pictureUrl"
       [mode]="mode"
-      (onEdit)="editSection(sectionType.PersonalDetails, modal)"
+      (onEdit)="editSection(sectionType.PersonalInfo, modal)"
     />
 
     @if (cv.canActivateAnonymousProfile && mode !== sectionMode.AnonymousProfileCreate) {
@@ -22,7 +22,7 @@
     </button>
     }
 
-    @if (cv.anonymousProfileActivated) {
+    @if (cv.anonymousProfileId) {
 
       @if (mode === sectionMode.AnonymousProfileView) {
       <button mat-fab extended class="mt-5 me-5" (click)="viewCV()">

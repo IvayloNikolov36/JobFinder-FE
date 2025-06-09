@@ -2,7 +2,7 @@ import {
   CourseCertificateInfo,
   EducationInfo,
   LanguageInfo,
-  PersonalDetails,
+  PersonalInfo,
   SkillsInfo,
   WorkExperienceInfo
 } from "../../../shared/models";
@@ -12,9 +12,9 @@ export interface CvListingData {
   name: string;
   pictureUrl: string;
   createdOn: Date;
-  anonymousProfileActivated: boolean;
+  anonymousProfileId: string | null;
   canActivateAnonymousProfile: boolean;
-  personalDetails: PersonalDetails;
+  personalInfo: PersonalInfo;
   languagesInfo: LanguageInfo[];
   workExperiences: WorkExperienceInfo[];
   educations: EducationInfo[];

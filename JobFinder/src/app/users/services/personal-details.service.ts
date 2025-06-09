@@ -1,22 +1,22 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PersonalDetails } from '../../shared/models/personal-details';
-import { getCvPersonalDetailsUpdateUrl } from '../../core/controllers';
-import { PersonalDetailsOutput } from '../models/cv';
+import { PersonalInfo } from '../../shared/models/personal-details';
+import { getCvPersonalInfoUpdateUrl } from '../../core/controllers';
+import { PersonalInfoOutput } from '../models/cv';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonalDetailsService {
+export class PersonalInfoService {
 
   constructor(private http: HttpClient) { }
 
-  update(cvId: string, data: PersonalDetailsOutput): Observable<Object> {
-    return this.http.put(getCvPersonalDetailsUpdateUrl(cvId), data);
+  update(cvId: string, data: PersonalInfoOutput): Observable<Object> {
+    return this.http.put(getCvPersonalInfoUpdateUrl(cvId), data);
   }
 
-  mapPersonalInfo = (data: PersonalDetails): PersonalDetailsOutput => {
+  mapPersonalInfo = (data: PersonalInfo): PersonalInfoOutput => {
     return {
       id: data.id,
       firstName: data.firstName,
@@ -29,6 +29,6 @@ export class PersonalDetailsService {
       citizenshipId: data.citizenship.id,
       countryId: data.country.id,
       city: data.city
-    } as PersonalDetailsOutput;
+    } as PersonalInfoOutput;
   }
 }

@@ -1,8 +1,15 @@
-import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalDetails, SkillsInfo, WorkExperienceInfo } from "../../shared/models";
+import {
+      CourseCertificateInfo,
+      EducationInfo,
+      LanguageInfo,
+      PersonalInfo,
+      SkillsInfo,
+      WorkExperienceInfo
+} from "../../shared/models";
 
 export interface CvPreviewData {
       pictureUrl: string;
-      personalDetails: PersonalDetails;
+      personalInfo: PersonalInfo;
       languagesInfo: LanguageInfo[];
       workExperiences: WorkExperienceInfo[];
       educations: EducationInfo[];

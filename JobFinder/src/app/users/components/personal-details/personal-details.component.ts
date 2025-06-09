@@ -1,21 +1,21 @@
 import { Component, EventEmitter, input, Input, InputSignal, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BasicModel } from '../../../core/models';
-import { PersonalDetails } from '../../../shared/models';
+import { PersonalInfo } from '../../../shared/models';
 
 @Component({
   selector: 'jf-personal-details',
   templateUrl: './personal-details.component.html',
   standalone: false
 })
-export class PersonalDetailsComponent implements OnInit {
+export class PersonalInfoComponent implements OnInit {
 
   countries: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
   citizenships: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
   genderOptions: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
   @Input() isEditMode: boolean = false;
-  @Input() personalDetailsData: PersonalDetails | null = null;
-  @Output() emitPersonalDetails: EventEmitter<PersonalDetails> = new EventEmitter<PersonalDetails>();
+  @Input() personalInfo: PersonalInfo | null = null;
+  @Output() emitPersonalInfo: EventEmitter<PersonalInfo> = new EventEmitter<PersonalInfo>();
 
   personalInfoForm!: FormGroup;
   countryControl: FormControl<any> = new FormControl();
@@ -29,7 +29,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   emitData(): void {
-    this.emitPersonalDetails.emit(this.personalInfoForm.value);
+    this.emitPersonalInfo.emit(this.personalInfoForm.value);
   }
 
   compareFn = (first: BasicModel, second: BasicModel): boolean => {
@@ -53,8 +53,8 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.personalInfoForm = this.formBuilder.group(controlls);
 
-    if (this.personalDetailsData) {
-      this.personalInfoForm.setValue(this.personalDetailsData);
+    if (this.personalInfo) {
+      this.personalInfoForm.setValue(this.personalInfo);
     }
   }
 }
