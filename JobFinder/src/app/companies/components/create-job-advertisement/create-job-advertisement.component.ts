@@ -37,12 +37,15 @@ export class CreateJobAdvertisementComponent {
   ngOnInit() {
     this.loadNomenclatureData();
     this.initializeJobAdvertisementForm();
-    
-    this.form.controls['jobCategoryId'].valueChanges.subscribe((categoryId: number) => {
-      if (categoryId === this.itCategoryId) {
-        this.loadITNomenclatureData();
-      }
-    });
+
+    this.form.controls['jobCategoryId'].valueChanges
+      .subscribe((categoryId: number) => {
+        if (categoryId === this.itCategoryId) {
+          this.loadITNomenclatureData();
+          this.form.controls['techStacks'].addValidators(Validators.required);
+          this.form.controls['itAreas'].addValidators(Validators.required);
+        }
+      });
   }
 
   publishAd(): void {
@@ -71,8 +74,8 @@ export class CreateJobAdvertisementComponent {
         intership: [false],
         locationId: [null, [Validators.required]],
         softSkills: [[], Validators.required],
-        techStacks: [[], Validators.required],
-        itAreas: [[], Validators.required],
+        techStacks: [[]],
+        itAreas: [[]],
         workplaceTypeId: [null, Validators.required]
       },
       {
