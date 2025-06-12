@@ -6,4 +6,5 @@ export interface AnonymousProfileAppearance {
     itAreas: number[];
     techStacks: number[];
     workplaceTypes: number[];
+    cities: number[];
 }

@@ -105,6 +105,21 @@
             </mat-form-field>
         </div>
 
+        <div class="my-5 ms-5">
+            <mat-form-field class="half-width">
+                <mat-label>Select preffered cities:</mat-label>
+                <mat-select formControlName="cities" multiple>
+                    <mat-option *ngFor="let city of (cities$ | async)" [value]="city.id">
+                        {{ city.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Select cities.</mat-hint>
+                <mat-error *ngIf="form.controls['cities']?.touched && form.controls['cities'].errors?.['required']">
+                    Selecting one or more city is mandatory!
+                </mat-error>
+            </mat-form-field>
+        </div>
+
         <button mat-fab extended type="submit" [disabled]="!form.valid" class="mt-5 me-5">
             Activate Anonymous Profile
         </button>

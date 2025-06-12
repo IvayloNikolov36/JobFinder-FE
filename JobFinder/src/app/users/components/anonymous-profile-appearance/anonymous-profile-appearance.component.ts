@@ -20,6 +20,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   techStacks$!: Observable<BasicModel[]>;
   itAreas$!: Observable<BasicModel[]>;
   workplaceTypes$!: Observable<BasicModel[]>;
+  cities$!: Observable<BasicModel[]>;
 
   form!: FormGroup;
 
@@ -33,6 +34,8 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loadNomenclatureData();
+
+    // TODO: if selected area is not IT => remove validators for two fields and remove them from DOM
 
     this.form.controls['jobCategoryId'].valueChanges
       .subscribe((categoryId: number) => {
@@ -55,7 +58,8 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
       softSkills: [[], Validators.required],
       itAreas: [[]],
       techStacks: [[]],
-      workplaceTypes: [[], Validators.required]
+      workplaceTypes: [[], Validators.required],
+      cities: [[], Validators.required]
     });
   }
 
@@ -66,5 +70,6 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.techStacks$ = this.nomenclatureService.getTechStacks();
     this.itAreas$ = this.nomenclatureService.getITAreas();
     this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
+    this.cities$ = this.nomenclatureService.getCities();
   }
 }
