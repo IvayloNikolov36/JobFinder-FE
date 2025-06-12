@@ -93,10 +93,10 @@
         <div class="my-5 ms-5">
             <label id="radio-group-label">Select your remote jobs preference:</label>
             <div class="d-flex mt-3">
-                <mat-radio-group aria-labelledby="radio-group-label" formControlName="remoteJobPreferenceId">
-                    <div *ngFor="let preference of (remoteJobPreferences$ | async)" class="d-flex">
-                        <mat-radio-button [value]="preference.id">
-                            {{ preference.name }}
+                <mat-radio-group aria-labelledby="radio-group-label" formControlName="workplaceTypeId">
+                    <div *ngFor="let workplaceType of (workplaceTypes$ | async)" class="d-flex">
+                        <mat-radio-button [value]="workplaceType.id">
+                            {{ workplaceType.name }}
                         </mat-radio-button>
                     </div>
                 </mat-radio-group>

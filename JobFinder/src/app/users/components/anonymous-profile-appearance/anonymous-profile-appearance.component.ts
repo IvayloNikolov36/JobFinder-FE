@@ -19,9 +19,11 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   softSkills$!: Observable<BasicModel[]>;
   techStacks$!: Observable<BasicModel[]>;
   itAreas$!: Observable<BasicModel[]>;
-  remoteJobPreferences$!: Observable<BasicModel[]>;
+  workplaceTypes$!: Observable<BasicModel[]>;
 
   form!: FormGroup;
+
+  readonly itCategoryId: number = 3;
 
   constructor(
     private nomenclatureService: NomenclatureService,
@@ -31,6 +33,14 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loadNomenclatureData();
+
+    this.form.controls['jobCategoryId'].valueChanges
+      .subscribe((categoryId: number) => {
+        if (categoryId === this.itCategoryId) {
+          this.form.controls['techStacks'].addValidators(Validators.required);
+          this.form.controls['itAreas'].addValidators(Validators.required);
+        }
+      });
   }
 
   submitAnonymousProfileAppearanceData = (): void => {
@@ -43,9 +53,9 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
       jobEngagements: [[], Validators.required],
       preferredPositions: [null],
       softSkills: [[], Validators.required],
-      itAreas: [[], Validators.required], // TODO: requred only if IT sector is selected
-      techStacks: [[], Validators.required],
-      remoteJobPreferenceId: [null, Validators.required]
+      itAreas: [[]],
+      techStacks: [[]],
+      workplaceTypeId: [null, Validators.required]
     });
   }
 
@@ -55,6 +65,6 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.softSkills$ = this.nomenclatureService.getSoftSkills();
     this.techStacks$ = this.nomenclatureService.getTechStacks();
     this.itAreas$ = this.nomenclatureService.getITAreas();
-    this.remoteJobPreferences$ = this.nomenclatureService.getRemoteJobPreferences();
+    this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
   }
 }

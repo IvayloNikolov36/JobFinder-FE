@@ -75,10 +75,6 @@ export class NomenclatureService {
     return this.http.get<BasicModel[]>(NomenclatureController.getItAreasUrl());
   }
 
-  getRemoteJobPreferences(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getRemoteJobPreferencesUrl());
-  }
-
   getWorkplaceTypes(): Observable<BasicModel[]> {
     return this.http.get<BasicModel[]>(NomenclatureController.getWorkplaceTypesUrl());
   }

@@ -20,6 +20,5 @@ export class NomenclatureController {
     static getSoftSkillsUrl = (): string => Route + 'soft-skills';
     static getTechStacksUrls = (): string => Route + 'tech-stacks';
     static getItAreasUrl = (): string => Route + 'it-areas';
-    static getRemoteJobPreferencesUrl = (): string => Route + 'remote-job-preferences';
     static getWorkplaceTypesUrl = (): string => Route + 'workplace-types';
 }

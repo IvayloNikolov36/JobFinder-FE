@@ -5,5 +5,5 @@ export interface AnonymousProfileAppearance {
     softSkills: number[],
     itAreas: number[];
     techStacks: number[];
-    remoteJobPreferenceId: number;
+    workplaceTypeId: number;
 }
