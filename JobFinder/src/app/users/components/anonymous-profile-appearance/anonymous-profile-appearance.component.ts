@@ -55,7 +55,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
       softSkills: [[], Validators.required],
       itAreas: [[]],
       techStacks: [[]],
-      workplaceTypeId: [null, Validators.required]
+      workplaceTypes: [[], Validators.required]
     });
   }
 
