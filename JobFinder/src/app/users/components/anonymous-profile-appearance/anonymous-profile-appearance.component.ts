@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { NomenclatureService } from '../../../core/services';
 import { BasicModel } from '../../../core/models';
 import { Observable } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AnonymousProfileAppearance } from '../../models';
 
 @Component({
@@ -21,6 +21,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   itAreas$!: Observable<BasicModel[]>;
   workplaceTypes$!: Observable<BasicModel[]>;
   cities$!: Observable<BasicModel[]>;
+  showITcontrols: WritableSignal<boolean> = signal<boolean>(false);
 
   form!: FormGroup;
 
@@ -34,16 +35,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loadNomenclatureData();
-
-    // TODO: if selected area is not IT => remove validators for two fields and remove them from DOM
-
-    this.form.controls['jobCategoryId'].valueChanges
-      .subscribe((categoryId: number) => {
-        if (categoryId === this.itCategoryId) {
-          this.form.controls['techStacks'].addValidators(Validators.required);
-          this.form.controls['itAreas'].addValidators(Validators.required);
-        }
-      });
+    this.subscribeToJobCategoryFormChanges();
   }
 
   submitAnonymousProfileAppearanceData = (): void => {
@@ -71,5 +63,28 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.itAreas$ = this.nomenclatureService.getITAreas();
     this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
     this.cities$ = this.nomenclatureService.getCities();
+  }
+
+  private subscribeToJobCategoryFormChanges = (): void => {
+
+    this.form.controls['jobCategoryId'].valueChanges
+      .subscribe((categoryId: number) => {
+
+        const techStacksControl = this.form.controls['techStacks'];
+        const itAreasControl = this.form.controls['itAreas'];
+        const validator: ValidatorFn = Validators.required;
+
+        if (categoryId === this.itCategoryId) {
+          techStacksControl.addValidators(validator);
+          itAreasControl.addValidators(validator);
+          this.showITcontrols.set(true);
+        } else {
+          techStacksControl.removeValidators(validator);
+          itAreasControl.removeValidators(validator);
+          this.showITcontrols.set(false);
+          techStacksControl.setValue([]);
+          itAreasControl.setValue([]);
+        }
+      });
   }
 }

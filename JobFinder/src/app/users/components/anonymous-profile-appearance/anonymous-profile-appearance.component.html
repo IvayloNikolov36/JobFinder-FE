@@ -36,8 +36,7 @@
 
         <div class="d-flex justify-content-start ms-5 my-5">
             <mat-form-field class="half-width">
-                <textarea matInput type="text" placeholder="preffered positions"
-                    formControlName="preferredPositions">
+                <textarea matInput type="text" placeholder="preffered positions" formControlName="preferredPositions">
                 </textarea>
                 <mat-hint>Here you can input preffered job positions.</mat-hint>
             </mat-form-field>
@@ -59,6 +58,7 @@
             </mat-form-field>
         </div>
 
+        @if (showITcontrols()) {
         <div class="d-flex justify-content-start ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>Tech Stack</mat-label>
@@ -89,6 +89,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
+        }
 
         <div class="my-5 ms-5">
             <mat-form-field class="half-width">
@@ -99,7 +100,8 @@
                     </mat-option>
                 </mat-select>
                 <mat-hint>Select workplace types.</mat-hint>
-                <mat-error *ngIf="form.controls['workplaceTypes']?.touched && form.controls['workplaceTypes'].errors?.['required']">
+                <mat-error
+                    *ngIf="form.controls['workplaceTypes']?.touched && form.controls['workplaceTypes'].errors?.['required']">
                     Selecting one or more workplace type is mandatory!
                 </mat-error>
             </mat-form-field>
