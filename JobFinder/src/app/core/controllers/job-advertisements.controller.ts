@@ -1,5 +1,7 @@
 import { environment } from "../../../environments/environment";
 
+// TODO: refactor the whole file
+
 const route: string = environment.apiUrl;
 
 export const getAds = (): string => route + 'jobads';
@@ -9,3 +11,4 @@ export const getAd = (id: number) => route + `jobads/${id}`;
 export const createAd = (): string => route + 'jobads/create';
 export const getEngagementsUrl = (): string => route + 'jobEngagements';
 export const getCategoriesUrl = (): string => route + 'jobCategories';
+export const getRelatedAnonymousProfilesUrl = (jobAdId: number): string => route + 'jobads' + `/${jobAdId}/anonymous-profiles`;

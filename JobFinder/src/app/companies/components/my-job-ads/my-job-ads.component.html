@@ -25,17 +25,19 @@
             <mat-card-content class="mt-2">
 
                 <div class="d-flex justify-content-between">
+                    <span class="mx-0">
+                        <i class="bi bi-calendar2-week me-2"></i>{{ jobAd.publishDate | date }}
+                    </span>
                     @if (jobAd.salary) {
                     <div class="salary-container">
                         {{ jobAd.salary }}
                     </div>
                     }
-                    <span class="mx-0">
-                        <i class="bi bi-calendar2-week me-2"></i>{{ jobAd.publishDate | date }}
-                    </span>
                 </div>
 
-                <mat-expansion-panel class="mt-3" (opened)="openExpansionPanel(jobAd.id)"
+                <!-- TODO: create the expansion panel as a separate child component -->
+
+                <mat-expansion-panel class="mt-3" (opened)="openApplicationsPanel(jobAd.id)"
                     [hideToggle]="jobAd.applicationsSent < 1" [disabled]="jobAd.applicationsSent < 1" [id]="jobAd.id">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
@@ -71,6 +73,20 @@
                         <jf-ad-applications-listing [applicationsData]="applicationsDataResource.value()" />
                     </ng-template>
                 </mat-expansion-panel>
+
+                @if (jobAd.isActive) {
+                <mat-expansion-panel class="w-75 mx-auto mt-3" (opened)="openRelatedAnonymousProfilesPanel(jobAd.id)" [id]="jobAd.id">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="d-flex justify-content-center">
+                            <span class="text-info">Related Anonymous Profiles</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <ng-template matExpansionPanelContent>
+                        <jf-related-anonymous-profiles-listing [anonymousProfilesData]="relatedAnonymousProfilesDataResource.value()" />
+                    </ng-template>
+                </mat-expansion-panel>
+                }
 
             </mat-card-content>
         </mat-card>

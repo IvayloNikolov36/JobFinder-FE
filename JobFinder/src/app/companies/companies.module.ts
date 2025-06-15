@@ -8,6 +8,7 @@ import {
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
   MyJobAdsComponent,
+  RelatedAnonymousProfilesListingComponent,
   UserCvPreviewComponent
 } from './components';
 
@@ -19,6 +20,7 @@ import {
     UserCvPreviewComponent,
     CompanyProfileComponent,
     AdDetailsComponent,
+    RelatedAnonymousProfilesListingComponent,
   ],
   imports: [
     SharedModule,

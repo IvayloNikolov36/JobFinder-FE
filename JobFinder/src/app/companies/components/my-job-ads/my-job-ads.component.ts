@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AdApplicationInfo, CompanyAd } from '../../models';
+import { AnonymousProfileListingModel, CompanyAd } from '../../models';
 import { CompanyJobAdApplicationsService, CompanyJobAdsService } from '../../services';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { renderSalary } from '../../../shared/functions';
@@ -13,8 +13,6 @@ import { renderSalary } from '../../../shared/functions';
 export class MyJobAdsComponent implements OnInit {
 
   jobAds$!: Observable<CompanyAd[]>;
-  currentJobAdApplicationsData$!: Observable<AdApplicationInfo[]>;
-
   filterType: typeof AdsFilterEnum = AdsFilterEnum;
   selectedFilterType: AdsFilterEnum = AdsFilterEnum.Active;
 
@@ -32,7 +30,17 @@ export class MyJobAdsComponent implements OnInit {
     }
   });
 
+  readonly relatedAnonymousProfilesDataResource = rxResource({
+    request: () => ({
+      currentJobAdId: this.selectedAdId()
+    }),
+    loader: ({ request }) => {
+      return this.jobAdsService.getRelatedAnonymousProfiles(request.currentJobAdId);
+    }
+  });
+
   private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
+  private readonly selectedAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
 
   ngOnInit(): void {
     this.loadJobAds();
@@ -47,9 +55,12 @@ export class MyJobAdsComponent implements OnInit {
 
   }
 
-  openExpansionPanel(jobAdId: number): void {
-    
+  openApplicationsPanel = (jobAdId: number): void => {
     this.jobAdId.set(jobAdId);
+  }
+
+  openRelatedAnonymousProfilesPanel = (jobAdId: number): void => {
+    this.selectedAdId.set(jobAdId);
   }
 
   private loadJobAds = (): void => {
