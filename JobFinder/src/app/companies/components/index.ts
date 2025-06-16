@@ -5,3 +5,4 @@ export * from './user-cv-preview/user-cv-preview.component';
 export * from './company-profile/company-profile.component';
 export * from './ad-details/ad-details.component';
 export * from './related-anonymous-profiles-listing/related-anonymous-profiles-listing.component';
+export * from './anonymous-profile-preview/anonymous-profile-preview.component';

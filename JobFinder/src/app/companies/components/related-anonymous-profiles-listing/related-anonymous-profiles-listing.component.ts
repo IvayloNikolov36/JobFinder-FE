@@ -9,6 +9,7 @@ import { AnonymousProfileListingModel } from '../../models';
 export class RelatedAnonymousProfilesListingComponent {
 
   @Input() anonymousProfilesData: AnonymousProfileListingModel[] | undefined;
+  @Input() jobAdId!: number;
 
   readonly displayedColumns: string[] = ['id', 'activateDate', 'actions'];
 }

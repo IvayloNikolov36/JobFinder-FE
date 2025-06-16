@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdDetailsComponent, CompanyProfileComponent, CreateJobAdvertisementComponent, MyJobAdsComponent, UserCvPreviewComponent } from './components';
+import { AdDetailsComponent, AnonymousProfilePreviewComponent, CompanyProfileComponent, CreateJobAdvertisementComponent, MyJobAdsComponent, UserCvPreviewComponent } from './components';
 
 const routes: Routes = [
     { path: 'profile', component: CompanyProfileComponent },
@@ -8,6 +8,7 @@ const routes: Routes = [
     { path: 'ad/:id', component: AdDetailsComponent },
     { path: 'my-ads', component: MyJobAdsComponent },
     { path: 'my-ads/:id/user-cv-preview/:cvId', component: UserCvPreviewComponent },
+    { path: 'my-ads/:id/anonymous-profile-preview/:profileId', component: AnonymousProfilePreviewComponent },
     { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ];
 

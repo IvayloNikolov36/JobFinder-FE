@@ -5,6 +5,7 @@ import { CompaniesRoutingModule } from './companies-routing.module';
 import {
   AdApplicationsListingComponent,
   AdDetailsComponent,
+  AnonymousProfilePreviewComponent,
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
   MyJobAdsComponent,
@@ -21,6 +22,7 @@ import {
     CompanyProfileComponent,
     AdDetailsComponent,
     RelatedAnonymousProfilesListingComponent,
+    AnonymousProfilePreviewComponent,
   ],
   imports: [
     SharedModule,

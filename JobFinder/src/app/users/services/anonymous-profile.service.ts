@@ -12,7 +12,7 @@ export class AnonymousProfileService {
     constructor(private http: HttpClient) { }
 
     view = (): Observable<object> => {
-        return this.http.get<object>(AnonymousProfileController.view());
+        return this.http.get<object>(AnonymousProfileController.getMine());
     }
 
     create = (cvId: string, profileData: AnonymousProfileCreate): Observable<object> => {
