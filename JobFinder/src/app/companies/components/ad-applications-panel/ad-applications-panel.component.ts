@@ -12,6 +12,8 @@ export class AdApplicationsPanelComponent {
 
   @Input() jobAd!: CompanyAd;
 
+  isExpanded: boolean = false;
+
   constructor(private jobAdApplicationsService: CompanyJobAdApplicationsService) { }
 
   private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
@@ -26,7 +28,12 @@ export class AdApplicationsPanelComponent {
     }
   });
 
-  openApplicationsPanel = (jobAdId: number): void => {
+  onOpenApplicationsPanel = (jobAdId: number): void => {
+    this.isExpanded = true;
     this.jobAdId.set(jobAdId);
+  }
+
+  onCloseApplicationsPanel = (): void => {
+    this.isExpanded = false;
   }
 }
