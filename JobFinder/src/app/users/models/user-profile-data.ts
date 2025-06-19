@@ -3,7 +3,7 @@ export interface UserProfileData {
     email: string;
     phone: string;
     pictureUrl: string;
-    curriculumVitaesCount: number;
+    cVsCount: number;
     subscriptionsCount: number;
     applicationsCount: number;
 }
