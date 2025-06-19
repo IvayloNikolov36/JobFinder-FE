@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { JobAd } from "../../core/models";
-import { createAd, getAllCompanyAds, getCompanyAds, getRelatedAnonymousProfilesUrl } from "../../core/controllers";
 import { AnonymousProfileListingModel, CompanyAd } from "../models";
+import { JobAdsController } from "../../core/controllers";
 
 @Injectable({
     providedIn: "root"
@@ -13,20 +13,20 @@ export class CompanyJobAdsService {
     constructor(private http: HttpClient) { }
 
     createJobAd(data: JobAd): Observable<Object> {
-        return this.http.post(createAd(), data);
+        return this.http.post(JobAdsController.createAd(), data);
     }
 
     getAllCompanyAds(): Observable<CompanyAd[]> {
-        return this.http.get<CompanyAd[]>(getAllCompanyAds());
+        return this.http.get<CompanyAd[]>(JobAdsController.getAllCompanyAds());
     }
 
     getCompanyAds(active: boolean): Observable<CompanyAd[]> {
-        return this.http.get<CompanyAd[]>(getCompanyAds(active));
+        return this.http.get<CompanyAd[]>(JobAdsController.getCompanyAds(active));
     }
 
     getRelatedAnonymousProfiles(jobAdId: number | undefined): Observable<AnonymousProfileListingModel[]> {
         return jobAdId !== undefined
-            ? this.http.get<AnonymousProfileListingModel[]>(getRelatedAnonymousProfilesUrl(jobAdId))
+            ? this.http.get<AnonymousProfileListingModel[]>(JobAdsController.getRelatedAnonymousProfiles(jobAdId))
             : of([]);
     }
 }

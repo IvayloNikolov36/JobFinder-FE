@@ -3,12 +3,11 @@ import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/c
 import { map, Observable } from 'rxjs';
 import { JobAd } from '../../core/models/job-ad';
 import { JobDetails } from '../../core/models/job-details';
-import { getAd, getAds } from '../../core/controllers';
-
 import { SortByColumnEnum } from '../../core/enums';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { renderSalary } from '../../shared/functions';
 import { AdsFiltering, AdsFilterProps } from '../models';
+import { JobAdsController } from '../../core/controllers';
 
 @Injectable({
   providedIn: 'root'
@@ -42,11 +41,11 @@ export class JobAdvertisementsService {
   readonly itemsOnPage: Signal<number> = computed(() => this.filterModel().items);
 
   getAllActive(filter: AdsFiltering): Observable<JobAd[]> {
-    return this.http.post<JobAd[]>(getAds(), filter);
+    return this.http.post<JobAd[]>(JobAdsController.getAds(), filter);
   }
 
   details(id: number): Observable<JobDetails> {
-    return this.http.get<JobDetails>(getAd(id));
+    return this.http.get<JobDetails>(JobAdsController.getAd(id));
   }
 
   getItemsCountArray = (): number[] => this.itemsCountArray;
@@ -59,7 +58,7 @@ export class JobAdvertisementsService {
     loader: ({ request }) => {
       return this.getAllActive(new AdsFiltering(request.page, request.filter))
         .pipe(
-          map((data: any) => {      
+          map((data: any) => {
             const totalCount = data.totalCount;
             let ads = data.data as JobAd[];
             ads = ads.map((a: JobAd) => {
