@@ -1,8 +1,7 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CompanyAd } from '../../models';
 import { CompanyJobAdsService } from '../../services';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { renderSalary } from '../../../shared/functions';
 
 @Component({
@@ -18,17 +17,6 @@ export class MyJobAdsComponent implements OnInit {
 
   constructor(private jobAdsService: CompanyJobAdsService) { }
 
-  readonly relatedAnonymousProfilesDataResource = rxResource({
-    request: () => ({
-      currentJobAdId: this.selectedAdId()
-    }),
-    loader: ({ request }) => {
-      return this.jobAdsService.getRelatedAnonymousProfiles(request.currentJobAdId);
-    }
-  });
-
-  private readonly selectedAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
-
   ngOnInit(): void {
     this.loadJobAds();
   }
@@ -40,10 +28,6 @@ export class MyJobAdsComponent implements OnInit {
 
   viewAdDetails(id: number): void {
 
-  }
-
-  openRelatedAnonymousProfilesPanel = (jobAdId: number): void => {
-    this.selectedAdId.set(jobAdId);
   }
 
   private loadJobAds = (): void => {

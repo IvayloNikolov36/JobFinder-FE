@@ -6,6 +6,7 @@ import {
   AdApplicationsListingComponent,
   AdApplicationsPanelComponent,
   AdDetailsComponent,
+  AdRelatedAnonymousProfilesPanelComponent,
   AnonymousProfilePreviewComponent,
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
@@ -25,6 +26,7 @@ import {
     RelatedAnonymousProfilesListingComponent,
     AnonymousProfilePreviewComponent,
     AdApplicationsPanelComponent,
+    AdRelatedAnonymousProfilesPanelComponent,
   ],
   imports: [
     SharedModule,

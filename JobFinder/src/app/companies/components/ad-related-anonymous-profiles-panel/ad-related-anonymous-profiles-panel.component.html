@@ -1,0 +1,17 @@
+<mat-expansion-panel class="w-75 mx-auto mt-3"
+    (opened)="openRelatedAnonymousProfilesPanel(jobAdId)"
+    [id]="jobAdId"
+>
+    <mat-expansion-panel-header>
+        <mat-panel-title class="d-flex justify-content-center">
+            <span class="text-info">Related Anonymous Profiles</span>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-template matExpansionPanelContent>
+        <jf-related-anonymous-profiles-listing
+            [anonymousProfilesData]="relatedAnonymousProfilesDataResource.value()"
+            [jobAdId]="jobAdId"
+        />
+    </ng-template>
+</mat-expansion-panel>

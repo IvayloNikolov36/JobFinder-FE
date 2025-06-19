@@ -35,25 +35,10 @@
                     }
                 </div>
 
-                <!-- TODO: create the expansion panel as a separate child component -->
-
                 <jf-ad-applications-panel [jobAd]="jobAd" />
 
                 @if (jobAd.isActive) {
-                <mat-expansion-panel class="w-75 mx-auto mt-3" (opened)="openRelatedAnonymousProfilesPanel(jobAd.id)" [id]="jobAd.id">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="d-flex justify-content-center">
-                            <span class="text-info">Related Anonymous Profiles</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-
-                    <ng-template matExpansionPanelContent>
-                        <jf-related-anonymous-profiles-listing
-                            [anonymousProfilesData]="relatedAnonymousProfilesDataResource.value()"
-                            [jobAdId]="jobAd.id"
-                        />
-                    </ng-template>
-                </mat-expansion-panel>
+                <jf-ad-related-anonymous-profiles-panel [jobAdId]="jobAd.id" />
                 }
 
             </mat-card-content>
