@@ -6,3 +6,4 @@ export * from './company-profile/company-profile.component';
 export * from './ad-details/ad-details.component';
 export * from './related-anonymous-profiles-listing/related-anonymous-profiles-listing.component';
 export * from './anonymous-profile-preview/anonymous-profile-preview.component';
+export * from './ad-applications-panel/ad-applications-panel.component';

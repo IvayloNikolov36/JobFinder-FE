@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CompaniesRoutingModule } from './companies-routing.module';
 import {
   AdApplicationsListingComponent,
+  AdApplicationsPanelComponent,
   AdDetailsComponent,
   AnonymousProfilePreviewComponent,
   CompanyProfileComponent,
@@ -23,6 +24,7 @@ import {
     AdDetailsComponent,
     RelatedAnonymousProfilesListingComponent,
     AnonymousProfilePreviewComponent,
+    AdApplicationsPanelComponent,
   ],
   imports: [
     SharedModule,
