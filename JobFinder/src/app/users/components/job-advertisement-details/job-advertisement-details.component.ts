@@ -43,7 +43,7 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   send = (): void => {
-    const jobApplication = { jobAdId: this.jobAdId, curriculumVitaeId: this.selectedCv } as JobAdApplication;
+    const jobApplication = { jobAdId: this.jobAdId, cvId: this.selectedCv } as JobAdApplication;
     this.jobAdsApplicationsService.applyForJob(jobApplication)
       .subscribe({
         next: () => {

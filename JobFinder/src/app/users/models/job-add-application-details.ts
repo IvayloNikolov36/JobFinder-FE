@@ -1,7 +1,7 @@
 export interface JobAdApplicationDetails {
     id: number;
     jobAdId: number;
-    curriculumVitaeId: string;
+    cvId: string;
     curriculumVitaeName: string;
     jobTitle: string;
     companyName: string;

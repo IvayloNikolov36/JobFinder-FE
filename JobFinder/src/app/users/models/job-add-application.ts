@@ -1,4 +1,4 @@
 export interface JobAdApplication {
     jobAdId: number;
-    curriculumVitaeId: string;
+    cvId: string;
 }

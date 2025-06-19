@@ -2,7 +2,7 @@ export interface AdApplicationInfo {
     id: number;
     applicant: string;
     jobAdId: number;
-    curriculumVitaeId: string;
+    cvId: string;
     curriculumVitaeName: string;
     curriculumVitaePictureUrl: string;
     email: string;
