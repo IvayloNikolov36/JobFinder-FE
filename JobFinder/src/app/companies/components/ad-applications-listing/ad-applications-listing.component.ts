@@ -14,6 +14,6 @@ export class AdApplicationsListingComponent {
   constructor(private router: Router) { }
 
   openCvPreview = (cvId: string, jobAdId: number): void => {
-    this.router.navigate([`my-ads/${jobAdId}/user-cv-preview/${cvId}`]);
+    this.router.navigate([`my-ads/${jobAdId}/cv/${cvId}/preview`]);
   }
 }

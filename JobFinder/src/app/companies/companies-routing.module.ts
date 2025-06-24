@@ -7,8 +7,8 @@ const routes: Routes = [
     { path: 'ads/create', component: CreateJobAdvertisementComponent },
     { path: 'ad/:id', component: AdDetailsComponent },
     { path: 'my-ads', component: MyJobAdsComponent },
-    { path: 'my-ads/:id/user-cv-preview/:cvId', component: UserCvPreviewComponent },
-    { path: 'my-ads/:id/anonymous-profile-preview/:profileId', component: AnonymousProfilePreviewComponent },
+    { path: 'my-ads/:id/cv/:cvId/preview', component: UserCvPreviewComponent },
+    { path: 'my-ads/:id/anonymous-profile/:profileId/preview', component: AnonymousProfilePreviewComponent },
     { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ];
 

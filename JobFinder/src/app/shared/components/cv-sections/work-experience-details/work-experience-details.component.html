@@ -19,8 +19,9 @@
             }"
         >
             <div class="d-flex justify-content-between">
-                <h6>{{ item.organization }}</h6>
-
+                <h6 [class]="{'cv-details-blur': mode === sectionMode.AnonymousProfileView}">
+                    {{ item.organization }}
+                </h6>
                 @if (mode === sectionMode.AnonymousProfileCreate) {
                 <a (click)="blurSection(item.id)" class="pointer">
                     <i class="bi bi-eye-slash-fill"></i>

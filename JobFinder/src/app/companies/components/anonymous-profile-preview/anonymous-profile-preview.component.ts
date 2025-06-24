@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyAnonymousProfilesService } from '../../services';
-import { AnonymousProfileDataModel } from '../../models';
-import { Observable } from 'rxjs';
+import { AnonymousProfileDataModel, CvPreviewData } from '../../models';
+import { map, Observable } from 'rxjs';
+import { CvSectionModeEnum } from '../../../shared/enums';
+import { EducationInfo, PersonalInfo, WorkExperienceInfo } from '../../../shared/models';
+
+const OrganizationName: string = 'Blurred Organization';
+const PictureUrl: string = 'https://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
 
 @Component({
   selector: 'jf-anonymous-profile-preview',
@@ -14,7 +19,9 @@ export class AnonymousProfilePreviewComponent implements OnInit {
   jobAdId!: number;
   anonymousProfileId!: string;
 
-  anonymousProfileData$!: Observable<AnonymousProfileDataModel>;
+  anonymousProfileData$!: Observable<CvPreviewData>;
+
+  mode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +35,24 @@ export class AnonymousProfilePreviewComponent implements OnInit {
   }
 
   private loadAnonymousProfileData = (id: string, jobAdId: number) => {
-    this.anonymousProfileData$ = this.anonymousProfileService.preview(id, jobAdId);
+    this.anonymousProfileData$ = this.anonymousProfileService
+      .preview(id, jobAdId)
+      .pipe(
+        map((x: AnonymousProfileDataModel) => {
+          return new CvPreviewData(
+            PictureUrl,
+            x.personalInfo as PersonalInfo,
+            x.educationInfo.map(ei => {
+              return { ...ei, includeInAnonymousProfile: true, id: 0 } satisfies EducationInfo
+            }),
+            x.workExperienceInfo.map(we => {
+              return { ...we, includeInAnonymousProfile: true, id: 0, organization: OrganizationName } satisfies WorkExperienceInfo
+            }),
+            x.languagesInfo,
+            x.skillsInfo,
+            x.coursesInfo
+          );
+        })
+      );
   }
 }

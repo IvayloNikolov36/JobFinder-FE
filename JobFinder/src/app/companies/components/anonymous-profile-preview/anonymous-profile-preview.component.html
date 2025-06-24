@@ -1,1 +1,17 @@
-<p>anonymous-profile-preview works!</p>
+<div class="container-fluid pb-3">
+
+    @if(anonymousProfileData$ | async; as ap) {
+    <jf-personal-info-details [personalInfo]="ap.personalInfo" [pictureUrl]="ap.pictureUrl" [mode]="mode.AnonymousProfileView" />
+
+    <jf-work-experience-details [workExperienceData]="ap.workExperiences" [mode]="mode.AnonymousProfileView" />
+
+    <jf-education-details [educationData]="ap.educations" [mode]="mode.AnonymousProfileView" />
+
+    <jf-languages-details [languagesData]="ap.languagesInfo" [mode]="mode.AnonymousProfileView" />
+
+    <jf-skills-details [skillsData]="ap.skills" [mode]="mode.AnonymousProfileView" />
+
+    <jf-courses-details [coursesData]="ap.courseCertificates" [mode]="mode.AnonymousProfileView" />
+    }
+
+</div>

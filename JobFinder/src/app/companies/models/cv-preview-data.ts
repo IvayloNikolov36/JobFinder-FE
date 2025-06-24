@@ -7,12 +7,14 @@ import {
       WorkExperienceInfo
 } from "../../shared/models";
 
-export interface CvPreviewData {
-      pictureUrl: string;
-      personalInfo: PersonalInfo;
-      languagesInfo: LanguageInfo[];
-      workExperiences: WorkExperienceInfo[];
-      educations: EducationInfo[];
-      courseCertificates: CourseCertificateInfo[];
-      skills: SkillsInfo;
+export class CvPreviewData {
+      constructor(
+            public pictureUrl: string,
+            public personalInfo: PersonalInfo,
+            public educations: EducationInfo[],
+            public workExperiences: WorkExperienceInfo[],
+            public languagesInfo: LanguageInfo[],
+            public skills: SkillsInfo,
+            public courseCertificates: CourseCertificateInfo[]
+      ) { }
 }
