@@ -12,6 +12,12 @@
     <jf-skills-details [skillsData]="ap.skills" [mode]="mode.AnonymousProfileView" />
 
     <jf-courses-details [coursesData]="ap.courseCertificates" [mode]="mode.AnonymousProfileView" />
+
+    <div class="d-flex justify-content-center my-4">
+        <button mat-fab extended (click)="requestCv()">
+            Request Cv
+        </button>
+    </div>
     }
 
 </div>
