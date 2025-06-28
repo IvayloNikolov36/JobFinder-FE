@@ -4,6 +4,7 @@ import { CvViewComponent } from './components/cv-view-edit/cv-view-edit.componen
 import {
   CompanyDetailsComponent,
   CreateCvComponent,
+  CvRequestsListingComponent,
   JobAdvertisementDetailsComponent,
   MyJobApplicationsComponent,
   MySubscriptionsComponent,
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'profile/cvs/new', component: CreateCvComponent },
   { path: 'profile/subscriptions', component: MySubscriptionsComponent },
   { path: 'profile/job-applications', component: MyJobApplicationsComponent },
+  { path: 'profile/cv-requests', component: CvRequestsListingComponent },
   { path: 'profile/cvs/view/:id', component: CvViewComponent },
   { path: 'company/:id', component: CompanyDetailsComponent },
   { path: 'job-ad/:id', component: JobAdvertisementDetailsComponent },

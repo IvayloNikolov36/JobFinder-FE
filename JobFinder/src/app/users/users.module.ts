@@ -4,6 +4,7 @@ import {
   CoursesCertificatesComponent,
   CreateCvComponent,
   CvInfoComponent,
+  CvRequestsListingComponent,
   CvViewComponent,
   EducationsComponent,
   CreateJobsSubscriptionsComponent,
@@ -42,6 +43,7 @@ import { SharedModule } from '../shared/shared.module';
     JobAdvertisementDetailsComponent,
     CompanyDetailsComponent,
     AnonymousProfileAppearanceComponent,
+    CvRequestsListingComponent,
   ],
   imports: [
     SharedModule,

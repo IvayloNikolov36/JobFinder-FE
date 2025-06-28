@@ -8,3 +8,4 @@ export * from './work-experience-output';
 export * from './cv-listing-data';
 export * from './education-output';
 export * from './cv-info';
+export * from './cv-request-listing.model';
