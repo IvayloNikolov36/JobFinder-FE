@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { AnonymousProfileCreate } from "../models";
-import { AnonymousProfileController } from "../../core/controllers";
+import { AnonymousProfileController, CvPreviewRequestController } from "../../core/controllers";
 import { CvRequestListingModel } from "../models/cv";
 
 @Injectable({
@@ -26,5 +26,9 @@ export class AnonymousProfileService {
 
     viewAllCvRequests = (): Observable<CvRequestListingModel[]> => {
         return this.http.get<CvRequestListingModel[]>(AnonymousProfileController.getAllCvRequests());
+    }
+
+    acceptCvPreviewRequest = (cvPreviewRequestId: number): Observable<object> => {
+        return this.http.get<object>(CvPreviewRequestController.acceptRequest(cvPreviewRequestId));
     }
 }

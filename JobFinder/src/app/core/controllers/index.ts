@@ -9,3 +9,4 @@ export * from './user-profile-controller';
 export * from './company-profile.controller';
 export * from './companies.controller';
 export * from './anonymous-profile.controller';
+export * from './cv-preview-request.controller';

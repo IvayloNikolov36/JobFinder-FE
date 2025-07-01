@@ -31,7 +31,7 @@
                     <div class="d-flex justify-content-end gap-2">
                         <a mat-stroked-button>View company</a>
                         <a mat-stroked-button routerLink="/job-ad/{{element.jobAdId}}">View ad</a>
-                        <button mat-raised-button class="danger-btn" (click)="giveAccessToCv()">
+                        <button mat-raised-button class="danger-btn" (click)="giveAccessToCv(element.id, element.companyName)">
                             Give access to CV
                         </button>
                     </div>

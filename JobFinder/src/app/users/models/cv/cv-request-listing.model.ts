@@ -1,4 +1,5 @@
 export interface CvRequestListingModel {
+    id: number;
     jobAdId: number;
     position: string;
     companyName: string;
