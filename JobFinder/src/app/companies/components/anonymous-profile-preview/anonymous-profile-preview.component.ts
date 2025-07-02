@@ -44,6 +44,7 @@ export class AnonymousProfilePreviewComponent implements OnInit {
       } satisfies CvPreviewRequestModel)
       .subscribe({
         next: () => this.toastr.success('Successfully requested Cv.')
+        // TODO: hide the button for CV request
       });
   }
 

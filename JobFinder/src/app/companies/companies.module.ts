@@ -10,6 +10,7 @@ import {
   AnonymousProfilePreviewComponent,
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
+  CvPreviewRequestsListingComponent,
   MyJobAdsComponent,
   RelatedAnonymousProfilesListingComponent,
   UserCvPreviewComponent
@@ -27,6 +28,7 @@ import {
     AnonymousProfilePreviewComponent,
     AdApplicationsPanelComponent,
     AdRelatedAnonymousProfilesPanelComponent,
+    CvPreviewRequestsListingComponent,
   ],
   imports: [
     SharedModule,

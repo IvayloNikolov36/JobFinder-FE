@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../../services';
 import { CvPreviewData } from '../../models';
+import { Observable } from 'rxjs';
 
 const PreviewedAfterMiliSeconds: number = 3000;
 
@@ -12,33 +13,43 @@ const PreviewedAfterMiliSeconds: number = 3000;
 })
 export class UserCvPreviewComponent implements OnInit, OnDestroy {
 
-  userCvId!: string;
-  jobAdId!: number;
+  userCvData$!: Observable<CvPreviewData>;
   cv!: CvPreviewData;
   timerId: any;
+  setPreviewed: boolean = false;
+  userCvId: string | null = null;
+  jobAdId: number | null = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private cvsService: CurriculumVitaesService,
+    cvsService: CurriculumVitaesService,
+    route: ActivatedRoute,
     private applicationsService: CompanyJobAdApplicationsService
   ) {
-    this.userCvId = this.route.snapshot.params['cvId'];
-    this.jobAdId = +this.route.snapshot.params['id'];
+    const requestCvId: string = route.snapshot.params['cvRequestId'];
+    if (requestCvId) {
+      this.userCvData$ = cvsService.getRequestedCvData(+requestCvId);
+    } else {
+      this.userCvId = route.snapshot.params['cvId'];
+      this.jobAdId = +route.snapshot.params['id'];
+      this.userCvData$ = cvsService.getUserCvData(this.userCvId!, this.jobAdId);
+      this.setPreviewed = true;
+    }
   }
 
   ngOnInit(): void {
-    this.cvsService.getUserCvData(this.userCvId, this.jobAdId)
-      .subscribe((data: CvPreviewData) => {
-        this.cv = data;
-        this.setPreviewed();
-      });
+    this.userCvData$.subscribe((data: CvPreviewData) => {
+      this.cv = data;
+      if (this.setPreviewed) {
+        this.setCvIsPreviewed();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     clearTimeout(this.timerId);
   }
 
-  private setPreviewed(): void {
+  private setCvIsPreviewed(): void {
     this.timerId = setTimeout(() => {
       this.cvPreviewed();
     }, PreviewedAfterMiliSeconds);
@@ -46,7 +57,7 @@ export class UserCvPreviewComponent implements OnInit, OnDestroy {
 
   private cvPreviewed(): void {
     this.applicationsService
-      .setPreviewInfo(this.userCvId, this.jobAdId)
+      .setPreviewInfo(this.userCvId!, this.jobAdId!)
       .subscribe();
   }
 }

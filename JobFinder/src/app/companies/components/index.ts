@@ -8,3 +8,4 @@ export * from './related-anonymous-profiles-listing/related-anonymous-profiles-l
 export * from './anonymous-profile-preview/anonymous-profile-preview.component';
 export * from './ad-applications-panel/ad-applications-panel.component';
 export * from './ad-related-anonymous-profiles-panel/ad-related-anonymous-profiles-panel.component';
+export * from './cv-preview-requests-listing/cv-preview-requests-listing.component';

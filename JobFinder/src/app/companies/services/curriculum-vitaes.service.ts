@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { getUserCvData } from "../../core/controllers";
+import { getRequestedCvData, getUserCvData } from "../../core/controllers";
 import { CvPreviewData } from "../models";
 
 @Injectable({
@@ -13,5 +13,9 @@ export class CurriculumVitaesService {
 
     getUserCvData = (cvId: string, jobAdId: number): Observable<CvPreviewData> => {
         return this.http.get<CvPreviewData>(getUserCvData(cvId, jobAdId));
+    }
+
+    getRequestedCvData = (cvRequestId: number): Observable<CvPreviewData> => {
+        return this.http.get<CvPreviewData>(getRequestedCvData(cvRequestId));
     }
 }
