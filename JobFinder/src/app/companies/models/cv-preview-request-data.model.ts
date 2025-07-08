@@ -1,7 +1,6 @@
 export interface CvPreviewRequestDataModel {
     id: number;
-    anonymousProfileId: string;
-    cvId: string;
+    cvId: string | null;
     jobAdId: number;
     position: string;
     requestDate: Date;

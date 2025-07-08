@@ -3,9 +3,9 @@
         @if (cvRequestsData$ | async; as cvRequests) {
         <table mat-table [dataSource]="cvRequests" class="mat-elevation-z8">
 
-            <ng-container matColumnDef="anonymousProfile">
-                <th mat-header-cell *matHeaderCellDef> Anonymous Profile </th>
-                <td mat-cell *matCellDef="let element"> {{element.anonymousProfileId}} </td>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="position">

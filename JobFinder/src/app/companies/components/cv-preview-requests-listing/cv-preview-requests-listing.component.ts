@@ -12,7 +12,7 @@ export class CvPreviewRequestsListingComponent implements OnInit {
 
   cvRequestsData$!: Observable<CvPreviewRequestDataModel[]>;
 
-  readonly displayedColumns: string[] = ['anonymousProfile', 'position', 'requestDate', 'acceptedDate', 'actions'];
+  readonly displayedColumns: string[] = ['id', 'position', 'requestDate', 'acceptedDate', 'actions'];
 
   constructor(private cvPreviewRequestsService: CvPreviewRequestsService) { }
 
