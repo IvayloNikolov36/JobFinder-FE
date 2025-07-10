@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { AnonymousProfileController } from "../../core/controllers";
+import { AnonymousProfileController, CvPreviewRequestController } from "../../core/controllers";
 import { AnonymousProfileDataModel, CvPreviewRequestModel } from "../models";
 
 @Injectable({
@@ -16,6 +16,6 @@ export class CompanyAnonymousProfilesService {
     }
 
     requestCv = (request: CvPreviewRequestModel): Observable<Object> => {
-        return this.http.post(AnonymousProfileController.requestCv(), request);
+        return this.http.post(CvPreviewRequestController.requestCv(), request);
     }
 }

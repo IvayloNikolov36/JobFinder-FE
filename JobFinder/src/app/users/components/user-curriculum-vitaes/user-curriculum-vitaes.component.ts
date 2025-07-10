@@ -40,6 +40,7 @@ export class UserCurriculumVitaesComponent implements OnInit, OnDestroy {
     });
   }
 
+  // TODO: add logic and show info when there are job applications or/and cv preview requests
   deleteCv(id: string, name: string, modalElement: any): void {
     this.cvName = name;
     this.cvId = id;

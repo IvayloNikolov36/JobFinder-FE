@@ -25,7 +25,7 @@ export class AnonymousProfileService {
     }
 
     viewAllCvRequests = (): Observable<CvRequestListingModel[]> => {
-        return this.http.get<CvRequestListingModel[]>(AnonymousProfileController.getAllCvRequests());
+        return this.http.get<CvRequestListingModel[]>(CvPreviewRequestController.getAllCvRequests());
     }
 
     acceptCvPreviewRequest = (cvPreviewRequestId: number): Observable<object> => {
