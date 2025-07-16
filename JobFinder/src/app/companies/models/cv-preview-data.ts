@@ -15,6 +15,7 @@ export class CvPreviewData {
             public workExperiences: WorkExperienceInfo[],
             public languagesInfo: LanguageInfo[],
             public skills: SkillsInfo,
-            public courseCertificates: CourseCertificateInfo[]
+            public courseCertificates: CourseCertificateInfo[],
+            public isCvRequested: boolean
       ) { }
 }

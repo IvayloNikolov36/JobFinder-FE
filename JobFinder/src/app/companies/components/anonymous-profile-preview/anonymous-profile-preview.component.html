@@ -1,7 +1,8 @@
 <div class="container-fluid pb-3">
 
     @if(anonymousProfileData$ | async; as ap) {
-    <jf-personal-info-details [personalInfo]="ap.personalInfo" [pictureUrl]="ap.pictureUrl" [mode]="mode.AnonymousProfileView" />
+    <jf-personal-info-details [personalInfo]="ap.personalInfo" [pictureUrl]="ap.pictureUrl"
+        [mode]="mode.AnonymousProfileView" />
 
     <jf-work-experience-details [workExperienceData]="ap.workExperiences" [mode]="mode.AnonymousProfileView" />
 
@@ -13,11 +14,18 @@
 
     <jf-courses-details [coursesData]="ap.courseCertificates" [mode]="mode.AnonymousProfileView" />
 
+    @let cvRequestButtonTooltip = ap.isCvRequested || disableRequestCvButton
+        ? "You have already requested the CV"
+        : "Request CV";
+
     <div class="d-flex justify-content-center my-4">
-        <button mat-fab extended (click)="requestCv()">
-            Request Cv
+        <button mat-fab extended
+            [disabled]="ap.isCvRequested || disableRequestCvButton"
+            disabledInteractive
+            [matTooltip]="cvRequestButtonTooltip"
+            (click)="requestCv()"
+        > Request Cv
         </button>
     </div>
     }
-
 </div>

@@ -23,6 +23,7 @@ export class AnonymousProfilePreviewComponent implements OnInit {
   anonymousProfileData$!: Observable<CvPreviewData>;
 
   mode: typeof CvSectionModeEnum = CvSectionModeEnum;
+  disableRequestCvButton: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,8 +44,10 @@ export class AnonymousProfilePreviewComponent implements OnInit {
         jobAdId: this.jobAdId
       } satisfies CvPreviewRequestModel)
       .subscribe({
-        next: () => this.toastr.success('Successfully requested Cv.')
-        // TODO: hide the button for CV request
+        next: () =>  {
+          this.toastr.success('Successfully requested Cv.')
+          this.disableRequestCvButton = true;
+        }
       });
   }
 
@@ -64,7 +67,8 @@ export class AnonymousProfilePreviewComponent implements OnInit {
             }),
             x.languagesInfo,
             x.skillsInfo,
-            x.coursesInfo
+            x.coursesInfo,
+            x.isCvRequested
           );
         })
       );

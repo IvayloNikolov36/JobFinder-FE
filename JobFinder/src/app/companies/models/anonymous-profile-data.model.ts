@@ -14,4 +14,5 @@ export interface AnonymousProfileDataModel {
     languagesInfo: LanguageInfo[];
     skillsInfo: SkillsInfo;
     coursesInfo: CourseCertificateInfo[];
+    isCvRequested: boolean;
 }

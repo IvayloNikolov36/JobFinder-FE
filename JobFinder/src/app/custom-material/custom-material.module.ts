@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -46,6 +47,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTableModule,
     MatMenuModule,
     MatRadioModule,
+    MatTooltipModule,
   ]
 })
 export class CustomMaterialModule { }
