@@ -1,7 +1,17 @@
 <div class="container-fluid">
 
     <div class="w-75 mx-auto my-3 py-4">
-        @for(app of applications$ | async; track app.id; let even = $even) {
+        @if (applications$ | async; as applications) {
+
+        @if (applications.length === 0) {
+        <mat-card class="job-ad-card p-1 shadow mb-4 bg-body rounded green-blue-gradient" appearance="outlined">
+            <mat-card-content class="mt-3 d-flex justify-content-center">
+                <h5>No job applications sent.</h5>
+            </mat-card-content>
+        </mat-card>
+        }
+
+        @for(app of applications; track app.id; let even = $even) {
         <mat-card [class]="{'me-5': even, 'ms-5': !even, 'green-blue-gradient': even, 'blue-green-gradient': !even}"
             class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined"
             (click)="viewJobApplicationDetails(app.jobAdId)">
@@ -30,6 +40,7 @@
                 </span>
             </mat-card-content>
         </mat-card>
+        }
         }
     </div>
 
