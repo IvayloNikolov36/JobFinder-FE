@@ -66,9 +66,9 @@ export class LoginComponent implements OnInit {
   private setDataInStorage(loginResult: LoginResultModel): void {
     localStorage.setItem('token', loginResult.token);
     localStorage.setItem('username', loginResult.username);
-    const isAdmin: boolean = loginResult.role === 'Admin' ? true : false;
+    const isAdmin: boolean = loginResult.roles.includes('Admin');
     localStorage.setItem('isAdmin', String(isAdmin));
-    const isCompany: boolean = loginResult.role === 'Company' ? true : false;
+    const isCompany: boolean = loginResult.roles.includes('Company');
     localStorage.setItem('isCompany', String(isCompany));
   }
 }

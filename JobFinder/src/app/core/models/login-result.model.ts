@@ -3,5 +3,5 @@ export interface LoginResultModel {
     token: string,
     username: string,
     id: string,
-    role: string
+    roles: string[]
 }
