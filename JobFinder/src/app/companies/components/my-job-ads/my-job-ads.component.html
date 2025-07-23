@@ -1,7 +1,7 @@
 <div class="container-fluid p-4">
 
     <div class="d-flex justify-content-center mt-2 mb-4">
-        <mat-button-toggle-group (change)="changeFilter($event)" [value]="filterType.Active">
+        <mat-button-toggle-group (change)="changeFilter($event)" [value]="filterType.All">
             <mat-button-toggle [value]="filterType.Active">Active</mat-button-toggle>
             <mat-button-toggle [value]="filterType.Inactive">Inactive</mat-button-toggle>
             <mat-button-toggle [value]="filterType.All">All</mat-button-toggle>
@@ -9,7 +9,7 @@
     </div>
 
     <mat-accordion multi="false">
-        @for (jobAd of jobAds$ | async; track jobAd.id; let even = $even) {
+        @for (jobAd of jobAds; track jobAd.id; let even = $even) {
         <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
             class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
             <mat-card-header>

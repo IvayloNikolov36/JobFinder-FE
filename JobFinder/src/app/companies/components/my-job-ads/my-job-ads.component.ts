@@ -11,9 +11,10 @@ import { renderSalary } from '../../../shared/functions';
 })
 export class MyJobAdsComponent implements OnInit {
 
-  jobAds$!: Observable<CompanyAd[]>;
+  jobAds!: CompanyAd[];
+  allJobAds: CompanyAd[] | null = null;
   filterType: typeof AdsFilterEnum = AdsFilterEnum;
-  selectedFilterType: AdsFilterEnum = AdsFilterEnum.Active;
+  selectedFilterType: AdsFilterEnum = AdsFilterEnum.All;
 
   constructor(private jobAdsService: CompanyJobAdsService) { }
 
@@ -30,30 +31,39 @@ export class MyJobAdsComponent implements OnInit {
 
   }
 
-  private loadJobAds = (): void => {
-    let observableData: Observable<CompanyAd[]>;
-
-    switch (this.selectedFilterType) {
-      case AdsFilterEnum.All:
-        observableData = this.jobAdsService.getAllCompanyAds();
-        break;
-      case AdsFilterEnum.Active:
-        observableData = this.jobAdsService.getCompanyAds(true);
-        break;
-      case AdsFilterEnum.Inactive:
-        observableData = this.jobAdsService.getCompanyAds(false);
-        break;
-    }
-
-    // TODO: create momoization
-
-    this.jobAds$ = observableData
+  private getAllCompanyAds = (): Observable<CompanyAd[]> => {
+    return this.jobAdsService.getAllCompanyAds()
       .pipe(
         map((ads: CompanyAd[]) => {
           ads.map((a: CompanyAd) => a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency));
           return ads;
         })
       );
+  }
+
+  private loadJobAds = (): void => {
+    if (this.allJobAds === null) {
+      this.getAllCompanyAds().subscribe((ads: CompanyAd[]) => {
+        this.allJobAds = ads;
+        this.setJobAdsData(ads);
+      });
+    } else {
+      this.setJobAdsData(this.allJobAds);
+    }
+  }
+
+  private setJobAdsData = (allAds: CompanyAd[]): void => {
+    switch (this.selectedFilterType) {
+      case AdsFilterEnum.All:
+        this.jobAds = allAds;
+        break;
+      case AdsFilterEnum.Active:
+        this.jobAds = allAds.filter(ja => ja.isActive);
+        break;
+      case AdsFilterEnum.Inactive:
+        this.jobAds = allAds.filter(ja => !ja.isActive);
+        break;
+    }
   }
 }
 
