@@ -36,9 +36,6 @@
             </div>
             }
             <a mat-flat-button routerLink="view/{{element.id}}">View</a>
-            <button mat-raised-button class="danger-btn" (click)="deleteCv(element.id, element.name, modal)">
-              Delete
-            </button>
           </div>
         </td>
       </ng-container>
@@ -46,28 +43,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  </div>
-</div>
-
-
-<div #modal class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Curriculum Vitae</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>You are about to delete CV '{{ cvName }}'</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancelDeletion()">
-          Cancel
-        </button>
-        <button type="button" class="btn btn-danger" (click)="onDeleteCv()">
-          Delete
-        </button>
-      </div>
-    </div>
   </div>
 </div>

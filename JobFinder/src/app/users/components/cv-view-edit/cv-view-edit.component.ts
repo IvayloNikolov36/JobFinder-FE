@@ -9,7 +9,7 @@ import {
   PersonalInfoService,
   WorkExperiencesService
 } from '../../services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CvListingData } from '../../models/cv/cv-listing-data';
 import {
   EducationOutput,
@@ -56,6 +56,7 @@ export class CvViewComponent implements OnInit {
   fullName!: string;
   cv!: CvListingData;
   showModal: boolean = false;
+  deleteModal: Modal | null = null;
   editCvSectionTitle: string = '';
   createdComponentRef!: ComponentRef<any>;
 
@@ -74,6 +75,7 @@ export class CvViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private toaster: ToastrService,
     private cvService: CurriculumVitaesService,
     private educationsService: EducationsService,
@@ -167,7 +169,8 @@ export class CvViewComponent implements OnInit {
       this.cv.id,
       this.constructAnonymousProfileActivationData(profileAppearanceData))
       .subscribe({
-        next: (data: any) => { // TODO: refactor
+        next: (data: any) => {
+          // TODO: refactor
           this.cv.anonymousProfileId = data.id;
           this.cv.canActivateAnonymousProfile = false;
           this.mode = CvSectionModeEnum.AnonymousProfileView;
@@ -177,8 +180,7 @@ export class CvViewComponent implements OnInit {
       });
   }
 
-  // TODO: create dialog for assertion
-
+  // TODO: create dialog for confirmation
   deactivateAnonymousProfile = (): void => {
     this.anonymousProfileService.delete(this.cv.anonymousProfileId!)
       .subscribe({
@@ -202,6 +204,32 @@ export class CvViewComponent implements OnInit {
 
   onProfileAppearanceDataEmit = (profileAppearanceData: AnonymousProfileAppearance): void => {
     this.activateAnonymousProfile(profileAppearanceData);
+  }
+
+  // TODO: add logic and show info when there are job applications or/and cv preview requests
+  deleteCv(modalElement: Element): void {
+    this.deleteModal = new Modal(modalElement);
+    this.deleteModal.show();
+  }
+
+  onDeleteCv = (): void => {
+    this.cvService.delete(this.cvId)
+      .subscribe({
+        next: () => {         
+          this.toaster.success(`CV '${this.cv.name}' is deleted successfully.`);
+          this.router.navigate(['/profile/cvs']);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toaster.error(error.error);
+        },
+        complete: () => {
+          this.deleteModal?.hide();
+        }
+      });
+  }
+
+  onCancelDeletion = (): void => {
+    this.deleteModal?.hide();
   }
 
   private constructAnonymousProfileActivationData = (
