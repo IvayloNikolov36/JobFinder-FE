@@ -12,7 +12,7 @@ import { AdsFiltering, AdsFilterProps } from '../../models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 const ShowFiltersText: string = 'Show Filters';
-const CloseFiltersText: string = 'Close Filters';
+const CloseFiltersText: string = 'Hide Filters';
 
 @Component({
   selector: 'jf-job-ads-listing',

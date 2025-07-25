@@ -1,6 +1,8 @@
 <div class="container-fluid">
 
-  <div *ngIf="!showApplyForm" class="d-flex justify-content-center my-3">
+  <h4 class="text-center my-5">Job Details</h4>
+
+  <div *ngIf="canApply && !showApplyForm" class="d-flex justify-content-center my-3">
     <button mat-fab extended (click)="onApply()">
       <span class="me-2"><i class="bi bi-send"></i></span>Apply
     </button>

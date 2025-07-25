@@ -11,13 +11,13 @@ export class AuthService {
 
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-  constructor(private http: HttpClient) {  }
+  constructor(private http: HttpClient) { }
 
   registerUser(registerModel: RegisterUserModel): Observable<Object> {
     return this.http.post(registerUserUrl(), registerModel);
   }
 
-  registerComapny(body: any): Observable<Object> {
+  registerCompany(body: any): Observable<Object> {
     return this.http.post(registerCompanyUrl(), body);
   }
 
@@ -31,16 +31,14 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return localStorage.getItem('token') !== null;
+    return this.getToken() !== null;
   }
 
-  isCompany(): boolean {
-    return localStorage.getItem('isCompany') === 'true';
-  }
+  isAdmin = (): boolean => this.getRoles().includes("Admin");
 
-  isAdmin(): boolean {
-    return localStorage.getItem('isAdmin') === 'true';
-  }
+  isCompany = (): boolean => this.getRoles().includes("Company");
+
+  isJobSeeker = (): boolean => this.getRoles().includes("Job Seeker");
 
   getUserName(): string | null {
     return localStorage.getItem('username');
@@ -49,5 +47,16 @@ export class AuthService {
   getToken(): string | null {
     const token = localStorage.getItem('token');
     return token;
+  }
+
+  private getRoles = (): string[] => {
+    const rolesData: string | null = localStorage.getItem('roles');
+
+    if (rolesData) {
+      const roles: string[] = JSON.parse(rolesData);
+      return roles;
+    }
+
+    return [];
   }
 }

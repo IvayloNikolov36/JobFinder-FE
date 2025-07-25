@@ -7,7 +7,7 @@ import { JobAdApplication } from '../../models';
 import { CurriculumVitaesService, UserApplicationsService } from '../../../users/services';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'jf-job-advertisement-details',
@@ -21,16 +21,20 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   showApplyForm: boolean = false;
   myCVs$!: Observable<CvListing[]>;
   selectedCv: string | null = null;
+  canApply!: boolean;
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private cvsService: CurriculumVitaesService,
     private jobAdsApplicationsService: UserApplicationsService,
     private toastr: ToastrService) {
+    // TODO: use the new approach to get the id
     this.jobAdId = parseInt(this.route.snapshot.params['id']);
   }
 
   ngOnInit(): void {
+    this.canApply = this.authService.isJobSeeker();
     this.getJobDetails();
   }
 
@@ -58,6 +62,6 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   private getJobDetails = (): void => {
-    // TODO: implement the function
+    // TODO: implement the function   
   }
 }

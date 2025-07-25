@@ -28,7 +28,7 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   registerCompany(): void {
-    this.authService.registerComapny(this.form.value)
+    this.authService.registerCompany(this.form.value)
       .subscribe({
         next: () => this.router.navigate(['/login']),
         error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))

@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       .login(this.form.value)
       .subscribe({
         next: (loginResult: LoginResultModel) => {
-          this.setDataInStorage(loginResult);
+          this.setData(loginResult);
           this.authService.isLoggedIn.next(true);
           this.router.navigate(['/home']);
         },
@@ -63,13 +63,10 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  private setDataInStorage(loginResult: LoginResultModel): void {
+  private setData(loginResult: LoginResultModel): void {
     localStorage.setItem('token', loginResult.token);
     localStorage.setItem('username', loginResult.username);
-    const isAdmin: boolean = loginResult.roles.includes('Admin');
-    localStorage.setItem('isAdmin', String(isAdmin));
-    const isCompany: boolean = loginResult.roles.includes('Company');
-    localStorage.setItem('isCompany', String(isCompany));
+    localStorage.setItem('roles', JSON.stringify(loginResult.roles));
   }
 }
 
