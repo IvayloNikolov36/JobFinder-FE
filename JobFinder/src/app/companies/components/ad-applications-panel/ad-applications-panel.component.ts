@@ -19,12 +19,12 @@ export class AdApplicationsPanelComponent {
   private readonly jobAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
 
   readonly applicationsDataResource = rxResource({
-    request: () => ({
+    params: () => ({
       currentJobAdId: this.jobAdId()
     }),
-    loader: ({ request }) => {
+    stream: ({ params }) => {
       return this.jobAdApplicationsService
-        .getJobAllApplicationsData(request.currentJobAdId);
+        .getJobAllApplicationsData(params.currentJobAdId);
     }
   });
 

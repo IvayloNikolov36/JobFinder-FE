@@ -51,12 +51,12 @@ export class JobAdvertisementsService {
   getItemsCountArray = (): number[] => this.itemsCountArray;
 
   private readonly jobAdsDataResource = rxResource({
-    request: () => ({
+    params: () => ({
       filter: this.filterModel(),
       page: this.currentPage()
     }),
-    loader: ({ request }) => {
-      return this.getAllActive(new AdsFiltering(request.page, request.filter))
+    stream: ({ params }) => {
+      return this.getAllActive(new AdsFiltering(params.page, params.filter))
         .pipe(
           map((data: any) => {
             const totalCount = data.totalCount;

@@ -16,11 +16,11 @@ export class AdRelatedAnonymousProfilesPanelComponent {
   private readonly selectedAdId: WritableSignal<number | undefined> = signal<number | undefined>(undefined);
 
   readonly relatedAnonymousProfilesDataResource = rxResource({
-    request: () => ({
+    params: () => ({
       currentJobAdId: this.selectedAdId()
     }),
-    loader: ({ request }) => {
-      return this.jobAdsService.getRelatedAnonymousProfiles(request.currentJobAdId);
+    stream: ({ params }) => {
+      return this.jobAdsService.getRelatedAnonymousProfiles(params.currentJobAdId);
     }
   });
 
