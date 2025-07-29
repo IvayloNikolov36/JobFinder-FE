@@ -1,6 +1,6 @@
 import { environment } from "../../../environments/environment";
 
-const route: string = environment.apiUrl + 'CompanySubscriptions';
+const route: string = environment.apiUrl + 'company-subscriptions';
 
 export const subscribeForCompanyJobs = (companyId: number): string => route + `/${companyId}`;
 export const unsubscribeForCompanyJobs = (companyId: number): string => route + `/unsubscribe/${companyId}`;

@@ -12,6 +12,6 @@ export class CvPreviewRequestsService {
     constructor (private http: HttpClient) { }
 
     getAllCvRequestsData = (): Observable<CvPreviewRequestDataModel[]> => {
-        return this.http.get<CvPreviewRequestDataModel[]>(CvPreviewRequestController.getCompanyAllCvRequestData());
+        return this.http.get<CvPreviewRequestDataModel[]>(CvPreviewRequestController.getAllCompanyCvRequestData());
     } 
 }

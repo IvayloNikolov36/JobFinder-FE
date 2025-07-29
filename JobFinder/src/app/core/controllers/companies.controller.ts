@@ -1,8 +1,8 @@
 import { environment } from "../../../environments/environment";
 
-const Route: string = environment.apiUrl + 'company/';
+const Route: string = environment.apiUrl + 'companies/';
 
 export class CompaniesController {
 
-    static getDetailsUrl = (companyId: number): string => Route + `details/${companyId}`;
+    static getDetailsUrl = (companyId: number): string => Route + `${companyId}`;
 }

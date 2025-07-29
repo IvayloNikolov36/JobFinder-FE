@@ -13,7 +13,7 @@ export class CompanyJobAdsService {
     constructor(private http: HttpClient) { }
 
     createJobAd(data: JobAd): Observable<Object> {
-        return this.http.post(JobAdsController.createAd(), data);
+        return this.http.post(JobAdsController.create(), data);
     }
 
     getAllCompanyAds(): Observable<CompanyAd[]> {
