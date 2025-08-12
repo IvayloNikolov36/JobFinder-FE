@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CompanyJobAdApplicationsService, CurriculumVitaesService } from '../../services';
 import { CvPreviewData } from '../../models';
 import { Observable } from 'rxjs';
@@ -13,36 +12,22 @@ const PreviewedAfterMiliSeconds: number = 3000;
 })
 export class UserCvPreviewComponent implements OnInit, OnDestroy {
 
+  @Input() cvRequestId: string | null = null;
+  @Input() cvId!: string;
+  @Input('id') jobAdId!: number;
+
   userCvData$!: Observable<CvPreviewData>;
   cv!: CvPreviewData;
   timerId: any;
   setPreviewed: boolean = false;
-  userCvId: string | null = null;
-  jobAdId: number | null = null;
 
   constructor(
-    cvsService: CurriculumVitaesService,
-    route: ActivatedRoute,
+    private cvsService: CurriculumVitaesService,
     private applicationsService: CompanyJobAdApplicationsService
-  ) {
-    const requestCvId: string = route.snapshot.params['cvRequestId'];
-    if (requestCvId) {
-      this.userCvData$ = cvsService.getRequestedCvData(+requestCvId);
-    } else {
-      this.userCvId = route.snapshot.params['cvId'];
-      this.jobAdId = +route.snapshot.params['id'];
-      this.userCvData$ = cvsService.getUserCvData(this.userCvId!, this.jobAdId);
-      this.setPreviewed = true;
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.userCvData$.subscribe((data: CvPreviewData) => {
-      this.cv = data;
-      if (this.setPreviewed) {
-        this.setCvIsPreviewed();
-      }
-    });
+    this.loadCvData();
   }
 
   ngOnDestroy(): void {
@@ -57,7 +42,23 @@ export class UserCvPreviewComponent implements OnInit, OnDestroy {
 
   private cvPreviewed(): void {
     this.applicationsService
-      .setPreviewInfo(this.userCvId!, this.jobAdId!)
+      .setPreviewInfo(this.cvId, this.jobAdId)
       .subscribe();
+  }
+
+  private loadCvData = (): void => {
+    if (this.cvRequestId) {
+      this.userCvData$ = this.cvsService.getRequestedCvData(+this.cvRequestId);
+    } else {
+      this.userCvData$ = this.cvsService.getUserCvData(this.cvId, this.jobAdId);
+      this.setPreviewed = true;
+    }
+
+    this.userCvData$.subscribe((data: CvPreviewData) => {
+      this.cv = data;
+      if (this.setPreviewed) {
+        this.setCvIsPreviewed();
+      }
+    });
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JobDetails } from '../../../core/models/job-details';
 import { CvListing } from '../../../users/models/cv';
@@ -16,7 +15,8 @@ import { AuthService } from '../../../core/services';
 })
 export class JobAdvertisementDetailsComponent implements OnInit {
 
-  jobAdId!: number;
+  @Input() id!: number;
+
   jobDetails!: JobDetails;
   showApplyForm: boolean = false;
   myCVs$!: Observable<CvListing[]>;
@@ -24,14 +24,10 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   canApply!: boolean;
 
   constructor(
-    private route: ActivatedRoute,
     private authService: AuthService,
     private cvsService: CurriculumVitaesService,
     private jobAdsApplicationsService: UserApplicationsService,
-    private toastr: ToastrService) {
-    // TODO: use the new approach to get the id
-    this.jobAdId = parseInt(this.route.snapshot.params['id']);
-  }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.canApply = this.authService.isJobSeeker();
@@ -47,7 +43,7 @@ export class JobAdvertisementDetailsComponent implements OnInit {
   }
 
   send = (): void => {
-    const jobApplication = { jobAdId: this.jobAdId, cvId: this.selectedCv } as JobAdApplication;
+    const jobApplication = { jobAdId: this.id, cvId: this.selectedCv } as JobAdApplication;
     this.jobAdsApplicationsService.applyForJob(jobApplication)
       .subscribe({
         next: () => {

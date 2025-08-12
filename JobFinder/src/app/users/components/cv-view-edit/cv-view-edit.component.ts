@@ -1,5 +1,5 @@
 import { SkillsService } from '../../services/skills.service';
-import { Component, ComponentRef, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, Input, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
 import {
   AnonymousProfileService,
   CoursesService,
@@ -9,7 +9,7 @@ import {
   PersonalInfoService,
   WorkExperiencesService
 } from '../../services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CvListingData } from '../../models/cv/cv-listing-data';
 import {
   EducationOutput,
@@ -52,7 +52,8 @@ export class CvViewComponent implements OnInit {
 
   @ViewChild('editCvSectionComponent', { read: ViewContainerRef }) cvSectionComponentRef!: ViewContainerRef;
 
-  cvId: string;
+  @Input() id!: string;
+
   fullName!: string;
   cv!: CvListingData;
   showModal: boolean = false;
@@ -74,7 +75,6 @@ export class CvViewComponent implements OnInit {
   mode: CvSectionModeEnum = CvSectionModeEnum.Edit;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private toaster: ToastrService,
     private cvService: CurriculumVitaesService,
@@ -86,8 +86,6 @@ export class CvViewComponent implements OnInit {
     private personalInfoService: PersonalInfoService,
     private nomenclatureService: NomenclatureService,
     private anonymousProfileService: AnonymousProfileService) {
-
-    this.cvId = this.route.snapshot.params['id'];
 
     const initialValue: BasicModel[] = [] as BasicModel[];
 
@@ -102,7 +100,9 @@ export class CvViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCvData();
+    if (this.id) {
+      this.loadCvData(this.id);
+    }
   }
 
   onCloseEditSectionModal = (): void => {
@@ -213,9 +213,9 @@ export class CvViewComponent implements OnInit {
   }
 
   onDeleteCv = (): void => {
-    this.cvService.delete(this.cvId)
+    this.cvService.delete(this.id)
       .subscribe({
-        next: () => {         
+        next: () => {
           this.toaster.success(`CV '${this.cv.name}' is deleted successfully.`);
           this.router.navigate(['/profile/cvs']);
         },
@@ -412,8 +412,8 @@ export class CvViewComponent implements OnInit {
       });
   }
 
-  private loadCvData = (): void => {
-    this.cvService.getCvListingData(this.cvId)
+  private loadCvData = (cvId: string): void => {
+    this.cvService.getCvListingData(cvId)
       .subscribe((data: CvListingData) => {
         this.cv = data;
         const details: PersonalInfo = this.cv.personalInfo;

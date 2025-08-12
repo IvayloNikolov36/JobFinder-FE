@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { CompanyAnonymousProfilesService } from '../../services';
 import { AnonymousProfileDataModel, CvPreviewData, CvPreviewRequestModel } from '../../models';
 import { map, Observable } from 'rxjs';
@@ -17,8 +16,8 @@ const PictureUrl: string = 'https://s3.amazonaws.com/37assets/svn/765-default-av
 })
 export class AnonymousProfilePreviewComponent implements OnInit {
 
-  jobAdId!: number;
-  anonymousProfileId!: string;
+  @Input() id!: number;
+  @Input() profileId!: string;
 
   anonymousProfileData$!: Observable<CvPreviewData>;
 
@@ -26,25 +25,23 @@ export class AnonymousProfilePreviewComponent implements OnInit {
   disableRequestCvButton: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
     private anonymousProfileService: CompanyAnonymousProfilesService,
-    private toastr: ToastrService) {
-    this.jobAdId = this.route.snapshot.params['id'];
-    this.anonymousProfileId = this.route.snapshot.params['profileId'];
-  }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.loadAnonymousProfileData(this.anonymousProfileId, this.jobAdId);
+    if (this.id && this.profileId) {
+      this.loadAnonymousProfileData(this.profileId, this.id);
+    }
   }
 
   requestCv = (): void => {
     this.anonymousProfileService
       .requestCv({
-        anonymousProfileId: this.anonymousProfileId,
-        jobAdId: this.jobAdId
+        anonymousProfileId: this.profileId,
+        jobAdId: this.id
       } satisfies CvPreviewRequestModel)
       .subscribe({
-        next: () =>  {
+        next: () => {
           this.toastr.success('Successfully requested Cv.')
           this.disableRequestCvButton = true;
         }
