@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { BasicModel } from '../../../core/models';
@@ -37,15 +43,7 @@ export class CreateJobAdvertisementComponent {
   ngOnInit() {
     this.loadNomenclatureData();
     this.initializeJobAdvertisementForm();
-
-    this.form.controls['jobCategoryId'].valueChanges
-      .subscribe((categoryId: number) => {
-        if (categoryId === this.itCategoryId) {
-          this.loadITNomenclatureData();
-          this.form.controls['techStacks'].addValidators(Validators.required);
-          this.form.controls['itAreas'].addValidators(Validators.required);
-        }
-      });
+    this.subscribeToJobCategoryChanges();
   }
 
   publishAd(): void {
@@ -59,6 +57,61 @@ export class CreateJobAdvertisementComponent {
           this.toastr.error(error.error.errors);
         }
       });
+  }
+
+  private get techStackControl(): any {
+    return this.form.controls['techStacks'];
+  }
+
+  private get itAreasControl(): any {
+    return this.form.controls['itAreas'];
+  }
+
+  private get minSalaryControl(): any {
+    return this.form.controls['minSalary'];
+  }
+
+  private get maxSalaryControl(): any {
+    return this.form.controls['maxSalary'];
+  }
+
+  private get currencyControl(): any {
+    return this.form.controls['currencyId'];
+  }
+
+  private get jobCategoryControl(): any {
+    return this.form.controls['jobCategoryId'];
+  }
+
+  private subscribeToJobCategoryChanges = (): void => {
+    this.jobCategoryControl.valueChanges
+      .subscribe((categoryId: number) => {
+        debugger;
+        if (categoryId === this.itCategoryId) {
+          this.loadITNomenclatureData();
+          this.manageITRelatedControlsValidators([Validators.required], 'add');
+        } else {
+          this.techStackControl.setValue([]);
+          this.itAreasControl.setValue([]);
+          this.techStackControl.error = '';
+          this.manageITRelatedControlsValidators([Validators.required], 'remove');
+        }
+      });
+  }
+
+  private manageITRelatedControlsValidators = (
+    validators: Validators[],
+    action: 'add' | 'remove'): void => {
+
+    if (action === 'add') {
+      this.techStackControl.addValidators(validators);
+      this.itAreasControl.addValidators(validators);
+      return;
+    }
+    this.techStackControl.removeValidators(validators);
+    this.techStackControl.updateValueAndValidity();
+    this.itAreasControl.removeValidators(validators);
+    this.itAreasControl.updateValueAndValidity();
   }
 
   private initializeJobAdvertisementForm(): void {
@@ -83,16 +136,16 @@ export class CreateJobAdvertisementComponent {
       } as AbstractControlOptions
     );
 
-    this.form.controls['minSalary'].valueChanges
+    this.minSalaryControl.valueChanges
       .pipe(distinctUntilChanged())
       .subscribe((minSalaryValue: number | null) => {
-        this.setCurrencyFormControl(minSalaryValue, this.form.controls['maxSalary'].value, [Validators.required]);
+        this.setCurrencyFormControl(minSalaryValue, this.maxSalaryControl.value, [Validators.required]);
       });
 
-    this.form.controls['maxSalary'].valueChanges
+    this.maxSalaryControl.valueChanges
       .pipe(distinctUntilChanged())
       .subscribe((maxSalaryValue: number | null) => {
-        this.setCurrencyFormControl(this.form.controls['minSalary'].value, maxSalaryValue, [Validators.required]);
+        this.setCurrencyFormControl(this.minSalaryControl.value, maxSalaryValue, [Validators.required]);
       });
   }
 
@@ -100,18 +153,18 @@ export class CreateJobAdvertisementComponent {
     minSalaryValue: number | null,
     maxSalaryValue: number | null,
     validators: ValidatorFn[]): void => {
-    const currencyFormControl = this.form.controls['currencyId'];
+
     if (minSalaryValue === null && maxSalaryValue == null) {
-      currencyFormControl.removeValidators(validators);
+      this.currencyControl.removeValidators(validators);
     } else {
-      currencyFormControl.addValidators(validators);
+      this.currencyControl.addValidators(validators);
     }
 
-    if (!minSalaryValue && !maxSalaryValue && currencyFormControl.value) {
-      currencyFormControl.setValue(null);
+    if (!minSalaryValue && !maxSalaryValue && this.currencyControl.value) {
+      this.currencyControl.setValue(null);
     }
 
-    currencyFormControl.updateValueAndValidity();
+    this.currencyControl.updateValueAndValidity();
   }
 
   private loadNomenclatureData(): void {
