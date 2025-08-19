@@ -8,7 +8,7 @@ export interface CompanyAd {
     location: string;
     applicationsSent: number;
     notPreviewedApplications: number;
-    isActive: boolean;
+    lifecycleStatusId: number;
     publishDate: Date;
     salary: string | null;
 }

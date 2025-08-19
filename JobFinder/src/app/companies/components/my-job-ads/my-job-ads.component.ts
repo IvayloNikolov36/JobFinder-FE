@@ -16,6 +16,8 @@ export class MyJobAdsComponent implements OnInit {
   filterType: typeof AdsFilterEnum = AdsFilterEnum;
   selectedFilterType: AdsFilterEnum = AdsFilterEnum.All;
 
+  activeStatusId: number = LifycycleStatusEnum.Active;
+
   constructor(private jobAdsService: CompanyJobAdsService) { }
 
   ngOnInit(): void {
@@ -58,10 +60,13 @@ export class MyJobAdsComponent implements OnInit {
         this.jobAds = allAds;
         break;
       case AdsFilterEnum.Active:
-        this.jobAds = allAds.filter(ja => ja.isActive);
+        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Active);
         break;
-      case AdsFilterEnum.Inactive:
-        this.jobAds = allAds.filter(ja => !ja.isActive);
+      case AdsFilterEnum.Draft:
+        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Draft);
+        break;
+      case AdsFilterEnum.Retired:
+        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Retired);
         break;
     }
   }
@@ -69,6 +74,13 @@ export class MyJobAdsComponent implements OnInit {
 
 enum AdsFilterEnum {
   Active,
-  Inactive,
+  Draft,
+  Retired,
   All
+}
+
+enum LifycycleStatusEnum {
+  Draft = 1,
+  Active = 2,
+  Retired = 3
 }
