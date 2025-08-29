@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { JobAd } from "../../core/models";
+import { AdDetails, IdentityResult, JobAd, JobAdEditModel } from "../../core/models";
 import { AnonymousProfileListingModel, CompanyAd } from "../models";
 import { JobAdsController } from "../../core/controllers";
 
@@ -12,8 +12,24 @@ export class CompanyJobAdsService {
 
     constructor(private http: HttpClient) { }
 
-    createJobAd(data: JobAd): Observable<Object> {
-        return this.http.post(JobAdsController.create(), data);
+    get(id: number): Observable<AdDetails> {
+        return this.http.get<AdDetails>(JobAdsController.get(id));
+    }
+
+    createJobAd(data: JobAd): Observable<IdentityResult<number>> {
+        return this.http.post<IdentityResult<number>>(JobAdsController.create(), data);
+    }
+
+    updateJobAd(id: number, data: JobAdEditModel): Observable<Object> {
+        return this.http.put(JobAdsController.update(id), data);
+    }
+
+    activate(id: number, data: JobAdEditModel): Observable<Object> {
+        return this.updateJobAd(id, data);
+    }
+
+    retire(id: number): Observable<Object> {
+        return this.http.get(JobAdsController.retire(id), {});
     }
 
     getAllCompanyAds(): Observable<CompanyAd[]> {

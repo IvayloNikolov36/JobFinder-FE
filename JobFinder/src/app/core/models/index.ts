@@ -5,3 +5,6 @@ export * from './data-listing';
 export * from './job-ad';
 export * from './job-details';
 export * from './update-result';
+export * from './job-ad-edit.model';
+export * from './identity-result.model';
+export * from './ad-details.model';

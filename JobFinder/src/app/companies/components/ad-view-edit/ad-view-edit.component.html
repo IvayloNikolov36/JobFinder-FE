@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <jf-ad-form [adData]="adDetails" />
+
+    <!-- TODO: disable the buttons if the form is not valid and add a button for Edit mode -->
+    <div class="d-flex justify-content-center gap-3 pb-3">
+        @if (adDetails?.lifecycleStatusId === status.Draft) {
+        <button mat-fab extended (click)="update()">
+            Update
+        </button>
+        <button mat-fab extended (click)="activate()">
+            Update and Activate
+        </button>
+        }
+        @if (adDetails?.lifecycleStatusId === status.Active) {
+        <button mat-fab extended (click)="retire()">
+            Retire
+        </button>
+        }
+    </div>
+</div>

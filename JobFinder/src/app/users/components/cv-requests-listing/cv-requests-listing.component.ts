@@ -24,6 +24,7 @@ export class CvRequestsListingComponent implements OnInit {
     this.loadCvRequestsData();
   }
 
+  // TODO: update the button after successful permision
   giveAccessToCv(id: number, companyName: string): void {
     this.anonymousProfileService.acceptCvPreviewRequest(id)
       .subscribe({

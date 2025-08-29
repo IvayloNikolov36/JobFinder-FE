@@ -45,7 +45,7 @@ export class JobAdvertisementsService {
   }
 
   details(id: number): Observable<JobDetails> {
-    return this.http.get<JobDetails>(JobAdsController.getAdDetails(id));
+    return this.http.get<JobDetails>(JobAdsController.get(id));
   }
 
   getItemsCountArray = (): number[] => this.itemsCountArray;

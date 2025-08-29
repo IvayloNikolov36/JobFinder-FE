@@ -3,6 +3,8 @@ import { map, Observable } from 'rxjs';
 import { CompanyAd } from '../../models';
 import { CompanyJobAdsService } from '../../services';
 import { renderSalary } from '../../../shared/functions';
+import { AdsFilterEnum, LifycycleStatusEnum } from '../../enums';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jf-my-job-ads',
@@ -18,7 +20,9 @@ export class MyJobAdsComponent implements OnInit {
 
   activeStatusId: number = LifycycleStatusEnum.Active;
 
-  constructor(private jobAdsService: CompanyJobAdsService) { }
+  constructor(private jobAdsService: CompanyJobAdsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadJobAds();
@@ -30,7 +34,7 @@ export class MyJobAdsComponent implements OnInit {
   }
 
   viewAdDetails(id: number): void {
-
+    this.router.navigate(['ads', id]);
   }
 
   private getAllCompanyAds = (): Observable<CompanyAd[]> => {
@@ -70,17 +74,4 @@ export class MyJobAdsComponent implements OnInit {
         break;
     }
   }
-}
-
-enum AdsFilterEnum {
-  Active,
-  Draft,
-  Retired,
-  All
-}
-
-enum LifycycleStatusEnum {
-  Draft = 1,
-  Active = 2,
-  Retired = 3
 }

@@ -1,188 +1,20 @@
 <div class="container">
 
-  <h5 class="text-center text-primary mt-2">Publish new advertisement</h5>
+  <h5 class="text-center text-primary mt-4">Create new advertisement</h5>
 
   <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
-  <form [formGroup]="form" (ngSubmit)="publishAd()">
+  <jf-ad-form />
 
-    <mat-form-field class="d-flex half-width mx-auto my-4">
-      <mat-label>Position</mat-label>
-      <input type="text" matInput formControlName="position" placeholder="Position Title...">
-      @if (form.get('position')?.touched && form.get('position')?.errors?.['required']) {
-      <mat-error>Please enter a job position</mat-error>
-      }
-      @if (form.get('position')?.errors?.['minlength']) {
-      <mat-error>Length must be at least {{form.get('position')?.errors?.['minlength']['requiredLength']}} characters!
-      </mat-error>
-      }
-      @if (form.get('position')?.errors?.['maxlength']) {
-      <mat-error>
-        Length must be up to {{form.get('position')?.errors?.['maxlength']['requiredLength']}} characters!
-      </mat-error>
-      }
-    </mat-form-field>
+  <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
 
-    <mat-form-field class="d-flex half-width mx-auto my-4">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" placeholder="Job description..."></textarea>
-      @if (form.get('description')?.touched && form.get('description')?.errors?.['required']) {
-      <mat-error>Please enter a job description</mat-error>
-      }
-      @if (form.get('description')?.errors?.['minlength']) {
-      <mat-error>
-        Length must be at least {{form.get('description')?.errors?.['minlength']['requiredLength']}} characters!
-      </mat-error>
-      }
-    </mat-form-field>
+  @if (adForm?.form) {
+  <div class="d-flex justify-content-center gap-3 pb-3">
+    <button mat-fab extended [disabled]="!(adForm!.form.valid)" (click)="saveAsDraft()">
+      Save as Draft
+    </button>
+  </div>
+  }
 
-    <div class="d-flex justify-content-center gap-5 my-4">
-      <mat-form-field class="quarter-width">
-        <mat-label>Min Salary</mat-label>
-        <input type="number" matInput formControlName="minSalary" min="1" placeholder="Min Salary...">
-        @if (form.get('minSalary')?.errors?.['min']) {
-        <mat-error>Value must be above 0!</mat-error>
-        }
-      </mat-form-field>
 
-      <mat-form-field class="quarter-width">
-        <mat-label>Max Salary</mat-label>
-        <input type="number" matInput formControlName="maxSalary" min="1" placeholder="Max Salary...">
-        @if (form.get('maxSalary')?.errors?.['min']) {
-        <mat-error>Value must be above 0!</mat-error>
-        }
-        @if (form.get('maxSalary')?.errors?.['greaterThanOrEqual']) {
-        <mat-error>Max Salary must be greater than or equal to Min Salary!</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Currency</mat-label>
-        <mat-select formControlName="currencyId">
-          <mat-option [value]="null">Select Currency</mat-option>
-          @for (currency of currencies$ | async; track currency.id) {
-          <mat-option [value]="currency.id">{{ currency.name }}</mat-option>
-          }
-        </mat-select>
-        @if (form.get('currencyId')?.errors?.['required']) {
-        <mat-error>Selecting Currency is mandotory!</mat-error>
-        }
-      </mat-form-field>
-    </div>
-
-    <div class="d-flex justify-content-center gap-5 my-4">
-      <mat-form-field class="half-width">
-        <mat-label>Job Category</mat-label>
-        <mat-select formControlName="jobCategoryId">
-          @for (category of jobCategories$ | async; track category.id) {
-          <mat-option [value]="category.id">{{ category.name }}</mat-option>
-          }
-        </mat-select>
-        @if (form.get('jobCategoryId')?.errors?.['required']) {
-        <mat-error>Selecting Job Category is mandatory!</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field class="half-width">
-        <mat-label>Job Engagement</mat-label>
-        <mat-select formControlName="jobEngagementId">
-          @for (engagement of jobEngagements$ | async; track engagement.id) {
-          <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
-          }
-        </mat-select>
-        @if (form.get('jobEngagementId')?.errors?.['required']) {
-        <mat-error>Selecting Job Engagement is mandatory!</mat-error>
-        }
-      </mat-form-field>
-    </div>
-
-    @if (form.controls['jobCategoryId'].value === itCategoryId) {
-    <div class="d-flex justify-content-center gap-5 my-4">
-      <mat-form-field class="half-width">
-        <mat-label>Tech Stack</mat-label>
-        <mat-select formControlName="techStacks" multiple>
-          <mat-option *ngFor="let stack of (techStacks$ | async)" [value]="stack.id">
-            {{ stack.name }}
-          </mat-option>
-        </mat-select>
-        <mat-hint>Select Tech Stack.</mat-hint>
-        @if (form.controls['techStacks'].touched && form.controls['techStacks'].errors?.['required']) {
-        <mat-error>
-          Selecting one or more tech stack is mandatory!
-        </mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field class="half-width">
-        <mat-label>IT Areas</mat-label>
-        <mat-select formControlName="itAreas" multiple>
-          <mat-option *ngFor="let area of (itAreas$ | async)" [value]="area.id">
-            {{ area.name }}
-          </mat-option>
-        </mat-select>
-        <mat-hint>Select IT areas.</mat-hint>
-        @if (form.controls['itAreas'].touched && form.controls['itAreas'].errors?.['required']) {
-        <mat-error>
-          Selecting one or more it area is mandatory!
-        </mat-error>
-        }
-      </mat-form-field>
-    </div>
-    }
-
-    <mat-form-field class="d-flex half-width mx-auto my-4">
-      <mat-label>Soft Skills</mat-label>
-      <mat-select formControlName="softSkills" multiple>
-        <mat-option *ngFor="let skill of (softSkills$ | async)" [value]="skill.id">
-          {{ skill.name }}
-        </mat-option>
-      </mat-select>
-      <mat-hint>Select Soft Skills.</mat-hint>
-      @if (form.controls['softSkills'].touched && form.controls['softSkills'].errors?.['required']) {
-      <mat-error>
-        Selecting one or more soft skill is mandatory!
-      </mat-error>
-      }
-    </mat-form-field>
-
-    <div class="d-flex mx-auto my-2">
-      <mat-checkbox formControlName="intership" class="mx-auto">Intership</mat-checkbox>
-    </div>
-    
-    <mat-form-field class="d-flex half-width mx-auto my-4">
-      <mat-label>Location</mat-label>
-      <mat-select formControlName="locationId">
-        @for (location of locations$ | async; track location.id) {
-        <mat-option [value]="location.id">{{ location.name }}</mat-option>
-        }
-      </mat-select>
-      @if (form.get('locationId')?.errors?.['required']) {
-      <mat-error>Selecting Location is mandatory!</mat-error>
-      }
-    </mat-form-field>
-
-    <div class="d-flex justify-content-center mx-auto my-4">
-      <label id="radio-group-label">Select workplace type:</label>
-      <div class="d-flex my-3">
-        <mat-radio-group aria-labelledby="radio-group-label" formControlName="workplaceTypeId">
-          <div *ngFor="let workplace of (workplaceTypes$ | async)" class="d-flex">
-            <mat-radio-button [value]="workplace.id">
-              {{ workplace.name }}
-            </mat-radio-button>
-          </div>
-          @if (form.get('workplaceType')?.touched && form.get('workplaceType')?.errors?.['required']) {
-          <mat-error>Selecting workplace type is mandatory!</mat-error>
-          }
-        </mat-radio-group>
-      </div>
-    </div>
-
-    <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
-
-    <div class="d-flex justify-content-center pb-3">
-      <button mat-fab extended type="submit" [disabled]="!form.valid">
-        Publish
-      </button>
-    </div>
-
-  </form>
 </div>

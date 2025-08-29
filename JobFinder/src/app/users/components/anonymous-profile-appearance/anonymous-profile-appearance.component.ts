@@ -70,6 +70,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.form.controls['jobCategoryId'].valueChanges
       .subscribe((categoryId: number) => {
 
+        // TODO: make getters for controls and research how to reuse control names and not to use strings
         const techStacksControl = this.form.controls['techStacks'];
         const itAreasControl = this.form.controls['itAreas'];
         const validator: ValidatorFn = Validators.required;

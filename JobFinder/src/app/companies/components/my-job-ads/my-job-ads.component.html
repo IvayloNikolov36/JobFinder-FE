@@ -11,6 +11,7 @@
 
     <mat-accordion multi="false">
         @for (jobAd of jobAds; track jobAd.id; let even = $even) {
+        <!-- TODO: create a component for job ad card -->
         <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
             class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
             <mat-card-header>

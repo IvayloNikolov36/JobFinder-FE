@@ -2,6 +2,7 @@ import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { CompanyAd } from '../../models';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CompanyJobAdApplicationsService } from '../../services';
+import { LifycycleStatusEnum } from '../../enums';
 
 @Component({
   selector: 'jf-ad-applications-panel',
@@ -13,6 +14,7 @@ export class AdApplicationsPanelComponent {
   @Input() jobAd!: CompanyAd;
 
   isExpanded: boolean = false;
+  activeStatus: number = LifycycleStatusEnum.Active;
 
   constructor(private jobAdApplicationsService: CompanyJobAdApplicationsService) { }
 
