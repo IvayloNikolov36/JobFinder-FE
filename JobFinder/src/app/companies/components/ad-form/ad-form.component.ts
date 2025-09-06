@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { GreaterThanOrEqual } from '../../../core/functions';
 import { distinctUntilChanged, Observable } from 'rxjs';
-import { AdDetails, BasicModel } from '../../../core/models';
+import { BasicModel, JobAdCreate } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 
 @Component({
@@ -12,9 +12,9 @@ import { NomenclatureService } from '../../../core/services';
 })
 export class AdFormComponent implements OnInit, OnChanges {
 
-  @Input() adData: AdDetails | null = null;
+  @Input() adData: JobAdCreate | null = null;
 
-  form!: FormGroup;
+  form!: FormGroup<JobAdForm>;
   jobCategories$!: Observable<BasicModel[]>;
   jobEngagements$!: Observable<BasicModel[]>;
   locations$!: Observable<BasicModel[]>;
@@ -42,49 +42,50 @@ export class AdFormComponent implements OnInit, OnChanges {
     this.subscribeToJobCategoryChanges();
   }
 
+  get formValueAsModel(): JobAdCreate {
+    return this.form.value as JobAdCreate;
+  }
+
   private get techStackControl(): any {
-    return this.form.controls['techStacks'];
+    return this.form.controls.techStacks;
   }
 
   private get itAreasControl(): any {
-    return this.form.controls['itAreas'];
+    return this.form.controls.itAreas;
   }
 
   private get minSalaryControl(): any {
-    return this.form.controls['minSalary'];
+    return this.form.controls.minSalary;
   }
 
   private get maxSalaryControl(): any {
-    return this.form.controls['maxSalary'];
+    return this.form.controls.maxSalary;
   }
 
   private get currencyControl(): any {
-    return this.form.controls['currencyId'];
+    return this.form.controls.currencyId;
   }
 
   private get jobCategoryControl(): any {
-    return this.form.controls['jobCategoryId'];
+    return this.form.controls.jobCategoryId;
   }
 
   private initializeJobAdvertisementForm(): void {
-    this.form = this.fb.group(
+    this.form = this.fb.group<JobAdForm>(
       {
-        // TODO: refactor the model and remove id and lifecycleStatusId
-        id: [],
-        lifecycleStatusId: [],
-        position: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(90)]],
-        description: ['', [Validators.required, Validators.minLength(20)]],
-        minSalary: [null, [Validators.min(1)]],
-        maxSalary: [null, [Validators.min(1)]],
-        currencyId: [null],
-        jobCategoryId: [null, [Validators.required]],
-        jobEngagementId: [null, [Validators.required]],
-        intership: [false],
-        locationId: [null, [Validators.required]],
-        softSkills: [[], Validators.required],
-        techStacks: [[]],
-        itAreas: [[]],
-        workplaceTypeId: [null, Validators.required]
+        position: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6), Validators.maxLength(90)] }),
+        description: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(20)] }),
+        minSalary: new FormControl(null, { nonNullable: false, validators: [Validators.min(1)] }),
+        maxSalary: new FormControl(null, { nonNullable: false, validators: [Validators.min(1)] }),
+        currencyId: new FormControl(null, { nonNullable: false }),
+        jobCategoryId: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        jobEngagementId: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        intership: new FormControl(false, { nonNullable: true }),
+        locationId: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        softSkills: new FormControl([], { nonNullable: true, validators: [Validators.required] }),
+        techStacks: new FormControl([], { nonNullable: true }),
+        itAreas: new FormControl([], { nonNullable: true }),
+        workplaceTypeId: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
       },
       {
         validator: GreaterThanOrEqual('minSalary', 'maxSalary')
@@ -143,9 +144,9 @@ export class AdFormComponent implements OnInit, OnChanges {
 
   private manageITRelatedControlsValidators = (
     validators: Validators[],
-    action: 'add' | 'remove'): void => {
+    action: Action): void => {
 
-    if (action === 'add') {
+    if (action === Action.add) {
       this.techStackControl.addValidators(validators);
       this.itAreasControl.addValidators(validators);
       return;
@@ -161,13 +162,33 @@ export class AdFormComponent implements OnInit, OnChanges {
       .subscribe((categoryId: number) => {
         if (categoryId === this.itCategoryId) {
           this.loadITNomenclatureData();
-          this.manageITRelatedControlsValidators([Validators.required], 'add');
+          this.manageITRelatedControlsValidators([Validators.required], Action.add);
         } else {
           this.techStackControl.setValue([]);
           this.itAreasControl.setValue([]);
           this.techStackControl.error = '';
-          this.manageITRelatedControlsValidators([Validators.required], 'remove');
+          this.manageITRelatedControlsValidators([Validators.required], Action.remove);
         }
       });
   }
+}
+
+enum Action {
+  add, remove
+}
+
+interface JobAdForm {
+  position: FormControl<string>,
+  description: FormControl<string>,
+  minSalary: FormControl<number | null>,
+  maxSalary: FormControl<number | null>,
+  currencyId: FormControl<number | null>,
+  jobCategoryId: FormControl<number>,
+  jobEngagementId: FormControl<number>,
+  intership: FormControl<boolean>,
+  locationId: FormControl<number>,
+  softSkills: FormControl<number[]>,
+  techStacks: FormControl<number[]>,
+  itAreas: FormControl<number[]>,
+  workplaceTypeId: FormControl<number>
 }

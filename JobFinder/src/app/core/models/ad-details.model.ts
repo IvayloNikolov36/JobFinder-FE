@@ -1,17 +1,6 @@
-export interface AdDetails {
+import { JobAdCreate } from "./job-ad-create.model";
+
+export interface AdDetails extends JobAdCreate {
     id: number;
-    position: string;
-    description: string;
     lifecycleStatusId: number;
-    minSalary: number | null;
-    maxSalary: number | null;
-    currencyId: number | null;
-    jobCategoryId: number;
-    jobEngagementId: number;
-    intership: boolean;
-    locationId: number;
-    softSkills: number[];
-    techStacks: number[];
-    itAreas: number[];
-    workplaceTypeId: number;
 }

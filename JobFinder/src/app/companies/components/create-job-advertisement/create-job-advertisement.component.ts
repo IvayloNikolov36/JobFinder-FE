@@ -19,12 +19,8 @@ export class CreateJobAdvertisementComponent {
     private toastr: ToastrService,
     private jobAdsService: CompanyJobAdsService) { }
 
-  ngOnInit() {
-
-  }
-
   saveAsDraft(): void {
-    this.jobAdsService.createJobAd(this.adForm!.form.value)
+    this.jobAdsService.createJobAd(this.adForm!.formValueAsModel)
       .subscribe({
         next: (data: IdentityResult<number>) => {
           this.router.navigate(['ads', data.id]);

@@ -8,3 +8,4 @@ export * from './update-result';
 export * from './job-ad-edit.model';
 export * from './identity-result.model';
 export * from './ad-details.model';
+export * from './job-ad-create.model';

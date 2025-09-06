@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CompanyJobAdsService } from '../../services';
-import { AdDetails, JobAd, JobAdEditModel } from '../../../core/models';
+import { AdDetails, JobAd, JobAdCreate, JobAdEditModel } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
@@ -16,6 +16,7 @@ export class AdViewEditComponent implements OnInit {
   @Input() id!: number;
   @ViewChild(AdFormComponent) adFormComponent!: AdFormComponent;
 
+  adData: JobAdCreate | null = null;
   adDetails: AdDetails | null = null;
 
   readonly status: typeof LifycycleStatusEnum = LifycycleStatusEnum;
@@ -27,14 +28,11 @@ export class AdViewEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.jobAdsService.get(this.id)
-      .subscribe((data: AdDetails) => {
-        this.adDetails = data;
-      });
+    this.getJobAdData();
   }
 
   update(): void {
-    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.form.value))
+    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.formValueAsModel))
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is updated successfuly!', 'Success');
@@ -47,7 +45,7 @@ export class AdViewEditComponent implements OnInit {
   }
 
   activate(): void {
-    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.form.value, true))
+    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.formValueAsModel, true))
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is activated successfuly!', 'Success');
@@ -72,7 +70,28 @@ export class AdViewEditComponent implements OnInit {
       });
   }
 
-  private constructJobAdEditModel = (data: JobAd, activate: boolean = false): JobAdEditModel => {
+  private getJobAdData = (): void => {
+    this.jobAdsService.get(this.id)
+      .subscribe((data: AdDetails) => {
+        this.adDetails = data;
+        this.adData = new JobAdCreate(
+          data.position,
+          data.description,
+          data.minSalary,
+          data.maxSalary,
+          data.currencyId,
+          data.jobCategoryId,
+          data.jobEngagementId,
+          data.intership,
+          data.locationId,
+          data.softSkills,
+          data.techStacks,
+          data.itAreas,
+          data.workplaceTypeId);
+      });
+  }
+
+  private constructJobAdEditModel = (data: JobAdCreate, activate: boolean = false): JobAdEditModel => {
     return { ...data, activate } as JobAdEditModel;
   }
 }
