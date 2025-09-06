@@ -18,8 +18,6 @@ export class MyJobAdsComponent implements OnInit {
   filterType: typeof AdsFilterEnum = AdsFilterEnum;
   selectedFilterType: AdsFilterEnum = AdsFilterEnum.All;
 
-  activeStatusId: number = LifycycleStatusEnum.Active;
-
   constructor(private jobAdsService: CompanyJobAdsService,
     private router: Router
   ) { }

@@ -11,3 +11,4 @@ export * from './ad-related-anonymous-profiles-panel/ad-related-anonymous-profil
 export * from './cv-preview-requests-listing/cv-preview-requests-listing.component';
 export * from './ad-view-edit/ad-view-edit.component';
 export * from './ad-form/ad-form.component';
+export * from './job-ad-card/job-ad-card.component';

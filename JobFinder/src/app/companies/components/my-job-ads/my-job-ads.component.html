@@ -11,40 +11,7 @@
 
     <mat-accordion multi="false">
         @for (jobAd of jobAds; track jobAd.id; let even = $even) {
-        <!-- TODO: create a component for job ad card -->
-        <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
-            class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(jobAd.id)">
-            <mat-card-header>
-                <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
-                    <mat-card-title class="mb-3">
-                        {{ jobAd.position }}
-                    </mat-card-title>
-                    <mat-card-subtitle>
-                        <i class="bi bi-pin-fill me-2"></i>{{ jobAd.location }}
-                    </mat-card-subtitle>
-                </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content class="mt-2">
-
-                <div class="d-flex justify-content-between">
-                    <span class="mx-0">
-                        <i class="bi bi-calendar2-week me-2"></i>{{ jobAd.publishDate | date }}
-                    </span>
-                    @if (jobAd.salary) {
-                    <div class="salary-container">
-                        {{ jobAd.salary }}
-                    </div>
-                    }
-                </div>
-
-                <jf-ad-applications-panel [jobAd]="jobAd" />
-
-                @if (jobAd.lifecycleStatusId === activeStatusId) {
-                <jf-ad-related-anonymous-profiles-panel [jobAdId]="jobAd.id" />
-                }
-
-            </mat-card-content>
-        </mat-card>
+        <jf-job-ad-card [jobAd]="jobAd" [isEven]="even" (onClicked)="viewAdDetails(jobAd.id)" />
         }
     </mat-accordion>
 

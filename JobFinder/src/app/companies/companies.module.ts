@@ -13,6 +13,7 @@ import {
   CompanyProfileComponent,
   CreateJobAdvertisementComponent,
   CvPreviewRequestsListingComponent,
+  JobAdCardComponent,
   MyJobAdsComponent,
   RelatedAnonymousProfilesListingComponent,
   UserCvPreviewComponent
@@ -33,6 +34,7 @@ import {
     CvPreviewRequestsListingComponent,
     AdViewEditComponent,
     AdFormComponent,
+    JobAdCardComponent,
   ],
   imports: [
     SharedModule,
