@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, signal, WritableSignal } from 
 import { NomenclatureService } from '../../../core/services';
 import { BasicModel } from '../../../core/models';
 import { Observable } from 'rxjs';
-import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AnonymousProfileAppearance } from '../../models';
 
 @Component({
@@ -23,7 +23,7 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   cities$!: Observable<BasicModel[]>;
   showITcontrols: WritableSignal<boolean> = signal<boolean>(false);
 
-  form!: FormGroup;
+  form!: FormGroup<AnonymousProfileAppearanceForm>;
 
   readonly itCategoryId: number = 3;
 
@@ -42,16 +42,24 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.onAppearanceDataEmit.emit(this.form.value as AnonymousProfileAppearance);
   }
 
+  private get techStackControl() {
+    return this.form.controls.techStacks;
+  }
+
+  private get itAreasControl() {
+    return this.form.controls.itAreas;
+  }
+
   private initializeForm(): void {
-    this.form = this.formBuilder.group({
-      jobCategoryId: [null, Validators.required],
-      jobEngagements: [[], Validators.required],
-      preferredPositions: [null],
-      softSkills: [[], Validators.required],
-      itAreas: [[]],
-      techStacks: [[]],
-      workplaceTypes: [[], Validators.required],
-      cities: [[], Validators.required]
+    this.form = this.formBuilder.group<AnonymousProfileAppearanceForm>({
+      jobCategoryId: new FormControl(0, { nonNullable: true, validators: Validators.required }),
+      jobEngagements: new FormControl([], { nonNullable: true, validators: Validators.required }),
+      preferredPositions: new FormControl(null, { nonNullable: false }),
+      softSkills: new FormControl([], { nonNullable: true, validators: Validators.required }),
+      itAreas: new FormControl([], { nonNullable: true }),
+      techStacks: new FormControl([], { nonNullable: true }),
+      workplaceTypes: new FormControl([], { nonNullable: true, validators: Validators.required }),
+      cities: new FormControl([], { nonNullable: true, validators: Validators.required })
     });
   }
 
@@ -69,23 +77,30 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
 
     this.form.controls['jobCategoryId'].valueChanges
       .subscribe((categoryId: number) => {
-
-        // TODO: make getters for controls and research how to reuse control names and not to use strings
-        const techStacksControl = this.form.controls['techStacks'];
-        const itAreasControl = this.form.controls['itAreas'];
         const validator: ValidatorFn = Validators.required;
 
         if (categoryId === this.itCategoryId) {
-          techStacksControl.addValidators(validator);
-          itAreasControl.addValidators(validator);
+          this.techStackControl.addValidators(validator);
+          this.itAreasControl.addValidators(validator);
           this.showITcontrols.set(true);
         } else {
-          techStacksControl.removeValidators(validator);
-          itAreasControl.removeValidators(validator);
+          this.techStackControl.removeValidators(validator);
+          this.itAreasControl.removeValidators(validator);
           this.showITcontrols.set(false);
-          techStacksControl.setValue([]);
-          itAreasControl.setValue([]);
+          this.techStackControl.setValue([]);
+          this.itAreasControl.setValue([]);
         }
       });
   }
+}
+
+interface AnonymousProfileAppearanceForm {
+  jobCategoryId: FormControl<number>;
+  jobEngagements: FormControl<number[]>;
+  preferredPositions: FormControl<string | null>;
+  softSkills: FormControl<number[]>;
+  itAreas: FormControl<number[]>;
+  techStacks: FormControl<number[]>;
+  workplaceTypes: FormControl<number[]>;
+  cities: FormControl<number[]>;
 }
