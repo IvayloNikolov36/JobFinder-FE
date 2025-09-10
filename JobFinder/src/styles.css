@@ -116,3 +116,10 @@ a {
 .cv-pic-blur {
   filter: blur(0.85rem) grayscale(100%);
 }
+
+/* --- Cv Requests --- */
+
+.company-logo-sm {
+  height: 5.625rem;
+  width: auto;
+}

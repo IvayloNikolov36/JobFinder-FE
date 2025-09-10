@@ -1,6 +1,6 @@
 <mat-card [class]="cardClass"
-    class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="cardClicked()">
-    <mat-card-header>
+    class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined">
+    <mat-card-header  (click)="cardClicked()">
         <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
             <mat-card-title class="mb-3">
                 {{ jobAd.position }}

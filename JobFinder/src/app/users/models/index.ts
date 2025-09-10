@@ -6,3 +6,5 @@ export * from './job-add-application';
 export * from './job-add-application-details';
 export * from './anonymous-profile-create';
 export * from './anonymous-profile-appearance';
+export * from './company-basic-details.model';
+export * from './job-ad-basic-details.model';

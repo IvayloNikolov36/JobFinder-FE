@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AnonymousProfileService } from '../../services';
 import { CvRequestListingModel } from '../../models/cv';
-import { Observable } from 'rxjs';
+import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'jf-cv-requests-listing',
@@ -12,9 +13,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CvRequestsListingComponent implements OnInit {
 
-  cvRequestsData$!: Observable<CvRequestListingModel[]>;
+  cvRequestsData: CvRequestListingModel[] = [];
 
-  readonly displayedColumns: string[] = ['company', 'position', 'requestDate', 'acceptedDate', 'actions'];
+  readonly displayedColumns: string[] = ['companyLogo', 'company', 'position', 'requestDate', 'acceptedDate', 'actions'];
+  loading: boolean = false;
 
   constructor(
     private anonymousProfileService: AnonymousProfileService,
@@ -24,16 +26,28 @@ export class CvRequestsListingComponent implements OnInit {
     this.loadCvRequestsData();
   }
 
-  // TODO: update the button after successful permision
-  giveAccessToCv(id: number, companyName: string): void {
+  allowCvPreview(id: number, companyName: string): void {
     this.anonymousProfileService.acceptCvPreviewRequest(id)
       .subscribe({
-        next: () => this.toastr.success(`You have just allowed ${companyName} to canvass your CV.`),
+        next: () => {
+          const requestCv: CvRequestListingModel = this.cvRequestsData.find(rd => rd.id === id)!;
+          requestCv.acceptedDate = new Date();
+          this.cvRequestsData = cloneDeep(this.cvRequestsData);
+          this.toastr.success(`You have just allowed ${companyName} to canvass your CV.`)
+        },
         error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
-      })
+      });
   }
 
-  private loadCvRequestsData() {
-    this.cvRequestsData$ = this.anonymousProfileService.viewAllCvRequests();
+  private loadCvRequestsData(): void {
+    this.loading = true;
+    this.anonymousProfileService
+      .viewAllCvRequests()
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        next: (data: CvRequestListingModel[]) => this.cvRequestsData = data
+      });
   }
 }

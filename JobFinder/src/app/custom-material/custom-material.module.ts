@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -48,6 +49,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatMenuModule,
     MatRadioModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class CustomMaterialModule { }
