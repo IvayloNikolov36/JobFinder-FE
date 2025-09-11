@@ -10,7 +10,7 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef> Position </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.jobAd.position}} </td>
             </ng-container>
 
             <ng-container matColumnDef="requestDate">
@@ -32,7 +32,7 @@
                         @if (element.acceptedDate) {
                         <a mat-stroked-button routerLink="/view-requested-cv/{{element.id}}">View CV</a>
                         }
-                        <a mat-stroked-button routerLink="/job-ad/{{element.jobAdId}}">View Ad</a>
+                        <a mat-stroked-button routerLink="/job-ad/{{element.jobAd.id}}">View Ad</a>
                     </div>
                 </td>
             </ng-container>

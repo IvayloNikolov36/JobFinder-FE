@@ -1,8 +1,9 @@
+import { JobAdBasicDetails } from "../../users/models";
+
 export interface CvPreviewRequestDataModel {
     id: number;
     cvId: string | null;
-    jobAdId: number;
-    position: string;
+    jobAd: JobAdBasicDetails;
     requestDate: Date;
     acceptedDate: string | null;
 }

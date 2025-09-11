@@ -1,8 +1,8 @@
+import { CompanyBasicDetails } from "../../users/models";
+
 export interface JobAd {
   id: number;
-  companyId: number;
-  companyLogo: string;
-  companyName: string;
+  company: CompanyBasicDetails,
   position: string;
   postedOn: string;
   jobCategory: string;

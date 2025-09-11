@@ -30,9 +30,7 @@ export class JobAdvertisementsService {
     isAscending: false
   } as AdsFilterProps;
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   readonly filterModel: WritableSignal<AdsFilterProps> = signal<AdsFilterProps>(this.initialFilterModel);
   readonly currentPage: WritableSignal<number> = signal<number>(this.initialPage);

@@ -13,13 +13,13 @@
                 </small>
             </mat-card-subtitle>
             <div>
-                <img mat-card-md-image [src]="ad.companyLogo" alt="Company Logo">
+                <img mat-card-md-image [src]="ad.company.logo" alt="Company Logo">
             </div>
         </mat-card-title-group>
     </mat-card-header>
     <mat-card-content class="mt-2">
         <div class="d-flex justify-content-between">
-            <span>{{ ad.companyName }}</span>
+            <span>{{ ad.company.name }}</span>
             @if (ad.salary) {
             <div class="salary-container">
                 {{ ad.salary }}
