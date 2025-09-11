@@ -27,7 +27,7 @@ import { WorkExperienceInfoComponent } from '../work-experiences/work-experience
 import { ToastrService } from 'ngx-toastr';
 import { PersonalInfoComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
-import { BasicModel, UpdateResult } from '../../../core/models';
+import { BasicModel, IdentityResult, UpdateResult } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
 import {
@@ -58,6 +58,7 @@ export class CvViewComponent implements OnInit {
   cv!: CvListingData;
   showModal: boolean = false;
   deleteModal: Modal | null = null;
+  deactivateModal!: Modal;
   editCvSectionTitle: string = '';
   createdComponentRef!: ComponentRef<any>;
 
@@ -165,32 +166,40 @@ export class CvViewComponent implements OnInit {
   }
 
   activateAnonymousProfile = (profileAppearanceData: AnonymousProfileAppearance): void => {
-    this.anonymousProfileService.create(
-      this.cv.id,
-      this.constructAnonymousProfileActivationData(profileAppearanceData))
+    this.anonymousProfileService
+      .create(
+        this.cv.id,
+        this.constructAnonymousProfileActivationData(profileAppearanceData))
       .subscribe({
-        next: (data: any) => {
-          // TODO: refactor
+        next: (data: IdentityResult<string>) => {
           this.cv.anonymousProfileId = data.id;
           this.cv.canActivateAnonymousProfile = false;
           this.mode = CvSectionModeEnum.AnonymousProfileView;
-          this.toaster.success('Successfully activated an anonymous profile!');
+          this.toaster.success('Successfully activated anonymous profile!');
         },
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
       });
   }
 
-  // TODO: create dialog for confirmation
-  deactivateAnonymousProfile = (): void => {
+  deactivateAnonymousProfile = (modalElement: Element): void => {
+    this.deactivateModal = new Modal(modalElement);
+    this.deactivateModal.show();
+  }
+
+  onDeactivateAnonymousProfile = (): void => {
     this.anonymousProfileService.delete(this.cv.anonymousProfileId!)
       .subscribe({
         next: () => {
           this.cv.anonymousProfileId = null;
           this.cv.canActivateAnonymousProfile = true;
           this.mode = CvSectionModeEnum.View;
+          this.deactivateModal.hide();
           this.toaster.success('Successfully deactivated anonymous profile!');
         },
-        error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
+        error: (error: HttpErrorResponse) => {
+          this.deactivateModal.hide();
+          this.toaster.error(error.error.errors);
+        }
       });
   }
 
@@ -230,6 +239,10 @@ export class CvViewComponent implements OnInit {
 
   onCancelDeletion = (): void => {
     this.deleteModal?.hide();
+  }
+
+  onCancelDeactivateAnonymousProfile = (): void => {
+    this.deactivateModal.hide();
   }
 
   private constructAnonymousProfileActivationData = (

@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { AnonymousProfileCreate } from "../models";
 import { AnonymousProfilesController, CvPreviewRequestController } from "../../core/controllers";
 import { CvRequestListingModel } from "../models/cv";
+import { IdentityResult } from "../../core/models";
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +17,10 @@ export class AnonymousProfileService {
         return this.http.get<object>(AnonymousProfilesController.getMine());
     }
 
-    create = (cvId: string, profileData: AnonymousProfileCreate): Observable<object> => {
-        return this.http.post<object>(AnonymousProfilesController.create(cvId), profileData);
+    create = (cvId: string, profileData: AnonymousProfileCreate)
+        : Observable<IdentityResult<string>> => {
+        return this.http
+            .post<IdentityResult<string>>(AnonymousProfilesController.create(cvId), profileData);
     }
 
     delete = (id: string): Observable<object> => {
