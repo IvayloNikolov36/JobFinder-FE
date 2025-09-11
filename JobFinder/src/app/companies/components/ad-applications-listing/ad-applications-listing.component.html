@@ -3,7 +3,7 @@
     <mat-card [class]="{'me-5': even, 'ms-5': !even, 'white-blue-gradient': even, 'blue-white-gradient': !even}"
         class="job-ad-card p-1 shadow mb-4 bg-body rounded"
         appearance="outlined"
-        (click)="openCvPreview(app.cvId, app.jobAdId)"
+        (click)="openCvPreview(app.cv.id, app.jobAdId)"
     >
         <mat-card-header>
             <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
@@ -14,7 +14,7 @@
                     <span><i class="bi bi-phone me-2"></i>{{ app.phone }}</span>
                     <span><i class="bi bi-mailbox ms-3 me-2"></i>{{ app.email }}</span>
                 </mat-card-subtitle>
-                <img mat-card-image class="application-cv-picture" [src]="app.curriculumVitaePictureUrl"
+                <img mat-card-image class="application-cv-picture" [src]="app.cv.pictureUrl"
                     alt="CV Picture">
             </mat-card-title-group>
         </mat-card-header>

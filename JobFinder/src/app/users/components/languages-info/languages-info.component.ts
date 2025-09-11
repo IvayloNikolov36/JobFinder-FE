@@ -10,8 +10,8 @@ import { LanguageInfo } from '../../../shared/models';
 })
 export class LanguagesInfoComponent implements OnInit {
 
-  languageTypes = input.required<BasicModel[]>();
-  languageLevels = input.required<BasicModel[]>();
+  languageTypes = input.required<BasicModel<number>[]>();
+  languageLevels = input.required<BasicModel<number>[]>();
   @Input() isEditMode: boolean = false;
   @Input() languagesInfoData: LanguageInfo[] = [];
   @Output() emitLanguagesInfo = new EventEmitter<LanguageInfo[]>();
@@ -43,7 +43,7 @@ export class LanguagesInfoComponent implements OnInit {
     this.emitLanguagesInfo.emit(this.languagesForm.value.languagesInfoArray as LanguageInfo[]);
   }
 
-  compareFn = (first: BasicModel, second: BasicModel): boolean => {
+  compareFn = (first: BasicModel<number>, second: BasicModel<number>): boolean => {
     return first && second ? first.id === second.id : first === second;
   }
 

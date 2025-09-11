@@ -7,9 +7,9 @@ export interface PersonalInfo {
   lastName: string;
   phone: string;
   email: string;
-  gender: BasicModel;
+  gender: BasicModel<number>;
   birthdate: string;
-  citizenship: BasicModel;
-  country: BasicModel;
+  citizenship: BasicModel<number>;
+  country: BasicModel<number>;
   city: string;
 }

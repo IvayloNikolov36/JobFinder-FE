@@ -1,4 +1,4 @@
-export interface BasicModel {
-  id: number;
+export interface BasicModel<T> {
+  id: T;
   name: string;
 }

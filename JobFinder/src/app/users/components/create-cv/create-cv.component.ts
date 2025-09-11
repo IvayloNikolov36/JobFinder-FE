@@ -35,14 +35,14 @@ export class CreateCvComponent implements AfterViewInit {
   skillsInfoForm!: FormGroup<any>;
   coursesCertificatesForm!: FormGroup<any>;
 
-  countries!: Signal<BasicModel[]>;
-  citizenships!: Signal<BasicModel[]>;
-  genderOptions!: Signal<BasicModel[]>;
-  businessSectors!: Signal<BasicModel[]>;
-  educationLevels!: Signal<BasicModel[]>;
-  languageTypes!: Signal<BasicModel[]>;
-  languageLevels!: Signal<BasicModel[]>;
-  drivingCategories!: Signal<BasicModel[]>;
+  countries!: Signal<BasicModel<number>[]>;
+  citizenships!: Signal<BasicModel<number>[]>;
+  genderOptions!: Signal<BasicModel<number>[]>;
+  businessSectors!: Signal<BasicModel<number>[]>;
+  educationLevels!: Signal<BasicModel<number>[]>;
+  languageTypes!: Signal<BasicModel<number>[]>;
+  languageLevels!: Signal<BasicModel<number>[]>;
+  drivingCategories!: Signal<BasicModel<number>[]>;
 
   cvModel: CvCreate = {} as CvCreate;
 

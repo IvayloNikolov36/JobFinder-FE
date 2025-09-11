@@ -1,5 +1,5 @@
 import { Component, input, InputSignal } from '@angular/core';
-import { AdApplicationInfo } from '../../models';
+import { JobApplicationInfo } from '../../models';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AdApplicationsListingComponent {
 
-  applicationsData: InputSignal<AdApplicationInfo[] | undefined> = input.required<AdApplicationInfo[] | undefined>();
+  applicationsData: InputSignal<JobApplicationInfo[] | undefined> = input.required<JobApplicationInfo[] | undefined>();
 
   constructor(private router: Router) { }
 

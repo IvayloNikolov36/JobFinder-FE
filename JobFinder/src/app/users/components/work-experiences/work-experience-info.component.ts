@@ -10,7 +10,7 @@ import { WorkExperienceInfo } from '../../../shared/models';
 })
 export class WorkExperienceInfoComponent implements OnInit {
 
-  businessSectors = input.required<BasicModel[]>();
+  businessSectors = input.required<BasicModel<number>[]>();
   @Input() isEditMode: boolean = false;
   @Input() workExperienceInfoData: WorkExperienceInfo[] = [];
   @Output() emitWorkExperiencesData: EventEmitter<WorkExperienceInfo[]> = new EventEmitter<WorkExperienceInfo[]>();
@@ -46,7 +46,7 @@ export class WorkExperienceInfoComponent implements OnInit {
     this.emitWorkExperiencesData.emit(workExperienceData);
   }
 
-  compareFn = (first: BasicModel, second: BasicModel): boolean => {
+  compareFn = (first: BasicModel<number>, second: BasicModel<number>): boolean => {
     return first && second ? first.id === second.id : first === second;
   }
 

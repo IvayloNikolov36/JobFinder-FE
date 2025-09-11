@@ -11,71 +11,71 @@ export class NomenclatureService {
 
   constructor(private http: HttpClient) { }
 
-  getEducationLevels(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getEducationLevelsUrl());
+  getEducationLevels(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getEducationLevelsUrl());
   }
 
-  getLanguageLevels(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getLanguageLevelsUrl());
+  getLanguageLevels(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getLanguageLevelsUrl());
   }
 
-  getLanguageTypes(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getLanguageTypesUrl());
+  getLanguageTypes(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getLanguageTypesUrl());
   }
 
-  getCountries(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getCountriesUrl());
+  getCountries(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getCountriesUrl());
   }
 
-  getCitizenships(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getCitizenshipsUrl());
+  getCitizenships(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getCitizenshipsUrl());
   }
 
-  getBusinessSectors(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getBusinessSectorsUrl());
+  getBusinessSectors(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getBusinessSectorsUrl());
   }
 
-  getGenderOptions(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getGenderOptionsUrl());
+  getGenderOptions(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getGenderOptionsUrl());
   }
 
-  getDrivingCategories(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getDrivingCategoriesUrl());
+  getDrivingCategories(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getDrivingCategoriesUrl());
   }
 
-  getJobCategories(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getJobCategoriesUrl());
+  getJobCategories(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getJobCategoriesUrl());
   }
 
-  getJobEngagements(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getJobEngagementsUrl());
+  getJobEngagements(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getJobEngagementsUrl());
   }
 
-  getCities(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getCititesUrl());
+  getCities(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getCititesUrl());
   }
 
-  getCurrcencies(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getCurrenciesUrl());
+  getCurrcencies(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getCurrenciesUrl());
   }
 
-  getRecurringTypes(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getRecurringTypesUrl());
+  getRecurringTypes(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getRecurringTypesUrl());
   }
 
-  getSoftSkills(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getSoftSkillsUrl());
+  getSoftSkills(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getSoftSkillsUrl());
   }
 
-  getTechStacks(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getTechStacksUrls());
+  getTechStacks(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getTechStacksUrls());
   }
 
-  getITAreas(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getItAreasUrl());
+  getITAreas(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getItAreasUrl());
   }
 
-  getWorkplaceTypes(): Observable<BasicModel[]> {
-    return this.http.get<BasicModel[]>(NomenclatureController.getWorkplaceTypesUrl());
+  getWorkplaceTypes(): Observable<BasicModel<number>[]> {
+    return this.http.get<BasicModel<number>[]>(NomenclatureController.getWorkplaceTypesUrl());
   }
 }

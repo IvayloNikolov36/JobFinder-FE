@@ -19,10 +19,10 @@ export class CreateJobsSubscriptionsComponent implements OnInit {
   @Output() emitSubscription: EventEmitter<JobSubscription> = new EventEmitter<JobSubscription>();
 
   form!: FormGroup;
-  recurringTypes$!: Observable<BasicModel[]>;
-  locations$!: Observable<BasicModel[]>;
-  jobCategories$!: Observable<BasicModel[]>;
-  jobEngagements$!: Observable<BasicModel[]>;
+  recurringTypes$!: Observable<BasicModel<number>[]>;
+  locations$!: Observable<BasicModel<number>[]>;
+  jobCategories$!: Observable<BasicModel<number>[]>;
+  jobEngagements$!: Observable<BasicModel<number>[]>;
 
   subscriptionCriteriasErrorMessage: string = '';
 

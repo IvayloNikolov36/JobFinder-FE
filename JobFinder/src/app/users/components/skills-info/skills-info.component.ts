@@ -10,7 +10,7 @@ import { SkillsInfo } from '../../../shared/models';
 })
 export class SkillsInfoComponent implements OnInit {
 
-  drivingCategories = input.required<BasicModel[]>();
+  drivingCategories = input.required<BasicModel<number>[]>();
   @Input() isEditMode = false;
   @Input() skillsInfoData: SkillsInfo | null = null;
   @Output() emitSkillsData = new EventEmitter<SkillsInfo>();
@@ -39,7 +39,7 @@ export class SkillsInfoComponent implements OnInit {
     this.emitSkillsData.emit(dataToEmit);
   }
 
-  compareFn = (first: BasicModel, second: BasicModel): boolean => {
+  compareFn = (first: BasicModel<number>, second: BasicModel<number>): boolean => {
     return first && second ? first.id === second.id : first === second;
   }
 
@@ -50,7 +50,7 @@ export class SkillsInfoComponent implements OnInit {
       computerSkills: [null, [Validators.minLength(10), Validators.maxLength(1000)]],
       otherSkills: [null, [Validators.minLength(10), Validators.maxLength(500)]],
       hasManagedPeople: [false, []],
-      drivingLicenseCategories: [[] as BasicModel[]]
+      drivingLicenseCategories: [[] as BasicModel<number>[]]
     });
 
     if (this.skillsInfoData) {

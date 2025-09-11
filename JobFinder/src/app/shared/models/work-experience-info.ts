@@ -6,7 +6,7 @@ export interface WorkExperienceInfo {
   toDate: string;
   jobTitle: string;
   organization: string;
-  businessSector: BasicModel;
+  businessSector: BasicModel<number>;
   location: string;
   additionalDetails: string | null;
   includeInAnonymousProfile: boolean | null;

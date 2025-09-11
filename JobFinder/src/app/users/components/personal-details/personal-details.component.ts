@@ -10,9 +10,9 @@ import { PersonalInfo } from '../../../shared/models';
 })
 export class PersonalInfoComponent implements OnInit {
 
-  countries: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
-  citizenships: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
-  genderOptions: InputSignal<BasicModel[]> = input.required<BasicModel[]>();
+  countries: InputSignal<BasicModel<number>[]> = input.required<BasicModel<number>[]>();
+  citizenships: InputSignal<BasicModel<number>[]> = input.required<BasicModel<number>[]>();
+  genderOptions: InputSignal<BasicModel<number>[]> = input.required<BasicModel<number>[]>();
   @Input() isEditMode: boolean = false;
   @Input() personalInfo: PersonalInfo | null = null;
   @Output() emitPersonalInfo: EventEmitter<PersonalInfo> = new EventEmitter<PersonalInfo>();
@@ -32,7 +32,7 @@ export class PersonalInfoComponent implements OnInit {
     this.emitPersonalInfo.emit(this.personalInfoForm.value);
   }
 
-  compareFn = (first: BasicModel, second: BasicModel): boolean => {
+  compareFn = (first: BasicModel<number>, second: BasicModel<number>): boolean => {
     return first && second ? first.id === second.id : first === second;
   }
 

@@ -14,13 +14,13 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
 
   @Output() onAppearanceDataEmit: EventEmitter<AnonymousProfileAppearance> = new EventEmitter<AnonymousProfileAppearance>;
 
-  jobCategories$!: Observable<BasicModel[]>;
-  jobEngagements$!: Observable<BasicModel[]>;
-  softSkills$!: Observable<BasicModel[]>;
-  techStacks$!: Observable<BasicModel[]>;
-  itAreas$!: Observable<BasicModel[]>;
-  workplaceTypes$!: Observable<BasicModel[]>;
-  cities$!: Observable<BasicModel[]>;
+  jobCategories$!: Observable<BasicModel<number>[]>;
+  jobEngagements$!: Observable<BasicModel<number>[]>;
+  softSkills$!: Observable<BasicModel<number>[]>;
+  techStacks$!: Observable<BasicModel<number>[]>;
+  itAreas$!: Observable<BasicModel<number>[]>;
+  workplaceTypes$!: Observable<BasicModel<number>[]>;
+  cities$!: Observable<BasicModel<number>[]>;
   showITcontrols: WritableSignal<boolean> = signal<boolean>(false);
 
   form!: FormGroup<AnonymousProfileAppearanceForm>;

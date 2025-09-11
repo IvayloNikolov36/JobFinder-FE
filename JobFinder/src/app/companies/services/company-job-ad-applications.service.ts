@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { AdApplicationInfo } from "../models";
+import { JobApplicationInfo } from "../models";
 import { getJobAllApplications, setPreviewInfo } from "../../core/controllers";
 
 @Injectable({
@@ -11,11 +11,11 @@ export class CompanyJobAdApplicationsService {
 
   constructor(private http: HttpClient) { }
 
-  getJobAllApplicationsData = (jobAdId: number | undefined): Observable<AdApplicationInfo[]> => {
+  getJobAllApplicationsData = (jobAdId: number | undefined): Observable<JobApplicationInfo[]> => {
     if (!jobAdId) {
       return of([]);
     }
-    return this.http.get<AdApplicationInfo[]>(getJobAllApplications(jobAdId));
+    return this.http.get<JobApplicationInfo[]>(getJobAllApplications(jobAdId));
   }
 
   setPreviewInfo = (cvId: string, jobAdId: number): Observable<object> => {

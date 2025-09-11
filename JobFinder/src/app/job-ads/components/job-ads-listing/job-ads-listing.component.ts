@@ -21,10 +21,10 @@ const CloseFiltersText: string = 'Hide Filters';
 })
 export class JobAdsListingComponent {
 
-  categories: Signal<BasicModel[]> = signal([]);
-  engagements: Signal<BasicModel[]> = signal([]);
-  locations: Signal<BasicModel[]> = signal([]);
-  recurringTypes: Signal<BasicModel[]> = signal([]);
+  categories: Signal<BasicModel<number>[]> = signal([]);
+  engagements: Signal<BasicModel<number>[]> = signal([]);
+  locations: Signal<BasicModel<number>[]> = signal([]);
+  recurringTypes: Signal<BasicModel<number>[]> = signal([]);
 
   recurringTypeId = new FormControl<number | null>(null, Validators.required);
 

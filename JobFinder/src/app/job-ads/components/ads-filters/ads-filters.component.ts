@@ -12,9 +12,9 @@ import { AdsFilterProps } from '../../models';
 })
 export class AdsFiltersComponent implements OnInit {
 
-  categories: InputSignal<BasicModel[]> = input.required();
-  engagements: InputSignal<BasicModel[]> = input.required();
-  locations: InputSignal<BasicModel[]> = input.required();
+  categories: InputSignal<BasicModel<number>[]> = input.required();
+  engagements: InputSignal<BasicModel<number>[]> = input.required();
+  locations: InputSignal<BasicModel<number>[]> = input.required();
 
   form!: FormGroup;
 

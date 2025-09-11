@@ -4,7 +4,7 @@ export interface WorkExperienceInfoAnonymousProfileModel {
       fromDate: string;
       toDate: string;
       jobTitle: string;
-      businessSector: BasicModel;
+      businessSector: BasicModel<number>;
       location: string;
       additionalDetails: string | null;
 }

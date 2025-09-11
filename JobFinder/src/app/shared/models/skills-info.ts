@@ -6,6 +6,6 @@ export interface SkillsInfo {
   computerSkills: string | null;
   otherSkills: string | null;
   hasManagedPeople: boolean;
-  drivingLicenseCategories: BasicModel[];
+  drivingLicenseCategories: BasicModel<number>[];
   licenseCategoriesText: string;
 }

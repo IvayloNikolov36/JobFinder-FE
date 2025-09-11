@@ -5,7 +5,7 @@ export interface EducationInfoAnonymousProfileModel {
     toDate: Date;
     organization: string;
     location: string;
-    educationLevel: BasicModel;
+    educationLevel: BasicModel<number>;
     major: string;
     mainSubjects: string;
 }

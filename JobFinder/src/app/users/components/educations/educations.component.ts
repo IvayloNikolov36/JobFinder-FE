@@ -10,7 +10,7 @@ import { EducationInfo } from '../../../shared/models';
 })
 export class EducationsComponent implements OnInit {
 
-  educationLevels = input.required<BasicModel[]>();
+  educationLevels = input.required<BasicModel<number>[]>();
   @Input() isEditMode: boolean = false;
   @Input() educationsData: EducationInfo[] = [];
   @Output() emitEducationData = new EventEmitter<EducationInfo[]>();
@@ -42,7 +42,7 @@ export class EducationsComponent implements OnInit {
     this.emitEducationData.emit(this.educationsForm.value.educationsArray as EducationInfo[]);
   }
 
-  compareFn = (first: BasicModel, second: BasicModel): boolean => {
+  compareFn = (first: BasicModel<number>, second: BasicModel<number>): boolean => {
     return first && second ? first.id === second.id : first === second;
   }
 

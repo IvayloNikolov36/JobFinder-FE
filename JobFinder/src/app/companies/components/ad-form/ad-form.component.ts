@@ -15,14 +15,14 @@ export class AdFormComponent implements OnInit, OnChanges {
   @Input() adData: JobAdCreate | null = null;
 
   form!: FormGroup<JobAdForm>;
-  jobCategories$!: Observable<BasicModel[]>;
-  jobEngagements$!: Observable<BasicModel[]>;
-  locations$!: Observable<BasicModel[]>;
-  currencies$!: Observable<BasicModel[]>;
-  workplaceTypes$!: Observable<BasicModel[]>;
-  softSkills$!: Observable<BasicModel[]>;
-  itAreas$: Observable<BasicModel[]> | undefined = undefined;
-  techStacks$: Observable<BasicModel[]> | undefined = undefined;
+  jobCategories$!: Observable<BasicModel<number>[]>;
+  jobEngagements$!: Observable<BasicModel<number>[]>;
+  locations$!: Observable<BasicModel<number>[]>;
+  currencies$!: Observable<BasicModel<number>[]>;
+  workplaceTypes$!: Observable<BasicModel<number>[]>;
+  softSkills$!: Observable<BasicModel<number>[]>;
+  itAreas$: Observable<BasicModel<number>[]> | undefined = undefined;
+  techStacks$: Observable<BasicModel<number>[]> | undefined = undefined;
 
   readonly itCategoryId: number = 3;
 

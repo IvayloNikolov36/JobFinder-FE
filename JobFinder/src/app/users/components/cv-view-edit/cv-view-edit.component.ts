@@ -61,14 +61,14 @@ export class CvViewComponent implements OnInit {
   editCvSectionTitle: string = '';
   createdComponentRef!: ComponentRef<any>;
 
-  educationLevels!: Signal<BasicModel[]>;
-  languageTypes!: Signal<BasicModel[]>;
-  languageLevels!: Signal<BasicModel[]>;
-  bussinessSectors!: Signal<BasicModel[]>;
-  countries!: Signal<BasicModel[]>;
-  citizenships!: Signal<BasicModel[]>;
-  genderOptions!: Signal<BasicModel[]>;
-  drivingCategories!: Signal<BasicModel[]>;
+  educationLevels!: Signal<BasicModel<number>[]>;
+  languageTypes!: Signal<BasicModel<number>[]>;
+  languageLevels!: Signal<BasicModel<number>[]>;
+  bussinessSectors!: Signal<BasicModel<number>[]>;
+  countries!: Signal<BasicModel<number>[]>;
+  citizenships!: Signal<BasicModel<number>[]>;
+  genderOptions!: Signal<BasicModel<number>[]>;
+  drivingCategories!: Signal<BasicModel<number>[]>;
 
   sectionType: typeof CvSectionTypeEnum = CvSectionTypeEnum;
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
@@ -87,7 +87,7 @@ export class CvViewComponent implements OnInit {
     private nomenclatureService: NomenclatureService,
     private anonymousProfileService: AnonymousProfileService) {
 
-    const initialValue: BasicModel[] = [] as BasicModel[];
+    const initialValue: BasicModel<number>[] = [] as BasicModel<number>[];
 
     this.educationLevels = toSignal(this.nomenclatureService.getEducationLevels(), { initialValue });
     this.languageTypes = toSignal(this.nomenclatureService.getLanguageTypes(), { initialValue });
@@ -268,7 +268,7 @@ export class CvViewComponent implements OnInit {
 
     const component: SkillsInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
-    component.drivingCategories = this.drivingCategories as InputSignal<BasicModel[]>;
+    component.drivingCategories = this.drivingCategories as InputSignal<BasicModel<number>[]>;
     component.skillsInfoData = this.cv.skills;
 
     component.emitSkillsData
@@ -293,7 +293,7 @@ export class CvViewComponent implements OnInit {
     this.createdComponentRef = createdComponentRef;
 
     const component: WorkExperienceInfoComponent = createdComponentRef.instance;
-    component.businessSectors = this.bussinessSectors as InputSignal<BasicModel[]>;
+    component.businessSectors = this.bussinessSectors as InputSignal<BasicModel<number>[]>;
     component.workExperienceInfoData = this.cv.workExperiences;
     component.isEditMode = true;
 
@@ -343,8 +343,8 @@ export class CvViewComponent implements OnInit {
     const component: LanguagesInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
     component.languagesInfoData = this.cv.languagesInfo;
-    component.languageTypes = this.languageTypes as InputSignal<BasicModel[]>;
-    component.languageLevels = this.languageLevels as InputSignal<BasicModel[]>;
+    component.languageTypes = this.languageTypes as InputSignal<BasicModel<number>[]>;
+    component.languageLevels = this.languageLevels as InputSignal<BasicModel<number>[]>;
 
     component.emitLanguagesInfo.subscribe((data: LanguageInfo[]) => {
 
@@ -369,7 +369,7 @@ export class CvViewComponent implements OnInit {
     const component: EducationsComponent = createdComponentRef.instance;
     component.isEditMode = true;
     component.educationsData = this.cv.educations;
-    component.educationLevels = this.educationLevels as InputSignal<BasicModel[]>;
+    component.educationLevels = this.educationLevels as InputSignal<BasicModel<number>[]>;
 
     component.emitEducationData
       .subscribe((data: EducationInfo[]) => {
@@ -393,9 +393,9 @@ export class CvViewComponent implements OnInit {
     const component: PersonalInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
     component.personalInfo = this.cv.personalInfo;
-    component.countries = this.countries as InputSignal<BasicModel[]>;
-    component.citizenships = this.citizenships as InputSignal<BasicModel[]>;
-    component.genderOptions = this.genderOptions as InputSignal<BasicModel[]>;
+    component.countries = this.countries as InputSignal<BasicModel<number>[]>;
+    component.citizenships = this.citizenships as InputSignal<BasicModel<number>[]>;
+    component.genderOptions = this.genderOptions as InputSignal<BasicModel<number>[]>;
 
     component.emitPersonalInfo
       .subscribe((data: PersonalInfo) => {
@@ -423,7 +423,7 @@ export class CvViewComponent implements OnInit {
       });
   }
 
-  private getDrivingLicensesText = (drivingLicenseCategories: BasicModel[]): string => {
+  private getDrivingLicensesText = (drivingLicenseCategories: BasicModel<number>[]): string => {
     return drivingLicenseCategories.length > 0
       ? drivingLicenseCategories.map(x => x.name).join(', ')
       : 'no driving license';

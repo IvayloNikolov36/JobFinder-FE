@@ -2,7 +2,7 @@ import { BasicModel } from "../../../core/models";
 
 export interface PersonalInfoAnonymousProfileModel {
     id: number;
-    gender: BasicModel;
-    citizenship: BasicModel;
+    gender: BasicModel<number>;
+    citizenship: BasicModel<number>;
     city: string;
 }
