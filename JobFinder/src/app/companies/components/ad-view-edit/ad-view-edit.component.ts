@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CompanyJobAdsService } from '../../services';
 import { AdDetails, JobAdCreate, JobAdEditModel } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
 import { LifycycleStatusEnum } from '../../enums';
 
@@ -16,7 +16,6 @@ export class AdViewEditComponent implements OnInit {
   @Input() id!: number;
   @ViewChild(AdFormComponent) adFormComponent!: AdFormComponent;
 
-  // TODO: create resolver to fetch the needed data
   adData!: JobAdCreate;
   adDetails: AdDetails | null = null;
 
@@ -24,16 +23,19 @@ export class AdViewEditComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private jobAdsService: CompanyJobAdsService,
     private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
-    this.getJobAdData();
+    this.getAdDetailsData();
   }
 
   update(): void {
-    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.formValueAsModel))
+    this.jobAdsService.updateJobAd(
+      this.id,
+      this.constructJobAdEditModel(this.adFormComponent.formValueAsModel))
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is updated successfuly!', 'Success');
@@ -46,7 +48,9 @@ export class AdViewEditComponent implements OnInit {
   }
 
   activate(): void {
-    this.jobAdsService.updateJobAd(this.id, this.constructJobAdEditModel(this.adFormComponent.formValueAsModel, true))
+    this.jobAdsService.updateJobAd(
+      this.id,
+      this.constructJobAdEditModel(this.adFormComponent.formValueAsModel, true))
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is activated successfuly!', 'Success');
@@ -75,28 +79,30 @@ export class AdViewEditComponent implements OnInit {
     this.router.navigate(['ads/create'], { state: this.adData });
   }
 
-  private getJobAdData = (): void => {
-    this.jobAdsService.get(this.id)
-      .subscribe((data: AdDetails) => {
-        this.adDetails = data;
-        this.adData = new JobAdCreate(
-          data.position,
-          data.description,
-          data.minSalary,
-          data.maxSalary,
-          data.currencyId,
-          data.jobCategoryId,
-          data.jobEngagementId,
-          data.intership,
-          data.locationId,
-          data.softSkills,
-          data.techStacks,
-          data.itAreas,
-          data.workplaceTypeId);
-      });
+  private getAdDetailsData(): void {
+    this.activatedRoute.data.subscribe(({ data }) => {
+      this.adDetails = data;
+      this.adData = new JobAdCreate(
+        data.position,
+        data.description,
+        data.minSalary,
+        data.maxSalary,
+        data.currencyId,
+        data.jobCategoryId,
+        data.jobEngagementId,
+        data.intership,
+        data.locationId,
+        data.softSkills,
+        data.techStacks,
+        data.itAreas,
+        data.workplaceTypeId);
+    });
   }
 
-  private constructJobAdEditModel = (data: JobAdCreate, activate: boolean = false): JobAdEditModel => {
+  private constructJobAdEditModel = (
+    data: JobAdCreate,
+    activate: boolean = false
+  ): JobAdEditModel => {
     return { ...data, activate } as JobAdEditModel;
   }
 }

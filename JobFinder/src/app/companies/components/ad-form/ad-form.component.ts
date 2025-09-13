@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { GreaterThanOrEqual } from '../../../core/functions';
 import { distinctUntilChanged, forkJoin, Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { JobAdForm } from '../../models';
   templateUrl: './ad-form.component.html',
   standalone: false
 })
-export class AdFormComponent implements OnInit, OnChanges {
+export class AdFormComponent implements OnInit {
 
   @Input() adData: JobAdCreate | null = null;
 
@@ -32,26 +32,10 @@ export class AdFormComponent implements OnInit, OnChanges {
     private nomenclatureService: NomenclatureService
   ) { }
 
-  ngOnChanges(): void {
-    // TODO: remove the logic in onChanges after resolver is done
-    if (this.adData && this.form) {
-      this.form.setValue(this.adData);
-    }
-  }
-
   ngOnInit(): void {
     this.initializeJobAdvertisementForm();
     this.subscribeToJobCategoryChanges();
-
-    this.nomenclatureDataObservable(this.shouldLoadItNomenclatureData())
-      .subscribe({
-        next: (data: BasicModel<number>[][]) => {
-          this.setNomenclatureData(data);
-          if (this.adData) {
-            this.form.setValue(this.adData);
-          }
-        }
-      });
+    this.getNomenclatureData();
   }
 
   get formValueAsModel(): JobAdCreate {
@@ -210,6 +194,18 @@ export class AdFormComponent implements OnInit, OnChanges {
 
   private shouldLoadItNomenclatureData(): boolean {
     return this.adData?.jobCategoryId === this.itCategoryId;
+  }
+
+  private getNomenclatureData(): void {
+    this.nomenclatureDataObservable(this.shouldLoadItNomenclatureData())
+      .subscribe({
+        next: (data: BasicModel<number>[][]) => {
+          this.setNomenclatureData(data);
+          if (this.adData) {
+            this.form.setValue(this.adData);
+          }
+        }
+      });
   }
 
   private setNomenclatureData(data: BasicModel<number>[][]): void {
