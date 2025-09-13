@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { GreaterThanOrEqual } from '../../../core/functions';
-import { distinctUntilChanged, Observable } from 'rxjs';
+import { distinctUntilChanged, forkJoin, Observable } from 'rxjs';
 import { BasicModel, JobAdCreate } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
+import { JobAdForm } from '../../models';
 
 @Component({
   selector: 'jf-ad-form',
@@ -15,14 +16,15 @@ export class AdFormComponent implements OnInit, OnChanges {
   @Input() adData: JobAdCreate | null = null;
 
   form!: FormGroup<JobAdForm>;
-  jobCategories$!: Observable<BasicModel<number>[]>;
-  jobEngagements$!: Observable<BasicModel<number>[]>;
-  locations$!: Observable<BasicModel<number>[]>;
-  currencies$!: Observable<BasicModel<number>[]>;
-  workplaceTypes$!: Observable<BasicModel<number>[]>;
-  softSkills$!: Observable<BasicModel<number>[]>;
-  itAreas$: Observable<BasicModel<number>[]> | undefined = undefined;
-  techStacks$: Observable<BasicModel<number>[]> | undefined = undefined;
+
+  jobCategories!: BasicModel<number>[];
+  jobEngagements!: BasicModel<number>[];
+  locations!: BasicModel<number>[];
+  currencies!: BasicModel<number>[];
+  workplaceTypes!: BasicModel<number>[];
+  softSkills!: BasicModel<number>[];
+  itAreas: BasicModel<number>[] | undefined;
+  techStacks: BasicModel<number>[] | undefined;
 
   readonly itCategoryId: number = 3;
 
@@ -31,15 +33,25 @@ export class AdFormComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void {
+    // TODO: remove the logic in onChanges after resolver is done
     if (this.adData && this.form) {
       this.form.setValue(this.adData);
     }
   }
 
   ngOnInit(): void {
-    this.loadNomenclatureData();
     this.initializeJobAdvertisementForm();
     this.subscribeToJobCategoryChanges();
+
+    this.nomenclatureDataObservable(this.shouldLoadItNomenclatureData())
+      .subscribe({
+        next: (data: BasicModel<number>[][]) => {
+          this.setNomenclatureData(data);
+          if (this.adData) {
+            this.form.setValue(this.adData);
+          }
+        }
+      });
   }
 
   get formValueAsModel(): JobAdCreate {
@@ -92,12 +104,20 @@ export class AdFormComponent implements OnInit, OnChanges {
       } as AbstractControlOptions
     );
 
+    this.subscribeToMinSalaryValueChanges();
+
+    this.subscribeToMaxSalaryValueChanges();
+  }
+
+  private subscribeToMinSalaryValueChanges(): void {
     this.minSalaryControl.valueChanges
       .pipe(distinctUntilChanged())
       .subscribe((minSalaryValue: number | null) => {
         this.setCurrencyFormControl(minSalaryValue, this.maxSalaryControl.value, [Validators.required]);
       });
+  }
 
+  private subscribeToMaxSalaryValueChanges(): void {
     this.maxSalaryControl.valueChanges
       .pipe(distinctUntilChanged())
       .subscribe((maxSalaryValue: number | null) => {
@@ -123,22 +143,38 @@ export class AdFormComponent implements OnInit, OnChanges {
     this.currencyControl.updateValueAndValidity();
   }
 
-  private loadNomenclatureData(): void {
-    this.jobCategories$ = this.nomenclatureService.getJobCategories();
-    this.jobEngagements$ = this.nomenclatureService.getJobEngagements();
-    this.locations$ = this.nomenclatureService.getCities();
-    this.currencies$ = this.nomenclatureService.getCurrcencies();
-    this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
-    this.softSkills$ = this.nomenclatureService.getSoftSkills();
+  private nomenclatureDataObservable(includeItNomenclatureData: boolean = false)
+    : Observable<BasicModel<number>[][]> {
+
+    const nomenclatureObservables = [
+      this.nomenclatureService.getJobCategories(),
+      this.nomenclatureService.getJobEngagements(),
+      this.nomenclatureService.getCities(),
+      this.nomenclatureService.getCurrcencies(),
+      this.nomenclatureService.getWorkplaceTypes(),
+      this.nomenclatureService.getSoftSkills()
+    ];
+
+    if (includeItNomenclatureData) {
+      nomenclatureObservables.concat(
+        [
+          this.nomenclatureService.getITAreas(),
+          this.nomenclatureService.getTechStacks()
+        ]
+      );
+    }
+
+    return forkJoin(nomenclatureObservables);
   }
 
   private loadITNomenclatureData(): void {
-    if (this.itAreas$ === undefined) {
-      this.itAreas$ = this.nomenclatureService.getITAreas();
+    if (this.itAreas === undefined) {
+      this.nomenclatureService.getITAreas()
+        .subscribe((data: BasicModel<number>[]) => this.itAreas = data);
     }
-
-    if (this.techStacks$ === undefined) {
-      this.techStacks$ = this.nomenclatureService.getTechStacks();
+    if (this.techStacks === undefined) {
+      this.nomenclatureService.getTechStacks()
+        .subscribe((data: BasicModel<number>[]) => this.techStacks = data);
     }
   }
 
@@ -171,24 +207,23 @@ export class AdFormComponent implements OnInit, OnChanges {
         }
       });
   }
+
+  private shouldLoadItNomenclatureData(): boolean {
+    return this.adData?.jobCategoryId === this.itCategoryId;
+  }
+
+  private setNomenclatureData(data: BasicModel<number>[][]): void {
+    this.jobCategories = data[0];
+    this.jobEngagements = data[1];
+    this.locations = data[2];
+    this.currencies = data[3];
+    this.workplaceTypes = data[4];
+    this.softSkills = data[5];
+    this.itAreas = data[6];
+    this.techStacks = data[7];
+  }
 }
 
 enum Action {
   add, remove
-}
-
-interface JobAdForm {
-  position: FormControl<string>,
-  description: FormControl<string>,
-  minSalary: FormControl<number | null>,
-  maxSalary: FormControl<number | null>,
-  currencyId: FormControl<number | null>,
-  jobCategoryId: FormControl<number>,
-  jobEngagementId: FormControl<number>,
-  intership: FormControl<boolean>,
-  locationId: FormControl<number>,
-  softSkills: FormControl<number[]>,
-  techStacks: FormControl<number[]>,
-  itAreas: FormControl<number[]>,
-  workplaceTypeId: FormControl<number>
 }

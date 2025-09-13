@@ -7,3 +7,4 @@ export * from './anonymous-profile-data.model';
 export * from './cv-preview-request.model';
 export * from './cv-preview-request-data.model';
 export * from './cv-basic-details.model';
+export * from './ad-form.model';

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IdentityResult } from '../../../core/models';
+import { IdentityResult, JobAdCreate } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';
 import { AdFormComponent } from '../ad-form/ad-form.component';
@@ -14,10 +14,16 @@ export class CreateJobAdvertisementComponent {
 
   @ViewChild(AdFormComponent) adForm: AdFormComponent | null = null;
 
+  adData: JobAdCreate | null = null;
+
   constructor(
     private router: Router,
     private toastr: ToastrService,
-    private jobAdsService: CompanyJobAdsService) { }
+    private jobAdsService: CompanyJobAdsService) {
+    
+    const passedAdData = this.router.getCurrentNavigation()?.extras.state;
+    this.adData = passedAdData as JobAdCreate;
+  }
 
   saveAsDraft(): void {
     this.jobAdsService.createJobAd(this.adForm!.formValueAsModel)

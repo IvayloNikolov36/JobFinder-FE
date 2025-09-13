@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CompanyJobAdsService } from '../../services';
-import { AdDetails, JobAd, JobAdCreate, JobAdEditModel } from '../../../core/models';
+import { AdDetails, JobAdCreate, JobAdEditModel } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
@@ -16,7 +16,8 @@ export class AdViewEditComponent implements OnInit {
   @Input() id!: number;
   @ViewChild(AdFormComponent) adFormComponent!: AdFormComponent;
 
-  adData: JobAdCreate | null = null;
+  // TODO: create resolver to fetch the needed data
+  adData!: JobAdCreate;
   adDetails: AdDetails | null = null;
 
   readonly status: typeof LifycycleStatusEnum = LifycycleStatusEnum;
@@ -68,6 +69,10 @@ export class AdViewEditComponent implements OnInit {
           this.toastr.error(error.error.errors);
         }
       });
+  }
+
+  createNewWithCopiedData(): void {
+    this.router.navigate(['ads/create'], { state: this.adData });
   }
 
   private getJobAdData = (): void => {
