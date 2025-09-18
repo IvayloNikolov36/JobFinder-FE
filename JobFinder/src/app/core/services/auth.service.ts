@@ -9,9 +9,14 @@ import { LoginResultModel, RegisterUserModel } from '../models';
 })
 export class AuthService {
 
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated());
+  readonly isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const token: string | null = this.getToken();
+    if (token && this.isTokenExpired(token)) {
+      this.logout();
+    }
+  }
 
   registerUser(registerModel: RegisterUserModel): Observable<Object> {
     return this.http.post(registerUserUrl(), registerModel);
@@ -58,5 +63,13 @@ export class AuthService {
     }
 
     return [];
+  }
+
+  private isTokenExpired(token: string): boolean {
+    const jwtToken: any = JSON.parse(atob(token.split('.')[1]));
+    const expireDate: Date = new Date(jwtToken.exp * 1000);
+    const timeout: number = expireDate.getTime() - Date.now();
+
+    return timeout <= 0;
   }
 }
