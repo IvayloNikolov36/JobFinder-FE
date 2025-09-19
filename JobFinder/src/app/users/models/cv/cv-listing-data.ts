@@ -20,4 +20,6 @@ export interface CvListingData {
   educations: EducationInfo[];
   courseCertificates: CourseCertificateInfo[];
   skills: SkillsInfo;
+  applicationForActiveAd: boolean;
+  approvedCvPreviewForActiveAd: boolean;
 }

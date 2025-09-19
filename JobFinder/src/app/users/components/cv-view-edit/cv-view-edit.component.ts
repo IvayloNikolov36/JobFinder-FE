@@ -75,6 +75,8 @@ export class CvViewComponent implements OnInit {
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
   mode: CvSectionModeEnum = CvSectionModeEnum.Edit;
 
+  deleteCvConfirmationText: string = 'Are you sure you want to delete this CV ?';
+
   constructor(
     private router: Router,
     private toaster: ToastrService,
@@ -215,8 +217,18 @@ export class CvViewComponent implements OnInit {
     this.activateAnonymousProfile(profileAppearanceData);
   }
 
-  // TODO: add logic and show info when there are job applications or/and cv preview requests
   deleteCv(modalElement: Element): void {
+    let messageAffix: string = '';
+
+    if (this.cv.applicationForActiveAd) {
+      messageAffix += ' This CV has been sent as an application for a job that is still active.';
+    }
+
+    if (this.cv.approvedCvPreviewForActiveAd) {
+      messageAffix += ' There is an approved company request for this CV preview that is suitable for an active job.'
+    }
+
+    this.deleteCvConfirmationText += messageAffix;
     this.deleteModal = new Modal(modalElement);
     this.deleteModal.show();
   }
