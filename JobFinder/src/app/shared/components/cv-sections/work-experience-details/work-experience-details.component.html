@@ -12,12 +12,7 @@
         @for (item of workExperienceData; track item.id) {
 
         @if (mode !== sectionMode.AnonymousProfileView || item.includeInAnonymousProfile) {
-        <div class="card my-2 p-3"
-            [class]="{
-                'cv-section-blur':
-                (mode === sectionMode.AnonymousProfileCreate && item.includeInAnonymousProfile === false)
-            }"
-        >
+        <div class="card my-2 p-3" [class]="item.blurredStyle">
             <div class="d-flex justify-content-between">
                 <h6 [class]="{'cv-details-blur': mode === sectionMode.AnonymousProfileView}">
                     {{ item.organization }}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WorkExperienceInfo } from '../../../models';
 import { CvSectionModeEnum } from '../../../enums';
 
@@ -7,13 +7,17 @@ import { CvSectionModeEnum } from '../../../enums';
   templateUrl: './work-experience-details.component.html',
   standalone: false
 })
-export class WorkExperienceDetailsComponent {
+export class WorkExperienceDetailsComponent implements OnInit {
 
   @Input() workExperienceData: WorkExperienceInfo[] = [];
   @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
   @Output() onEdit: EventEmitter<void> = new EventEmitter<void>();
 
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
+
+  ngOnInit(): void {
+    this.setItemsBlur(this.workExperienceData);
+  }
 
   editWorkExperienceData = (): void => {
     this.onEdit.emit();
@@ -25,6 +29,20 @@ export class WorkExperienceDetailsComponent {
       workExpInfo.includeInAnonymousProfile = workExpInfo.includeInAnonymousProfile === null
         ? false
         : !workExpInfo.includeInAnonymousProfile;
+      this.setItemsBlur([workExpInfo]);
     }
+  }
+
+  setItemsBlur = (items: WorkExperienceInfo[]): void => {
+    items.forEach(item => {
+      if (this.mode === this.sectionMode.AnonymousProfileCreate
+        && item.includeInAnonymousProfile === false) {
+        item.blurredStyle = {
+          'cv-section-blur': true
+        };
+      } else {
+        item.blurredStyle = {};
+      }
+    });
   }
 }

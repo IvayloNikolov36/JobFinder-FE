@@ -60,7 +60,13 @@ export class AnonymousProfilePreviewComponent implements OnInit {
               return { ...ei, includeInAnonymousProfile: true, id: 0 } satisfies EducationInfo
             }),
             x.workExperienceInfo.map(we => {
-              return { ...we, includeInAnonymousProfile: true, id: 0, organization: OrganizationName } satisfies WorkExperienceInfo
+              return {
+                ...we,
+                includeInAnonymousProfile: true,
+                id: 0,
+                organization: OrganizationName,
+                blurredStyle: {}
+              } satisfies WorkExperienceInfo
             }),
             x.languagesInfo,
             x.skillsInfo,

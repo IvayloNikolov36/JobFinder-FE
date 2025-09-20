@@ -10,4 +10,5 @@ export interface WorkExperienceInfo {
   location: string;
   additionalDetails: string | null;
   includeInAnonymousProfile: boolean | null;
+  blurredStyle: object;
 }

@@ -70,7 +70,6 @@ export class WorkExperienceInfoComponent implements OnInit {
 
   private createWorkExperienceFormGroup(): FormGroup<any> {
     return this.formBuilder.group({
-      id: [0],
       fromDate: [null, Validators.required],
       toDate: [null],
       jobTitle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
@@ -78,7 +77,9 @@ export class WorkExperienceInfoComponent implements OnInit {
       businessSector: [null, Validators.required],
       location: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       additionalDetails: [null, [Validators.minLength(20), Validators.maxLength(3000)]],
-      includeInAnonymousProfile: [null]
+      id: [0],
+      includeInAnonymousProfile: [null],
+      blurredStyle: [{}]
     });
   }
 }
