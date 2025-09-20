@@ -1,33 +1,37 @@
-<mat-card [class]="{'me-5': isEven, 'ms-5': !isEven, 'white-blue-gradient': isEven, 'blue-white-gradient': !isEven}"
-    class="job-ad-card p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewAdDetails(ad.id)">
+<mat-card [class]="cardClass" class="job-ad-card shadow bg-body rounded mb-4 p-1" appearance="outlined">
     <mat-card-header>
         <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
-            <mat-card-title class="mb-3">
-                {{ ad.position }}
-            </mat-card-title>
-            <mat-card-subtitle>
-                <span class="me-3">{{ ad.jobCategory }}</span>
-                <i class="bi bi-pin-fill me-2"></i>{{ ad.location }}
-                <small class="ms-3">
-                    <i class="bi bi-clock me-2"></i>{{ ad.jobEngagement }}
-                </small>
-            </mat-card-subtitle>
-            <div>
-                <img mat-card-md-image [src]="ad.company.logo" alt="Company Logo">
+            <div class="row flex-grow-1" (click)="viewAdDetails(ad.id)">
+                <mat-card-title class="mb-3">
+                    {{ ad.position }}
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="me-3">{{ ad.jobCategory }}</span>
+                    <i class="bi bi-pin-fill me-2"></i>{{ ad.location }}
+                    <small class="ms-3">
+                        <i class="bi bi-clock me-2"></i>{{ ad.jobEngagement }}
+                    </small>
+                </mat-card-subtitle>
+                <div class="d-flex flex-row justify-content-end align-items-center gap-5 mt-2">
+                    @if (ad.salary) {
+                    <div class="salary-container">
+                        {{ ad.salary }}
+                    </div>
+                    }
+                    <span>
+                        <i class="bi bi-calendar2-week me-2"></i>{{ ad.postedOn | date }}
+                    </span>
+                </div>
             </div>
+            <a routerLink="/users/company/{{ad.company.id}}">
+                <div class="d-flex flex-column">
+                    <img mat-card-md-image [src]="ad.company.logo" alt="Company Logo">
+                    <span class="text-center mt-2">{{ ad.company.name }}</span>
+                </div>
+            </a>
         </mat-card-title-group>
     </mat-card-header>
-    <mat-card-content class="mt-2">
-        <div class="d-flex justify-content-between">
-            <span>{{ ad.company.name }}</span>
-            @if (ad.salary) {
-            <div class="salary-container">
-                {{ ad.salary }}
-            </div>
-            }
-            <span class="mx-0">
-                <i class="bi bi-calendar2-week me-2"></i>{{ ad.postedOn | date }}
-            </span>
-        </div>
+    <mat-card-content class="mt-2" (click)="viewAdDetails(ad.id)">
+
     </mat-card-content>
 </mat-card>
