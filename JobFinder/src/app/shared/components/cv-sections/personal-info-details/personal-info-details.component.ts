@@ -17,18 +17,25 @@ export class PersonalInfoDetailsComponent implements OnChanges {
 
   fullName: string = '';
   blurDetails: boolean = false;
+  picClass: object = {};
 
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
   ngOnChanges(): void {
     this.blurDetails = this.mode === CvSectionModeEnum.AnonymousProfileCreate;
-
     if (this.personalInfo) {
       this.fullName = getFullName(this.personalInfo);
     }
+    this.setProfilePicStyleClass();
   }
 
   onEditClicked = (): void => {
     this.onEdit.emit();
+  }
+
+  setProfilePicStyleClass = (): void => {
+    this.picClass = {
+      'cv-pic-blur': (this.blurDetails || this.mode === this.sectionMode.AnonymousProfileView)
+    };
   }
 }
