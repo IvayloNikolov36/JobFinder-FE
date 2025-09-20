@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { WorkExperienceInfo } from '../../../models';
 import { CvSectionModeEnum } from '../../../enums';
 
@@ -7,7 +7,7 @@ import { CvSectionModeEnum } from '../../../enums';
   templateUrl: './work-experience-details.component.html',
   standalone: false
 })
-export class WorkExperienceDetailsComponent implements OnInit {
+export class WorkExperienceDetailsComponent implements OnChanges {
 
   @Input() workExperienceData: WorkExperienceInfo[] = [];
   @Input() mode: CvSectionModeEnum = CvSectionModeEnum.View;
@@ -15,8 +15,10 @@ export class WorkExperienceDetailsComponent implements OnInit {
 
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
 
-  ngOnInit(): void {
-    this.setItemsBlur(this.workExperienceData);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mode'] && this.workExperienceData) {
+      this.setItemsBlur(this.workExperienceData);
+    }
   }
 
   editWorkExperienceData = (): void => {
