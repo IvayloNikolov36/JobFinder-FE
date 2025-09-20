@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
 import { LifycycleStatusEnum } from '../../enums';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-ad-view-edit',
@@ -41,7 +42,7 @@ export class AdViewEditComponent implements OnInit {
           this.toastr.success('The advertisement is updated successfuly!', 'Success');
           this.router.navigate(['/home']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.toastr.error(error.error.errors);
         }
       });
@@ -56,7 +57,7 @@ export class AdViewEditComponent implements OnInit {
           this.toastr.success('The advertisement is activated successfuly!', 'Success');
           this.router.navigate(['/home']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.toastr.error(error.error.errors);
         }
       });
@@ -69,7 +70,7 @@ export class AdViewEditComponent implements OnInit {
           this.toastr.success('The advertisement is retired successfuly!', 'Success');
           this.adDetails!.lifecycleStatusId = LifycycleStatusEnum.Retired;
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.toastr.error(error.error.errors);
         }
       });

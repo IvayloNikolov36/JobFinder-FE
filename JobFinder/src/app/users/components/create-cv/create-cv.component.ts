@@ -11,6 +11,7 @@ import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { Router } from '@angular/router';
 import { CourseCertificateInfo, EducationInfo, LanguageInfo, PersonalInfo, SkillsInfo, WorkExperienceInfo } from '../../../shared/models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-create-cv',
@@ -108,7 +109,7 @@ export class CreateCvComponent implements AfterViewInit {
           this.toastr.success(`${this.cvModel.name} cv is successfully created.`);
           this.router.navigate(['/profile/cvs']);
         },
-        error: (err) => this.toastr.error(err.error.errors[0].join(''))
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors[0].join(''))
       });
   }
 

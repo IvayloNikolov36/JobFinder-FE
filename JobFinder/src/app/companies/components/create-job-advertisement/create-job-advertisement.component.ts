@@ -4,6 +4,7 @@ import { IdentityResult, JobAdCreate } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';
 import { AdFormComponent } from '../ad-form/ad-form.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-create-job-advertisement',
@@ -33,7 +34,7 @@ export class CreateJobAdvertisementComponent {
           window.scroll(0, 0);
           this.toastr.success("The advertisement is created successfuly!", "Success");
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.toastr.error(error.error.errors);
         }
       });

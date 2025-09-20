@@ -2,7 +2,8 @@
 
     <span>{{ companyDetails?.name }}</span>
 
-    @if (companyDetails?.hasSubscription) {
+    @if (companyDetails) {
+    @if (companyDetails.hasSubscription) {
     <button mat-button (click)="unsubscribeFromCompany()">
         Unsubscribe
     </button>
@@ -12,4 +13,6 @@
         Subscribe
     </button>
     }
+    }
+
 </div>

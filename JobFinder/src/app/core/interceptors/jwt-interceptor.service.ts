@@ -29,7 +29,7 @@ export class JwtInterceptorService implements HttpInterceptor {
     return next
       .handle(request)
       .pipe(
-        catchError((err) => {
+        catchError((err: Error) => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
               // TODO: redirect user to the unauthorized page
