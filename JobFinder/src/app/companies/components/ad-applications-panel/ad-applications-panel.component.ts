@@ -1,5 +1,5 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { CompanyAd } from '../../models';
+import { Component, computed, Input, Signal, signal, WritableSignal } from '@angular/core';
+import { CompanyAd, JobApplicationInfo } from '../../models';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CompanyJobAdApplicationsService } from '../../services';
 import { LifycycleStatusEnum } from '../../enums';
@@ -29,6 +29,8 @@ export class AdApplicationsPanelComponent {
         .getJobAllApplicationsData(params.currentJobAdId);
     }
   });
+
+  applicationsData: Signal<JobApplicationInfo[]> = computed(() => this.applicationsDataResource?.value() ?? []);
 
   onOpenApplicationsPanel = (jobAdId: number): void => {
     this.isExpanded = true;

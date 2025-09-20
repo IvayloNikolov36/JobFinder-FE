@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyDetailsUser } from '../../models';
 import { CompaniesService, SubscriptionsService } from '../../services';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jf-company-details',
@@ -11,7 +12,7 @@ import { CompaniesService, SubscriptionsService } from '../../services';
 export class CompanyDetailsComponent implements OnInit {
 
   @Input() id!: number;
-  companyDetails!: CompanyDetailsUser | null;
+  companyDetails: CompanyDetailsUser | null = null;
 
   constructor(
     private subscriptionsService: SubscriptionsService,
@@ -38,6 +39,11 @@ export class CompanyDetailsComponent implements OnInit {
 
   private loadDetails = (id: number): void => {
     this.companiesService.getDetails(this.id)
-      .subscribe((data: CompanyDetailsUser) => this.companyDetails = data);
+      .subscribe({
+        next: (data: CompanyDetailsUser) =>  {
+          this.companyDetails = data;
+        },
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
+      });
   }
 }

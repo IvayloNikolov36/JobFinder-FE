@@ -33,7 +33,6 @@ export class ResponseHandlerInterceptorService implements HttpInterceptor {
         catchError((err: HttpErrorResponse) => {
           let errorMessage: string = '';
 
-          const errorStatus = err.status;
           const serverError = err.status.toString().startsWith('50');
 
           if (err.status === 400 || serverError) {
