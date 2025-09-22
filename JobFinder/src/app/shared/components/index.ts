@@ -7,3 +7,4 @@ export * from './cv-sections/courses-details/courses-details.component';
 export * from './cv-sections/personal-info-details/personal-info-details.component';
 export * from './edit-button/edit-button.component';
 export * from './pagination/pagination.component';
+export * from './job-ad/job-ad.component';

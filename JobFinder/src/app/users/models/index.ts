@@ -8,3 +8,4 @@ export * from './anonymous-profile-create';
 export * from './anonymous-profile-appearance';
 export * from './company-basic-details.model';
 export * from './job-ad-basic-details.model';
+export * from './cpmpany-job-ads-listing.model';

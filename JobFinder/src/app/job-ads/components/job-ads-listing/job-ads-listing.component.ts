@@ -6,9 +6,9 @@ import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../../shared/models';
 import { FormControl, Validators } from '@angular/forms';
-import { JobAdvertisementsService } from '../../services';
+import { JobAdvertisementsService } from '../../../job-ads/services';
 import { SubscriptionsService } from '../../../users/services';
-import { AdsFiltering, AdsFilterProps } from '../../models';
+import { AdsFiltering, AdsFilterProps } from '../../../job-ads/models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 const ShowFiltersText: string = 'Show Filters';

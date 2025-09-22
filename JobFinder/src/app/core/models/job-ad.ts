@@ -1,15 +1,6 @@
 import { CompanyBasicDetails } from "../../users/models";
+import { JobAdListing } from "./job-ad-listing.model";
 
-export interface JobAd {
-  id: number;
-  company: CompanyBasicDetails,
-  position: string;
-  postedOn: string;
-  jobCategory: string;
-  jobEngagement: string;
-  minSalary: number | null;
-  maxSalary: number | null;
-  currency: string | null;
-  location: string;
-  salary: string | null;
+export interface JobAd extends JobAdListing {
+  company: CompanyBasicDetails
 }

@@ -8,6 +8,7 @@ import {
   CoursesDetailsComponent,
   EditButtonComponent,
   EducationDetailsComponent,
+  JobAdComponent,
   LanguagesDetailsComponent,
   NavbarComponent,
   PaginationComponent,
@@ -29,7 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
     SkillsDetailsComponent,
     CoursesDetailsComponent,
     PersonalInfoDetailsComponent,
-    EditButtonComponent,   
+    EditButtonComponent,
+    JobAdComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { ToastrModule } from 'ngx-toastr';
     CoursesDetailsComponent,
     PersonalInfoDetailsComponent,
     EditButtonComponent,
+    JobAdComponent
   ]
 })
 export class SharedModule { }
