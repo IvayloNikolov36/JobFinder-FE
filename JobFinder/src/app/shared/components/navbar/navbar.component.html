@@ -1,10 +1,15 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
 
-    <ul class="nav nav-underline justify-content-start">
+    <ul class="nav">
       <li class="nav-item">
-        <a class="navbar-brand" routerLink="/home">JF</a>
+        <a class="navbar-brand app-logo" routerLink="/home">
+          <span class="fst-italic fs-5">JobFinder</span>
+        </a>
       </li>
+    </ul>
+
+    <ul class="nav nav-underline">
       <li class="nav-item">
         <a class="nav-link" routerLink="/ads/all">Job Ads</a>
       </li>
@@ -16,8 +21,7 @@
       }
     </ul>
 
-    <ul class="nav nav-underline justify-content-end">
-
+    <ul class="nav nav-underline">
       @if (isAuthenticated) {
       <li class="nav-item">
         <a class="nav-link" [routerLink]="isCompany ? 'companies/profile' : 'users/profile'">

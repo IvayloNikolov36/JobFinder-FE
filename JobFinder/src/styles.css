@@ -67,6 +67,14 @@ a {
   background-image: linear-gradient(to left, rgb(161, 240, 170), rgb(147, 210, 252));
 }
 
+.app-logo {
+  border: 0.145rem solid rgba(44, 168, 235, 0.359);
+  border-radius: 0.295rem;
+  padding: 0.245rem 1.245rem;
+  background-color: rgba(136, 216, 245, 0.305);
+  color:  rgb(44, 168, 235);
+}
+
 .salary-container {
   border: 0.095rem solid rgb(136, 206, 244);
   border-radius: 25px;
