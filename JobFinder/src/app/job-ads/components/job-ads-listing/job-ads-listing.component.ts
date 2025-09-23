@@ -1,7 +1,7 @@
 import { Component, computed, linkedSignal, signal, Signal, WritableSignal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { BasicModel, JobAd } from '../../../core/models';
+import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { JobsSubscriptionCriterias } from '../../../shared/models';
@@ -10,6 +10,7 @@ import { JobAdvertisementsService } from '../../../job-ads/services';
 import { SubscriptionsService } from '../../../users/services';
 import { AdsFiltering, AdsFilterProps } from '../../../job-ads/models';
 import { HttpErrorResponse } from '@angular/common/http';
+import { JobAd } from '../../../users/models';
 
 const ShowFiltersText: string = 'Show Filters';
 const CloseFiltersText: string = 'Hide Filters';
@@ -95,7 +96,7 @@ export class JobAdsListingComponent {
       .subscribeForJobsWithCriterias(subscriptionCriterias)
       .subscribe({
         next: () => this.toastr.success("Succsessfully subscribed for jobs with selected criterias."),
-        error: (err: HttpErrorResponse) =>  this.toastr.error(err.error.errors[0]),
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors[0]),
         complete: () => {
           this.recurringTypeId.setValue(null);
           this.showSubscribeButton.set(false);

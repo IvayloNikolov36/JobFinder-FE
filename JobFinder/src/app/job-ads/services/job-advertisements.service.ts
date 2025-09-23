@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { JobAd } from '../../core/models/job-ad';
-import { JobDetails } from '../../core/models/job-details';
+import { JobAd } from '../../users/models/job-ad/job-ad.model';
+import { JobDetails } from '../../shared/models/job-details';
 import { SortByColumnEnum } from '../../core/enums';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { renderSalary } from '../../shared/functions';

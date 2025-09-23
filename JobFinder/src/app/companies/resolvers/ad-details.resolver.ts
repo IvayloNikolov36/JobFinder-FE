@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, MaybeAsync, RedirectCommand, Resolve, RouterStateSnapshot } from '@angular/router';
-import { AdDetails } from '../../core/models';
+import { AdDetails } from '../models';
 import { Injectable } from '@angular/core';
 import { CompanyJobAdsService } from '../services';
 
@@ -17,5 +17,4 @@ export class JobAdDetailsResolver implements Resolve<AdDetails> {
 
     return this.jobAdsService.get(adId);
   }
-
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { JobDetails } from '../../../core/models/job-details';
+import { JobDetails } from '../../../shared/models/job-details';
 import { CvListing } from '../../../users/models/cv';
 import { JobAdApplication } from '../../models';
 import { CurriculumVitaesService, UserApplicationsService } from '../../../users/services';

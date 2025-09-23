@@ -9,3 +9,4 @@ export * from './anonymous-profile/personal-info-anonymous-profile.model';
 export * from './anonymous-profile/personal-info-anonymous-profile.model';
 export * from './anonymous-profile/education-info-anonymous-profile.model';
 export * from './anonymous-profile/work-experience-info-anonymous-profile.model';
+export * from './job-details';

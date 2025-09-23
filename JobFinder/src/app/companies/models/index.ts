@@ -8,3 +8,6 @@ export * from './cv-preview-request.model';
 export * from './cv-preview-request-data.model';
 export * from './cv-basic-details.model';
 export * from './ad-form.model';
+export * from './ad-details.model';
+export * from './job-ad-create.model';
+export * from './job-ad-edit.model';

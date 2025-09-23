@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IdentityResult, JobAdCreate } from '../../../core/models';
+import { IdentityResult } from '../../../core/models';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';
 import { AdFormComponent } from '../ad-form/ad-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { JobAdCreate } from '../../models';
 
 @Component({
   selector: 'jf-create-job-advertisement',

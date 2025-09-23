@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { GreaterThanOrEqual } from '../../../core/functions';
 import { distinctUntilChanged, forkJoin, Observable } from 'rxjs';
-import { BasicModel, JobAdCreate } from '../../../core/models';
+import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
-import { JobAdForm } from '../../models';
+import { JobAdCreate, JobAdForm } from '../../models';
 
 @Component({
   selector: 'jf-ad-form',

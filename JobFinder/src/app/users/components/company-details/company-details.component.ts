@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CompanyDetailsUser, CompanyJobAdsListing } from '../../models';
+import { CompanyDetailsUser, CompanyJobAdsListing, JobAd } from '../../models';
 import { CompaniesService, SubscriptionsService } from '../../services';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { JobAd } from '../../../core/models';
 
 @Component({
   selector: 'jf-company-details',

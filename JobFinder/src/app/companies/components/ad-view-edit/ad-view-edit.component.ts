@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CompanyJobAdsService } from '../../services';
-import { AdDetails, JobAdCreate, JobAdEditModel } from '../../../core/models';
+import { AdDetails, JobAdCreate, JobAdEditModel } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
