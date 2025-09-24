@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h3 class="text-center my-4">{{ companyDetails?.name }}</h3>
 
-    @if (companyDetails) {
+    @if (companyDetails && canSubscribe) {
     <div class="d-flex justify-content-end me-4 mb-3">
         @if (companyDetails.hasSubscription) {
         <button mat-fab extended (click)="unsubscribeFromCompany()">

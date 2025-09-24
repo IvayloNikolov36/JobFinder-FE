@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CompanyDetailsUser, CompanyJobAdsListing, JobAd } from '../../models';
-import { CompaniesService, SubscriptionsService } from '../../services';
+import { CompanyDetailsUser, CompanyJobAdsListing, JobAd } from '../../../users/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CompaniesService, CompanySubscriptionsService } from '../../services';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'jf-company-details',
@@ -15,12 +16,16 @@ export class CompanyDetailsComponent implements OnInit {
   @Input() id!: number;
   companyDetails: CompanyDetailsUser | null = null;
   companyJobAds: JobAd[] = [];
+  canSubscribe: boolean = false;
 
   constructor(
     private router: Router,
-    private subscriptionsService: SubscriptionsService,
+    authService: AuthService,
+    private subscriptionsService: CompanySubscriptionsService,
     private companiesService: CompaniesService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+    this.canSubscribe = authService.isJobSeeker();
+  }
 
   ngOnInit(): void {
     if (this.id) {
@@ -65,8 +70,6 @@ export class CompanyDetailsComponent implements OnInit {
               ...ad
             } as JobAd
           });
-          console.log(data);
-          console.log(this.companyJobAds);
         }
       });
   }

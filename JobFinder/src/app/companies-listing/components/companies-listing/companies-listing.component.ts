@@ -22,7 +22,6 @@ export class CompaniesListingComponent implements OnInit {
       .subscribe({
         next: (data: CompanyListing[]) => {
           this.companies = data;
-          console.log(data);
         }
       });
   }

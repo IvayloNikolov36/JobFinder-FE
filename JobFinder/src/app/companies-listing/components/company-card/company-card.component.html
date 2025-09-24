@@ -1,23 +1,38 @@
 @if (company) {
-<mat-card class="p-1 shadow mb-4 bg-body rounded" appearance="outlined">
-    <mat-card-header>
-        <mat-card-title-group class="flex-row-reverse justify-content-end gap-5">
-            <mat-card-title class="mb-3">
-                <span>{{ company.name }}</span>
-            </mat-card-title>
-            <mat-card-subtitle class="text-info">
-                <span><i class="bi bi-phone me-2"></i>{{ company.ads }}</span>
-                <span><i class="bi bi-mailbox ms-3 me-2"></i>{{ company.employees }}</span>
-            </mat-card-subtitle>
-            <img mat-card-image class="application-cv-picture" [src]="company.logo" alt="Company Picture">
-        </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content class="mt-2">
-        <div class="d-flex justify-content-between">
-            <span>
-                <i class="bi bi-calendar2-week me-2"></i>
+<mat-card class="p-1 shadow mb-4 bg-body rounded" appearance="outlined" (click)="viewCompanyDetails()">
+    <div class="align-self-stretch">
+        <mat-card-header class="pe-0">
+            <mat-card-title-group class="d-flex flex-row-reverse justify-content-end gap-3">
+                <div class="container">
+                    <div class="d-flex justify-content-between">
+                        <mat-card-title class="mb-3">
+                            <span>{{ company.name }}</span>
+                        </mat-card-title>
+                        @if (!company.subscription) {
+                        <span class="text-info fs-3" matTooltip="Subscribe for advertisements">
+                            <i class="bi bi-bookmarks"></i>
+                        </span>
+                        }
+                    </div>
+                    <mat-card-subtitle class="text-info">
+                        <span><i class="bi bi-people-fill me-2"></i>{{ company.employees }} Employees</span>
+                    </mat-card-subtitle>
+                </div>
+                <div class="p-1">
+                    <img mat-card-image class="company-listing-img" [src]="company.logo" alt="Company Picture">
+                </div>
+            </mat-card-title-group>
+        </mat-card-header>
+    </div>
+    <mat-card-content class="my-3 mb-0">
+        <mat-divider class="d-flex w-75 mx-auto"></mat-divider>
+        <div class="d-flex justify-content-center mt-2 pt-2">
+            <span class="fs-6 fst-italic fw-bold text-info">
+                <i class="bi bi-collection me-2"></i>
+                {{ company.ads }} Advertisements
             </span>
         </div>
     </mat-card-content>
+
 </mat-card>
 }

@@ -1,7 +1,7 @@
 export * from './company-subscription';
 export * from './job-ad/job-subscription';
 export * from './user-profile-data';
-export * from './company-details-user';
+export * from '../../companies-listing/models/company-details-user';
 export * from './job-ad/job-add-application';
 export * from './job-ad/job-add-application-details';
 export * from './job-ad/job-ad-basic-details.model';
@@ -10,4 +10,4 @@ export * from './job-ad/job-ad.model';
 export * from './anonymous-profile-create';
 export * from './anonymous-profile-appearance';
 export * from './company-basic-details.model';
-export * from './cpmpany-job-ads-listing.model';
+export * from '../../companies-listing/models/cpmpany-job-ads-listing.model';

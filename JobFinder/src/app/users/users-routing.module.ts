@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CvViewComponent } from './components/cv-view-edit/cv-view-edit.component';
 import {
-  CompanyDetailsComponent,
   CreateCvComponent,
   CvRequestsListingComponent,
   JobAdvertisementDetailsComponent,
@@ -20,7 +19,6 @@ const routes: Routes = [
   { path: 'profile/job-applications', component: MyJobApplicationsComponent },
   { path: 'profile/cv-requests', component: CvRequestsListingComponent },
   { path: 'profile/cvs/view/:id', component: CvViewComponent },
-  { path: 'company/:id', component: CompanyDetailsComponent },
   { path: 'job-ad/:id', component: JobAdvertisementDetailsComponent },
   { path: '', pathMatch: 'full', redirectTo: 'profile' },
 ];

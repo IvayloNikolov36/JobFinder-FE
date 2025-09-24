@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
   getMyCompanySubscriptions,
-  subscribeForCompanyJobs,
   SubscriptionsController,
   unsubscribeForAllCompanyJobs,
   unsubscribeForCompanyJobs,
@@ -32,10 +31,6 @@ export class SubscriptionsService {
 
   getAllMyJobSubscriptions(): Observable<JobSubscription[]> {
     return this.http.get<JobSubscription[]>(SubscriptionsController.getAllMyJobSubscriptions());
-  }
-
-  subscribeForCompanyJobs(companyId: number): Observable<object> {
-    return this.http.get<object>(subscribeForCompanyJobs(companyId));
   }
 
   unsubscribeFromCompany(companyId: number): Observable<object> {

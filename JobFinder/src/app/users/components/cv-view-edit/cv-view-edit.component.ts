@@ -205,10 +205,6 @@ export class CvViewComponent implements OnInit {
       });
   }
 
-  getAnonymousProfile = (): void => {
-    this.anonymousProfileService.view().subscribe((data: unknown) => console.log(data));
-  }
-
   setAnonymousProfileAppearanceCriterias = (): void => {
     this.mode = CvSectionModeEnum.AnonymousProfileSetAppearanceCriterias;
   }

@@ -130,3 +130,8 @@ a {
   height: 5.625rem;
   width: auto;
 }
+
+.company-listing-img {
+  max-width: 8.125rem;
+  height: 8.125rem;
+}

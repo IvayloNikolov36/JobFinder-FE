@@ -7,6 +7,5 @@ export * from './skills.service';
 export * from './work-experiences.service';
 export * from './user-profile.service';
 export * from './subscriptions.service';
-export * from './companies.service';
 export * from './user-applications.service';
 export * from './anonymous-profile.service';
