@@ -10,14 +10,18 @@
     </ul>
 
     <ul class="nav nav-underline">
+      @if (isAuthenticated) {
       <li class="nav-item">
         <a class="nav-link" routerLink="/ads/all">Job Ads</a>
       </li>
-
-      @if (isAuthenticated && isCompany) {
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/companies-listing/all">Companies</a>
+      </li>
+      @if (isCompany) {
       <li class="nav-item">
         <a class="nav-link" routerLink="/companies/ads/create">New ad</a>
       </li>
+      }
       }
     </ul>
 

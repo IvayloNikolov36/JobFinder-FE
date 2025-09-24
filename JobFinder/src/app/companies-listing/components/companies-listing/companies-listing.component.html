@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <h4 class="mt-3">All Companies:</h4>
+
+    <div class="my-4">
+        @for(company of companies; track company.id; let i = $index; let count = $count;) {
+        <div class="d-flex justify-content-center gap-5 mx-5 my-4">
+
+            @let firstItemIndex = i + i;
+            @let showElement = firstItemIndex !== count;
+            @if (showElement) {
+            <div [class]="{'w-50': (firstItemIndex === count - 1), 'container': (firstItemIndex !== count - 1) }">
+                <jf-company-card [company]="companies[firstItemIndex]" />
+            </div>
+
+            @let secondItemIndex = firstItemIndex + 1;
+            @let showSecond = (secondItemIndex) !== count;
+            @if (showSecond) {
+            <div class="container">
+                <jf-company-card [company]="companies[secondItemIndex]" />
+            </div>
+            }
+            }
+
+        </div>
+        }
+    </div>
+</div>

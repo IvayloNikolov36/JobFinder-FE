@@ -11,7 +11,17 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'ads', loadChildren: () => import('./job-ads/job-ads.module').then(m => m.JobAdsModule), canActivate: [AuthGuard] },
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canActivate: [AuthGuard] },
-  { path: 'companies', loadChildren: () => import('./companies/companies.module').then(c => c.CompaniesModule), canActivate: [CompanyGuard] },
+  {
+    path: 'companies',
+    loadChildren: () => import('./companies/companies.module')
+      .then(c => c.CompaniesModule), canActivate: [CompanyGuard]
+  },
+  {
+    path: 'companies-listing',
+    loadChildren: () => import('./companies-listing/companies-listing.module')
+      .then(cl => cl.CompaniesListingModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
