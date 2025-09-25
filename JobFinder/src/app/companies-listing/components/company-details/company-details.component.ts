@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CompaniesService, CompanySubscriptionsService } from '../../services';
 import { AuthService } from '../../../core/services';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'jf-company-details',
@@ -15,8 +16,9 @@ export class CompanyDetailsComponent implements OnInit {
 
   @Input() id!: number;
   companyDetails: CompanyDetailsUser | null = null;
-  companyJobAds: JobAd[] = [];
+  companyJobAds!: JobAd[];
   canSubscribe: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private router: Router,
@@ -30,6 +32,11 @@ export class CompanyDetailsComponent implements OnInit {
   ngOnInit(): void {
     if (this.id) {
       this.loadDetails(this.id);
+    }
+  }
+
+  onOpenExpansionPanel = (): void => {
+    if (!this.companyJobAds) {
       this.loadCompanyActiveAds(this.id);
     }
   }
@@ -61,7 +68,12 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   private loadCompanyActiveAds = (id: number): void => {
+    this.loading = true;
+
     this.companiesService.getActiveAds(id)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: (data: CompanyJobAdsListing) => {
           this.companyJobAds = data.ads.map(ad => {
@@ -70,7 +82,8 @@ export class CompanyDetailsComponent implements OnInit {
               ...ad
             } as JobAd
           });
-        }
+        },
+        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
       });
   }
 }

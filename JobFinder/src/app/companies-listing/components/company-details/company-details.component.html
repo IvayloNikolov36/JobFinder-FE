@@ -18,13 +18,19 @@
 
     <div class="d-flex w-75 my-4 mx-auto">
         <mat-accordion class="full-width">
-            <mat-expansion-panel class="mt-3">
+            <mat-expansion-panel class="mt-3" (opened)="onOpenExpansionPanel()">
                 <mat-expansion-panel-header>
                     <mat-panel-title class="fs-6 fst-italic">View company job advertisements</mat-panel-title>
                 </mat-expansion-panel-header>
                 <ng-template matExpansionPanelContent>
+                    @if (loading) {
+                    <mat-progress-spinner mode="determinate"></mat-progress-spinner>
+                    <mat-spinner class="mx-auto mb-3"></mat-spinner>
+                    }
+                    @else {
                     @for (ad of companyJobAds; track ad.id; let even = $even) {
                     <jf-job-ad [ad]="ad" [isEven]="even" />
+                    }
                     }
                 </ng-template>
             </mat-expansion-panel>
