@@ -3,7 +3,7 @@
   <div *ngFor="let workExp of we.controls; let i = index" [formGroup]="workExp" class="my-4">
 
     <mat-accordion class="full-width">
-      <mat-expansion-panel class="mt-3">
+      <mat-expansion-panel class="mt-3" [expanded]="openedPanel === i" (opened)="openExpansionPanel(i)">
         <mat-expansion-panel-header>
           <mat-panel-title class="fs-6 fst-italic">
             <span>Work Experience {{i + 1}}</span>

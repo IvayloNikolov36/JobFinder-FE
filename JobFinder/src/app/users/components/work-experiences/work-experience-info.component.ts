@@ -17,6 +17,8 @@ export class WorkExperienceInfoComponent implements OnInit {
 
   workExpForm!: FormGroup;
 
+  openedPanel: number | undefined = 0;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -27,11 +29,19 @@ export class WorkExperienceInfoComponent implements OnInit {
     return this.workExpForm.controls['workExperienceArray'] as FormArray<FormGroup>;
   }
 
+  openExpansionPanel(index: number): void {
+    this.openedPanel = index;
+  }
+
   addWorkExperienceForm(): void {
     this.we.push(this.createWorkExperienceFormGroup());
+    this.openedPanel = this.we.length - 1;
   }
 
   removeWorkExperienceForm(formIndex: number): void {
+    if (this.we.length === 1) {
+      return;
+    }
     this.we.removeAt(formIndex);
   }
 
