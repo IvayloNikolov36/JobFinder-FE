@@ -31,11 +31,8 @@ export class WorkExperienceInfoComponent implements OnInit {
     this.we.push(this.createWorkExperienceFormGroup());
   }
 
-  removeWorkExperienceForm(): void {
-    if (this.we.length === 1) {
-      return;
-    }
-    this.we.removeAt(this.we.length - 1);
+  removeWorkExperienceForm(formIndex: number): void {
+    this.we.removeAt(formIndex);
   }
 
   emitData(): void {
