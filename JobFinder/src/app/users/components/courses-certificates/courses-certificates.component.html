@@ -34,15 +34,15 @@
 
   </div>
 
-  <div class="d-flex justify-content-start gap-2 mt-4">
-    <button mat-button color="primary" [disabled]="!coursesForm.valid" (click)="addNewCourseInfo()">Add another</button>
-    <button mat-button color="primary" (click)="removeLastCoursesFormGroup()">Remove last</button>
+  <div class="d-flex justify-content-center gap-2 mt-4">
+    <button mat-button color="primary" [disabled]="!coursesForm.valid" (click)="addNewCourseInfo()">Add new</button>
+    <button mat-button color="primary" [disabled]="coursesFormArray.length === 1" (click)="removeLastCoursesFormGroup()">Remove last</button>
   </div>
 
-  <div class="d-flex mt-3">
+  <div class="d-flex justify-content-center mt-3">
     @if (isEditMode) {
-    <button type="submit" mat-button [disabled]="!coursesForm.valid" (click)="emitData()">
-      Update
+    <button type="submit" mat-fab extended [disabled]="!coursesForm.valid" (click)="emitData()">
+      Update Info
     </button>
     }
     @else {
