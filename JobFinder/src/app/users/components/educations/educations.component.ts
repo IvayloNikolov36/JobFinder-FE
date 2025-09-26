@@ -17,6 +17,8 @@ export class EducationsComponent implements OnInit {
 
   educationsForm!: FormGroup;
 
+  openedPanel: number | undefined = 0;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -27,15 +29,17 @@ export class EducationsComponent implements OnInit {
     return this.educationsForm.controls['educationsArray'] as FormArray<FormGroup>;
   }
 
-  addNewEducationForm(): void {
-    this.educationsFormArray.push(this.createEducationFormGroup());
+  openExpansionPanel = (index: number): void => {
+    this.openedPanel = index;
   }
 
-  removeLastEducationForm(): void {
-    if (this.educationsFormArray.length === 1) {
-      return;
-    }
-    this.educationsFormArray.removeAt(this.educationsFormArray.length - 1);
+  addNewEducationForm(): void {
+    this.educationsFormArray.push(this.createEducationFormGroup());
+    this.openedPanel = this.educationsFormArray.length - 1;
+  }
+
+  removeEducationForm(formIndex: number): void {
+    this.educationsFormArray.removeAt(formIndex);
   }
 
   emitData(): void {
