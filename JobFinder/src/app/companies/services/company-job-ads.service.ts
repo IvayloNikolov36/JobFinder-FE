@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { AdDetails, AnonymousProfileListingModel, CompanyAd, JobAdCreate, JobAdEditModel } from "../models";
+import { AdDetails, AnonymousProfileListingModel, CompanyAd, JobAd } from "../models";
 import { JobAdsController } from "../../core/controllers";
 import { IdentityResult } from "../../core/models";
 
@@ -16,16 +16,16 @@ export class CompanyJobAdsService {
         return this.http.get<AdDetails>(JobAdsController.get(id));
     }
 
-    createJobAd(data: JobAdCreate): Observable<IdentityResult<number>> {
+    createJobAd(data: JobAd): Observable<IdentityResult<number>> {
         return this.http.post<IdentityResult<number>>(JobAdsController.create(), data);
     }
 
-    updateJobAd(id: number, data: JobAdEditModel): Observable<Object> {
+    updateJobAd(id: number, data: JobAd): Observable<Object> {
         return this.http.put(JobAdsController.update(id), data);
     }
 
-    activate(id: number, data: JobAdEditModel): Observable<Object> {
-        return this.updateJobAd(id, data);
+    activate(id: number): Observable<void> {
+        return this.http.get<void>(JobAdsController.activate(id));
     }
 
     retire(id: number): Observable<Object> {

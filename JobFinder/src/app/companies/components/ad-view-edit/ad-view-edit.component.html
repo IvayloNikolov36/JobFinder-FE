@@ -1,14 +1,31 @@
 <div class="container-fluid">
-    <jf-ad-form [adData]="adData" />
 
-    <!-- TODO: disable the buttons if the form is not valid and add a button for Edit mode -->
-    <div class="d-flex justify-content-center gap-3 pb-3">
-        @if (adDetails?.lifecycleStatusId === status.Draft) {
-        <button mat-fab extended (click)="update()">
-            Update
+    <div class="d-flex justify-content-end gap-2 my-4 me-4">
+
+        @if (!isEditMode) {
+        <button mat-fab extended (click)="createNewWithCopiedData()">
+            Copy
         </button>
         <button mat-fab extended (click)="activate()">
-            Update and Activate
+            Activate
+        </button>
+        <button mat-fab extended (click)="onEditMode()">
+            Edit
+        </button>
+        }
+        @if (isEditMode) {
+        <button mat-fab extended (click)="discardChanges()">
+            Discard Changes
+        </button>
+        }
+    </div>
+
+    <jf-ad-form [adData]="adData" [disabled]="!isEditMode" />
+
+    <div class="d-flex justify-content-center gap-3 pb-3">
+        @if (isEditMode && adDetails?.lifecycleStatusId === status.Draft) {
+        <button mat-fab extended (click)="update()">
+            Update
         </button>
         }
         @if (adDetails?.lifecycleStatusId === status.Active) {
@@ -16,8 +33,5 @@
             Retire
         </button>
         }
-        <button mat-fab extended (click)="createNewWithCopiedData()">
-            Copy
-        </button>
     </div>
 </div>

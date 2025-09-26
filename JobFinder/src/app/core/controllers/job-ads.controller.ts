@@ -9,6 +9,7 @@ export class JobAdsController {
     static getCompanyAds = (active: boolean): string => Route + `/company/${active}`;
     static create = (): string => Route + '/create';
     static update = (id: number): string => Route + `/${id}`;
+    static activate = (id: number): string => Route + `/${id}/activate`;
     static retire = (id: number): string => Route + `/${id}/retire`;
     static getRelatedAnonymousProfiles = (jobAdId: number): string => Route + `/${jobAdId}/anonymous-profiles`;
 }

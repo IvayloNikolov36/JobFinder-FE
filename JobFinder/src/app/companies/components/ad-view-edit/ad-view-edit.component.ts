@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CompanyJobAdsService } from '../../services';
-import { AdDetails, JobAdCreate, JobAdEditModel } from '../../models';
+import { AdDetails, JobAd } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdFormComponent } from '../ad-form/ad-form.component';
 import { LifycycleStatusEnum } from '../../enums';
 import { HttpErrorResponse } from '@angular/common/http';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'jf-ad-view-edit',
@@ -17,8 +18,10 @@ export class AdViewEditComponent implements OnInit {
   @Input() id!: number;
   @ViewChild(AdFormComponent) adFormComponent!: AdFormComponent;
 
-  adData!: JobAdCreate;
+  adData!: JobAd;
   adDetails: AdDetails | null = null;
+
+  isEditMode: boolean = false;
 
   readonly status: typeof LifycycleStatusEnum = LifycycleStatusEnum;
 
@@ -33,14 +36,23 @@ export class AdViewEditComponent implements OnInit {
     this.getAdDetailsData();
   }
 
+  onEditMode = (): void => {
+    this.isEditMode = true;
+  }
+
+  discardChanges = (): void => {
+    this.isEditMode = false;
+    this.adData = cloneDeep(this.adData);
+  }
+
   update(): void {
     this.jobAdsService.updateJobAd(
       this.id,
-      this.constructJobAdEditModel(this.adFormComponent.formValueAsModel))
+      this.adFormComponent.formValueAsModel)
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is updated successfuly!', 'Success');
-          this.router.navigate(['/home']);
+          this.router.navigate(['profile/my-ads']);
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error(error.error.errors);
@@ -49,17 +61,13 @@ export class AdViewEditComponent implements OnInit {
   }
 
   activate(): void {
-    this.jobAdsService.updateJobAd(
-      this.id,
-      this.constructJobAdEditModel(this.adFormComponent.formValueAsModel, true))
+    this.jobAdsService.activate(this.id)
       .subscribe({
         next: () => {
           this.toastr.success('The advertisement is activated successfuly!', 'Success');
-          this.router.navigate(['/home']);
+          this.router.navigate(['profile/my-ads']);
         },
-        error: (error: HttpErrorResponse) => {
-          this.toastr.error(error.error.errors);
-        }
+        error: (error: HttpErrorResponse) => this.toastr.error(error.error.errors)
       });
   }
 
@@ -70,9 +78,7 @@ export class AdViewEditComponent implements OnInit {
           this.toastr.success('The advertisement is retired successfuly!', 'Success');
           this.adDetails!.lifecycleStatusId = LifycycleStatusEnum.Retired;
         },
-        error: (error: HttpErrorResponse) => {
-          this.toastr.error(error.error.errors);
-        }
+        error: (error: HttpErrorResponse) => this.toastr.error(error.error.errors)
       });
   }
 
@@ -83,7 +89,7 @@ export class AdViewEditComponent implements OnInit {
   private getAdDetailsData(): void {
     this.activatedRoute.data.subscribe(({ data }) => {
       this.adDetails = data;
-      this.adData = new JobAdCreate(
+      this.adData = new JobAd(
         data.position,
         data.description,
         data.minSalary,
@@ -98,12 +104,5 @@ export class AdViewEditComponent implements OnInit {
         data.itAreas,
         data.workplaceTypeId);
     });
-  }
-
-  private constructJobAdEditModel = (
-    data: JobAdCreate,
-    activate: boolean = false
-  ): JobAdEditModel => {
-    return { ...data, activate } as JobAdEditModel;
   }
 }

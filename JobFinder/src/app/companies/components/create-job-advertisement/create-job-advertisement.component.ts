@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CompanyJobAdsService } from '../../services';
 import { AdFormComponent } from '../ad-form/ad-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { JobAdCreate } from '../../models';
+import { JobAd } from '../../models';
 
 @Component({
   selector: 'jf-create-job-advertisement',
@@ -16,7 +16,7 @@ export class CreateJobAdvertisementComponent {
 
   @ViewChild(AdFormComponent) adForm: AdFormComponent | null = null;
 
-  adData: JobAdCreate | null = null;
+  adData: JobAd | null = null;
 
   constructor(
     private router: Router,
@@ -24,7 +24,7 @@ export class CreateJobAdvertisementComponent {
     private jobAdsService: CompanyJobAdsService) {
     
     const passedAdData = this.router.getCurrentNavigation()?.extras.state;
-    this.adData = passedAdData as JobAdCreate;
+    this.adData = passedAdData as JobAd;
   }
 
   saveAsDraft(): void {

@@ -1,19 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { GreaterThanOrEqual } from '../../../core/functions';
 import { distinctUntilChanged, forkJoin, Observable } from 'rxjs';
 import { BasicModel } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
-import { JobAdCreate, JobAdForm } from '../../models';
+import { JobAd, JobAdForm } from '../../models';
 
 @Component({
   selector: 'jf-ad-form',
   templateUrl: './ad-form.component.html',
   standalone: false
 })
-export class AdFormComponent implements OnInit {
+export class AdFormComponent implements OnInit, OnChanges {
 
-  @Input() adData: JobAdCreate | null = null;
+  @Input() adData: JobAd | null = null;
+  @Input() disabled: boolean = false;
 
   form!: FormGroup<JobAdForm>;
 
@@ -32,14 +33,28 @@ export class AdFormComponent implements OnInit {
     private nomenclatureService: NomenclatureService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['adData']) {
+      this.form?.setValue(this.adData!);
+    }
+
+    if (changes['disabled']) {
+      if (this.disabled) {
+        this.form?.disable();
+      } else {
+        this.form?.enable();
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.initializeJobAdvertisementForm();
     this.subscribeToJobCategoryChanges();
     this.getNomenclatureData();
   }
 
-  get formValueAsModel(): JobAdCreate {
-    return this.form.value as JobAdCreate;
+  get formValueAsModel(): JobAd {
+    return this.form.value as JobAd;
   }
 
   private get techStackControl(): any {
@@ -203,6 +218,9 @@ export class AdFormComponent implements OnInit {
           this.setNomenclatureData(data);
           if (this.adData) {
             this.form.setValue(this.adData);
+            if (this.disabled) {
+              this.form.disable();
+            }
           }
         }
       });

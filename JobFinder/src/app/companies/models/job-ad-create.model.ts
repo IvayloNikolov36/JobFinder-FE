@@ -1,4 +1,4 @@
-export class JobAdCreate {
+export class JobAd {
     constructor(
         public position: string,
         public description: string,
