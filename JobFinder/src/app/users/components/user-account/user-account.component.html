@@ -2,14 +2,19 @@
 
   <ng-container *ngIf="userProfileData$ | async as userData">
 
-    <div class="d-flex justify-content-center my-5">
-      <div class="me-3">
-        <img class="user-avatar" [src]="userData.pictureUrl" alt="User Avatar">
+    <div class="d-flex justify-content-between w-50 mx-auto my-5">
+      <div class="d-flex justify-content-end">
+        <div class="me-3">
+          <img class="user-avatar" [src]="userData.pictureUrl" alt="User Avatar">
+        </div>
+        <div class="my-2 fw-bold">
+          <p>{{ userData.fullName }}</p>
+          <p><i class="bi bi-mailbox me-2"></i>{{ userData.email }}</p>
+          <p><i class="bi bi-telephone me-2"></i>{{ userData.phone }}</p>
+        </div>
       </div>
-      <div class="my-2 fw-bold">
-        <p>{{ userData.fullName }}</p>
-        <p><i class="bi bi-mailbox me-2"></i>{{ userData.email }}</p>
-        <p><i class="bi bi-telephone me-2"></i>{{ userData.phone }}</p>
+      <div>
+        <button matButton="filled" (click)="logout()">Log out</button>
       </div>
     </div>
 
