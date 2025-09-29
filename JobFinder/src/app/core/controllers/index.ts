@@ -1,4 +1,4 @@
-export * from './auth.controller';
+export * from './account.controller';
 export * from './job-ads.controller';
 export * from './cv.controller';
 export * from './nomenclature.controller';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { loginUrl, registerCompanyUrl, registerUserUrl } from '../controllers';
-import { LoginResultModel, RegisterUserModel } from '../models';
+import { ChangePassword, LoginResultModel, RegisterUserModel } from '../models';
+import { AccountController } from '../controllers';
 
 @Injectable({
   providedIn: 'root'
@@ -19,20 +19,24 @@ export class AuthService {
   }
 
   registerUser(registerModel: RegisterUserModel): Observable<Object> {
-    return this.http.post(registerUserUrl(), registerModel);
+    return this.http.post(AccountController.registerUserUrl(), registerModel);
   }
 
   registerCompany(body: any): Observable<Object> {
-    return this.http.post(registerCompanyUrl(), body);
+    return this.http.post(AccountController.registerCompanyUrl(), body);
   }
 
   login(body: any): Observable<LoginResultModel> {
-    return this.http.post<LoginResultModel>(loginUrl(), body);
+    return this.http.post<LoginResultModel>(AccountController.loginUrl(), body);
   }
 
   logout(): void {
     localStorage.clear();
     this.isLoggedIn.next(false);
+  }
+
+  changePassword(body: ChangePassword): Observable<Object> {
+    return this.http.post<Object>(AccountController.changePasswordUrl(), body);
   }
 
   isAuthenticated(): boolean {

@@ -13,8 +13,9 @@
           <p><i class="bi bi-telephone me-2"></i>{{ userData.phone }}</p>
         </div>
       </div>
-      <div>
+      <div class="d-flex flex-column">
         <button matButton="filled" (click)="logout()">Log out</button>
+        <a routerLink="/change-password" class="fs-5 mt-3">Change Password</a>
       </div>
     </div>
 
