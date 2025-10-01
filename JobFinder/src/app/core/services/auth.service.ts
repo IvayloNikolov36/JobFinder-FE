@@ -12,6 +12,7 @@ export class AuthService {
   readonly isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated());
 
   constructor(private http: HttpClient) {
+
     const token: string | null = this.getToken();
     if (token && this.isTokenExpired(token)) {
       this.logout();
@@ -37,6 +38,10 @@ export class AuthService {
 
   changePassword(body: ChangePassword): Observable<Object> {
     return this.http.post<Object>(AccountController.changePasswordUrl(), body);
+  }
+
+  requestLinkForPasswordChange(email: string): Observable<Object> {
+    return this.http.post(AccountController.forgottenPasswordUrl(), { email });
   }
 
   isAuthenticated(): boolean {

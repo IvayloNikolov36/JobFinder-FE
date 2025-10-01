@@ -9,7 +9,7 @@ import { JwtInterceptorService, ResponseHandlerInterceptorService } from './core
 import { SharedModule } from './shared/shared.module';
 import { CompaniesModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
-import { ChangePasswordComponent, HomeComponent, LoginComponent, RegisterCompanyComponent, RegisterUserComponent } from './core/components';
+import { ChangePasswordComponent, ForgottenPasswordComponent, HomeComponent, LoginComponent, RegisterCompanyComponent, RegisterUserComponent } from './core/components';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { ChangePasswordComponent, HomeComponent, LoginComponent, RegisterCompany
     RegisterUserComponent,
     RegisterCompanyComponent,
     ChangePasswordComponent,
+    ForgottenPasswordComponent,
   ],
   imports: [
     AppRoutingModule,

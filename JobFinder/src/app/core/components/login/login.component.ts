@@ -5,6 +5,7 @@ import { AuthService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 import { LoginResultModel } from '../../models';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ValidationConstants } from '../../constants';
 
 @Component({
   selector: 'jf-login',
@@ -14,7 +15,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   form!: FormGroup<LoginForm>;
-  emailPattern: RegExp = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
   constructor(
     private authService: AuthService,
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         '',
         {
           nonNullable: true,
-          validators: [Validators.required, Validators.pattern(this.emailPattern)]
+          validators: [Validators.required, Validators.pattern(ValidationConstants.emailPattern)]
         }),
       password: new FormControl(
         '',
