@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ChangePassword, LoginResultModel, RegisterUserModel } from '../models';
+import { ChangePassword, LoginResultModel, RegisterUserModel, ResetPassword } from '../models';
 import { AccountController } from '../controllers';
 
 @Injectable({
@@ -42,6 +42,10 @@ export class AuthService {
 
   requestLinkForPasswordChange(email: string): Observable<Object> {
     return this.http.post(AccountController.forgottenPasswordUrl(), { email });
+  }
+
+  resetPassword(model: ResetPassword): Observable<Object> {
+    return this.http.post(AccountController.resetPasswordUrl(), model);
   }
 
   isAuthenticated(): boolean {

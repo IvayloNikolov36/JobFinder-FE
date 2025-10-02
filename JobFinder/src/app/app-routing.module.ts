@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, CompanyGuard, IsNotSignedInGuard } from './core/guards';
-import { ChangePasswordComponent, ForgottenPasswordComponent, HomeComponent, LoginComponent, RegisterCompanyComponent, RegisterUserComponent } from './core/components';
+import { ChangePasswordComponent, ForgottenPasswordComponent, HomeComponent, LoginComponent, RegisterCompanyComponent, RegisterUserComponent, ResetPasswordComponent } from './core/components';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'register-user', component: RegisterUserComponent, canActivate: [IsNotSignedInGuard] },
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
   { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate: [IsNotSignedInGuard] },
+  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [IsNotSignedInGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'ads', loadChildren: () => import('./job-ads/job-ads.module').then(m => m.JobAdsModule), canActivate: [AuthGuard] },
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canActivate: [AuthGuard] },

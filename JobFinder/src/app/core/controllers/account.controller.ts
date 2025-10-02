@@ -8,4 +8,5 @@ export class AccountController {
     static registerUserUrl = (): string => Route + 'register/user';
     static changePasswordUrl = (): string => Route + 'change-password';
     static forgottenPasswordUrl = (): string => Route + 'forgotten-password';
+    static resetPasswordUrl = (): string => Route + 'reset-password';
 }
