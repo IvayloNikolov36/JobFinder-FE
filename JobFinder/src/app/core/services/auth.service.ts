@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ChangePassword, LoginResultModel, RegisterUserModel, ResetPassword } from '../models';
+import { ChangePassword, CompanyRegisterModel, LoginResultModel, RegisterUserModel, ResetPassword } from '../models';
 import { AccountController } from '../controllers';
+import { forIn } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,19 @@ export class AuthService {
     return this.http.post(AccountController.registerUserUrl(), registerModel);
   }
 
-  registerCompany(body: any): Observable<Object> {
-    return this.http.post(AccountController.registerCompanyUrl(), body);
+  registerCompany(data: CompanyRegisterModel, logo: File): Observable<Object> {
+    const formData: FormData = new FormData();
+    formData.append('logo', logo);
+
+    const keys: string[] = Object.keys(data);
+    keys.forEach((key: string) => {
+      formData.append(key, (data as any)[key])
+    });
+
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+
+    return this.http.post(AccountController.registerCompanyUrl(), formData, { headers });
   }
 
   login(body: any): Observable<LoginResultModel> {

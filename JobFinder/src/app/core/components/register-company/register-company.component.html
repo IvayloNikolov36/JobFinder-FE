@@ -119,14 +119,6 @@
       </mat-form-field>
 
       <mat-form-field class="d-flex half-width mx-auto my-3">
-        <mat-label>Company logo Url</mat-label>
-        <input type="text" matInput formControlName="logo" placeholder="Company logo Url...">
-        @if (form.controls.logo.touched && form.controls.logo.errors?.['required']) {
-        <mat-error>Company logo Url is mandatory!</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field class="d-flex half-width mx-auto my-3">
         <mat-label>Bulstat</mat-label>
         <input type="text" matInput formControlName="bulstat" placeholder="Bulstat...">
         @if (form.controls.bulstat.touched && form.controls.bulstat.errors?.['required']) {
@@ -143,6 +135,14 @@
         </mat-error>
         }
       </mat-form-field>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div id="company-logo-uploader">
+        <label for="formFile" class="form-label">Company Logo</label>
+        <input #filePicker type="file" class="form-control form-control-lg" id="formFile"
+          (change)="onFileChange($event)" accept="image/jpeg, image/jpg, image/png">
+      </div>
     </div>
 
     <mat-divider class="my-4 w-75 mx-auto"></mat-divider>

@@ -6,6 +6,7 @@ import { MustMatch } from '../../functions';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationConstants as c } from '../../constants';
+import { CompanyRegisterModel } from '../../models';
 
 @Component({
   selector: 'jf-register-company',
@@ -27,8 +28,14 @@ export class RegisterCompanyComponent implements OnInit {
     this.initializeRegisterForm();
   }
 
+  onFileChange(event: Event): void {
+    const files: FileList | null = (event.target as HTMLInputElement).files;
+    const file: File | null = files === null ? null : files[0];
+    this.form.patchValue({ logo: file });
+  }
+
   registerCompany(): void {
-    this.authService.registerCompany(this.form.value)
+    this.authService.registerCompany(this.form.value as CompanyRegisterModel, this.form.value.logo!)
       .subscribe({
         next: () => this.router.navigate(['/login']),
         error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
@@ -40,7 +47,7 @@ export class RegisterCompanyComponent implements OnInit {
       email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.pattern(c.emailPattern)] }),
       password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.passwordMinLength), Validators.maxLength(c.passwordMaxLength)] }),
       confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.passwordMinLength), Validators.maxLength(c.passwordMaxLength)] }),
-      logo: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      logo: new FormControl(null, { nonNullable: true, validators: [Validators.required] }),
       firstName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
       middleName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
       lastName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(c.minNameLength), Validators.maxLength(c.maxNameLength)] }),
@@ -56,7 +63,7 @@ interface RegisterCompanyForm {
   email: FormControl<string>;
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
-  logo: FormControl<string>;
+  logo: FormControl<File | null>;
   firstName: FormControl<string>;
   middleName: FormControl<string>;
   lastName: FormControl<string>;

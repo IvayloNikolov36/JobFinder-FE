@@ -6,3 +6,4 @@ export * from './update-result';
 export * from './identity-result.model';
 export * from './change-password.model';
 export * from './reset-password.model';
+export * from './company-register.model';
