@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MustMatch } from '../../functions';
-import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationConstants as c } from '../../constants';
 import { CompanyRegisterModel } from '../../models';
 
@@ -15,17 +13,26 @@ import { CompanyRegisterModel } from '../../models';
 })
 export class RegisterCompanyComponent implements OnInit {
 
+  @ViewChild('fileInput', { read: ElementRef }) fileInput!: ElementRef<HTMLElement>;
+
   form!: FormGroup<RegisterCompanyForm>;
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router,
-    private toastr: ToastrService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.initializeRegisterForm();
+  }
+
+  selectFile(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onCancelFileSelect(): void {
+    this.form.controls.logo.markAsTouched();
   }
 
   onFileChange(event: Event): void {
@@ -37,8 +44,7 @@ export class RegisterCompanyComponent implements OnInit {
   registerCompany(): void {
     this.authService.registerCompany(this.form.value as CompanyRegisterModel, this.form.value.logo!)
       .subscribe({
-        next: () => this.router.navigate(['/login']),
-        error: (err: HttpErrorResponse) => this.toastr.error(err.error.errors.join(' '))
+        next: () => this.router.navigate(['/login'])
       });
   }
 
