@@ -35,14 +35,14 @@
       }
       @else {
       <li class="nav-item me-4">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item me-4">
         <a class="nav-link" [matMenuTriggerFor]="menu">Register</a>
         <mat-menu #menu="matMenu">
           <a mat-menu-item routerLink="/register-user">User</a>
           <a mat-menu-item routerLink="/register-company">Company</a>
         </mat-menu>
-      </li>
-      <li class="nav-item me-4">
-        <a class="nav-link" routerLink="/login">Login</a>
       </li>
       }
     </ul>
