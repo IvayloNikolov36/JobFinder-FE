@@ -13,21 +13,9 @@
         characters!
       </mat-error>
     </mat-form-field>
-
-    <mat-form-field class="half-width">
-      <input matInput type="text" placeholder="Picture Url" formControlName="pictureUrl">
-      <mat-hint>Paste picture url.</mat-hint>
-      <mat-error
-        *ngIf="cvInfoForm.get('pictureUrl')?.touched && cvInfoForm.get('pictureUrl')?.errors?.['required']">Picture url
-        is
-        required!
-      </mat-error>
-      <mat-error *ngIf="cvInfoForm.get('pictureUrl')?.errors?.['pattern']">
-        Url is invalid!
-      </mat-error>
-    </mat-form-field>
   </div>
   <button type="submit" mat-button class="mt-3" color="primary" matStepperNext (click)="emitData()"
-    [disabled]="!cvInfoForm.valid">Next
+    [disabled]="!cvInfoForm.valid">
+    Next
   </button>
 </form>

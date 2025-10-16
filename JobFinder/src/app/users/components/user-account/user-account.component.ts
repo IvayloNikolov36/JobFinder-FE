@@ -35,7 +35,6 @@ export class UserAccountComponent implements OnInit {
     const file: File | null = files === null ? null : files[0];
 
     if (file) {
-      console.log(file);
       this.userProfileService.changeProfilePicture(file)
         .subscribe((data: any) => console.log(data));
     }

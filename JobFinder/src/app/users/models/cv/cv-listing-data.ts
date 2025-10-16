@@ -11,6 +11,7 @@ export interface CvListingData {
   id: string;
   name: string;
   pictureUrl: string;
+  pictureThumbnailUrl: string;
   createdOn: Date;
   anonymousProfileId: string | null;
   canActivateAnonymousProfile: boolean;

@@ -11,7 +11,6 @@ export class CvInfoComponent implements OnInit {
 
   @Output() emitCvInfoData: EventEmitter<CvInfo> = new EventEmitter<CvInfo>();
 
-  readonly urlPicPattern: RegExp = /^(http(s)?:\/\/)(.+)\.(jp(e)?g)$/;
   cvInfoForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
@@ -26,8 +25,7 @@ export class CvInfoComponent implements OnInit {
 
   private initializeForm(): void {
     this.cvInfoForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      pictureUrl: ['', [Validators.required, Validators.pattern(this.urlPicPattern)]]
+      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]]
     });
   }
 }
