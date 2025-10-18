@@ -1,5 +1,5 @@
 export interface CompanyProfileData {
-    logo: string;
+    logoThumbnailUrl: string;
     name: string;
     email: string;
     activeAdsCount: number;

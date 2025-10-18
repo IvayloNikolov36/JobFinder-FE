@@ -10,7 +10,6 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { forIn } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -40,21 +39,25 @@ export class ResponseHandlerInterceptorService implements HttpInterceptor {
           if (serverError) {
             this.toastr.error(err.error.message, err.error.guid);
           } else if (clientError) {
-            const errors: unknown = err.error.errors;
-
-            if (Array.isArray(errors)) {
-              errors.forEach((value: string) => {
-                errorMessage = errorMessage.concat(' ' + value);
-              });
+            if (!err.error) {
+              // 404 not found - consider what to do
+              errorMessage = err.message; 
             } else {
-              const errs = errors as any;
-              for (let e in errs) {
-                errorMessage = errorMessage.concat(' ' + errs[e].join(' '));
+              const errors: unknown = err.error.errors;
+
+              if (Array.isArray(errors)) {
+                errors.forEach((value: string) => {
+                  errorMessage = errorMessage.concat(' ' + value);
+                });
+              } else {
+                const errs = errors as any;
+                for (let e in errs) {
+                  errorMessage = errorMessage.concat(' ' + errs[e].join(' '));
+                }
               }
+
+              this.toastr.error(errorMessage);
             }
-
-            this.toastr.error(errorMessage);
-
           } else {
             errorMessage = err.error;
           }

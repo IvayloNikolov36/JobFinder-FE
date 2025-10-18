@@ -1,5 +1,8 @@
 import { environment } from "../../../environments/environment";
 
-const route: string = environment.apiUrl + 'company-profile';
+const Route: string = environment.apiUrl + 'company-profile/';
 
-export const getCompanyProfileData = (): string => route;
+export class CompanyProfileController {
+    static companyProfileData = (): string => Route;
+    static changeLogo = (): string => Route + 'change-logo';
+}
