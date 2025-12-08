@@ -19,7 +19,10 @@
             </div>
             <div class="d-flex flex-column">
                 <button matButton="filled" (click)="logout()">Log out</button>
-                <a routerLink="/change-password" class="fs-5 mt-3">Change Password</a>
+                <div class="d-flex flex-column mt-3 fst-italic">
+                    <a routerLink="edit" class="fs-5 mt-3">Edit Profile</a>
+                    <a routerLink="/change-password" class="fs-5 mt-3">Change Password</a>
+                </div>
             </div>
         </div>
 

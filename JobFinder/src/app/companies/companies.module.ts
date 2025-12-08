@@ -15,6 +15,7 @@ import {
   CvPreviewRequestsListingComponent,
   JobAdCardComponent,
   MyJobAdsComponent,
+  ProfileEditComponent,
   RelatedAnonymousProfilesListingComponent,
   UserCvPreviewComponent
 } from './components';
@@ -35,6 +36,7 @@ import {
     AdFormComponent,
     JobAdCardComponent,
     ApplicationCardComponent,
+    ProfileEditComponent,
   ],
   imports: [
     SharedModule,

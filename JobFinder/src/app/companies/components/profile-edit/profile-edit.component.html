@@ -1,0 +1,77 @@
+<div class="container">
+    <h4 class="text-primary text-center my-3">Company Edit</h4>
+
+    <form [formGroup]="form" (ngSubmit)="submitCompanyForm()">
+
+        <div class="d-flex flex-column">
+            <mat-form-field class="d-flex half-width mx-auto my-4">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="name" placeholder="Company Name...">
+                @if (form.controls.name.touched && form.controls.name.errors?.['required']) {
+                <mat-error>Company name is mandatory!</mat-error>
+                }
+                @if (form.controls.name.errors?.['minlength']) {
+                <mat-error>
+                    Company Name length has to be at least
+                    {{form.controls.name.errors?.['minlength']['requiredLength']}} symbols!
+                </mat-error>
+                }
+                @if (form.controls.name.errors?.['maxlength']) {
+                <mat-error>
+                    Company name length has to maximum {{form.controls.name.errors?.['maxlength']['requiredLength']}}
+                    symbols!
+                </mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field class="d-flex quarter-width mx-auto my-4">
+                <mat-label>Bulstat</mat-label>
+                <input type="text" matInput formControlName="bulstat" placeholder="Bulstat...">
+                @if (form.controls.bulstat.touched && form.controls.bulstat.errors?.['required']) {
+                <mat-error>Bulstat is mandatory!</mat-error>
+                }
+                @if (form.controls.bulstat.errors?.['minlength']) {
+                <mat-error>
+                    Bulstat length has to be at least
+                    {{form.controls.bulstat.errors?.['minlength']['requiredLength']}} symbols!
+                </mat-error>
+                }
+                @if (form.controls.bulstat.errors?.['maxlength']) {
+                <mat-error>
+                    Bulstat length has to maximum
+                    {{form.controls.bulstat.errors?.['maxlength']['requiredLength']}} symbols!
+                </mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field class="d-flex quarter-width mx-auto my-4">
+                <mat-label>Employees Count</mat-label>
+                <input type="number" matInput formControlName="employees" placeholder="Employees Count..." min="minEmployeesCount" max="maxEmployeesCount">
+                @if (form.controls.employees.touched && form.controls.employees.errors?.['required']) {
+                <mat-error>Employees count is mandatory!</mat-error>
+                }
+                @if (form.controls.employees.errors?.['minlength']) {
+                <mat-error>
+                    Employees count has to be at least
+                    {{form.controls.employees.errors?.['minlength']['requiredLength']}} symbols!
+                </mat-error>
+                }
+                @if (form.controls.employees.errors?.['maxlength']) {
+                <mat-error>
+                    Employees count has to maximum
+                    {{form.controls.employees.errors?.['maxlength']['requiredLength']}}
+                    symbols!
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <mat-divider class="my-4 w-75 mx-auto"></mat-divider>
+
+        <div class="d-flex justify-content-center pb-3">
+            <button mat-fab extended type="submit" [disabled]="!form.valid">
+                Update
+            </button>
+        </div>
+    </form>
+</div>

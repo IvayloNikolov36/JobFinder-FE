@@ -10,3 +10,4 @@ export * from './cv-basic-details.model';
 export * from './ad-form.model';
 export * from './ad-details.model';
 export * from './job-ad-create.model';
+export * from './company-edit.model';

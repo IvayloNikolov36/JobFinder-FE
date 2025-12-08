@@ -5,4 +5,5 @@ const Route: string = environment.apiUrl + 'company-profile/';
 export class CompanyProfileController {
     static companyProfileData = (): string => Route;
     static changeLogo = (): string => Route + 'change-logo';
+    static update = (): string => `${environment.apiUrl}companies/update`;
 }

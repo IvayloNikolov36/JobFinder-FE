@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { CompanyProfileData } from "../models";
+import { CompanyEditModel, CompanyProfileData } from "../models";
 import { CompanyProfileController } from "../../core/controllers";
 import { CloudImageModel } from "../../core/models";
 
@@ -27,5 +27,9 @@ export class CompanyProfileService {
             CompanyProfileController.changeLogo(),
             formData,
             { headers });
+    }
+
+    update = (company: CompanyEditModel): Observable<Object> => {
+        return this.http.put(CompanyProfileController.update(), company);
     }
 }

@@ -1,10 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdDetailsComponent, AdViewEditComponent, AnonymousProfilePreviewComponent, CompanyProfileComponent, CreateJobAdvertisementComponent, CvPreviewRequestsListingComponent, MyJobAdsComponent, UserCvPreviewComponent } from './components';
+import {
+    AdDetailsComponent,
+    AdViewEditComponent,
+    AnonymousProfilePreviewComponent,
+    CompanyProfileComponent,
+    CreateJobAdvertisementComponent,
+    CvPreviewRequestsListingComponent,
+    MyJobAdsComponent,
+    ProfileEditComponent,
+    UserCvPreviewComponent
+} from './components';
 import { JobAdDetailsResolver } from './resolvers/ad-details.resolver';
 
 const routes: Routes = [
     { path: 'profile', component: CompanyProfileComponent },
+    { path: 'profile/edit', component: ProfileEditComponent },
     { path: 'profile/my-ads', component: MyJobAdsComponent },
     { path: 'profile/cv-requests', component: CvPreviewRequestsListingComponent },
     { path: 'ads/create', component: CreateJobAdvertisementComponent },

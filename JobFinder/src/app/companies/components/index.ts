@@ -12,3 +12,4 @@ export * from './ad-view-edit/ad-view-edit.component';
 export * from './ad-form/ad-form.component';
 export * from './job-ad-card/job-ad-card.component';
 export * from './application-card/application-card.component';
+export * from './profile-edit/profile-edit.component';
