@@ -10,7 +10,7 @@
     </div>
 
     <mat-accordion multi="false">
-        @for (jobAd of jobAds; track jobAd.id; let even = $even) {
+        @for (jobAd of ads(); track jobAd.id; let even = $even) {
         <jf-job-ad-card [jobAd]="jobAd" [isEven]="even" (onClicked)="viewAdDetails(jobAd.id)" />
         }
     </mat-accordion>

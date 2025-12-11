@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +31,7 @@ import { ChangePasswordComponent, ForgottenPasswordComponent, HomeComponent, Log
     CompaniesModule,
   ],
   providers: [
+    provideZonelessChangeDetection(),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     {

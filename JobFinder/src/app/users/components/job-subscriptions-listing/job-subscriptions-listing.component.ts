@@ -8,7 +8,7 @@ import { JobSubscription } from '../../models';
 })
 export class JobSubscriptionsListingComponent {
 
-  @Input() jobSubscriptions: JobSubscription[] = [];
+  @Input() jobSubscriptions: JobSubscription[] = []; // TODO: accept it as inputsignal
   @Output() onUnsubscribe: EventEmitter<number> = new EventEmitter<number>();
 
   unsubscribeForJobs = (jobSubscriptionId: number): void => {

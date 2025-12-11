@@ -1,9 +1,10 @@
 <div class="container-fluid px-4 py-2">
-    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <!-- (selectedTabChange)="onTabChange($event)" -->
+    <mat-tab-group> 
 
         <mat-tab [label]="companyTabLabel">
 
-            @if (companysubscriptions.length > 0) {
+            @if (companySubs().length > 0) {
             <div class="text-start my-3 pt-3">
                 <i>Remove all company subscriptions:</i>
                 <a mat-button class="ms-2" class="danger-btn ms-2" (click)="unsubscribeAll()">Unsubscribe</a>
@@ -11,7 +12,7 @@
             }
 
             <div class="d-flex justify-content-start gap-3 my-3">
-                @for(sub of companysubscriptions; track sub.companyId) {
+                @for(sub of companySubs(); track sub.companyId) {
                 <mat-card class="company-card" appearance="outlined">
                     <mat-card-header class="mb-2">
                         <mat-card-title>{{ sub.companyName }}</mat-card-title>
@@ -29,7 +30,7 @@
             <ng-template matTabContent>
 
                 <div class="d-flex justify-content-start pt-3">
-                    @if (jobSubscriptions && jobSubscriptions.length > 0) {
+                    @if (jobSubs().length > 0) {
                     <div>
                         <i>Remove all jobs subscriptions:</i>
                         <a mat-button class="danger-btn ms-2" (click)="unsubscribeForAllJobs()">Unsubscribe</a>
@@ -51,7 +52,7 @@
                     </mat-accordion>
                 </div>
 
-                <jf-job-subscriptions-listing [jobSubscriptions]="jobSubscriptions"
+                <jf-job-subscriptions-listing [jobSubscriptions]="jobSubs()"
                     (onUnsubscribe)="unsubscribeJobs($event)" />
 
             </ng-template>

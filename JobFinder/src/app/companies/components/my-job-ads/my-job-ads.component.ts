@@ -1,75 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, computed, signal, Signal, WritableSignal } from '@angular/core';
+import { map } from 'rxjs';
 import { CompanyAd } from '../../models';
 import { CompanyJobAdsService } from '../../services';
 import { renderSalary } from '../../../shared/functions';
 import { AdsFilterEnum, LifycycleStatusEnum } from '../../enums';
 import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'jf-my-job-ads',
   templateUrl: './my-job-ads.component.html',
   standalone: false
 })
-export class MyJobAdsComponent implements OnInit {
+export class MyJobAdsComponent {
 
-  jobAds!: CompanyAd[];
-  allJobAds: CompanyAd[] | null = null;
   filterType: typeof AdsFilterEnum = AdsFilterEnum;
-  selectedFilterType: AdsFilterEnum = AdsFilterEnum.All;
+  selectedFilterType: WritableSignal<AdsFilterEnum> = signal(AdsFilterEnum.All);
+  allAds: Signal<CompanyAd[]>;
+  ads: Signal<CompanyAd[]> = computed(() => {
+    switch (this.selectedFilterType()) {
+      case AdsFilterEnum.All:
+        return this.allAds();
+      case AdsFilterEnum.Active:
+        return this.allAds()
+          .filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Active);
+      case AdsFilterEnum.Draft:
+        return this.allAds()
+          .filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Draft);
+      case AdsFilterEnum.Retired:
+        return this.allAds()
+          .filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Retired);
+    }
+  });
 
-  constructor(private jobAdsService: CompanyJobAdsService,
-    private router: Router
-  ) { }
+  constructor(
+    private jobAdsService: CompanyJobAdsService,
+    private router: Router) {
 
-  ngOnInit(): void {
-    this.loadJobAds();
-  }
-
-  changeFilter = (data: any) => {
-    this.selectedFilterType = data.value;
-    this.loadJobAds();
-  }
-
-  viewAdDetails(id: number): void {
-    this.router.navigate(['ads', id]);
-  }
-
-  private getAllCompanyAds = (): Observable<CompanyAd[]> => {
-    return this.jobAdsService.getAllCompanyAds()
+    this.allAds = toSignal(this.jobAdsService.getAllCompanyAds()
       .pipe(
         map((ads: CompanyAd[]) => {
           ads.map((a: CompanyAd) => a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency));
           return ads;
         })
-      );
+      ), { initialValue: [] });
   }
 
-  private loadJobAds = (): void => {
-    if (this.allJobAds === null) {
-      this.getAllCompanyAds().subscribe((ads: CompanyAd[]) => {
-        this.allJobAds = ads;
-        this.setJobAdsData(ads);
-      });
-    } else {
-      this.setJobAdsData(this.allJobAds);
-    }
+  changeFilter = (data: any) => {
+    this.selectedFilterType.set(data.value);
   }
 
-  private setJobAdsData = (allAds: CompanyAd[]): void => {
-    switch (this.selectedFilterType) {
-      case AdsFilterEnum.All:
-        this.jobAds = allAds;
-        break;
-      case AdsFilterEnum.Active:
-        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Active);
-        break;
-      case AdsFilterEnum.Draft:
-        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Draft);
-        break;
-      case AdsFilterEnum.Retired:
-        this.jobAds = allAds.filter(ja => ja.lifecycleStatusId === LifycycleStatusEnum.Retired);
-        break;
-    }
+  viewAdDetails(id: number): void {
+    this.router.navigate(['ads', id]);
   }
 }
