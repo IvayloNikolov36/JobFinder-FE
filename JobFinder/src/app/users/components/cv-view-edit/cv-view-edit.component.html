@@ -1,16 +1,16 @@
 <div class="container-fluid pb-3">
 
-  @if (cv) {
+  @if (cvData()) {
 
   <div class="d-flex justify-content-around gap-5 mx-5">
     <jf-personal-info-details
-      [personalInfo]="cv.personalInfo"
-      [pictureUrl]="cv.pictureUrl"
+      [personalInfo]="cvData()!.personalInfo"
+      [pictureUrl]="cvData()!.pictureUrl"
       [mode]="mode"
       (onEdit)="editSection(sectionType.PersonalInfo, modal)"
     />
 
-    @if (cv.canActivateAnonymousProfile && mode !== sectionMode.AnonymousProfileCreate) {
+    @if (cvData()!.canActivateAnonymousProfile && mode !== sectionMode.AnonymousProfileCreate) {
     <button mat-fab extended class="mt-5 me-5" (click)="createAnonymousProfile()">
       Create Anonymous Profile
     </button>
@@ -22,7 +22,7 @@
     </button>
     }
 
-    @if (cv.anonymousProfileId) {
+    @if (cvData()!.anonymousProfileId) {
       @if (mode === sectionMode.AnonymousProfileView) {
       <button mat-fab extended class="mt-5 me-5" (click)="viewCV()">
         View CV
@@ -45,31 +45,31 @@
   </div>
 
   <jf-work-experience-details
-    [workExperienceData]="cv.workExperiences"
+    [workExperienceData]="cvData()!.workExperiences"
     [mode]="mode"
     (onEdit)="editSection(sectionType.WorkExperienceInfo, modal)"
   />
 
   <jf-education-details
-    [educationData]="cv.educations"
+    [educationData]="cvData()!.educations"
     [mode]="mode"
     (onEdit)="editSection(sectionType.EducationInfo, modal)"
   />
 
   <jf-languages-details
-    [languagesData]="cv.languagesInfo"
+    [languagesData]="cvData()!.languagesInfo"
     [mode]="mode"
     (onEdit)="editSection(sectionType.LanguagesInfo, modal)"
   />
 
   <jf-skills-details
-    [skillsData]="cv.skills"
+    [skillsData]="cvData()!.skills"
     [mode]="mode"
     (onEdit)="editSection(sectionType.SkillsInfo, modal)"
   />
 
   <jf-courses-details
-    [coursesData]="cv.courseCertificates"
+    [coursesData]="cvData()!!.courseCertificates"
     [mode]="mode"
     (onEdit)="editSection(sectionType.CoursesInfo, modal)"
   />

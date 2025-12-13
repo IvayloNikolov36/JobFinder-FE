@@ -1,5 +1,5 @@
 import { SkillsService } from '../../services/skills.service';
-import { Component, ComponentRef, Input, InputSignal, OnInit, Signal, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, inject, Input, InputSignal, OnInit, signal, Signal, ViewChild, ViewContainerRef, WritableSignal } from '@angular/core';
 import {
   AnonymousProfileService,
   CoursesService,
@@ -19,7 +19,7 @@ import {
   WorkExperienceOutput
 } from '../../models/cv';
 import { EducationsComponent } from '../educations/educations.component';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { Modal } from 'bootstrap';
 import { LanguagesInfoComponent } from '../languages-info/languages-info.component';
 import { CoursesCertificatesComponent } from '../courses-certificates/courses-certificates.component';
@@ -38,10 +38,10 @@ import {
   SkillsInfo,
   WorkExperienceInfo
 } from '../../../shared/models';
-import { getFullName } from '../../../shared/functions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CvSectionModeEnum } from '../../../shared/enums';
 import { AnonymousProfileAppearance, AnonymousProfileCreate } from '../../models';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -54,22 +54,12 @@ export class CvViewComponent implements OnInit {
 
   @Input() id!: string;
 
-  fullName!: string;
-  cv!: CvListingData;
+  cvId: WritableSignal<string | undefined> = signal(undefined);
   showModal: boolean = false;
   deleteModal: Modal | null = null;
   deactivateModal!: Modal;
   editCvSectionTitle: string = '';
   createdComponentRef!: ComponentRef<any>;
-
-  educationLevels!: Signal<BasicModel<number>[]>;
-  languageTypes!: Signal<BasicModel<number>[]>;
-  languageLevels!: Signal<BasicModel<number>[]>;
-  bussinessSectors!: Signal<BasicModel<number>[]>;
-  countries!: Signal<BasicModel<number>[]>;
-  citizenships!: Signal<BasicModel<number>[]>;
-  genderOptions!: Signal<BasicModel<number>[]>;
-  drivingCategories!: Signal<BasicModel<number>[]>;
 
   sectionType: typeof CvSectionTypeEnum = CvSectionTypeEnum;
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
@@ -77,36 +67,50 @@ export class CvViewComponent implements OnInit {
 
   deleteCvConfirmationText: string = 'Are you sure you want to delete this CV ?';
 
-  constructor(
-    private router: Router,
-    private toaster: ToastrService,
-    private cvService: CurriculumVitaesService,
-    private educationsService: EducationsService,
-    private languagesService: LanguagesInfoService,
-    private coursesService: CoursesService,
-    private skillsInfoService: SkillsService,
-    private workExperiencesService: WorkExperiencesService,
-    private personalInfoService: PersonalInfoService,
-    private nomenclatureService: NomenclatureService,
-    private anonymousProfileService: AnonymousProfileService) {
-
-    const initialValue: BasicModel<number>[] = [] as BasicModel<number>[];
-
-    this.educationLevels = toSignal(this.nomenclatureService.getEducationLevels(), { initialValue });
-    this.languageTypes = toSignal(this.nomenclatureService.getLanguageTypes(), { initialValue });
-    this.languageLevels = toSignal(this.nomenclatureService.getLanguageLevels(), { initialValue });
-    this.bussinessSectors = toSignal(this.nomenclatureService.getBusinessSectors(), { initialValue });
-    this.countries = toSignal(this.nomenclatureService.getCountries(), { initialValue });
-    this.citizenships = toSignal(this.nomenclatureService.getCitizenships(), { initialValue });
-    this.genderOptions = toSignal(this.nomenclatureService.getGenderOptions(), { initialValue });
-    this.drivingCategories = toSignal(this.nomenclatureService.getDrivingCategories(), { initialValue });
-  }
+  private router: Router = inject(Router);
+  private toaster: ToastrService = inject(ToastrService);
+  private cvService: CurriculumVitaesService = inject(CurriculumVitaesService);
+  private educationsService: EducationsService = inject(EducationsService);
+  private languagesService: LanguagesInfoService = inject(LanguagesInfoService);
+  private coursesService: CoursesService = inject(CoursesService);
+  private skillsInfoService: SkillsService = inject(SkillsService);
+  private workExperiencesService: WorkExperiencesService = inject(WorkExperiencesService);
+  private personalInfoService: PersonalInfoService = inject(PersonalInfoService);
+  private anonymousProfileService: AnonymousProfileService = inject(AnonymousProfileService);
+  private nomenclatureService = inject(NomenclatureService);
 
   ngOnInit(): void {
     if (this.id) {
-      this.loadCvData(this.id);
+      this.cvId.set(this.id);
     }
   }
+
+  readonly languageTypes: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getLanguageTypes(), { initialValue: [] });
+  readonly educationLevels: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getEducationLevels(), { initialValue: [] });
+  readonly languageLevels: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getLanguageLevels(), { initialValue: [] });
+  readonly bussinessSectors: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getBusinessSectors(), { initialValue: [] });
+  readonly countries: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getCountries(), { initialValue: [] });
+  readonly citizenships: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getCitizenships(), { initialValue: [] });
+  readonly genderOptions: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getGenderOptions(), { initialValue: [] });
+  readonly drivingCategories: Signal<BasicModel<number>[]> = toSignal(this.nomenclatureService.getDrivingCategories(), { initialValue: [] });
+
+  private readonly cvDataResource = rxResource({
+    params: () => ({
+      cvId: this.cvId()
+    }),
+    stream: ({ params }) => {
+      return this.cvService
+        .getCvListingData(params.cvId!)
+        .pipe(
+          map((cvData: CvListingData) => {
+            const cvSkills: SkillsInfo = cvData.skills;
+            cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
+            return cvData;
+          }));
+    }
+  });
+
+  readonly cvData: WritableSignal<CvListingData | undefined> = this.cvDataResource.value;
 
   onCloseEditSectionModal = (): void => {
     this.createdComponentRef?.destroy();
@@ -156,10 +160,10 @@ export class CvViewComponent implements OnInit {
   }
 
   createAnonymousProfile = (): void => {
-    this.cv.workExperiences.forEach(e => e.includeInAnonymousProfile = true);
-    this.cv.educations.forEach(e => e.includeInAnonymousProfile = true);
-    this.cv.languagesInfo.forEach(l => l.includeInAnonymousProfile = true);
-    this.cv.courseCertificates.forEach(cs => cs.includeInAnonymousProfile = true);
+    this.cvData()!.workExperiences.forEach(e => e.includeInAnonymousProfile = true);
+    this.cvData()!.educations.forEach(e => e.includeInAnonymousProfile = true);
+    this.cvData()!.languagesInfo.forEach(l => l.includeInAnonymousProfile = true);
+    this.cvData()!.courseCertificates.forEach(cs => cs.includeInAnonymousProfile = true);
     this.mode = CvSectionModeEnum.AnonymousProfileCreate;
   }
 
@@ -170,12 +174,12 @@ export class CvViewComponent implements OnInit {
   activateAnonymousProfile = (profileAppearanceData: AnonymousProfileAppearance): void => {
     this.anonymousProfileService
       .create(
-        this.cv.id,
+        this.id,
         this.constructAnonymousProfileActivationData(profileAppearanceData))
       .subscribe({
         next: (data: IdentityResult<string>) => {
-          this.cv.anonymousProfileId = data.id;
-          this.cv.canActivateAnonymousProfile = false;
+          this.cvData()!.anonymousProfileId = data.id;
+          this.cvData()!.canActivateAnonymousProfile = false;
           this.mode = CvSectionModeEnum.AnonymousProfileView;
           this.toaster.success('Successfully activated anonymous profile!');
         },
@@ -189,11 +193,12 @@ export class CvViewComponent implements OnInit {
   }
 
   onDeactivateAnonymousProfile = (): void => {
-    this.anonymousProfileService.delete(this.cv.anonymousProfileId!)
+    this.anonymousProfileService
+      .delete(this.cvData()!.anonymousProfileId!)
       .subscribe({
         next: () => {
-          this.cv.anonymousProfileId = null;
-          this.cv.canActivateAnonymousProfile = true;
+          this.cvData()!.anonymousProfileId = null;
+          this.cvData()!.canActivateAnonymousProfile = true;
           this.mode = CvSectionModeEnum.View;
           this.deactivateModal.hide();
           this.toaster.success('Successfully deactivated anonymous profile!');
@@ -216,11 +221,11 @@ export class CvViewComponent implements OnInit {
   deleteCv(modalElement: Element): void {
     let messageAffix: string = '';
 
-    if (this.cv.applicationForActiveAd) {
+    if (this.cvData()!.applicationForActiveAd) {
       messageAffix += ' This CV has been sent as an application for a job that is still active.';
     }
 
-    if (this.cv.approvedCvPreviewForActiveAd) {
+    if (this.cvData()!.approvedCvPreviewForActiveAd) {
       messageAffix += ' There is an approved company request for this CV preview that is suitable for an active job.'
     }
 
@@ -233,7 +238,7 @@ export class CvViewComponent implements OnInit {
     this.cvService.delete(this.id)
       .subscribe({
         next: () => {
-          this.toaster.success(`CV '${this.cv.name}' is deleted successfully.`);
+          this.toaster.success(`CV '${this.cvData()!.name}' is deleted successfully.`);
           this.router.navigate(['/profile/cvs']);
         },
         error: (error: HttpErrorResponse) => {
@@ -256,19 +261,19 @@ export class CvViewComponent implements OnInit {
   private constructAnonymousProfileActivationData = (
     profileAppearanceData: AnonymousProfileAppearance): AnonymousProfileCreate => {
 
-    const workExperienceInfoIds: number[] = this.cv.workExperiences
+    const workExperienceInfoIds: number[] = this.cvData()!.workExperiences
       .filter(we => we.includeInAnonymousProfile)
       .map(we => we.id);
 
-    const educationsIds: number[] = this.cv.educations
+    const educationsIds: number[] = this.cvData()!.educations
       .filter(e => e.includeInAnonymousProfile)
       .map(e => e.id);
 
-    const languageInfoIds: number[] = this.cv.languagesInfo
+    const languageInfoIds: number[] = this.cvData()!.languagesInfo
       .filter(li => li.includeInAnonymousProfile)
       .map(li => li.id);
 
-    const courseInfoIds: number[] = this.cv.courseCertificates
+    const courseInfoIds: number[] = this.cvData()!.courseCertificates
       .filter(cs => cs.includeInAnonymousProfile)
       .map(cs => cs.id);
 
@@ -290,18 +295,22 @@ export class CvViewComponent implements OnInit {
     const component: SkillsInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
     component.drivingCategories = this.drivingCategories as InputSignal<BasicModel<number>[]>;
-    component.skillsInfoData = this.cv.skills;
+    component.skillsInfoData = this.cvData()!.skills;
+
+    // TODO: refactor - nested subscribe
 
     component.emitSkillsData
       .subscribe({
-        next: (data: SkillsInfo) => {
-          const requestData: SkillsInfoOutput = this.skillsInfoService.mapSkillsData(data);
-          this.skillsInfoService.update(this.cv.id, requestData).subscribe(() => {
-            this.cv.skills = { ...data };
-            const cvSkills: SkillsInfo = this.cv.skills;
-            cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
-            this.toaster.success("Skills info successfuly updated.");
-          });
+        next: (newSkillsData: SkillsInfo) => {
+          const requestData: SkillsInfoOutput = this.skillsInfoService.mapSkillsData(newSkillsData);
+
+          this.skillsInfoService
+            .update(this.id, requestData)
+            .subscribe(() => {
+              newSkillsData.licenseCategoriesText = this.getDrivingLicensesText(newSkillsData.drivingLicenseCategories);
+              this.cvData()!.skills = newSkillsData;
+              this.toaster.success("Skills info successfuly updated.");
+            });
         },
         error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update skills info!")
       });
@@ -315,17 +324,25 @@ export class CvViewComponent implements OnInit {
 
     const component: WorkExperienceInfoComponent = createdComponentRef.instance;
     component.businessSectors = this.bussinessSectors as InputSignal<BasicModel<number>[]>;
-    component.workExperienceInfoData = this.cv.workExperiences;
+    component.workExperienceInfoData = this.cvData()!.workExperiences;
     component.isEditMode = true;
 
+    // TODO: refactor - nested subscribe
+
     component.emitWorkExperiencesData
-      .subscribe((data: WorkExperienceInfo[]) => {
-        const requestData: WorkExperienceOutput[] = this.workExperiencesService.mapWorkExperienceInfoData(data);
-        this.workExperiencesService.update(this.cv.id, requestData)
+      .subscribe((newWorkExperienceInfo: WorkExperienceInfo[]) => {
+
+        const requestData: WorkExperienceOutput[] = this.workExperiencesService
+          .mapWorkExperienceInfoData(newWorkExperienceInfo);
+
+        this.workExperiencesService.update(this.id, requestData)
           .subscribe({
             next: (result: UpdateResult) => {
-              this.setItemsIds(data, result.newItemsIds);
-              this.cv.workExperiences = data;
+              this.setItemsIds(newWorkExperienceInfo, result.newItemsIds);
+              this.cvData.update((currentCvData) => {
+                currentCvData!.workExperiences = newWorkExperienceInfo;
+                return currentCvData;
+              });
               this.toaster.success("Work Experience info successfuly updated.");
             },
             error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update work experience info!")
@@ -342,16 +359,24 @@ export class CvViewComponent implements OnInit {
     const component: CoursesCertificatesComponent = createdComponentRef.instance;
 
     component.isEditMode = true;
-    component.coursesInfoData = this.cv.courseCertificates;
+    component.coursesInfoData = this.cvData()!.courseCertificates;
+
+    // TODO: refactor the nested subscribe
 
     component.emitCoursesData
       .subscribe({
         next: (data: CourseCertificateInfo[]) => {
-          this.coursesService.update(this.cv.id, data)
-            .subscribe((result: UpdateResult) => {
-              this.setItemsIds(data, result.newItemsIds);
-              this.cv.courseCertificates = data;
-              this.toaster.success("Courses info successfuly updated.");
+
+          this.coursesService.update(this.id, data)
+            .subscribe({
+              next: (result: UpdateResult) => {
+                this.setItemsIds(data, result.newItemsIds);
+                this.cvData.update((currentCvData) => {
+                  currentCvData!.courseCertificates = data;
+                  return currentCvData;
+                });
+                this.toaster.success("Courses info successfuly updated.");
+              }
             });
         },
         error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update courses info!")
@@ -363,24 +388,29 @@ export class CvViewComponent implements OnInit {
     this.createdComponentRef = createdComponentRef;
     const component: LanguagesInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
-    component.languagesInfoData = this.cv.languagesInfo;
+    component.languagesInfoData = this.cvData()!.languagesInfo;
     component.languageTypes = this.languageTypes as InputSignal<BasicModel<number>[]>;
     component.languageLevels = this.languageLevels as InputSignal<BasicModel<number>[]>;
 
-    component.emitLanguagesInfo.subscribe((data: LanguageInfo[]) => {
+    // TODO: refactor - nested subscribe
 
-      const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(data);
+    component.emitLanguagesInfo
+      .subscribe((data: LanguageInfo[]) => {
+        const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(data);
 
-      this.languagesService.update(this.cv.id, requestData)
-        .subscribe({
-          next: (result: UpdateResult) => {
-            this.setItemsIds(data, result.newItemsIds);
-            this.cv.languagesInfo = data;
-            this.toaster.success("Languages info successfuly updated.");
-          },
-          error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update languages info!")
-        });
-    });
+        this.languagesService.update(this.id, requestData)
+          .subscribe({
+            next: (result: UpdateResult) => {
+              this.setItemsIds(data, result.newItemsIds);
+              this.cvData.update((currentCvData) => {
+                currentCvData!.languagesInfo = data;
+                return currentCvData;
+              });
+              this.toaster.success("Languages info successfuly updated.");
+            },
+            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update languages info!")
+          });
+      });
   }
 
   private onCreateEducationModalComponent = (): void => {
@@ -389,17 +419,23 @@ export class CvViewComponent implements OnInit {
     this.createdComponentRef = createdComponentRef;
     const component: EducationsComponent = createdComponentRef.instance;
     component.isEditMode = true;
-    component.educationsData = this.cv.educations;
+    component.educationsData = this.cvData()!.educations;
     component.educationLevels = this.educationLevels as InputSignal<BasicModel<number>[]>;
 
+    // TODO: refactor - nested subscribe
+
     component.emitEducationData
-      .subscribe((data: EducationInfo[]) => {
-        const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(data);
-        this.educationsService.update(this.cv.id, requestData)
+      .subscribe((newEducationInfo: EducationInfo[]) => {
+        const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(newEducationInfo);
+
+        this.educationsService.update(this.id, requestData)
           .subscribe({
             next: (result: UpdateResult) => {
-              this.setItemsIds(data, result.newItemsIds);
-              this.cv.educations = data;
+              this.setItemsIds(newEducationInfo, result.newItemsIds);
+              this.cvData.update((currentCvData) => {
+                currentCvData!.educations = newEducationInfo;
+                return currentCvData;
+              });
               this.toaster.success("Education info successfuly updated.");
             },
             error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update education info!")
@@ -413,34 +449,26 @@ export class CvViewComponent implements OnInit {
     this.createdComponentRef = createdComponentRef;
     const component: PersonalInfoComponent = createdComponentRef.instance;
     component.isEditMode = true;
-    component.personalInfo = this.cv.personalInfo;
+    component.personalInfo = this.cvData()!.personalInfo;
     component.countries = this.countries as InputSignal<BasicModel<number>[]>;
     component.citizenships = this.citizenships as InputSignal<BasicModel<number>[]>;
     component.genderOptions = this.genderOptions as InputSignal<BasicModel<number>[]>;
 
+    // TODO: refactor - nested subscribe
+
     component.emitPersonalInfo
       .subscribe((data: PersonalInfo) => {
         const requestData: PersonalInfoOutput = this.personalInfoService.mapPersonalInfo(data);
-        this.personalInfoService.update(this.cv.id, requestData)
+
+        this.personalInfoService
+          .update(this.cvData()!.id, requestData)
           .subscribe({
             next: () => {
-              this.cv.personalInfo = { ...data };
-              this.fullName = getFullName(this.cv.personalInfo);
+              this.cvData()!.personalInfo = { ...data };
               this.toaster.success("Personal Details successfuly updated.");
             },
             error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update personal details!")
           });
-      });
-  }
-
-  private loadCvData = (cvId: string): void => {
-    this.cvService.getCvListingData(cvId)
-      .subscribe((data: CvListingData) => {
-        this.cv = data;
-        const details: PersonalInfo = this.cv.personalInfo;
-        this.fullName = getFullName(details);
-        const cvSkills: SkillsInfo = this.cv.skills;
-        cvSkills.licenseCategoriesText = this.getDrivingLicensesText(cvSkills.drivingLicenseCategories);
       });
   }
 

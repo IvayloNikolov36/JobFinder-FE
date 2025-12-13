@@ -1,34 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CurriculumVitaesService } from '../../services/curriculum-vitaes.service';
 import { CvListing } from '../../models/cv';
-import { Subscription } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'jf-user-curriculum-vitaes',
   templateUrl: './user-curriculum-vitaes.component.html',
   standalone: false
 })
-export class UserCurriculumVitaesComponent implements OnInit, OnDestroy {
+export class UserCurriculumVitaesComponent {
 
-  cvs: CvListing[] = [];
-  cvId: string | null = null;
-  subscriptions: Subscription[] = [];
+  cvs!: Signal<CvListing[]>;
 
   displayedColumns: string[] = ['name', 'createdOn', 'actions'];
 
-  constructor(private cvService: CurriculumVitaesService) { }
-
-  ngOnInit(): void {
-    const subscription: Subscription = this.cvService.getAllMine()
-      .subscribe((data: CvListing[]) => {
-        this.cvs = data;
-      });
-    this.subscriptions.push(subscription);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription: Subscription) => {
-      subscription.unsubscribe();
-    });
+  constructor(
+    private cvService: CurriculumVitaesService) {
+    this.cvs = toSignal(this.cvService.getAllMine(), { initialValue: [] });
   }
 }
