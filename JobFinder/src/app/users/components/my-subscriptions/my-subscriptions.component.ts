@@ -1,8 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { JobSubscription } from '../../models';
+import { Component, inject, Signal } from '@angular/core';
+import { CompanySubscription, JobSubscription } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 import { SubscriptionsService } from '../../services';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'jf-my-subscriptions',
@@ -17,45 +16,15 @@ export class MySubscriptionsComponent {
   private subscriptionsService: SubscriptionsService = inject(SubscriptionsService);
   private toastr: ToastrService = inject(ToastrService);
 
-  // TODO: move to service
-
-  private companysubscriptionsRaw = toSignal(this.subscriptionsService.getMyCompanySubscriptions(), { initialValue: [] });
-  companySubscriptions = computed(() => signal(this.companysubscriptionsRaw()));
-  companySubs = computed(() => this.companySubscriptions()());
-
-  private jobSubscriptionsRaw = toSignal(this.subscriptionsService.getAllMyJobSubscriptions(), { initialValue: [] });
-  private jobSubscriptions = computed(() => signal(this.jobSubscriptionsRaw()));
-  jobSubs = computed(() => this.jobSubscriptions()());
-
-  removeCompanySubscription = (companyId: number): void => {
-    this.companySubscriptions().update((current) => [...current.filter(cs => cs.companyId !== companyId)]);
-  }
-
-  clearCompanySubscriptions = (): void => {
-    this.companySubscriptions().set([]);
-  }
-
-  addJobSubscription = (jobsSubscription: JobSubscription): void => {
-    this.jobSubscriptions().update((current) => [...current, jobsSubscription]);
-  }
-
-  removeJobSubscriptions = (jobSubscriptionId: number): void => {
-    this.jobSubscriptions().update((current) => [...current.filter(js => js.id !== jobSubscriptionId)]);
-  }
-
-  clearJobSubscriptions = (): void => {
-    this.jobSubscriptions().set([]);
-  }
-
-  //---
+  jobSubs: Signal<JobSubscription[]> = this.subscriptionsService.jobSubs;
+  companySubs: Signal<CompanySubscription[]> = this.subscriptionsService.companySubs;
 
   onNewJobSubscriptionCreated(jobsSubscription: JobSubscription): void {
-    this.addJobSubscription(jobsSubscription);
+    this.subscriptionsService.addJobSubscription(jobsSubscription);
   }
 
   unsubscribe(companyId: number, companyName: string): void {
-    this.removeCompanySubscription(companyId);
-    // TODO: ???
+    this.subscriptionsService.removeCompanySubscription(companyId);
     this.subscriptionsService.unsubscribeFromCompany(companyId)
       .subscribe({
         next: () => {
@@ -65,8 +34,7 @@ export class MySubscriptionsComponent {
   }
 
   unsubscribeAll(): void {
-    this.clearCompanySubscriptions();
-    // TODO: ???
+    this.subscriptionsService.clearCompanySubscriptions();
     this.subscriptionsService.unsubscribeFromAllCompanies()
       .subscribe({
         next: () => {
@@ -76,20 +44,19 @@ export class MySubscriptionsComponent {
   }
 
   unsubscribeJobs(jobSubscriptionId: number): void {
-    this.removeJobSubscriptions(jobSubscriptionId);
-    // TODO: ???
+    this.subscriptionsService.removeJobSubscriptions(jobSubscriptionId);
     this.subscriptionsService.unsubscribeForJobsWithCriterias(jobSubscriptionId)
       .subscribe({
         next: () => {
-          const jobSubscription: JobSubscription = this.jobSubs().filter(js => js.id === jobSubscriptionId)[0];
-          this.toastr.success(`Successfully unsubscribed from jobs with category ${jobSubscription.jobCategory} and location ${jobSubscription.location}.`);
+          const jobSubscription: JobSubscription = this.subscriptionsService.getJobSubscription(jobSubscriptionId);
+          this.toastr.success(
+            `Successfully unsubscribed from jobs with category ${jobSubscription.jobCategory}and location ${jobSubscription.location}.`);
         }
       });
   }
 
   unsubscribeForAllJobs(): void {
-    this.clearJobSubscriptions();
-    // TODO: ???
+    this.subscriptionsService.clearJobSubscriptions();
     this.subscriptionsService.unsubscribeForAllJobsWithCriterias()
       .subscribe({
         next: () => {

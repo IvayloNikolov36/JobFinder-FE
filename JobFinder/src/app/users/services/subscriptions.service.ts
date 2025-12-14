@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import {
   getMyCompanySubscriptions,
   SubscriptionsController,
@@ -9,13 +9,46 @@ import {
 import { CompanySubscription, JobSubscription } from "../models";
 import { Observable } from "rxjs";
 import { JobsSubscriptionCriterias } from "../../shared/models";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionsService {
 
-  constructor(private http: HttpClient) { }
+  private http: HttpClient = inject(HttpClient);
+
+  private companysubscriptionsRaw = toSignal(this.getMyCompanySubscriptions(), { initialValue: [] });
+  companySubscriptions = computed(() => signal(this.companysubscriptionsRaw()));
+  companySubs = computed(() => this.companySubscriptions()());
+
+  private jobSubscriptionsRaw = toSignal(this.getAllMyJobSubscriptions(), { initialValue: [] });
+  private jobSubscriptions = computed(() => signal(this.jobSubscriptionsRaw()));
+  jobSubs = computed(() => this.jobSubscriptions()());
+
+  removeCompanySubscription = (companyId: number): void => {
+    this.companySubscriptions().update((current) => [...current.filter(cs => cs.companyId !== companyId)]);
+  }
+
+  clearCompanySubscriptions = (): void => {
+    this.companySubscriptions().set([]);
+  }
+
+  addJobSubscription = (jobsSubscription: JobSubscription): void => {
+    this.jobSubscriptions().update((current) => [...current, jobsSubscription]);
+  }
+
+  removeJobSubscriptions = (jobSubscriptionId: number): void => {
+    this.jobSubscriptions().update((current) => [...current.filter(js => js.id !== jobSubscriptionId)]);
+  }
+
+  clearJobSubscriptions = (): void => {
+    this.jobSubscriptions().set([]);
+  }
+
+  getJobSubscription(jobSubscriptionId: number): JobSubscription {
+    return this.jobSubs().find(js => js.id === jobSubscriptionId)!;
+  }
 
   subscribeForJobsWithCriterias(criterias: JobsSubscriptionCriterias): Observable<JobSubscription> {
     return this.http.post<JobSubscription>(SubscriptionsController.subscribeForJobWithCriterias(), criterias);
