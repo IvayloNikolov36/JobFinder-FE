@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap justify-content-start gap-3">
-    @for(jobSub of jobSubscriptions; track jobSub.id) {
+    @for(jobSub of jobSubscriptions(); track jobSub.id) {
     <div class="d-flex align-items-stretch my-2">
         <mat-card appearance="outlined" class="job-subscription-card">
             <mat-card-header>
