@@ -63,7 +63,7 @@ export class CvViewComponent implements OnInit {
 
   sectionType: typeof CvSectionTypeEnum = CvSectionTypeEnum;
   sectionMode: typeof CvSectionModeEnum = CvSectionModeEnum;
-  mode: CvSectionModeEnum = CvSectionModeEnum.Edit;
+  mode: WritableSignal<CvSectionModeEnum> = signal(CvSectionModeEnum.Edit);
 
   deleteCvConfirmationText: string = 'Are you sure you want to delete this CV ?';
 
@@ -152,11 +152,11 @@ export class CvViewComponent implements OnInit {
   }
 
   viewCV = (): void => {
-    this.mode = CvSectionModeEnum.Edit;
+    this.mode.set(CvSectionModeEnum.Edit);
   }
 
   viewAnonymousProfile = (): void => {
-    this.mode = CvSectionModeEnum.AnonymousProfileView;
+    this.mode.set(CvSectionModeEnum.AnonymousProfileView);
   }
 
   createAnonymousProfile = (): void => {
@@ -164,11 +164,11 @@ export class CvViewComponent implements OnInit {
     this.cvData()!.educations.forEach(e => e.includeInAnonymousProfile = true);
     this.cvData()!.languagesInfo.forEach(l => l.includeInAnonymousProfile = true);
     this.cvData()!.courseCertificates.forEach(cs => cs.includeInAnonymousProfile = true);
-    this.mode = CvSectionModeEnum.AnonymousProfileCreate;
+    this.mode.set(CvSectionModeEnum.AnonymousProfileCreate);
   }
 
   discardAnonymousProfile = (): void => {
-    this.mode = CvSectionModeEnum.Edit;
+    this.mode.set(CvSectionModeEnum.Edit);
   }
 
   activateAnonymousProfile = (profileAppearanceData: AnonymousProfileAppearance): void => {
@@ -180,7 +180,7 @@ export class CvViewComponent implements OnInit {
         next: (data: IdentityResult<string>) => {
           this.cvData()!.anonymousProfileId = data.id;
           this.cvData()!.canActivateAnonymousProfile = false;
-          this.mode = CvSectionModeEnum.AnonymousProfileView;
+          this.mode.set(CvSectionModeEnum.AnonymousProfileView);
           this.toaster.success('Successfully activated anonymous profile!');
         },
         error: (error: HttpErrorResponse) => this.toaster.error(error.error.errors)
@@ -199,7 +199,7 @@ export class CvViewComponent implements OnInit {
         next: () => {
           this.cvData()!.anonymousProfileId = null;
           this.cvData()!.canActivateAnonymousProfile = true;
-          this.mode = CvSectionModeEnum.View;
+          this.mode.set(CvSectionModeEnum.View);
           this.deactivateModal.hide();
           this.toaster.success('Successfully deactivated anonymous profile!');
         },
@@ -211,7 +211,7 @@ export class CvViewComponent implements OnInit {
   }
 
   setAnonymousProfileAppearanceCriterias = (): void => {
-    this.mode = CvSectionModeEnum.AnonymousProfileSetAppearanceCriterias;
+    this.mode.set(CvSectionModeEnum.AnonymousProfileSetAppearanceCriterias);
   }
 
   onProfileAppearanceDataEmit = (profileAppearanceData: AnonymousProfileAppearance): void => {
