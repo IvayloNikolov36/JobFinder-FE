@@ -27,7 +27,7 @@ import { WorkExperienceInfoComponent } from '../work-experiences/work-experience
 import { ToastrService } from 'ngx-toastr';
 import { PersonalInfoComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
-import { BasicModel, IdentityResult, UpdateResult } from '../../../core/models';
+import { BasicModel, IdentityResult } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
 import {
@@ -41,7 +41,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { CvSectionModeEnum } from '../../../shared/enums';
 import { AnonymousProfileAppearance, AnonymousProfileCreate } from '../../models';
-import { map } from 'rxjs';
+import { concatMap, forkJoin, map, of } from 'rxjs';
 
 @Component({
   selector: 'jf-cv-view-edit',
@@ -297,20 +297,19 @@ export class CvViewComponent implements OnInit {
     component.drivingCategories = this.drivingCategories as InputSignal<BasicModel<number>[]>;
     component.skillsInfoData = this.cvData()!.skills;
 
-    // TODO: refactor - nested subscribe
-
     component.emitSkillsData
-      .subscribe({
-        next: (newSkillsData: SkillsInfo) => {
-          const requestData: SkillsInfoOutput = this.skillsInfoService.mapSkillsData(newSkillsData);
-
-          this.skillsInfoService
-            .update(this.id, requestData)
-            .subscribe(() => {
-              newSkillsData.licenseCategoriesText = this.getDrivingLicensesText(newSkillsData.drivingLicenseCategories);
-              this.cvData()!.skills = newSkillsData;
-              this.toaster.success("Skills info successfuly updated.");
-            });
+      .pipe(
+        concatMap((newSkillsData: SkillsInfo) => {
+          return forkJoin([
+            this.skillsInfoService.update(this.id, this.skillsInfoService.mapSkillsData(newSkillsData)),
+            of(newSkillsData)
+          ]);
+        })
+      ).subscribe({
+        next: ([_, skillsData]) => {
+          skillsData.licenseCategoriesText = this.getDrivingLicensesText(skillsData.drivingLicenseCategories);
+          this.cvData()!.skills = skillsData;
+          this.toaster.success("Skills info successfuly updated.");
         },
         error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update skills info!")
       });
@@ -327,26 +326,23 @@ export class CvViewComponent implements OnInit {
     component.workExperienceInfoData = this.cvData()!.workExperiences;
     component.isEditMode = true;
 
-    // TODO: refactor - nested subscribe
-
     component.emitWorkExperiencesData
-      .subscribe((newWorkExperienceInfo: WorkExperienceInfo[]) => {
-
-        const requestData: WorkExperienceOutput[] = this.workExperiencesService
-          .mapWorkExperienceInfoData(newWorkExperienceInfo);
-
-        this.workExperiencesService.update(this.id, requestData)
-          .subscribe({
-            next: (result: UpdateResult) => {
-              this.setItemsIds(newWorkExperienceInfo, result.newItemsIds);
-              this.cvData.update((currentCvData) => {
-                currentCvData!.workExperiences = newWorkExperienceInfo;
-                return currentCvData;
-              });
-              this.toaster.success("Work Experience info successfuly updated.");
-            },
-            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update work experience info!")
-          });
+      .pipe(
+        concatMap((newWorkExperienceInfo: WorkExperienceInfo[]) => {
+          const requestData: WorkExperienceOutput[] = this.workExperiencesService
+            .mapWorkExperienceInfoData(newWorkExperienceInfo);
+          return forkJoin([
+            this.workExperiencesService.update(this.id, requestData),
+            of(newWorkExperienceInfo)
+          ]);
+        })
+      ).subscribe({
+        next: ([updateResult, newWorkExp]) => {
+          this.setItemsIds(newWorkExp, updateResult.newItemsIds);
+          this.cvData()!.workExperiences = newWorkExp;
+          this.toaster.success("Work Experience info successfuly updated.");
+        },
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update work experience info!")
       });
   }
 
@@ -357,27 +353,22 @@ export class CvViewComponent implements OnInit {
     this.createdComponentRef = createdComponentRef;
 
     const component: CoursesCertificatesComponent = createdComponentRef.instance;
-
     component.isEditMode = true;
     component.coursesInfoData = this.cvData()!.courseCertificates;
 
-    // TODO: refactor the nested subscribe
-
     component.emitCoursesData
-      .subscribe({
-        next: (data: CourseCertificateInfo[]) => {
-
-          this.coursesService.update(this.id, data)
-            .subscribe({
-              next: (result: UpdateResult) => {
-                this.setItemsIds(data, result.newItemsIds);
-                this.cvData.update((currentCvData) => {
-                  currentCvData!.courseCertificates = data;
-                  return currentCvData;
-                });
-                this.toaster.success("Courses info successfuly updated.");
-              }
-            });
+      .pipe(
+        concatMap((newCoursesInfo: CourseCertificateInfo[]) => {
+          return forkJoin([
+            this.coursesService.update(this.id, newCoursesInfo),
+            of(newCoursesInfo)
+          ])
+        })
+      ).subscribe({
+        next: ([updateResult, newCoursesInfo]) => {
+          this.setItemsIds(newCoursesInfo, updateResult.newItemsIds);
+          this.cvData()!.courseCertificates = newCoursesInfo;
+          this.toaster.success("Courses info successfuly updated.");
         },
         error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update courses info!")
       });
@@ -392,24 +383,22 @@ export class CvViewComponent implements OnInit {
     component.languageTypes = this.languageTypes as InputSignal<BasicModel<number>[]>;
     component.languageLevels = this.languageLevels as InputSignal<BasicModel<number>[]>;
 
-    // TODO: refactor - nested subscribe
-
     component.emitLanguagesInfo
-      .subscribe((data: LanguageInfo[]) => {
-        const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(data);
-
-        this.languagesService.update(this.id, requestData)
-          .subscribe({
-            next: (result: UpdateResult) => {
-              this.setItemsIds(data, result.newItemsIds);
-              this.cvData.update((currentCvData) => {
-                currentCvData!.languagesInfo = data;
-                return currentCvData;
-              });
-              this.toaster.success("Languages info successfuly updated.");
-            },
-            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update languages info!")
-          });
+      .pipe(
+        concatMap((languageInfo: LanguageInfo[]) => {
+          const requestData: LanguageInfoOutput[] = this.languagesService.mapLanguageInfoData(languageInfo);
+          return forkJoin([
+            this.languagesService.update(this.id, requestData),
+            of(languageInfo)
+          ]);
+        })
+      ).subscribe({
+        next: ([updateResult, newLanguageInfo]) => {
+          this.setItemsIds(newLanguageInfo, updateResult.newItemsIds);
+          this.cvData()!.languagesInfo = newLanguageInfo;
+          this.toaster.success("Languages info successfuly updated.");
+        },
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update languages info!")
       });
   }
 
@@ -422,24 +411,22 @@ export class CvViewComponent implements OnInit {
     component.educationsData = this.cvData()!.educations;
     component.educationLevels = this.educationLevels as InputSignal<BasicModel<number>[]>;
 
-    // TODO: refactor - nested subscribe
-
     component.emitEducationData
-      .subscribe((newEducationInfo: EducationInfo[]) => {
-        const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(newEducationInfo);
-
-        this.educationsService.update(this.id, requestData)
-          .subscribe({
-            next: (result: UpdateResult) => {
-              this.setItemsIds(newEducationInfo, result.newItemsIds);
-              this.cvData.update((currentCvData) => {
-                currentCvData!.educations = newEducationInfo;
-                return currentCvData;
-              });
-              this.toaster.success("Education info successfuly updated.");
-            },
-            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update education info!")
-          });
+      .pipe(
+        concatMap((newEducationInfo: EducationInfo[]) => {
+          const requestData: EducationOutput[] = this.educationsService.mapEducationInfoData(newEducationInfo);
+          return forkJoin([
+            this.educationsService.update(this.id, requestData),
+            of(newEducationInfo)
+          ]);
+        })
+      ).subscribe({
+        next: ([updateResult, newEducationInfo]) => {
+          this.setItemsIds(newEducationInfo, updateResult.newItemsIds);
+          this.cvData()!.educations = newEducationInfo;
+          this.toaster.success("Education info successfuly updated.");
+        },
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update education info!")
       });
   }
 
@@ -454,21 +441,21 @@ export class CvViewComponent implements OnInit {
     component.citizenships = this.citizenships as InputSignal<BasicModel<number>[]>;
     component.genderOptions = this.genderOptions as InputSignal<BasicModel<number>[]>;
 
-    // TODO: refactor - nested subscribe
-
     component.emitPersonalInfo
-      .subscribe((data: PersonalInfo) => {
-        const requestData: PersonalInfoOutput = this.personalInfoService.mapPersonalInfo(data);
-
-        this.personalInfoService
-          .update(this.cvData()!.id, requestData)
-          .subscribe({
-            next: () => {
-              this.cvData()!.personalInfo = { ...data };
-              this.toaster.success("Personal Details successfuly updated.");
-            },
-            error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update personal details!")
-          });
+      .pipe(
+        concatMap((newPersonalInfo: PersonalInfo) => {
+          const requestData: PersonalInfoOutput = this.personalInfoService.mapPersonalInfo(newPersonalInfo);
+          return forkJoin([
+            this.personalInfoService.update(this.cvData()!.id, requestData),
+            of(newPersonalInfo)
+          ]);
+        })
+      ).subscribe({
+        next: ([_, newPersonalInfo]) => {
+          this.cvData()!.personalInfo = newPersonalInfo;
+          this.toaster.success("Personal Details successfuly updated.");
+        },
+        error: (err: HttpErrorResponse) => this.showErrors(err.error.errors, "Can't update personal details!")
       });
   }
 
