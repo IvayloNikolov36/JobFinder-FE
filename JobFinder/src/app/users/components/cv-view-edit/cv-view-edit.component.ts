@@ -15,7 +15,6 @@ import {
   EducationOutput,
   LanguageInfoOutput,
   PersonalInfoOutput,
-  SkillsInfoOutput,
   WorkExperienceOutput
 } from '../../models/cv';
 import { EducationsComponent } from '../educations/educations.component';
@@ -27,7 +26,7 @@ import { WorkExperienceInfoComponent } from '../work-experiences/work-experience
 import { ToastrService } from 'ngx-toastr';
 import { PersonalInfoComponent } from '../personal-details/personal-details.component';
 import { SkillsInfoComponent } from '../skills-info/skills-info.component';
-import { BasicModel, IdentityResult } from '../../../core/models';
+import { BasicModel, IdentityResult, UpdateResult } from '../../../core/models';
 import { NomenclatureService } from '../../../core/services';
 import { CvSectionTypeEnum } from '../../enums/cv-section-type.enum';
 import {
@@ -337,7 +336,7 @@ export class CvViewComponent implements OnInit {
           ]);
         })
       ).subscribe({
-        next: ([updateResult, newWorkExp]) => {
+        next: ([updateResult, newWorkExp]: [UpdateResult, WorkExperienceInfo[]]) => {
           this.setItemsIds(newWorkExp, updateResult.newItemsIds);
           this.cvData()!.workExperiences = newWorkExp;
           this.toaster.success("Work Experience info successfuly updated.");
@@ -365,7 +364,7 @@ export class CvViewComponent implements OnInit {
           ])
         })
       ).subscribe({
-        next: ([updateResult, newCoursesInfo]) => {
+        next: ([updateResult, newCoursesInfo]: [UpdateResult, CourseCertificateInfo[]]) => {
           this.setItemsIds(newCoursesInfo, updateResult.newItemsIds);
           this.cvData()!.courseCertificates = newCoursesInfo;
           this.toaster.success("Courses info successfuly updated.");
@@ -393,7 +392,7 @@ export class CvViewComponent implements OnInit {
           ]);
         })
       ).subscribe({
-        next: ([updateResult, newLanguageInfo]) => {
+        next: ([updateResult, newLanguageInfo]: [UpdateResult, LanguageInfo[]]) => {
           this.setItemsIds(newLanguageInfo, updateResult.newItemsIds);
           this.cvData()!.languagesInfo = newLanguageInfo;
           this.toaster.success("Languages info successfuly updated.");
@@ -421,7 +420,7 @@ export class CvViewComponent implements OnInit {
           ]);
         })
       ).subscribe({
-        next: ([updateResult, newEducationInfo]) => {
+        next: ([updateResult, newEducationInfo]: [UpdateResult, EducationInfo[]]) => {
           this.setItemsIds(newEducationInfo, updateResult.newItemsIds);
           this.cvData()!.educations = newEducationInfo;
           this.toaster.success("Education info successfuly updated.");
@@ -451,7 +450,7 @@ export class CvViewComponent implements OnInit {
           ]);
         })
       ).subscribe({
-        next: ([_, newPersonalInfo]) => {
+        next: ([_, newPersonalInfo]: [Object, PersonalInfo]) => {
           this.cvData()!.personalInfo = newPersonalInfo;
           this.toaster.success("Personal Details successfuly updated.");
         },
