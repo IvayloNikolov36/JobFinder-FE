@@ -21,7 +21,8 @@ export class AdRelatedAnonymousProfilesPanelComponent {
     }),
     stream: ({ params }) => {
       return this.jobAdsService.getRelatedAnonymousProfiles(params.currentJobAdId);
-    }
+    },
+    defaultValue: []
   });
 
   openRelatedAnonymousProfilesPanel = (jobAdId: number) => {

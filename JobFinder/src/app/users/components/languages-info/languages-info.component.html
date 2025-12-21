@@ -1,7 +1,6 @@
-
-
 <form [formGroup]="languagesForm">
-  <div *ngFor="let lInfo of languagesInfoFormArray.controls; let i = index" [formGroup]="lInfo" class="my-5">
+  @for (lInfo of languagesInfoFormArray.controls; track $index; let i = $index) {
+  <div [formGroup]="lInfo" class="my-5">
 
     <span class="fs-4">Language Info</span>
 
@@ -9,15 +8,14 @@
       <mat-form-field class="half-width">
         <mat-label>Language</mat-label>
         <mat-select formControlName="languageType" [compareWith]="compareFn">
-          <mat-option *ngFor="let l of languageTypes()" [value]="l">
-            {{ l.name }}
-          </mat-option>
+          @for (l of languageTypes(); track l.id) {
+          <mat-option [value]="l">{{ l.name }}</mat-option>
+          }
         </mat-select>
         <mat-hint>Select education level.</mat-hint>
-        <mat-error
-          *ngIf="lInfo.controls['languageType']?.touched && lInfo.controls['languageType'].errors?.['required']">
-          Language is required!
-        </mat-error>
+        @if (lInfo.controls['languageType']?.touched && lInfo.controls['languageType'].errors?.['required']) {
+        <mat-error>Language is required!</mat-error>
+        }
       </mat-form-field>
     </div>
 
@@ -25,46 +23,45 @@
       <mat-form-field class="half-width">
         <mat-label>Comprehension level</mat-label>
         <mat-select formControlName="comprehensionLevel" [compareWith]="compareFn">
-          <mat-option *ngFor="let l of languageLevels()" [value]="l">
-            {{ l.name }}
-          </mat-option>
+          @for (l of languageLevels(); track l.id) {
+          <mat-option [value]="l">{{ l.name }}</mat-option>
+          }
         </mat-select>
         <mat-hint>Select comprehension level.</mat-hint>
-        <mat-error
-          *ngIf="lInfo.controls['comprehensionLevel']?.touched && lInfo.controls['comprehensionLevel'].errors?.['required']">
-          Comprehension level is required!
-        </mat-error>
+        @if (lInfo.controls['comprehensionLevel']?.touched && lInfo.controls['comprehensionLevel'].errors?.['required'])
+        {
+        <mat-error>Comprehension level is required!</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="half-width">
         <mat-label>Speaking level</mat-label>
         <mat-select formControlName="speakingLevel" [compareWith]="compareFn">
-          <mat-option *ngFor="let l of languageLevels()" [value]="l">
-            {{ l.name }}
-          </mat-option>
+          @for (l of languageLevels(); track l.id) {
+          <mat-option [value]="l">{{ l.name }}</mat-option>
+          }
         </mat-select>
         <mat-hint>Select speaking level.</mat-hint>
-        <mat-error
-          *ngIf="lInfo.controls['speakingLevel']?.touched && lInfo.controls['speakingLevel'].errors?.['required']">
-          Speaking level is required!
-        </mat-error>
+        @if (lInfo.controls['speakingLevel']?.touched && lInfo.controls['speakingLevel'].errors?.['required']) {
+        <mat-error>Speaking level is required!</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="half-width">
         <mat-label>Wiring level</mat-label>
         <mat-select formControlName="writingLevel" [compareWith]="compareFn">
-          <mat-option *ngFor="let l of languageLevels()" [value]="l">
-            {{ l.name }}
-          </mat-option>
+          @for (l of languageLevels(); track l.id) {
+          <mat-option [value]="l">{{ l.name }}</mat-option>
+          }
         </mat-select>
         <mat-hint>Select writing level.</mat-hint>
-        <mat-error
-          *ngIf="lInfo.controls['writingLevel']?.touched && lInfo.controls['writingLevel'].errors?.['required']">
-          Writing level is required!
-        </mat-error>
+        @if (lInfo.controls['writingLevel']?.touched && lInfo.controls['writingLevel'].errors?.['required']) {
+        <mat-error>Writing level is required!</mat-error>
+        }
       </mat-form-field>
     </div>
   </div>
+  }
 
   <div class="d-flex justify-content-center gap-3 mt-4">
     <button mat-button color="primary" [disabled]="!languagesForm.valid" (click)="addNewLanguageInfoForm()">

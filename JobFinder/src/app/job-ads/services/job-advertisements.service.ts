@@ -8,6 +8,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { renderSalary } from '../../shared/functions';
 import { AdsFiltering, AdsFilterProps } from '../models';
 import { JobAdsController } from '../../core/controllers';
+import { DataListing } from '../../core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +35,12 @@ export class JobAdvertisementsService {
 
   readonly filterModel: WritableSignal<AdsFilterProps> = signal<AdsFilterProps>(this.initialFilterModel);
   readonly currentPage: WritableSignal<number> = signal<number>(this.initialPage);
-  readonly jobAds: Signal<JobAd[] | undefined> = computed(() => this.jobAdsDataResource.value()?.ads);
+  readonly jobAds: Signal<JobAd[]> = computed(() => this.jobAdsDataResource.value().data);
   readonly totalCount: Signal<number> = computed(() => this.jobAdsDataResource.value()?.totalCount);
   readonly itemsOnPage: Signal<number> = computed(() => this.filterModel().items);
 
-  getAllActive(filter: AdsFiltering): Observable<JobAd[]> {
-    return this.http.post<JobAd[]>(JobAdsController.getAds(), filter);
+  getAllActive(filter: AdsFiltering): Observable<DataListing<JobAd>> {
+    return this.http.post<DataListing<JobAd>>(JobAdsController.getAds(), filter);
   }
 
   details(id: number): Observable<JobDetails> {
@@ -56,16 +57,17 @@ export class JobAdvertisementsService {
     stream: ({ params }) => {
       return this.getAllActive(new AdsFiltering(params.page, params.filter))
         .pipe(
-          map((data: any) => {
-            const totalCount = data.totalCount;
-            let ads = data.data as JobAd[];
-            ads = ads.map((a: JobAd) => {
+          map((data: DataListing<JobAd>) => {
+            const totalCount: number = data.totalCount;
+            let ads = data.data;
+            ads = ads.map((a) => {
               a.salary = renderSalary(a.minSalary, a.maxSalary, a.currency);
               return a;
             });
-            return { totalCount, ads };
+            return { totalCount, data: ads } satisfies DataListing<JobAd>;
           })
         );
-    }
+    },
+    defaultValue: { totalCount: 0, data: [] } satisfies DataListing<JobAd>
   });
 }

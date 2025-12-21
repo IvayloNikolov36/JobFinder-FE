@@ -94,9 +94,9 @@
         <mat-form-field class="half-width">
             <mat-label>Tech Stack</mat-label>
             <mat-select formControlName="techStacks" multiple>
-                <mat-option *ngFor="let stack of techStacks" [value]="stack.id">
-                    {{ stack.name }}
-                </mat-option>
+                @for (stack of techStacks; track stack.id) {
+                <mat-option [value]="stack.id">{{ stack.name }}</mat-option>
+                }
             </mat-select>
             <mat-hint>Select Tech Stack.</mat-hint>
             @if (form.controls['techStacks'].touched && form.controls['techStacks'].errors?.['required']) {
@@ -108,9 +108,9 @@
         <mat-form-field class="half-width">
             <mat-label>IT Areas</mat-label>
             <mat-select formControlName="itAreas" multiple>
-                <mat-option *ngFor="let area of itAreas" [value]="area.id">
-                    {{ area.name }}
-                </mat-option>
+                @for (area of itAreas; track area.id) {
+                <mat-option [value]="area.id">{{ area.name }}</mat-option>
+                }
             </mat-select>
             <mat-hint>Select IT areas.</mat-hint>
             @if (form.controls['itAreas'].touched && form.controls['itAreas'].errors?.['required']) {
@@ -125,9 +125,9 @@
     <mat-form-field class="d-flex half-width mx-auto my-4">
         <mat-label>Soft Skills</mat-label>
         <mat-select formControlName="softSkills" multiple>
-            <mat-option *ngFor="let skill of softSkills" [value]="skill.id">
-                {{ skill.name }}
-            </mat-option>
+            @for (skill of softSkills; track skill.id) {
+            <mat-option [value]="skill.id">{{ skill.name }}</mat-option>
+            }
         </mat-select>
         <mat-hint>Select Soft Skills.</mat-hint>
         @if (form.controls['softSkills'].touched && form.controls['softSkills'].errors?.['required']) {
@@ -159,11 +159,13 @@
         <label id="radio-group-label">Select workplace type:</label>
         <div class="d-flex my-3">
             <mat-radio-group aria-labelledby="radio-group-label" formControlName="workplaceTypeId">
-                <div *ngFor="let workplace of workplaceTypes" class="d-flex">
+                @for (workplace of workplaceTypes; track workplace.id) {
+                <div class="d-flex">
                     <mat-radio-button [value]="workplace.id">
                         {{ workplace.name }}
                     </mat-radio-button>
                 </div>
+                }
                 @if (form.get('workplaceType')?.touched && form.get('workplaceType')?.errors?.['required']) {
                 <mat-error>Selecting workplace type is mandatory!</mat-error>
                 }

@@ -3,15 +3,19 @@
     <mat-form-field class="quarter-width">
       <input matInput type="text" placeholder="Name" formControlName="name">
       <mat-hint>Enter CV name.</mat-hint>
-      <mat-error *ngIf="cvInfoForm.get('name')?.touched && cvInfoForm.get('name')?.errors?.['required']">CV name is
-        required!</mat-error>
-      <mat-error *ngIf="cvInfoForm.get('name')?.errors?.['minlength']">
+      @if (cvInfoForm.get('name')?.touched && cvInfoForm.get('name')?.errors?.['required']) {
+      <mat-error>CV name is required!</mat-error>
+      }
+      @if (cvInfoForm.get('name')?.errors?.['minlength']) {
+      <mat-error>
         CV name length must be at least {{cvInfoForm.get('name')?.errors?.['minlength']['requiredLength']}} characters!
       </mat-error>
-      <mat-error *ngIf="cvInfoForm.get('name')?.errors?.['maxlength']">
-        CV name length must be no more than {{cvInfoForm.get('name')?.errors?.['maxlength']['requiredLength']}}
-        characters!
+      }
+      @if (cvInfoForm.get('name')?.errors?.['maxlength']) {
+      <mat-error>
+        CV name length must be no more than {{cvInfoForm.get('name')?.errors?.['maxlength']['requiredLength']}} characters!
       </mat-error>
+      }
     </mat-form-field>
   </div>
   <button type="submit" mat-button class="mt-3" color="primary" matStepperNext (click)="emitData()"

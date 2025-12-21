@@ -1,71 +1,71 @@
 <div class="container-fluid">
 
-    <ng-container *ngIf="profileData$ | async as profile">
+    @let profile = profileData$ | async;
 
-        <div class="d-flex justify-content-between w-50 mx-auto my-5">
-            <div class="d-flex justify-content-end">
-                <div class="d-flex flex-column me-3">
-                    <img class="user-avatar" [src]="logoUrl || profile.logoThumbnailUrl" alt="User Avatar">
-                    <div class="mx-auto mt-2">
-                        <button matButton="elevated" (click)="selectFile()">Change Picture</button>
-                        <input #fileInput type="file" hidden (change)="onFileChange($event)"
-                            accept="image/jpeg, image/jpg, image/png">
+    @if (profile) {
+    <div class="d-flex justify-content-between w-50 mx-auto my-5">
+        <div class="d-flex justify-content-end">
+            <div class="d-flex flex-column me-3">
+                <img class="user-avatar" [src]="logoUrl || profile.logoThumbnailUrl" alt="User Avatar">
+                <div class="mx-auto mt-2">
+                    <button matButton="elevated" (click)="selectFile()">Change Picture</button>
+                    <input #fileInput type="file" hidden (change)="onFileChange($event)"
+                        accept="image/jpeg, image/jpg, image/png">
+                </div>
+            </div>
+            <div class="my-2 fw-bold">
+                <p>{{ profile.name }}</p>
+                <p><i class="bi bi-mailbox me-2"></i>{{ profile.email }}</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column">
+            <button matButton="filled" (click)="logout()">Log out</button>
+            <div class="d-flex flex-column mt-3 fst-italic">
+                <a routerLink="edit" class="fs-5 mt-3">Edit Profile</a>
+                <a routerLink="/change-password" class="fs-5 mt-3">Change Password</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-5">
+        <mat-card appearance="raised" class="white-blue-gradient">
+            <mat-card-header>
+                <mat-card-title>
+                    <div [matBadge]="profile.activeAdsCount" matBadgeOverlap="false" matBadgeSize="large">
+                        Job Advertisements
                     </div>
-                </div>
-                <div class="my-2 fw-bold">
-                    <p>{{ profile.name }}</p>
-                    <p><i class="bi bi-mailbox me-2"></i>{{ profile.email }}</p>
-                </div>
-            </div>
-            <div class="d-flex flex-column">
-                <button matButton="filled" (click)="logout()">Log out</button>
-                <div class="d-flex flex-column mt-3 fst-italic">
-                    <a routerLink="edit" class="fs-5 mt-3">Edit Profile</a>
-                    <a routerLink="/change-password" class="fs-5 mt-3">Change Password</a>
-                </div>
-            </div>
-        </div>
+                </mat-card-title>
+                <mat-card-subtitle class="mt-1 text-end">
+                    <div [matBadge]="profile.newApplicationsCount" matBadgeOverlap="false" matBadgeSize="large">
+                        <span class="fst-italic me-1">New Applications</span>
+                    </div>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="mt-2">
+                <a routerLink="my-ads">
+                    Here you can view all job ads and the applications sent to them.
+                </a>
+            </mat-card-content>
+        </mat-card>
 
-        <div class="d-flex justify-content-center gap-5">
-            <mat-card appearance="raised" class="white-blue-gradient">
-                <mat-card-header>
-                    <mat-card-title>
-                        <div [matBadge]="profile.activeAdsCount" matBadgeOverlap="false" matBadgeSize="large">
-                            Job Advertisements
-                        </div>
-                    </mat-card-title>
-                    <mat-card-subtitle class="mt-1 text-end">
-                        <div [matBadge]="profile.newApplicationsCount" matBadgeOverlap="false" matBadgeSize="large">
-                            <span class="fst-italic me-1">New Applications</span>
-                        </div>
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content class="mt-2">
-                    <a routerLink="my-ads">
-                        Here you can view all job ads and the applications sent to them.
-                    </a>
-                </mat-card-content>
-            </mat-card>
+        <mat-card appearance="raised" class="white-blue-gradient">
+            <mat-card-header>
+                <mat-card-title>New Job Advertisement</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="mt-2">
+                <a routerLink="/ads/create">Here you can post a new ad</a>
+            </mat-card-content>
+        </mat-card>
 
-            <mat-card appearance="raised" class="white-blue-gradient">
-                <mat-card-header>
-                    <mat-card-title>New Job Advertisement</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="mt-2">
-                    <a routerLink="/ads/create">Here you can post a new ad</a>
-                </mat-card-content>
-            </mat-card>
-
-            <mat-card appearance="raised" class="white-blue-gradient">
-                <mat-card-header>
-                    <mat-card-title>CV Preview Requests</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="mt-2">
-                    <a routerLink="cv-requests">Here you can view all CV requests</a>
-                </mat-card-content>
-            </mat-card>
-        </div>
-
-    </ng-container>
+        <mat-card appearance="raised" class="white-blue-gradient">
+            <mat-card-header>
+                <mat-card-title>CV Preview Requests</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="mt-2">
+                <a routerLink="cv-requests">Here you can view all CV requests</a>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    }
 
 </div>

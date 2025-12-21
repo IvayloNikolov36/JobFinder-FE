@@ -6,15 +6,14 @@
             <mat-form-field class="half-width">
                 <mat-label>Job Category</mat-label>
                 <mat-select formControlName="jobCategoryId">
-                    <mat-option *ngFor="let jobCategory of (jobCategories$ | async)" [value]="jobCategory.id">
-                        {{ jobCategory.name }}
-                    </mat-option>
+                    @for (jobCategory of (jobCategories$ | async); track jobCategory.id) {
+                    <mat-option [value]="jobCategory.id">{{ jobCategory.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select Job Category.</mat-hint>
-                <mat-error
-                    *ngIf="form.controls['jobCategoryId']?.touched && form.controls['jobCategoryId'].errors?.['required']">
-                    Job Category is required!
-                </mat-error>
+                @if (form.controls['jobCategoryId']?.touched && form.controls['jobCategoryId'].errors?.['required']) {
+                <mat-error>Job Category is required!</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -22,15 +21,14 @@
             <mat-form-field class="half-width">
                 <mat-label>Job Engagements</mat-label>
                 <mat-select formControlName="jobEngagements" multiple>
-                    <mat-option *ngFor="let engagement of (jobEngagements$ | async)" [value]="engagement.id">
-                        {{ engagement.name }}
-                    </mat-option>
+                    @for (engagement of (jobEngagements$ | async); track engagement.id) {
+                    <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select Job Engagements.</mat-hint>
-                <mat-error
-                    *ngIf="form.controls['jobEngagements']?.touched && form.controls['jobEngagements'].errors?.['required']">
-                    Job Engagements is required!
-                </mat-error>
+                @if (form.controls['jobEngagements']?.touched && form.controls['jobEngagements'].errors?.['required']) {
+                <mat-error>Job Engagements is required!</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -46,15 +44,14 @@
             <mat-form-field class="half-width">
                 <mat-label>Soft Skills</mat-label>
                 <mat-select formControlName="softSkills" multiple>
-                    <mat-option *ngFor="let skill of (softSkills$ | async)" [value]="skill.id">
-                        {{ skill.name }}
-                    </mat-option>
+                    @for (skill of (softSkills$ | async); track skill.id) {
+                    <mat-option [value]="skill.id">{{ skill.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select Soft Skills.</mat-hint>
-                <mat-error
-                    *ngIf="form.controls['softSkills']?.touched && form.controls['softSkills'].errors?.['required']">
-                    Selecting one or more soft skill is mandatory!
-                </mat-error>
+                @if (form.controls['softSkills']?.touched && form.controls['softSkills'].errors?.['required']) {
+                <mat-error>Selecting one or more soft skill is mandatory!</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -63,15 +60,14 @@
             <mat-form-field class="half-width">
                 <mat-label>Tech Stack</mat-label>
                 <mat-select formControlName="techStacks" multiple>
-                    <mat-option *ngFor="let stack of (techStacks$ | async)" [value]="stack.id">
-                        {{ stack.name }}
-                    </mat-option>
+                    @for (stack of (techStacks$ | async); track stack.id) {
+                    <mat-option [value]="stack.id">{{ stack.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select Tech Stack.</mat-hint>
-                <mat-error
-                    *ngIf="form.controls['techStacks']?.touched && form.controls['techStacks'].errors?.['required']">
-                    Selecting one or more tech stack is mandatory!
-                </mat-error>
+                @if (form.controls['techStacks']?.touched && form.controls['techStacks'].errors?.['required']) {
+                <mat-error>Selecting one or more tech stack is mandatory!</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -79,14 +75,14 @@
             <mat-form-field class="half-width">
                 <mat-label>IT Areas</mat-label>
                 <mat-select formControlName="itAreas" multiple>
-                    <mat-option *ngFor="let area of (itAreas$ | async)" [value]="area.id">
-                        {{ area.name }}
-                    </mat-option>
+                    @for (area of (itAreas$ | async); track area.id) {
+                    <mat-option [value]="area.id">{{ area.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select IT areas.</mat-hint>
-                <mat-error *ngIf="form.controls['itAreas']?.touched && form.controls['itAreas'].errors?.['required']">
-                    Selecting one or more it area is mandatory!
-                </mat-error>
+                @if (form.controls['itAreas']?.touched && form.controls['itAreas'].errors?.['required']) {
+                <mat-error>Selecting one or more it area is mandatory!</mat-error>
+                }
             </mat-form-field>
         </div>
         }
@@ -95,15 +91,16 @@
             <mat-form-field class="half-width">
                 <mat-label>Select your workplace preference:</mat-label>
                 <mat-select formControlName="workplaceTypes" multiple>
-                    <mat-option *ngFor="let workplaceType of (workplaceTypes$ | async)" [value]="workplaceType.id">
+                    @for (workplaceType of (workplaceTypes$ | async); track workplaceType.id) {
+                    <mat-option [value]="workplaceType.id">
                         {{ workplaceType.name }}
                     </mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select workplace types.</mat-hint>
-                <mat-error
-                    *ngIf="form.controls['workplaceTypes']?.touched && form.controls['workplaceTypes'].errors?.['required']">
-                    Selecting one or more workplace type is mandatory!
-                </mat-error>
+                @if (form.controls['workplaceTypes']?.touched && form.controls['workplaceTypes'].errors?.['required']) {
+                <mat-error>Selecting one or more workplace type is mandatory!</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -111,14 +108,14 @@
             <mat-form-field class="half-width">
                 <mat-label>Select preffered cities:</mat-label>
                 <mat-select formControlName="cities" multiple>
-                    <mat-option *ngFor="let city of (cities$ | async)" [value]="city.id">
-                        {{ city.name }}
-                    </mat-option>
+                    @for (city of (cities$ | async); track city.id) {
+                    <mat-option [value]="city.id">{{ city.name }}</mat-option>
+                    }
                 </mat-select>
                 <mat-hint>Select cities.</mat-hint>
-                <mat-error *ngIf="form.controls['cities']?.touched && form.controls['cities'].errors?.['required']">
-                    Selecting one or more city is mandatory!
-                </mat-error>
+                @if (form.controls['cities']?.touched && form.controls['cities'].errors?.['required']) {
+                <mat-error>Selecting one or more city is mandatory!</mat-error>
+                }
             </mat-form-field>
         </div>
 

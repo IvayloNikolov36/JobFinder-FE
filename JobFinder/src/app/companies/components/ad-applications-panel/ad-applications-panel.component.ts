@@ -27,10 +27,11 @@ export class AdApplicationsPanelComponent {
     stream: ({ params }) => {
       return this.jobAdApplicationsService
         .getJobAllApplicationsData(params.currentJobAdId);
-    }
+    },
+    defaultValue: []
   });
 
-  applicationsData: Signal<JobApplicationInfo[]> = computed(() => this.applicationsDataResource?.value() ?? []);
+  applicationsData: Signal<JobApplicationInfo[]> = computed(() => this.applicationsDataResource.value());
 
   onOpenApplicationsPanel = (jobAdId: number): void => {
     this.isExpanded = true;

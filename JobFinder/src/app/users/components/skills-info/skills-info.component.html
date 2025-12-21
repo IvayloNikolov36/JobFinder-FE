@@ -4,25 +4,35 @@
     <mat-form-field class="half-width">
       <textarea matInput type="text" placeholder="Computer skills" formControlName="computerSkills"></textarea>
       <mat-hint>Enter computer skills.</mat-hint>
-      <mat-error *ngIf="sf['computerSkills']?.errors?.['minlength']">
+      @if (sf['computerSkills']?.errors?.['minlength']) {
+      <mat-error>
         Computer skills length must be at least {{sf['computerSkills'].errors?.['minlength']['requiredLength']}}
         characters!
       </mat-error>
-      <mat-error *ngIf="sf['computerSkills'].errors?.['maxlength']">
+      }
+
+      @if (sf['computerSkills'].errors?.['maxlength']) {
+      <mat-error>
         Computer skills length must be no more than {{sf['computerSkills'].errors?.['maxlength']['requiredLength']}}
         characters!
       </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="half-width">
       <textarea matInput type="text" placeholder="Other skills" formControlName="otherSkills"></textarea>
       <mat-hint>Enter other skills.</mat-hint>
-      <mat-error *ngIf="sf['otherSkills'].errors?.['minlength']">
+      @if (sf['otherSkills'].errors?.['minlength']) {
+      <mat-error>
         Skills length must be at least {{sf['otherSkills'].errors?.['minlength']['requiredLength']}} characters!
       </mat-error>
-      <mat-error *ngIf="sf['otherSkills'].errors?.['maxlength']">
+      }
+      @if (sf['otherSkills'].errors?.['maxlength']) {
+      <mat-error>
         Skills length must be no more than {{sf['otherSkills'].errors?.['maxlength'].requiredLength}} characters!
       </mat-error>
+      }
+
     </mat-form-field>
 
   </div>
@@ -44,12 +54,15 @@
 
   </div>
 
-  <button *ngIf="!isEditMode" type="submit" [disabled]="!skillsForm.valid" mat-button class="mt-2" matStepperNext
-    (click)="emitData()">
-    Next
-  </button>
-
-  <button *ngIf="isEditMode" type="submit" [disabled]="!skillsForm.valid" mat-button class="mt-2" (click)="emitData()">
+  @if (isEditMode) {
+  <button type="submit" [disabled]="!skillsForm.valid" mat-button class="mt-2" (click)="emitData()">
     Update
   </button>
+  }
+  @else {
+  <button type="submit" [disabled]="!skillsForm.valid" mat-button class="mt-2" matStepperNext (click)="emitData()">
+    Next
+  </button>
+  }
+
 </form>

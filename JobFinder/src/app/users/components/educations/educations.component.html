@@ -1,5 +1,6 @@
 <form [formGroup]="educationsForm">
-  <div *ngFor="let e of educationsFormArray.controls; let i = index" [formGroup]="e" class="mt-1 mb-3">
+  @for (e of educationsFormArray.controls; track $index; let i = $index) {
+  <div [formGroup]="e" class="mt-1 mb-3">
 
     <mat-accordion class="full-width">
       <mat-expansion-panel class="mt-3" [expanded]="openedPanel === i" (opened)="openExpansionPanel(i)">
@@ -17,9 +18,9 @@
               <mat-datepicker-toggle matSuffix [for]="fromDateEducationPicker"></mat-datepicker-toggle>
               <mat-datepicker #fromDateEducationPicker></mat-datepicker>
               <mat-hint>Enter start date.</mat-hint>
-              <mat-error *ngIf="e.controls['fromDate']?.touched && e.controls['fromDate']?.errors?.['required']">
-                Start date is required!
-              </mat-error>
+              @if (e.controls['fromDate']?.touched && e.controls['fromDate']?.errors?.['required']) {
+              <mat-error>Start date is required!</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field class="half-width">
@@ -35,38 +36,41 @@
             <mat-form-field class="half-width">
               <input matInput type="text" placeholder="Organization" formControlName="organization">
               <mat-hint>Enter Organization.</mat-hint>
-              <mat-error
-                *ngIf="e.controls['organization']?.touched && e.controls['organization']?.errors?.['required']">Organization
-                is
-                required!
+              @if (e.controls['organization']?.touched && e.controls['organization']?.errors?.['required']) {
+              <mat-error>Organization is required!</mat-error>
+              }
+              @if (e.controls['organization']?.errors?.['minlength']) {
+              <mat-error>
+                Organization length must be at least
+                {{e.controls['organization'].errors?.['minlength']['requiredLength']}} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['organization']?.errors?.['minlength']">
-                Organization length must be at least {{
-                e.controls['organization'].errors?.['minlength']['requiredLength']}}
-                characters!
+              }
+              @if (e.controls['organization']?.errors?.['maxlength']) {
+              <mat-error>
+                Organization length must be no more than
+                {{e.controls['organization'].errors?.['maxlength']['requiredLength'] }} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['organization']?.errors?.['maxlength']">
-                Organization length must be no more than {{
-                e.controls['organization'].errors?.['maxlength']['requiredLength'] }}
-                characters!
-              </mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field class="half-width">
               <input matInput type="text" placeholder="Location" formControlName="location">
               <mat-hint>Enter Location.</mat-hint>
-              <mat-error
-                *ngIf="e.controls['location']?.touched && e.controls['location']?.errors?.['required']">Location is
-                required!
+              @if (e.controls['location']?.touched && e.controls['location']?.errors?.['required']) {
+              <mat-error>Location is required!</mat-error>
+              }
+              @if (e.controls['location']?.errors?.['minlength']) {
+              <mat-error>
+                Location length must be at least
+                {{e.controls['location'].errors?.['minlength']['requiredLength']}} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['location']?.errors?.['minlength']">
-                Location length must be at least {{e.controls['location'].errors?.['minlength']['requiredLength']}}
-                characters!
+              }
+              @if (e.controls['location']?.errors?.['maxlength']) {
+              <mat-error>
+                Location length must be no more than
+                {{e.controls['location'].errors?.['maxlength']['requiredLength']}} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['location']?.errors?.['maxlength']">
-                Location length must be no more than {{e.controls['location'].errors?.['maxlength']['requiredLength']}}
-                characters!
-              </mat-error>
+              }
             </mat-form-field>
           </div>
 
@@ -74,31 +78,34 @@
             <mat-form-field class="half-width">
               <mat-label>Education Level</mat-label>
               <mat-select formControlName="educationLevel" [compareWith]="compareFn">
-                <mat-option *ngFor="let e of educationLevels()" [value]="e">
-                  {{ e.name }}
-                </mat-option>
+                @for (e of educationLevels(); track e.id) {
+                <mat-option [value]="e">{{ e.name }}</mat-option>
+                }
               </mat-select>
               <mat-hint>Select education level.</mat-hint>
-              <mat-error
-                *ngIf="e.controls['educationLevel']?.touched && e.controls['educationLevel'].errors?.['required']">
-                Education level is required!
-              </mat-error>
+              @if (e.controls['educationLevel']?.touched && e.controls['educationLevel'].errors?.['required']) {
+              <mat-error>Education level is required!</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field class="half-width">
               <input matInput type="text" placeholder="Major" formControlName="major">
               <mat-hint>Enter major.</mat-hint>
-              <mat-error *ngIf="e.controls['major']?.touched && e.controls['major']?.errors?.['required']">Major is
-                required!
+              @if (e.controls['major']?.touched && e.controls['major']?.errors?.['required']) {
+              <mat-error>Major is required!</mat-error>
+              }
+              @if (e.controls['major']?.errors?.['minlength']) {
+              <mat-error>
+                Major length must be at least
+                {{e.controls['major'].errors?.['minlength']['requiredLength']}} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['major']?.errors?.['minlength']">
-                Major length must be at least {{e.controls['major'].errors?.['minlength']['requiredLength']}}
-                characters!
+              }
+              @if (e.controls['major']?.errors?.['maxlength']) {
+              <mat-error>
+                Major length must be no more than
+                {{e.controls['major'].errors?.['maxlength']['requiredLength']}} characters!
               </mat-error>
-              <mat-error *ngIf="e.controls['major']?.errors?.['maxlength']">
-                Major length must be no more than {{e.controls['major'].errors?.['maxlength']['requiredLength']}}
-                characters!
-              </mat-error>
+              }
             </mat-form-field>
           </div>
 
@@ -106,19 +113,22 @@
             <textarea matInput type="text" placeholder="Main subjects" formControlName="mainSubjects">
           </textarea>
             <mat-hint>Enter Main subjects.</mat-hint>
-            <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['required']">
-              Main subjects field is requred!
+            @if (e.controls['mainSubjects']?.errors?.['required']) {
+            <mat-error>Main subjects field is requred!</mat-error>
+            }
+            @if (e.controls['mainSubjects']?.errors?.['minlength']) {
+            <mat-error>
+              Main subjects length must be at least
+              {{e.controls['mainSubjects'].errors?.['minlength']['requiredLength']}} characters!
             </mat-error>
-            <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['minlength']">
-              Main subjects length must be at least {{
-              e.controls['mainSubjects'].errors?.['minlength']['requiredLength']}}
-              characters!
-            </mat-error>
-            <mat-error *ngIf="e.controls['mainSubjects']?.errors?.['maxlength']">
+            }
+            @if (e.controls['mainSubjects']?.errors?.['maxlength']) {
+            <mat-error>
               Main subjects length must be no more than
-              {{e.controls['mainSubjects'].errors?.['maxlength']['requiredLength']}}
-              characters!
+              {{e.controls['mainSubjects'].errors?.['maxlength']['requiredLength']}} characters!
             </mat-error>
+            }
+
           </mat-form-field>
 
           @if (educationsFormArray.length > 1) {
@@ -134,7 +144,7 @@
     </mat-accordion>
 
   </div>
-
+  }
 </form>
 
 <div class="d-flex justify-content-center">
