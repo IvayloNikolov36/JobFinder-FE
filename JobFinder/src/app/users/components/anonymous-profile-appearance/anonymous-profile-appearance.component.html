@@ -1,18 +1,19 @@
 <div class="container mt-2">
 
-    <form [formGroup]="form" (ngSubmit)="submitAnonymousProfileAppearanceData()">
-
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>Job Category</mat-label>
-                <mat-select formControlName="jobCategoryId">
+                <mat-select [field]="profileAppearanceForm.jobCategoryId">
                     @for (jobCategory of (jobCategories$ | async); track jobCategory.id) {
                     <mat-option [value]="jobCategory.id">{{ jobCategory.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select Job Category.</mat-hint>
-                @if (form.controls['jobCategoryId']?.touched && form.controls['jobCategoryId'].errors?.['required']) {
-                <mat-error>Job Category is required!</mat-error>
+                @if (profileAppearanceForm.jobCategoryId().invalid() && profileAppearanceForm.jobCategoryId().touched())
+                {
+                @for (error of profileAppearanceForm.jobCategoryId().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
@@ -20,21 +21,26 @@
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>Job Engagements</mat-label>
-                <mat-select formControlName="jobEngagements" multiple>
+                <mat-select [field]="profileAppearanceForm.jobEngagements" multiple>
                     @for (engagement of (jobEngagements$ | async); track engagement.id) {
                     <mat-option [value]="engagement.id">{{ engagement.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select Job Engagements.</mat-hint>
-                @if (form.controls['jobEngagements']?.touched && form.controls['jobEngagements'].errors?.['required']) {
-                <mat-error>Job Engagements is required!</mat-error>
+                @if (profileAppearanceForm.jobEngagements().invalid() &&
+                profileAppearanceForm.jobEngagements().touched())
+                {
+                @for (error of profileAppearanceForm.jobEngagements().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
 
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
-                <textarea matInput type="text" placeholder="preffered positions" formControlName="preferredPositions">
+                <textarea matInput type="text" placeholder="preffered positions"
+                    [field]="profileAppearanceForm.preferredPositions">
                 </textarea>
                 <mat-hint>Here you can input preffered job positions.</mat-hint>
             </mat-form-field>
@@ -43,14 +49,17 @@
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>Soft Skills</mat-label>
-                <mat-select formControlName="softSkills" multiple>
+                <mat-select [field]="profileAppearanceForm.softSkills" multiple>
                     @for (skill of (softSkills$ | async); track skill.id) {
                     <mat-option [value]="skill.id">{{ skill.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select Soft Skills.</mat-hint>
-                @if (form.controls['softSkills']?.touched && form.controls['softSkills'].errors?.['required']) {
-                <mat-error>Selecting one or more soft skill is mandatory!</mat-error>
+                @if (profileAppearanceForm.softSkills().invalid() && profileAppearanceForm.softSkills().touched())
+                {
+                @for (error of profileAppearanceForm.softSkills().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
@@ -59,14 +68,17 @@
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>Tech Stack</mat-label>
-                <mat-select formControlName="techStacks" multiple>
+                <mat-select [field]="profileAppearanceForm.techStacks" multiple>
                     @for (stack of (techStacks$ | async); track stack.id) {
                     <mat-option [value]="stack.id">{{ stack.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select Tech Stack.</mat-hint>
-                @if (form.controls['techStacks']?.touched && form.controls['techStacks'].errors?.['required']) {
-                <mat-error>Selecting one or more tech stack is mandatory!</mat-error>
+                @if (profileAppearanceForm.techStacks().invalid() && profileAppearanceForm.techStacks().touched())
+                {
+                @for (error of profileAppearanceForm.techStacks().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
@@ -74,14 +86,17 @@
         <div class="d-flex justify-content-center ms-5 my-5">
             <mat-form-field class="half-width">
                 <mat-label>IT Areas</mat-label>
-                <mat-select formControlName="itAreas" multiple>
+                <mat-select [field]="profileAppearanceForm.itAreas" multiple>
                     @for (area of (itAreas$ | async); track area.id) {
                     <mat-option [value]="area.id">{{ area.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select IT areas.</mat-hint>
-                @if (form.controls['itAreas']?.touched && form.controls['itAreas'].errors?.['required']) {
-                <mat-error>Selecting one or more it area is mandatory!</mat-error>
+                @if (profileAppearanceForm.itAreas().invalid() && profileAppearanceForm.itAreas().touched())
+                {
+                @for (error of profileAppearanceForm.itAreas().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
@@ -90,7 +105,7 @@
         <div class="d-flex justify-content-center my-5 ms-5">
             <mat-form-field class="half-width">
                 <mat-label>Select your workplace preference:</mat-label>
-                <mat-select formControlName="workplaceTypes" multiple>
+                <mat-select [field]="profileAppearanceForm.workplaceTypes" multiple>
                     @for (workplaceType of (workplaceTypes$ | async); track workplaceType.id) {
                     <mat-option [value]="workplaceType.id">
                         {{ workplaceType.name }}
@@ -98,8 +113,12 @@
                     }
                 </mat-select>
                 <mat-hint>Select workplace types.</mat-hint>
-                @if (form.controls['workplaceTypes']?.touched && form.controls['workplaceTypes'].errors?.['required']) {
-                <mat-error>Selecting one or more workplace type is mandatory!</mat-error>
+                @if (profileAppearanceForm.workplaceTypes().invalid() &&
+                profileAppearanceForm.workplaceTypes().touched())
+                {
+                @for (error of profileAppearanceForm.workplaceTypes().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
@@ -107,24 +126,26 @@
         <div class="d-flex justify-content-center ms-5">
             <mat-form-field class="half-width">
                 <mat-label>Select preffered cities:</mat-label>
-                <mat-select formControlName="cities" multiple>
+                <mat-select [field]="profileAppearanceForm.cities" multiple>
                     @for (city of (cities$ | async); track city.id) {
                     <mat-option [value]="city.id">{{ city.name }}</mat-option>
                     }
                 </mat-select>
                 <mat-hint>Select cities.</mat-hint>
-                @if (form.controls['cities']?.touched && form.controls['cities'].errors?.['required']) {
-                <mat-error>Selecting one or more city is mandatory!</mat-error>
+                @if (profileAppearanceForm.cities().invalid() && profileAppearanceForm.cities().touched())
+                {
+                @for (error of profileAppearanceForm.cities().errors(); track error.kind) {
+                <mat-error>{{ error }}</mat-error>
+                }
                 }
             </mat-form-field>
         </div>
 
         <div class="d-flex justify-content-center my-3">
-            <button mat-fab extended type="submit" [disabled]="!form.valid">
+            <button mat-fab extended [disabled]="profileAppearanceForm().invalid()"
+                (click)="submitAnonymousProfileAppearanceData()">
                 Activate Anonymous Profile
             </button>
         </div>
-
-    </form>
 
 </div>

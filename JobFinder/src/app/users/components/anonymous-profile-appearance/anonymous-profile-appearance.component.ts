@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output, signal, WritableSignal } from '@angular/core';
+import { Component, computed, EventEmitter, OnInit, Output, Signal, signal } from '@angular/core';
+import { form } from '@angular/forms/signals';
 import { NomenclatureService } from '../../../core/services';
 import { BasicModel } from '../../../core/models';
 import { Observable } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { AnonymousProfileAppearance } from '../../models';
+import { AnonymousProfileAppearance, initalData, ITCategoryId, ProfileAppearanceModel, profileAppearanceSchema } from '../../models';
 
 @Component({
   selector: 'jf-anonymous-profile-appearance',
@@ -14,6 +14,11 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
 
   @Output() onAppearanceDataEmit: EventEmitter<AnonymousProfileAppearance> = new EventEmitter<AnonymousProfileAppearance>;
 
+  readonly profileAppearanceModel = signal<ProfileAppearanceModel>(initalData);
+  readonly profileAppearanceForm = form(this.profileAppearanceModel, profileAppearanceSchema);
+  readonly showITcontrols: Signal<boolean> = computed(() =>
+    this.profileAppearanceForm.jobCategoryId().value() === ITCategoryId);
+
   jobCategories$!: Observable<BasicModel<number>[]>;
   jobEngagements$!: Observable<BasicModel<number>[]>;
   softSkills$!: Observable<BasicModel<number>[]>;
@@ -21,46 +26,29 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
   itAreas$!: Observable<BasicModel<number>[]>;
   workplaceTypes$!: Observable<BasicModel<number>[]>;
   cities$!: Observable<BasicModel<number>[]>;
-  showITcontrols: WritableSignal<boolean> = signal<boolean>(false);
 
-  form!: FormGroup<AnonymousProfileAppearanceForm>;
-
-  readonly itCategoryId: number = 3;
-
-  constructor(
-    private nomenclatureService: NomenclatureService,
-    private formBuilder: FormBuilder,
-  ) { }
+  constructor(private nomenclatureService: NomenclatureService) { }
 
   ngOnInit(): void {
-    this.initializeForm();
     this.loadNomenclatureData();
-    this.subscribeToJobCategoryFormChanges();
+    this.profileAppearanceForm.jobCategoryId()
   }
 
   submitAnonymousProfileAppearanceData = (): void => {
-    this.onAppearanceDataEmit.emit(this.form.value as AnonymousProfileAppearance);
-  }
+    const formData: ProfileAppearanceModel = this.profileAppearanceForm().value();
 
-  private get techStackControl() {
-    return this.form.controls.techStacks;
-  }
+    // TODO: think about cleverer approach
 
-  private get itAreasControl() {
-    return this.form.controls.itAreas;
-  }
+    const dataToEmit = { ...formData } as AnonymousProfileAppearance;
+    if (dataToEmit.preferredPositions?.length === 0) {
+      dataToEmit.preferredPositions = null;
+    }
+    if (dataToEmit.jobCategoryId !== ITCategoryId) {
+      dataToEmit.itAreas = [];
+      dataToEmit.techStacks = [];
+    }
 
-  private initializeForm(): void {
-    this.form = this.formBuilder.group<AnonymousProfileAppearanceForm>({
-      jobCategoryId: new FormControl(0, { nonNullable: true, validators: Validators.required }),
-      jobEngagements: new FormControl([], { nonNullable: true, validators: Validators.required }),
-      preferredPositions: new FormControl(null, { nonNullable: false }),
-      softSkills: new FormControl([], { nonNullable: true, validators: Validators.required }),
-      itAreas: new FormControl([], { nonNullable: true }),
-      techStacks: new FormControl([], { nonNullable: true }),
-      workplaceTypes: new FormControl([], { nonNullable: true, validators: Validators.required }),
-      cities: new FormControl([], { nonNullable: true, validators: Validators.required })
-    });
+    this.onAppearanceDataEmit.emit(dataToEmit);
   }
 
   private loadNomenclatureData(): void {
@@ -72,35 +60,4 @@ export class AnonymousProfileAppearanceComponent implements OnInit {
     this.workplaceTypes$ = this.nomenclatureService.getWorkplaceTypes();
     this.cities$ = this.nomenclatureService.getCities();
   }
-
-  private subscribeToJobCategoryFormChanges = (): void => {
-
-    this.form.controls['jobCategoryId'].valueChanges
-      .subscribe((categoryId: number) => {
-        const validator: ValidatorFn = Validators.required;
-
-        if (categoryId === this.itCategoryId) {
-          this.techStackControl.addValidators(validator);
-          this.itAreasControl.addValidators(validator);
-          this.showITcontrols.set(true);
-        } else {
-          this.techStackControl.removeValidators(validator);
-          this.itAreasControl.removeValidators(validator);
-          this.showITcontrols.set(false);
-          this.techStackControl.setValue([]);
-          this.itAreasControl.setValue([]);
-        }
-      });
-  }
-}
-
-interface AnonymousProfileAppearanceForm {
-  jobCategoryId: FormControl<number>;
-  jobEngagements: FormControl<number[]>;
-  preferredPositions: FormControl<string | null>;
-  softSkills: FormControl<number[]>;
-  itAreas: FormControl<number[]>;
-  techStacks: FormControl<number[]>;
-  workplaceTypes: FormControl<number[]>;
-  cities: FormControl<number[]>;
 }

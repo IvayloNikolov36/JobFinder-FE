@@ -21,6 +21,7 @@ import {
 } from './components/';
 import { UsersRoutingModule } from './users-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { Field } from "@angular/forms/signals";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     SharedModule,
     UsersRoutingModule,
-  ]
+    Field
+]
 })
 export class UsersModule { }
